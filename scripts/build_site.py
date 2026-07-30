@@ -169,6 +169,8 @@ def reset_articles_output(output_dir: Path = ARTICLES_OUT) -> None:
     if output_dir.exists():
         shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    # Keep the directory in Git even when no articles are published.
+    (output_dir / ".gitkeep").write_text("", encoding="utf-8")
 
 
 def main() -> int:

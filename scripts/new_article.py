@@ -17,14 +17,29 @@ from scripts.kb import (  # noqa: E402
     ARTICLE_ID_RE,
     CONTENT_ARTICLES,
     DIR_NAME_RE,
+    ROOT,
     iter_article_dirs,
     load_article,
     write_json,
     write_text,
 )
 
+RETIRED_IDS_PATH = ROOT / "content" / "retired-article-ids.json"
+
+
+def load_retired_ids() -> set[str]:
+    if not RETIRED_IDS_PATH.exists():
+        return set()
+    data = json.loads(RETIRED_IDS_PATH.read_text(encoding="utf-8"))
+    ids = data.get("ids", [])
+    if not isinstance(ids, list):
+        raise SystemExit(f"invalid retired ids file: {RETIRED_IDS_PATH}")
+    return {str(item) for item in ids}
+
 
 def next_article_id(year: str) -> str:
+    """Allocate the next ID for a year without reusing live or retired IDs."""
+
     max_seq = 0
     for article_dir in iter_article_dirs():
         meta = json.loads((article_dir / "article.json").read_text(encoding="utf-8"))
@@ -32,6 +47,10 @@ def next_article_id(year: str) -> str:
         if not m:
             continue
         if m.group(1) == year:
+            max_seq = max(max_seq, int(m.group(2)))
+    for retired_id in load_retired_ids():
+        m = ARTICLE_ID_RE.match(retired_id)
+        if m and m.group(1) == year:
             max_seq = max(max_seq, int(m.group(2)))
     return f"KB-{year}-{max_seq + 1:04d}"
 
@@ -46,6 +65,8 @@ def slugify(text: str) -> str:
 
 
 def reject_duplicates(article_id: str, slug: str, year: str) -> None:
+    if article_id in load_retired_ids():
+        raise SystemExit(f"削除済み記事IDは再利用できません: {article_id}")
     for article_dir in iter_article_dirs():
         meta = load_article(article_dir)
         if meta["id"] == article_id:

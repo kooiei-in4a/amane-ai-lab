@@ -5,6 +5,7 @@
 - Base branch: `main`
 - Base SHA: `c6e6cf982ff5c1772c609701419c2a86ae97b364`
 - Review branch: `review/post-bootstrap-hardening`
+- Reviewed code head: `0b9be3727b2f7fa8f5d3d1e79d6d89f08c46bdc1`
 - Reviewer role: independent architecture / security / reliability reviewer
 
 ## Review scope
@@ -84,30 +85,41 @@ The original tests did not cover Markdown script sanitization, stale generated p
 
 ## Post-fix validation
 
-The following checks are required on the review branch and Draft PR:
+Validation workflow run `30544167172` completed successfully against code head `0b9be3727b2f7fa8f5d3d1e79d6d89f08c46bdc1`.
+
+Executed gates:
 
 ```bash
-python3 -m pip install -r requirements.txt
-python3 scripts/build_site.py
+python -m pip install -r requirements.txt
+python scripts/build_site.py
 git status --porcelain=v1 --untracked-files=all -- articles data index.html sitemap.xml feed.xml
-python3 scripts/build_site.py
+python scripts/build_site.py
 git status --porcelain=v1 --untracked-files=all -- articles data index.html sitemap.xml feed.xml
-python3 scripts/validate_content.py
-python3 scripts/check_sensitive_data.py
-python3 -m unittest discover -s tests -v
+python scripts/validate_content.py
+python scripts/check_sensitive_data.py
+python -m unittest discover -s tests -v
 ```
 
-PR CI result: pending at initial report creation. This report must be updated if the review-branch checks do not pass.
+Results:
+
+- First build: 1 article generated; generated-tree status clean.
+- Second build: 1 article generated; generated-tree status remained clean and idempotent.
+- Content validation: `success=15 warnings=0 errors=0`.
+- Sensitive-data scan: `scanned_files=80 findings=0`.
+- Unit tests: 12 passed.
+- Internal links: 1 article link present.
+
+An earlier review-branch run correctly failed because a negative-test fixture committed a secret-like assignment literally. The fixture was changed to construct the value only at test runtime, retaining the negative test without weakening repository-wide scanning.
 
 ## Remaining findings
 
 ### Blocker
 
-None identified after the limited fixes, subject to review-branch CI.
+None.
 
 ### Major
 
-None identified after the limited fixes, subject to review-branch CI.
+None.
 
 ### Minor
 
@@ -124,6 +136,8 @@ None identified after the limited fixes, subject to review-branch CI.
 - Enable GitHub Discussions and configure the real giscus repository/category IDs.
 - Review and merge the Draft PR; the agent must not merge or publish.
 
-## Provisional decision
+## Final decision
 
-`PASS WITH MINOR FINDINGS`, conditional on successful review-branch CI and a clean two-pass generation result.
+`PASS WITH MINOR FINDINGS`.
+
+All Blocker and Major findings identified in this review were resolved with limited changes, and the strengthened validation workflow completed successfully with clean two-pass generation.

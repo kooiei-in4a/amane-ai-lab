@@ -25,6 +25,10 @@ TEXT_SUFFIXES = {
     ".py",
     ".mdc",
     ".toml",
+    ".ini",
+    ".cfg",
+    ".conf",
+    ".properties",
 }
 
 HIGH = {
@@ -49,6 +53,8 @@ MEDIUM = {
     "internal_url": re.compile(r"(?i)\bhttps?://(?:intranet|internal|corp)[^\s]*"),
 }
 
+REDACTED_TOKEN_RE = re.compile(r"\[REDACTED_[A-Z0-9_]+\]")
+
 DOC_POLICY_PREFIXES = (
     "agents/policies/",
     "agents/checklists/",
@@ -68,6 +74,9 @@ SAFE_EMAIL_DOMAINS = (
 
 
 def is_text_file(path: Path) -> bool:
+    lower_name = path.name.lower()
+    if lower_name == "dockerfile" or lower_name == ".env" or lower_name.startswith(".env."):
+        return True
     return path.suffix.lower() in TEXT_SUFFIXES or path.name in {
         "AGENTS.md",
         "CLAUDE.md",
@@ -89,6 +98,13 @@ def is_policy_doc(rel: str) -> bool:
 
 
 def scan_file(path: Path, rel: str) -> list[tuple[int, str, str]]:
+    """Return findings without returning the matched secret value.
+
+    Redaction placeholders are removed before matching. A placeholder therefore
+    remains allowed by itself, but it cannot suppress a real secret elsewhere on
+    the same line.
+    """
+
     findings: list[tuple[int, str, str]] = []
     try:
         text = path.read_text(encoding="utf-8")
@@ -96,22 +112,22 @@ def scan_file(path: Path, rel: str) -> list[tuple[int, str, str]]:
         return findings
 
     for lineno, line in enumerate(text.splitlines(), start=1):
-        if "[REDACTED_" in line:
-            continue
+        scan_line = REDACTED_TOKEN_RE.sub("", line)
         for kind, pattern in HIGH.items():
-            if pattern.search(line):
-                findings.append((lineno, kind, line.strip()[:200]))
+            if pattern.search(scan_line):
+                findings.append((lineno, kind, "[MATCH_REDACTED]"))
         if is_policy_doc(rel):
             continue
         for kind, pattern in MEDIUM.items():
-            match = pattern.search(line)
+            match = pattern.search(scan_line)
             if not match:
                 continue
             if kind == "email":
                 email = match.group(0).lower()
-                if any(email.endswith(domain) for domain in SAFE_EMAIL_DOMAINS):
+                domain = email.rsplit("@", 1)[1]
+                if domain in SAFE_EMAIL_DOMAINS:
                     continue
-            findings.append((lineno, kind, line.strip()[:200]))
+            findings.append((lineno, kind, "[MATCH_REDACTED]"))
     return findings
 
 
@@ -130,9 +146,10 @@ def main() -> int:
             continue
         scanned += 1
         rel = str(path.relative_to(root)).replace("\\", "/")
-        for lineno, kind, snippet in scan_file(path, rel):
+        for lineno, kind, _ in scan_file(path, rel):
             findings_total += 1
-            print(f"{rel}:{lineno}: {kind}: {snippet}")
+            # Never echo the matched line: CI logs must not become a second leak.
+            print(f"{rel}:{lineno}: {kind}")
 
     print(f"scanned_files={scanned} findings={findings_total}")
     return 1 if findings_total else 0

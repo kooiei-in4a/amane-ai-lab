@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.build_site import build_article_html, reset_articles_output
+from scripts.build_site import build_article_html, build_summary_parts, reset_articles_output
 from scripts.check_sensitive_data import is_text_file, scan_file
 from scripts.kb import ARTICLE_ID_RE, html_escape, load_site_config, markdown_to_html
 from scripts.new_article import load_retired_ids, next_article_id, slugify
@@ -56,6 +56,16 @@ class GeneratedOutputTest(unittest.TestCase):
             self.assertTrue(output.is_dir())
             self.assertFalse(stale.exists())
             self.assertEqual([p.name for p in output.iterdir()], [".gitkeep"])
+
+
+class SummaryDocumentTest(unittest.TestCase):
+    def test_build_summary_parts_adds_toc_and_section_ids(self):
+        md = "# Title\n\n## First\n\nBody\n\n## Second\n\nMore"
+        toc_html, body_html = build_summary_parts(md)
+        self.assertIn('href="#section-1"', toc_html)
+        self.assertIn("First", toc_html)
+        self.assertIn('id="section-1"', body_html)
+        self.assertIn('id="section-2"', body_html)
 
 
 class GiscusConfigurationTest(unittest.TestCase):

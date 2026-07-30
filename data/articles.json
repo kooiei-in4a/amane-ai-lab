@@ -1,5 +1,30 @@
 {
   "schemaVersion": 1,
   "generatedFrom": "content/articles",
-  "articles": []
+  "articles": [
+    {
+      "id": "KB-2026-0002",
+      "slug": "ai-agent-sdlc-future",
+      "title": "AIエージェント協働型開発がもたらす人材・企業・産業構造の変化",
+      "description": "ChatGPT・Claude・Geminiの3回答と統合分析。ボトルネックは生成能力ではなく検証の経済学へ移った。",
+      "status": "published",
+      "publishedAt": "2026-07-30",
+      "updatedAt": "2026-07-30",
+      "lastVerifiedAt": "2026-07-30",
+      "tags": [
+        "AIエージェント",
+        "SDLC",
+        "人材戦略",
+        "未来予測",
+        "検証"
+      ],
+      "agents": [
+        "ChatGPT",
+        "Claude",
+        "Gemini"
+      ],
+      "url": "/articles/2026/kb-2026-0002-ai-agent-sdlc-future/",
+      "year": "2026"
+    }
+  ]
 }

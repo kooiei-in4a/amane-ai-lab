@@ -1,10 +1,10 @@
-name: Pages artifact
+name: Deploy GitHub Pages
 
-# Builds a validated static-site artifact for GitHub Pages readiness checks.
-# This workflow does not enable, deploy, or modify repository Pages settings.
+# Builds and validates the static site on pull requests. Deploys only from main.
 
 on:
   workflow_dispatch:
+  pull_request:
   push:
     branches: [main]
 
@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: pages-artifact
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -24,6 +24,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
@@ -73,6 +76,21 @@ jobs:
           cp README.md LICENSE LICENSE-CONTENT _site/ 2>/dev/null || true
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: _site
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

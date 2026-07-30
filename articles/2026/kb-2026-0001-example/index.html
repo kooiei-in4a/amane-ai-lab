@@ -67,11 +67,12 @@
 <h2>制約・未確認事項</h2>
 <ul>
 <li>実在の市場シェア数値は検証していない</li>
-<li>giscus の本番IDは未設定</li>
+<li>コメントの読み込みと投稿にはGitHubへの接続が必要</li>
 </ul>
 <h2>訂正・更新履歴</h2>
 <ul>
 <li>2026-07-30: サンプル記事を初版作成</li>
+<li>2026-07-30: giscusの本番設定を反映</li>
 </ul></div>
     </section>
 
@@ -186,15 +187,15 @@ AIエージェントの検証結果を公開するナレッジベースを作り
 
     <section class="panel" aria-labelledby="comments-heading">
       <h2 id="comments-heading">コメント</h2>
-      <p class="note">コメントは GitHub Discussions（giscus）上の第三者投稿です。本番の repository / category ID は人間が設定します。</p>
+      <p class="note">コメントは GitHub Discussions（giscus）上の第三者投稿です。読み込みと投稿にはGitHubへの接続が必要です。</p>
       <button type="button" class="btn" id="load-giscus">コメントを読み込む</button>
       <div id="giscus-container"
         hidden
         data-giscus-src="https://giscus.app/client.js"
-  data-repo="OWNER/REPO"
-  data-repo-id="REPO_ID_PLACEHOLDER"
+  data-repo="kooiei-in4a/amane-ai-lab"
+  data-repo-id="R_kgDOToJuSQ"
   data-category="Announcements"
-  data-category-id="CATEGORY_ID_PLACEHOLDER"
+  data-category-id="DIC_kwDOToJuSc4DCT1S"
   data-mapping="specific"
   data-term="KB-2026-0001"
   data-strict="1"

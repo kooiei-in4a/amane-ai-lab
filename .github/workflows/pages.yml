@@ -1,7 +1,7 @@
 name: Pages artifact
 
-# Builds a static site artifact for GitHub Pages readiness checks.
-# This workflow does not enable or modify repository Pages settings.
+# Builds a validated static-site artifact for GitHub Pages readiness checks.
+# This workflow does not enable, deploy, or modify repository Pages settings.
 
 on:
   workflow_dispatch:
@@ -10,8 +10,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages-artifact
@@ -30,14 +28,48 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
 
-      - name: Build site
+      - name: Build site (first pass)
         run: python scripts/build_site.py
+
+      - name: Fail on generated drift
+        shell: bash
+        run: |
+          changes="$(git status --porcelain=v1 --untracked-files=all -- articles data index.html sitemap.xml feed.xml)"
+          if [[ -n "$changes" ]]; then
+            echo "Generated files are out of date. Refusing to assemble a Pages artifact."
+            printf '%s\n' "$changes"
+            git --no-pager diff -- articles data index.html sitemap.xml feed.xml
+            exit 1
+          fi
+
+      - name: Build site (idempotency pass)
+        run: python scripts/build_site.py
+
+      - name: Fail on non-idempotent generation
+        shell: bash
+        run: |
+          changes="$(git status --porcelain=v1 --untracked-files=all -- articles data index.html sitemap.xml feed.xml)"
+          if [[ -n "$changes" ]]; then
+            echo "A second build changed generated files. Refusing to assemble a Pages artifact."
+            printf '%s\n' "$changes"
+            git --no-pager diff -- articles data index.html sitemap.xml feed.xml
+            exit 1
+          fi
+
+      - name: Validate content
+        run: python scripts/validate_content.py
+
+      - name: Sensitive data check
+        run: python scripts/check_sensitive_data.py
+
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
 
       - name: Assemble public tree
         run: |
           mkdir -p _site
           cp -R articles assets data index.html sitemap.xml feed.xml .nojekyll _site/
-          # optional root docs for transparency
+          # Optional root documents for transparency.
           cp README.md LICENSE LICENSE-CONTENT _site/ 2>/dev/null || true
 
       - name: Upload Pages artifact

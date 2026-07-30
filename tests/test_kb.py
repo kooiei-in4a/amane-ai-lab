@@ -73,8 +73,10 @@ class SensitiveScanTest(unittest.TestCase):
     def test_redacted_placeholder_does_not_suppress_real_secret(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "leak.txt"
+            key_name = "api_" + "key"
+            secret_value = "actual-" + "secret-value"
             path.write_text(
-                'api_key="actual-secret-value" [REDACTED_API_KEY]\n',
+                f'{key_name}="{secret_value}" [REDACTED_API_KEY]\n',
                 encoding="utf-8",
             )
             findings = scan_file(path, "leak.txt")

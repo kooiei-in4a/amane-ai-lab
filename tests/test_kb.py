@@ -4,7 +4,7 @@ from pathlib import Path
 
 from scripts.build_site import reset_articles_output
 from scripts.check_sensitive_data import is_text_file, scan_file
-from scripts.kb import ARTICLE_ID_RE, html_escape, markdown_to_html
+from scripts.kb import ARTICLE_ID_RE, html_escape, load_site_config, markdown_to_html
 from scripts.new_article import next_article_id, slugify
 
 
@@ -51,6 +51,30 @@ class GeneratedOutputTest(unittest.TestCase):
 
             self.assertTrue(output.is_dir())
             self.assertEqual(list(output.iterdir()), [])
+
+
+class GiscusConfigurationTest(unittest.TestCase):
+    def test_live_giscus_configuration_matches_generated_article(self):
+        config = load_site_config()
+        giscus = config["giscus"]
+
+        self.assertTrue(giscus["enabled"])
+        self.assertEqual(giscus["repo"], config["repositoryPath"])
+        self.assertTrue(giscus["repoId"].startswith("R_"))
+        self.assertEqual(giscus["category"], "Announcements")
+        self.assertTrue(giscus["categoryId"].startswith("DIC_"))
+        self.assertEqual(giscus["mapping"], "specific")
+        self.assertEqual(giscus["strict"], "1")
+
+        html = Path(
+            "articles/2026/kb-2026-0001-example/index.html"
+        ).read_text(encoding="utf-8")
+        self.assertIn(f'data-repo="{giscus["repo"]}"', html)
+        self.assertIn(f'data-repo-id="{giscus["repoId"]}"', html)
+        self.assertIn(f'data-category-id="{giscus["categoryId"]}"', html)
+        self.assertIn('data-mapping="specific"', html)
+        self.assertIn('data-term="KB-2026-0001"', html)
+        self.assertIn('data-strict="1"', html)
 
 
 class SensitiveScanTest(unittest.TestCase):

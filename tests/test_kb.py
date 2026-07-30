@@ -2,10 +2,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.build_site import reset_articles_output
+from scripts.build_site import build_article_html, reset_articles_output
 from scripts.check_sensitive_data import is_text_file, scan_file
 from scripts.kb import ARTICLE_ID_RE, html_escape, load_site_config, markdown_to_html
-from scripts.new_article import next_article_id, slugify
+from scripts.new_article import load_retired_ids, next_article_id, slugify
 
 
 class KbHelpersTest(unittest.TestCase):
@@ -32,11 +32,15 @@ class KbHelpersTest(unittest.TestCase):
 
 
 class NewArticleIdTest(unittest.TestCase):
-    def test_next_id_increments(self):
-        # Uses repository content; sample article KB-2026-0001 exists.
+    def test_retired_ids_include_deleted_sample(self):
+        retired = load_retired_ids()
+        self.assertIn("KB-2026-0001", retired)
+
+    def test_next_id_skips_retired_ids(self):
         nxt = next_article_id("2026")
         self.assertTrue(ARTICLE_ID_RE.match(nxt))
         self.assertGreaterEqual(int(nxt.split("-")[2]), 2)
+        self.assertNotIn(nxt, load_retired_ids())
 
 
 class GeneratedOutputTest(unittest.TestCase):
@@ -50,11 +54,12 @@ class GeneratedOutputTest(unittest.TestCase):
             reset_articles_output(output)
 
             self.assertTrue(output.is_dir())
-            self.assertEqual(list(output.iterdir()), [])
+            self.assertFalse(stale.exists())
+            self.assertEqual([p.name for p in output.iterdir()], [".gitkeep"])
 
 
 class GiscusConfigurationTest(unittest.TestCase):
-    def test_live_giscus_configuration_matches_generated_article(self):
+    def test_live_giscus_configuration_is_embedded_in_rendered_html(self):
         config = load_site_config()
         giscus = config["giscus"]
 
@@ -66,14 +71,52 @@ class GiscusConfigurationTest(unittest.TestCase):
         self.assertEqual(giscus["mapping"], "specific")
         self.assertEqual(giscus["strict"], "1")
 
-        html = Path(
-            "articles/2026/kb-2026-0001-example/index.html"
-        ).read_text(encoding="utf-8")
+        with tempfile.TemporaryDirectory() as tmp:
+            article_dir = Path(tmp)
+            (article_dir / "responses").mkdir()
+            (article_dir / "article.json").write_text("{}", encoding="utf-8")
+            (article_dir / "conclusion.md").write_text("# 結論\n", encoding="utf-8")
+            (article_dir / "analysis.md").write_text("# 考察\n", encoding="utf-8")
+            (article_dir / "prompt.txt").write_text("prompt\n", encoding="utf-8")
+            (article_dir / "responses" / "chatgpt.md").write_text("# ok\n", encoding="utf-8")
+
+            meta = {
+                "schemaVersion": 1,
+                "id": "KB-2099-0001",
+                "slug": "fixture",
+                "title": "giscus fixture",
+                "description": "temporary fixture",
+                "status": "draft",
+                "publishedAt": None,
+                "updatedAt": "2026-07-30",
+                "lastVerifiedAt": "2026-07-30",
+                "tags": ["fixture"],
+                "agents": [
+                    {
+                        "name": "ChatGPT",
+                        "model": "test",
+                        "responseFile": "responses/chatgpt.md",
+                        "executedAt": "2026-07-30",
+                        "webSearch": False,
+                        "attachmentsUsed": False,
+                        "integrity": "raw",
+                        "notes": None,
+                    }
+                ],
+                "giscusTerm": "KB-2099-0001",
+                "supersededBy": None,
+                "_dir": article_dir,
+                "_year": "2099",
+                "_url": "/articles/2099/kb-2099-0001-fixture/",
+                "_dirname": "kb-2099-0001-fixture",
+            }
+            html = build_article_html(meta, config)
+
         self.assertIn(f'data-repo="{giscus["repo"]}"', html)
         self.assertIn(f'data-repo-id="{giscus["repoId"]}"', html)
         self.assertIn(f'data-category-id="{giscus["categoryId"]}"', html)
         self.assertIn('data-mapping="specific"', html)
-        self.assertIn('data-term="KB-2026-0001"', html)
+        self.assertIn('data-term="KB-2099-0001"', html)
         self.assertIn('data-strict="1"', html)
 
 

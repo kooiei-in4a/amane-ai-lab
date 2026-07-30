@@ -154,6 +154,10 @@ def main() -> int:
                 reporter.error(f"{meta['id']}: Edit on GitHub section missing")
             else:
                 reporter.success(f"{meta['id']}: Edit on GitHub")
+            if 'href="summary/"' not in html:
+                reporter.error(f"{meta['id']}: summary document link missing")
+            else:
+                reporter.success(f"{meta['id']}: summary document link")
             # duplicate id attributes (naive)
             ids_in_html = re.findall(r'\bid="([^"]+)"', html)
             dup = {i for i in ids_in_html if ids_in_html.count(i) > 1}
@@ -163,6 +167,18 @@ def main() -> int:
                 # XSS sample should be escaped in body text
                 if "&lt;script&gt;" not in html and 'alert("xss")' in html:
                     reporter.error(f"{meta['id']}: possible unescaped script content")
+
+        summary_html = output_dir / "summary" / "index.html"
+        if not summary_html.exists():
+            reporter.error(f"{meta['id']}: generated summary HTML missing: {summary_html}")
+        else:
+            summary = summary_html.read_text(encoding="utf-8")
+            if PLACEHOLDER_RE.search(summary):
+                reporter.error(f"{meta['id']}: unresolved placeholders in summary HTML")
+            elif "summary-toc" not in summary or "summary-doc-body" not in summary:
+                reporter.error(f"{meta['id']}: summary document structure missing")
+            else:
+                reporter.success(f"{meta['id']}: summary document")
 
         articles.append(meta)
 

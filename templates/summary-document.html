@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITLE}} — 資料版 — {{SITE_TITLE}}</title>
+  <meta name="description" content="{{DESCRIPTION}}">
+  <link rel="canonical" href="{{CANONICAL_URL}}">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{TITLE}} — 資料版">
+  <meta property="og:description" content="{{DESCRIPTION}}">
+  <meta property="og:url" content="{{OG_URL}}">
+  <meta property="og:site_name" content="{{SITE_NAME}}">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="{{ASSET_PREFIX}}/assets/css/site.css">
+</head>
+<body class="summary-doc-page">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="{{HOME_HREF}}">{{SITE_NAME}}</a></p>
+      <nav aria-label="サイト">
+        <a href="{{ARTICLE_HREF}}">記事本文</a>
+        <a href="{{HOME_HREF}}">記事一覧</a>
+        <a href="{{REPO_URL}}">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap summary-doc">
+    <header class="summary-doc-header panel">
+      <p class="meta-row">
+        <span class="pill">{{ARTICLE_ID}}</span>
+        <span class="pill">資料版</span>
+        <span>更新: {{UPDATED_AT}}</span>
+      </p>
+      <h1>{{SUMMARY_TITLE}}</h1>
+      <p class="summary-doc-subtitle">{{SUMMARY_SUBTITLE}}</p>
+      <p class="summary-doc-nav">
+        <a class="btn btn-secondary" href="{{ARTICLE_HREF}}">← 記事本文へ戻る</a>
+      </p>
+    </header>
+
+    <div class="summary-doc-layout">
+      {{TOC_HTML}}
+      <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
+        {{BODY_HTML}}
+      </article>
+    </div>
+
+    <footer class="summary-doc-footer panel">
+      <p class="note">この資料は記事の「結論」セクション（<code>conclusion.md</code>）から自動生成しています。</p>
+      <p><a href="{{ARTICLE_HREF}}">記事本文（プロンプト・AI回答・考察）</a> · <a href="{{HOME_HREF}}">記事一覧</a></p>
+    </footer>
+  </main>
+</body>
+</html>

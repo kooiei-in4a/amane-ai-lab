@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -31,6 +32,68 @@ from scripts.kb import (  # noqa: E402
 
 
 REQUIRED_FILES = ("article.json", "conclusion.md", "analysis.md", "prompt.txt")
+SUMMARY_SOURCE = "conclusion.md"
+
+
+def build_summary_parts(conclusion_md: str) -> tuple[str, str]:
+    """Build table-of-contents HTML and body HTML with section anchors."""
+
+    headings = re.findall(r"^## (.+)$", conclusion_md, re.MULTILINE)
+    toc_html = (
+        '<nav class="summary-toc" aria-label="目次">'
+        '<h2 class="summary-toc-title">目次</h2><ol>'
+    )
+    for index, title in enumerate(headings, start=1):
+        toc_html += (
+            f'<li><a href="#section-{index}">{html_escape(title)}</a></li>'
+        )
+    toc_html += "</ol></nav>"
+
+    body_html = markdown_to_html(conclusion_md)
+    counter = {"value": 0}
+
+    def add_section_id(match: re.Match[str]) -> str:
+        counter["value"] += 1
+        return f'<h2 id="section-{counter["value"]}">'
+
+    body_html = re.sub(r"<h2>", add_section_id, body_html)
+    return toc_html, body_html
+
+
+def build_summary_document_html(meta: dict, config: dict) -> str:
+    article_dir: Path = meta["_dir"]
+    conclusion_md = read_text(article_dir / SUMMARY_SOURCE)
+    toc_html, body_html = build_summary_parts(conclusion_md)
+
+    base = config["baseUrl"].rstrip("/")
+    article_url = base + meta["_url"]
+    summary_url = article_url + "summary/"
+    first_line = conclusion_md.splitlines()[0].lstrip("# ").strip() if conclusion_md else meta["title"]
+
+    return render_template(
+        "summary-document.html",
+        {
+            "LANG": html_escape(config["language"]),
+            "SITE_TITLE": html_escape(config["siteTitle"]),
+            "SITE_NAME": html_escape(config["siteName"]),
+            "TITLE": html_escape(meta["title"]),
+            "DESCRIPTION": html_escape(meta["description"]),
+            "CANONICAL_URL": html_escape(summary_url),
+            "OG_URL": html_escape(summary_url),
+            "ARTICLE_ID": html_escape(meta["id"]),
+            "UPDATED_AT": html_escape(meta["updatedAt"]),
+            "SUMMARY_TITLE": html_escape(first_line or "3ソース統合サマリー"),
+            "SUMMARY_SUBTITLE": html_escape(
+                "ChatGPT / Claude / Gemini の回答を統合した要点資料。"
+            ),
+            "TOC_HTML": toc_html,
+            "BODY_HTML": body_html,
+            "ARTICLE_HREF": html_escape(article_url),
+            "HOME_HREF": html_escape(base + "/"),
+            "REPO_URL": html_escape(config["repository"]),
+            "ASSET_PREFIX": html_escape("../../../.."),
+        },
+    )
 
 
 def validate_schema(meta: dict) -> None:
@@ -175,7 +238,7 @@ def reset_articles_output(output_dir: Path = ARTICLES_OUT) -> None:
 
 def main() -> int:
     config = load_site_config()
-    rendered_articles: list[tuple[dict, str]] = []
+    rendered_articles: list[tuple[dict, str, str]] = []
 
     # Render every source successfully before replacing committed generated pages.
     # This prevents an invalid later article from leaving a partially refreshed tree.
@@ -183,12 +246,19 @@ def main() -> int:
         meta = load_article(article_dir)
         public_meta = {k: v for k, v in meta.items() if not k.startswith("_")}
         validate_schema(public_meta)
-        rendered_articles.append((meta, build_article_html(meta, config)))
+        rendered_articles.append(
+            (
+                meta,
+                build_article_html(meta, config),
+                build_summary_document_html(meta, config),
+            )
+        )
 
     reset_articles_output()
-    for meta, html in rendered_articles:
+    for meta, html, summary_html in rendered_articles:
         out_dir = ARTICLES_OUT / meta["_year"] / meta["_dirname"]
         write_text(out_dir / "index.html", html)
+        write_text(out_dir / "summary" / "index.html", summary_html)
 
     index = build_index()
     write_json(DATA_DIR / "articles.json", index)

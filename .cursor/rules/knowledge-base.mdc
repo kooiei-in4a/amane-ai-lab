@@ -1,0 +1,11 @@
+---
+description: amane-ai-lab knowledge base agent entry
+globs:
+alwaysApply: true
+---
+
+作業開始前にリポジトリルートの `AGENTS.md` を読むこと。
+
+詳細ルールは `agents/` 配下を参照する。このファイルに共通ルールを複製しない。
+
+正本は `content/articles/`。`articles/` 配下のHTMLは生成物であり直接編集しない。

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "siteName": "amane-ai-lab",
+  "siteTitle": "amane AI Lab Knowledge Base",
+  "description": "AIエージェントによる検証結果を公開するナレッジベース",
+  "baseUrl": "https://kooiei-in4a.github.io/amane-ai-lab",
+  "language": "ja",
+  "repository": "https://github.com/kooiei-in4a/amane-ai-lab",
+  "repositoryPath": "kooiei-in4a/amane-ai-lab",
+  "contentLicense": "CC-BY-4.0",
+  "codeLicense": "MIT",
+  "giscus": {
+    "enabled": false,
+    "repo": "OWNER/REPO",
+    "repoId": "REPO_ID_PLACEHOLDER",
+    "category": "Announcements",
+    "categoryId": "CATEGORY_ID_PLACEHOLDER",
+    "mapping": "specific",
+    "strict": "1",
+    "reactionsEnabled": "1",
+    "emitMetadata": "0",
+    "inputPosition": "bottom",
+    "theme": "preferred_color_scheme",
+    "lang": "ja",
+    "loading": "lazy"
+  }
+}

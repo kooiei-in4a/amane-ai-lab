@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "KB-2026-0001",
+  "slug": "example",
+  "title": "静的ナレッジベースの初期構成を複数AIで比較する",
+  "description": "架空の比較検証を通じて、記事テンプレートと生成パイプラインを確認するためのサンプル記事。",
+  "status": "published",
+  "publishedAt": "2026-07-30",
+  "updatedAt": "2026-07-30",
+  "lastVerifiedAt": "2026-07-30",
+  "tags": ["サンプル", "静的サイト", "AIエージェント"],
+  "agents": [
+    {
+      "name": "ChatGPT",
+      "model": "GPT-5.6 Thinking",
+      "responseFile": "responses/chatgpt.md",
+      "executedAt": "2026-07-30",
+      "webSearch": false,
+      "attachmentsUsed": false,
+      "integrity": "raw",
+      "notes": null
+    },
+    {
+      "name": "Claude",
+      "model": "Claude Opus",
+      "responseFile": "responses/claude.md",
+      "executedAt": "2026-07-30",
+      "webSearch": false,
+      "attachmentsUsed": false,
+      "integrity": "formatted",
+      "notes": "見出し整形のみ"
+    }
+  ],
+  "giscusTerm": "KB-2026-0001",
+  "supersededBy": null
+}

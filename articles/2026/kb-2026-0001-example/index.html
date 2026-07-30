@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>静的ナレッジベースの初期構成を複数AIで比較する — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="架空の比較検証を通じて、記事テンプレートと生成パイプラインを確認するためのサンプル記事。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-example/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="静的ナレッジベースの初期構成を複数AIで比較する">
+  <meta property="og:description" content="架空の比較検証を通じて、記事テンプレートと生成パイプラインを確認するためのサンプル記事。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-example/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="静的ナレッジベースの初期構成を複数AIで比較する">
+  <meta name="twitter:description" content="架空の比較検証を通じて、記事テンプレートと生成パイプラインを確認するためのサンプル記事。">
+  <link rel="stylesheet" href="../../../assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane-ai-lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap article-page">
+    <header class="article-header">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0001</span>
+        <span class="pill status-published">published</span>
+        <span>公開: 2026-07-30</span>
+        <span>最終確認: 2026-07-30</span>
+        <span>更新: 2026-07-30</span>
+      </p>
+      <h1>静的ナレッジベースの初期構成を複数AIで比較する</h1>
+      <ul class="tag-list"><li>サンプル</li><li>静的サイト</li><li>AIエージェント</li></ul>
+    </header>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">結論</h2>
+      <div class="prose"><h1>結論</h1>
+<p>静的HTMLと構造化正本の分離は、初期の公開ナレッジベースに適している。</p>
+<ul>
+<li>GitHub Pagesだけで公開できる</li>
+<li>AIエージェントが変更対象を誤りにくい</li>
+<li>サーバーサイドアプリやDBは初期不要</li>
+</ul>
+<p>主な制約は、管理画面がないことと、コメント機能を外部サービスへ依存すること。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">考察・判断プロセス</h2>
+      <div class="prose"><h1>考察</h1>
+<p>このサンプルは、実装パイプライン確認のための架空データである。</p>
+<p>判断プロセス:</p>
+<ol>
+<li>公開コストを抑える必要がある</li>
+<li>記事差分をGitで確認したい</li>
+<li>AI回答のエスケープ漏れを防ぎたい</li>
+</ol>
+<p>以上から、HTML直接編集ではなく <code>content/articles/</code> を正本とする方式を採る。</p>
+<h2>制約・未確認事項</h2>
+<ul>
+<li>実在の市場シェア数値は検証していない</li>
+<li>giscus の本番IDは未設定</li>
+</ul>
+<h2>訂正・更新履歴</h2>
+<ul>
+<li>2026-07-30: サンプル記事を初版作成</li>
+</ul></div>
+    </section>
+
+    <section class="panel" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">入力プロンプト</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn" id="copy-prompt" data-copy-target="prompt-text">プロンプトをコピー</button>
+        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
+        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
+        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      </div>
+      <pre id="prompt-text" class="prompt-block"><code>あなたはソフトウェアアーキテクトです。
+AIエージェントの検証結果を公開するナレッジベースを作ります。
+
+要件:
+- GitHub Pagesで公開する
+- サーバーサイドアプリやDBは使わない
+- 記事の正本と公開HTMLを分離したい
+- AIエージェントが記事を更新しやすいこと
+
+候補:
+1. 静的HTML + 独自生成スクリプト
+2. React / Next.js
+3. 外部CMS
+
+比較観点と推奨を簡潔に答えてください。
+実在の顧客情報や秘密情報は使わないでください。
+</code></pre>
+    </section>
+
+    <section class="panel" aria-labelledby="agents-heading">
+      <h2 id="agents-heading">AIエージェントの回答</h2>
+      <div id="agent-responses"><section class="agent-response" data-agent="ChatGPT">
+  <details>
+    <summary>
+      <span class="agent-name">ChatGPT</span>
+      <span class="agent-meta">GPT-5.6 Thinking / 2026-07-30 / integrity=raw</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>なし</dd></div>
+      <div><dt>添付</dt><dd>なし</dd></div>
+      <div><dt>完全性</dt><dd>raw</dd></div>
+    </dl>
+    <div class="agent-body prose"><h1>ChatGPT回答（サンプル）</h1>
+<p>推奨は「静的HTML + 独自生成スクリプト」です。</p>
+<p>理由:</p>
+<ul>
+<li>GitHub Pagesと相性が良い</li>
+<li>依存関係が少ない</li>
+<li>記事ごとのURLが安定しやすい</li>
+<li>AIエージェントがファイル単位で変更しやすい</li>
+</ul>
+<p>React / Next.js は現状要件に対して過剰です。外部CMSは権限・料金・エクスポートの課題が増えます。</p>
+<p>注意: これはパイプライン確認用の架空回答です。</p></div>
+  </details>
+</section>
+<section class="agent-response" data-agent="Claude">
+  <details>
+    <summary>
+      <span class="agent-name">Claude</span>
+      <span class="agent-meta">Claude Opus / 2026-07-30 / integrity=formatted</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>なし</dd></div>
+      <div><dt>添付</dt><dd>なし</dd></div>
+      <div><dt>完全性</dt><dd>formatted</dd></div>
+    </dl>
+    <p class="agent-notes">見出し整形のみ</p>
+    <div class="agent-body prose"><h1>Claude回答（サンプル）</h1>
+<h2>推奨</h2>
+<p>静的サイト生成を自前スクリプトで行う構成を推奨します。</p>
+<h2>比較</h2>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>利点</th>
+<th>欠点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>静的HTML + スクリプト</td>
+<td>単純、Git親和性</td>
+<td>管理画面なし</td>
+</tr>
+<tr>
+<td>React / Next.js</td>
+<td>表現力</td>
+<td>依存と保守コスト</td>
+</tr>
+<tr>
+<td>外部CMS</td>
+<td>編集UI</td>
+<td>外部依存</td>
+</tr>
+</tbody>
+</table>
+<h2>結論</h2>
+<p>初期は静的構成で十分。必要性が確認できてから拡張する。</p>
+<p>注意: これはパイプライン確認用の架空回答です。次のような危険なHTML文字列も、実行されず文字列として表示されるべきです。</p>
+<pre><code class="language-html">&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;
+</code></pre></div>
+  </details>
+</section></div>
+    </section>
+
+    <section class="panel" aria-labelledby="edit-heading">
+      <h2 id="edit-heading">Edit on GitHub</h2>
+      <p>正本ディレクトリ: <a href="https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0001-example/">https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0001-example/</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="comments-heading">
+      <h2 id="comments-heading">コメント</h2>
+      <p class="note">コメントは GitHub Discussions（giscus）上の第三者投稿です。本番の repository / category ID は人間が設定します。</p>
+      <button type="button" class="btn" id="load-giscus">コメントを読み込む</button>
+      <div id="giscus-container"
+        hidden
+        data-giscus-src="https://giscus.app/client.js"
+  data-repo="OWNER/REPO"
+  data-repo-id="REPO_ID_PLACEHOLDER"
+  data-category="Announcements"
+  data-category-id="CATEGORY_ID_PLACEHOLDER"
+  data-mapping="specific"
+  data-term="KB-2026-0001"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="ja"
+  data-loading="lazy"
+      ></div>
+    </section>
+
+    <footer class="article-footer panel">
+      <p>コード: MIT / コンテンツ: CC BY 4.0。AI回答は参考情報であり、事実確認は読者の責任です。</p>
+      <p><a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧へ戻る</a></p>
+    </footer>
+  </main>
+
+  <script src="../../../assets/js/site.js" defer></script>
+</body>
+</html>

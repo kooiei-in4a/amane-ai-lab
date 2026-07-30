@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "KB-2026-0001",
+  "slug": "agent-market-share",
+  "title": "AIエージェントのシェアを複数ソースで比較する",
+  "description": "複数の公開情報を利用してAIエージェント市場を比較した記録。",
+  "status": "draft",
+  "publishedAt": null,
+  "updatedAt": "2026-07-30",
+  "lastVerifiedAt": "2026-07-30",
+  "tags": ["AIエージェント", "市場調査"],
+  "agents": [
+    {
+      "name": "ChatGPT",
+      "model": "GPT-5.6 Thinking",
+      "responseFile": "responses/chatgpt.md",
+      "executedAt": "2026-07-30",
+      "webSearch": true,
+      "attachmentsUsed": false,
+      "integrity": "raw",
+      "notes": null
+    }
+  ],
+  "giscusTerm": "KB-2026-0001",
+  "supersededBy": null
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "content/articles",
+  "articles": [
+    {
+      "id": "KB-2026-0001",
+      "slug": "example",
+      "title": "静的ナレッジベースの初期構成を複数AIで比較する",
+      "description": "架空の比較検証を通じて、記事テンプレートと生成パイプラインを確認するためのサンプル記事。",
+      "status": "published",
+      "publishedAt": "2026-07-30",
+      "updatedAt": "2026-07-30",
+      "lastVerifiedAt": "2026-07-30",
+      "tags": [
+        "サンプル",
+        "静的サイト",
+        "AIエージェント"
+      ],
+      "agents": [
+        "ChatGPT",
+        "Claude"
+      ],
+      "url": "/articles/2026/kb-2026-0001-example/",
+      "year": "2026"
+    }
+  ]
+}

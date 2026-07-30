@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kooiei-in4a/amane-ai-lab/agents/schemas/article-index.schema.json",
+  "title": "KnowledgeBaseArticleIndex",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "generatedFrom", "articles"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "generatedFrom": { "type": "string", "const": "content/articles" },
+    "articles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "slug",
+          "title",
+          "description",
+          "status",
+          "publishedAt",
+          "updatedAt",
+          "lastVerifiedAt",
+          "tags",
+          "agents",
+          "url",
+          "year"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "slug": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "status": { "type": "string" },
+          "publishedAt": { "type": ["string", "null"] },
+          "updatedAt": { "type": "string" },
+          "lastVerifiedAt": { "type": "string" },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "agents": { "type": "array", "items": { "type": "string" } },
+          "url": { "type": "string" },
+          "year": { "type": "string", "pattern": "^[0-9]{4}$" }
+        }
+      }
+    }
+  }
+}

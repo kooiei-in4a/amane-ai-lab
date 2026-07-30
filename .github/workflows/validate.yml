@@ -1,0 +1,56 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Build site
+        run: python scripts/build_site.py
+
+      - name: Fail on generated drift
+        run: |
+          if ! git diff --quiet -- articles data index.html sitemap.xml feed.xml; then
+            echo "Generated files are out of date. Run scripts/build_site.py and commit."
+            git --no-pager diff --stat
+            exit 1
+          fi
+
+      - name: Validate content
+        run: python scripts/validate_content.py
+
+      - name: Sensitive data check
+        run: python scripts/check_sensitive_data.py
+
+      - name: Unit tests
+        run: python -m unittest discover -s tests
+
+      - name: Internal link presence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('.')
+          index = json.loads((root/'data'/'articles.json').read_text(encoding='utf-8'))
+          missing = []
+          for a in index['articles']:
+              target = root / a['url'].lstrip('/') / 'index.html'
+              if not target.exists():
+                  missing.append(str(target))
+          if missing:
+              raise SystemExit('missing pages: ' + ', '.join(missing))
+          print('internal links ok', len(index['articles']))
+          PY

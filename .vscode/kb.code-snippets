@@ -1,0 +1,23 @@
+{
+  "Article JSON scaffold": {
+    "scope": "json",
+    "prefix": "kb-article",
+    "body": [
+      "{",
+      "  \"schemaVersion\": 1,",
+      "  \"id\": \"KB-${CURRENT_YEAR}-0001\",",
+      "  \"slug\": \"${1:slug}\",",
+      "  \"title\": \"${2:title}\",",
+      "  \"description\": \"${3:description}\",",
+      "  \"status\": \"draft\",",
+      "  \"publishedAt\": null,",
+      "  \"updatedAt\": \"${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}\",",
+      "  \"lastVerifiedAt\": \"${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}\",",
+      "  \"tags\": [\"$4\"],",
+      "  \"agents\": [],",
+      "  \"giscusTerm\": \"KB-${CURRENT_YEAR}-0001\",",
+      "  \"supersededBy\": null",
+      "}"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>amane AI Lab Knowledge Base</title>
+  <link href="https://kooiei-in4a.github.io/amane-ai-lab/" rel="alternate"/>
+  <link href="https://kooiei-in4a.github.io/amane-ai-lab/feed.xml" rel="self"/>
+  <id>https://kooiei-in4a.github.io/amane-ai-lab/</id>
+  <updated>2026-07-30T00:00:00Z</updated>
+  <subtitle>AIエージェントによる検証結果を公開するナレッジベース</subtitle>
+  <entry>
+    <title>静的ナレッジベースの初期構成を複数AIで比較する</title>
+    <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-example/" rel="alternate"/>
+    <id>https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-example/</id>
+    <updated>2026-07-30T00:00:00Z</updated>
+    <published>2026-07-30T00:00:00Z</published>
+    <summary type="text">架空の比較検証を通じて、記事テンプレートと生成パイプラインを確認するためのサンプル記事。</summary>
+  </entry>
+</feed>

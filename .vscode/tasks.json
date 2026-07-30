@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "New Article",
+      "type": "shell",
+      "command": "python scripts/new_article.py --title \"${input:title}\" --slug \"${input:slug}\"",
+      "problemMatcher": []
+    },
+    {
+      "label": "Build Site",
+      "type": "shell",
+      "command": "python scripts/build_site.py",
+      "problemMatcher": []
+    },
+    {
+      "label": "Validate",
+      "type": "shell",
+      "command": "python scripts/validate_content.py",
+      "problemMatcher": []
+    },
+    {
+      "label": "Sensitive Data Check",
+      "type": "shell",
+      "command": "python scripts/check_sensitive_data.py",
+      "problemMatcher": []
+    },
+    {
+      "label": "Preview",
+      "type": "shell",
+      "command": "python -m http.server 8000",
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ],
+  "inputs": {
+    "title": {
+      "type": "promptString",
+      "description": "Article title"
+    },
+    "slug": {
+      "type": "promptString",
+      "description": "Article slug (optional)",
+      "default": ""
+    }
+  }
+}

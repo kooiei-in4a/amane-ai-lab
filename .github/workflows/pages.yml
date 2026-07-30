@@ -1,0 +1,46 @@
+name: Pages artifact
+
+# Builds a static site artifact for GitHub Pages readiness checks.
+# This workflow does not enable or modify repository Pages settings.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-artifact
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Build site
+        run: python scripts/build_site.py
+
+      - name: Assemble public tree
+        run: |
+          mkdir -p _site
+          cp -R articles assets data index.html sitemap.xml feed.xml .nojekyll _site/
+          # optional root docs for transparency
+          cp README.md LICENSE LICENSE-CONTENT _site/ 2>/dev/null || true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kooiei-in4a/amane-ai-lab/agents/schemas/article.schema.json",
+  "title": "KnowledgeBaseArticle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "slug",
+    "title",
+    "description",
+    "status",
+    "publishedAt",
+    "updatedAt",
+    "lastVerifiedAt",
+    "tags",
+    "agents",
+    "giscusTerm",
+    "supersededBy"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "id": {
+      "type": "string",
+      "pattern": "^KB-[0-9]{4}-[0-9]{4}$"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "description": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "published", "superseded", "archived"]
+    },
+    "publishedAt": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "updatedAt": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "lastVerifiedAt": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "agents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "model",
+          "responseFile",
+          "executedAt",
+          "webSearch",
+          "attachmentsUsed",
+          "integrity",
+          "notes"
+        ],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "model": { "type": "string", "minLength": 1 },
+          "responseFile": {
+            "type": "string",
+            "pattern": "^responses/[a-z0-9_-]+\\.md$"
+          },
+          "executedAt": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          },
+          "webSearch": { "type": "boolean" },
+          "attachmentsUsed": { "type": "boolean" },
+          "integrity": {
+            "type": "string",
+            "enum": ["raw", "formatted", "redacted", "excerpted", "edited"]
+          },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "giscusTerm": {
+      "type": "string",
+      "pattern": "^KB-[0-9]{4}-[0-9]{4}$"
+    },
+    "supersededBy": {
+      "type": ["string", "null"],
+      "pattern": "^KB-[0-9]{4}-[0-9]{4}$"
+    }
+  }
+}

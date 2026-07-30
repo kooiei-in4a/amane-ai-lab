@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "articleId": "KB-2026-0001",
+  "reviewerRole": "content-reviewer",
+  "verdict": "pass_with_minor",
+  "findings": [
+    {
+      "severity": "Minor",
+      "summary": "出典リンクを1件追加するとよい",
+      "detail": "市場調査の主張に対する公開ソースの明示が不足している。"
+    }
+  ]
+}

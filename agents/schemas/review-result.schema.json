@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kooiei-in4a/amane-ai-lab/agents/schemas/review-result.schema.json",
+  "title": "ReviewResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "articleId", "reviewerRole", "verdict", "findings"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "articleId": { "type": "string", "pattern": "^KB-[0-9]{4}-[0-9]{4}$" },
+    "reviewerRole": { "type": "string" },
+    "verdict": {
+      "type": "string",
+      "enum": ["pass", "pass_with_minor", "fail"]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["severity", "summary"],
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": ["Blocker", "Major", "Minor", "Suggestion"]
+          },
+          "summary": { "type": "string" },
+          "detail": { "type": "string" }
+        }
+      }
+    }
+  }
+}

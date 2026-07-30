@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITLE}} — {{SITE_TITLE}}</title>
+  <meta name="description" content="{{DESCRIPTION}}">
+  <link rel="canonical" href="{{CANONICAL_URL}}">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{TITLE}}">
+  <meta property="og:description" content="{{DESCRIPTION}}">
+  <meta property="og:url" content="{{OG_URL}}">
+  <meta property="og:site_name" content="{{SITE_NAME}}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{TITLE}}">
+  <meta name="twitter:description" content="{{DESCRIPTION}}">
+  <link rel="stylesheet" href="{{ASSET_PREFIX}}/assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="{{HOME_HREF}}">{{SITE_NAME}}</a></p>
+      <nav aria-label="サイト">
+        <a href="{{HOME_HREF}}">記事一覧</a>
+        <a href="{{REPO_URL}}">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap article-page">
+    <header class="article-header">
+      <p class="meta-row">
+        <span class="pill">{{ARTICLE_ID}}</span>
+        <span class="pill status-{{STATUS}}">{{STATUS}}</span>
+        <span>公開: {{PUBLISHED_AT}}</span>
+        <span>最終確認: {{LAST_VERIFIED_AT}}</span>
+        <span>更新: {{UPDATED_AT}}</span>
+      </p>
+      <h1>{{TITLE}}</h1>
+      <ul class="tag-list">{{TAGS_HTML}}</ul>
+    </header>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">結論</h2>
+      <div class="prose">{{CONCLUSION_HTML}}</div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">考察・判断プロセス</h2>
+      <div class="prose">{{ANALYSIS_HTML}}</div>
+    </section>
+
+    <section class="panel" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">入力プロンプト</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn" id="copy-prompt" data-copy-target="prompt-text">プロンプトをコピー</button>
+        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
+        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
+        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      </div>
+      <pre id="prompt-text" class="prompt-block"><code>{{PROMPT_TEXT}}</code></pre>
+    </section>
+
+    <section class="panel" aria-labelledby="agents-heading">
+      <h2 id="agents-heading">AIエージェントの回答</h2>
+      <div id="agent-responses">{{AGENTS_HTML}}</div>
+    </section>
+
+    <section class="panel" aria-labelledby="edit-heading">
+      <h2 id="edit-heading">Edit on GitHub</h2>
+      <p>正本ディレクトリ: <a href="{{EDIT_URL}}">{{EDIT_URL}}</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="comments-heading">
+      <h2 id="comments-heading">コメント</h2>
+      <p class="note">コメントは GitHub Discussions（giscus）上の第三者投稿です。本番の repository / category ID は人間が設定します。</p>
+      <button type="button" class="btn" id="load-giscus">コメントを読み込む</button>
+      <div id="giscus-container"
+        hidden
+        data-giscus-src="https://giscus.app/client.js"
+{{GISCUS_ATTRS}}
+      ></div>
+    </section>
+
+    <footer class="article-footer panel">
+      <p>コード: MIT / コンテンツ: CC BY 4.0。AI回答は参考情報であり、事実確認は読者の責任です。</p>
+      <p><a href="{{HOME_HREF}}">記事一覧へ戻る</a></p>
+    </footer>
+  </main>
+
+  <script src="{{ASSET_PREFIX}}/assets/js/site.js" defer></script>
+</body>
+</html>

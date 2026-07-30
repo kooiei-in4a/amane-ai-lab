@@ -72,6 +72,7 @@ def main() -> int:
     ids: set[str] = set()
     slugs: set[tuple[str, str]] = set()
     urls: set[str] = set()
+    expected_output_dirs: set[Path] = set()
 
     dirs = iter_article_dirs()
     if not dirs:
@@ -132,7 +133,9 @@ def main() -> int:
                 f"{meta['id']}: directory name {article_dir.name} != {expected_dirname}"
             )
 
-        out_html = ARTICLES_OUT / meta["_year"] / expected_dirname / "index.html"
+        output_dir = ARTICLES_OUT / meta["_year"] / expected_dirname
+        expected_output_dirs.add(output_dir.resolve())
+        out_html = output_dir / "index.html"
         if not out_html.exists():
             reporter.error(f"{meta['id']}: generated HTML missing: {out_html}")
         else:
@@ -158,10 +161,18 @@ def main() -> int:
                 reporter.error(f"{meta['id']}: duplicate HTML ids: {sorted(dup)}")
             if "<script>alert" in html and "&lt;script&gt;alert" not in html and "alert(&quot;xss&quot;)" not in html:
                 # XSS sample should be escaped in body text
-                if "&lt;script&gt;" not in html and "alert(\"xss\")" in html:
+                if "&lt;script&gt;" not in html and 'alert("xss")' in html:
                     reporter.error(f"{meta['id']}: possible unescaped script content")
 
         articles.append(meta)
+
+    if ARTICLES_OUT.exists():
+        for year_dir in sorted(ARTICLES_OUT.iterdir()):
+            if not year_dir.is_dir():
+                continue
+            for output_dir in sorted(year_dir.iterdir()):
+                if output_dir.is_dir() and output_dir.resolve() not in expected_output_dirs:
+                    reporter.error(f"stale generated article directory: {output_dir}")
 
     index_path = DATA_DIR / "articles.json"
     if index_path.exists():

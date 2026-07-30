@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import sys
 from pathlib import Path
 
@@ -162,19 +163,30 @@ def build_home_html(index: dict, config: dict) -> str:
     )
 
 
+def reset_articles_output(output_dir: Path = ARTICLES_OUT) -> None:
+    """Recreate the generated article tree so removed sources cannot stay public."""
+
+    if output_dir.exists():
+        shutil.rmtree(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+
 def main() -> int:
     config = load_site_config()
-    built = 0
+    rendered_articles: list[tuple[dict, str]] = []
 
+    # Render every source successfully before replacing committed generated pages.
+    # This prevents an invalid later article from leaving a partially refreshed tree.
     for article_dir in iter_article_dirs():
         meta = load_article(article_dir)
-        # Validate without private keys
         public_meta = {k: v for k, v in meta.items() if not k.startswith("_")}
         validate_schema(public_meta)
-        html = build_article_html(meta, config)
+        rendered_articles.append((meta, build_article_html(meta, config)))
+
+    reset_articles_output()
+    for meta, html in rendered_articles:
         out_dir = ARTICLES_OUT / meta["_year"] / meta["_dirname"]
         write_text(out_dir / "index.html", html)
-        built += 1
 
     index = build_index()
     write_json(DATA_DIR / "articles.json", index)
@@ -184,7 +196,7 @@ def main() -> int:
     write_text(REPO_ROOT / "feed.xml", build_feed(index, config))
     write_text(REPO_ROOT / "index.html", build_home_html(index, config))
 
-    print(f"built {built} article(s)")
+    print(f"built {len(rendered_articles)} article(s)")
     print("wrote data/articles.json, sitemap.xml, feed.xml, index.html")
     return 0
 

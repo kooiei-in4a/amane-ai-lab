@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画 — 資料版 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/summary/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画 — 資料版">
+  <meta property="og:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/summary/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="../../../../assets/css/site.css">
+</head>
+<body class="summary-doc-page">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane-ai-lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/">記事本文</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap summary-doc">
+    <header class="summary-doc-header panel">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0002</span>
+        <span class="pill">資料版</span>
+        <span>更新: 2026-07-31</span>
+      </p>
+      <h1>結論を一言でいうと</h1>
+      <p class="summary-doc-subtitle">合成結果を、わかりやすい言葉で短くまとめた資料版。</p>
+      <nav class="summary-source-links" aria-label="記事本文の関連セクション">
+        <p class="summary-source-links-label">記事本文の関連セクション</p>
+        <ul>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#background-heading">検討に至った背景</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#prompt-heading">調査プロンプト</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#agents-heading">AIエージェントの回答</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#analysis-heading">AI回答の合成</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#analysis-plain-heading">合成（わかりやすい説明）</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#conclusion-heading">要約</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#conclusion-plain-heading">要約（わかりやすい説明）</a></li>
+        </ul>
+      </nav>
+      <p class="summary-doc-nav">
+        <a class="btn btn-secondary" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/">← 記事本文へ戻る</a>
+      </p>
+    </header>
+
+    <div class="summary-doc-layout">
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol><li><a href="#section-1">いま1社・1モデルに決めない</a></li><li><a href="#section-2">推奨案</a></li><li><a href="#section-3">進め方</a></li><li><a href="#section-4">メリット</a></li><li><a href="#section-5">デメリット</a></li><li><a href="#section-6">経営・営業の判断ポイント</a></li><li><a href="#section-7">最終判断</a></li></ol></nav>
+      <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
+        <h1>結論を一言でいうと</h1>
+<h2 id="section-1">いま1社・1モデルに決めない</h2>
+<p>3つのAI調査は、DeepSeek、Qwen、GLMなどを有力候補として挙げました。しかし、値段、契約方法、一度に出力できる量、データの扱いについて、回答が大きく食い違っています。</p>
+<p>そのため、今すぐ「このモデルが1位」と決めるのではなく、候補を役割別に残して少額の実験をするのが安全です。</p>
+<h2 id="section-2">推奨案</h2>
+<h3>主力候補</h3>
+<p>安さとコーディング性能の候補として、DeepSeekの現行高性能モデルを試します。</p>
+<h3>日本企業向け候補</h3>
+<p>日本語、国際契約、リージョン、法人運用を重視し、Qwenの現行国際向けモデルを試します。資料に書かれた名称をそのまま使わず、公式ページで現在のモデルIDを確認します。</p>
+<h3>長時間エージェント候補</h3>
+<p>複数のツールを長く使う仕事では、GLMの現行モデルを比較します。ただし、値段と最大出力の記述が食い違うため、契約前に確認します。</p>
+<h3>安い大量処理</h3>
+<p>分類、前処理、簡単なレビューなどは、DeepSeekの低価格・高速モデルを比較します。</p>
+<h3>難しい仕事の比較枠</h3>
+<p>他モデルが失敗する難しい課題や大きなリポジトリでは、Kimiの現行高性能モデルを限定的に試します。高価になりやすいため、通常の大量処理には使いません。</p>
+<h2 id="section-3">進め方</h2>
+<ol>
+<li>公式ページで、現在使える正確なモデル名と値段を確認する</li>
+<li>OpenRouterなどで同じ課題を試し、候補を絞る</li>
+<li>本番で使う公式APIまたは固定Providerでもう一度試す</li>
+<li>顧客情報や非公開コードを送ってよい契約か確認する</li>
+<li>主力、安い補助、難しいレビュー、予備の4役に分ける</li>
+</ol>
+<h2 id="section-4">メリット</h2>
+<ul>
+<li>誤ったランキングで契約する危険を減らせる</li>
+<li>実際にかかる費用と人間の手直し時間を比べられる</li>
+<li>1つのサービスが止まっても切り替えやすい</li>
+<li>安いモデルと高性能モデルを使い分けられる</li>
+<li>セキュリティや契約条件を説明しやすい</li>
+</ul>
+<h2 id="section-5">デメリット</h2>
+<ul>
+<li>比較試験の準備と記録に手間がかかる</li>
+<li>複数のAPIキーや請求を管理する必要がある</li>
+<li>モデル更新が速く、定期的な再試験が必要になる</li>
+<li>機密情報を扱う場合は、法務とセキュリティ確認が増える</li>
+<li>最初から1位を決める方法より、決定まで時間がかかる</li>
+</ul>
+<h2 id="section-6">経営・営業の判断ポイント</h2>
+<p>値段の安さだけでなく、次を確認してください。</p>
+<ul>
+<li>顧客との契約上、コードやデータを外部AIへ送ってよいか</li>
+<li>データがどの国で処理・保存されるか</li>
+<li>問題発生時の連絡や保証があるか</li>
+<li>モデルが終了した時に切り替えられるか</li>
+<li>人間の修正時間を含めても安いか</li>
+<li>日本語の仕様や業務ルールを正しく扱えるか</li>
+</ul>
+<h2 id="section-7">最終判断</h2>
+<p><strong>PoCでは複数モデルを同じ条件で比較し、本番ではモデルID、Provider、データ条件を固定する。</strong></p>
+<p>これが、今回の資料から導ける最も安全で実務的な結論です。</p>
+      </article>
+    </div>
+
+    <footer class="summary-doc-footer panel">
+      <p class="note">この資料は記事の「合成結果の要約（わかりやすい説明）」（<code>conclusion-plain.md</code>）から自動生成しています。</p>
+      <p>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#background-heading">背景</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#prompt-heading">プロンプト</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#agents-heading">AI回答</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#analysis-heading">合成</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#analysis-plain-heading">合成（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#conclusion-heading">要約</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/#conclusion-plain-heading">要約（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

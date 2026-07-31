@@ -129,8 +129,9 @@ feed.xml
 | 種別 | パス | 位置づけ |
 |---|---|---|
 | 記事メタデータ | `content/articles/**/article.json` | 正本 |
-| 結論 | `content/articles/**/conclusion.md` | 正本 |
-| 人間の考察 | `content/articles/**/analysis.md` | 正本 |
+| 検討背景 | `content/articles/**/background.md` | 正本 |
+| 合成結果の要約 | `content/articles/**/conclusion.md` | 正本 |
+| 2回答の合成 | `content/articles/**/analysis.md` | 正本 |
 | 入力プロンプト | `content/articles/**/prompt.txt` | 正本 |
 | AI回答 | `content/articles/**/responses/*.md` | 正本 |
 | 公開HTML | `articles/**/index.html` | 生成物 |
@@ -175,9 +176,10 @@ feed.xml
 │     └─ YYYY/
 │        └─ kb-YYYY-NNNN-slug/
 │           ├─ article.json
-│           ├─ conclusion.md
-│           ├─ analysis.md
+│           ├─ background.md
 │           ├─ prompt.txt
+│           ├─ analysis.md
+│           ├─ conclusion.md
 │           └─ responses/
 │              ├─ chatgpt.md
 │              ├─ claude.md
@@ -223,6 +225,7 @@ feed.xml
 │  ├─ build_site.py
 │  ├─ validate_content.py
 │  ├─ check_sensitive_data.py
+│  ├─ install_git_hooks.py
 │  ├─ generate_index.py
 │  ├─ generate_sitemap.py
 │  └─ generate_feed.py
@@ -233,6 +236,9 @@ feed.xml
 │
 ├─ .work/
 │
+├─ .githooks/
+│  └─ pre-commit
+│
 ├─ .github/
 │  ├─ workflows/
 │  ├─ ISSUE_TEMPLATE/
@@ -240,6 +246,8 @@ feed.xml
 │  └─ copilot-instructions.md
 │
 ├─ .cursor/
+│  ├─ hooks.json
+│  ├─ hooks/
 │  └─ rules/
 │
 └─ .vscode/
@@ -353,7 +361,7 @@ edited
   "id": "KB-2026-0001",
   "slug": "agent-market-share",
   "title": "AIエージェントのシェアを複数ソースで比較する",
-  "description": "複数の公開情報を利用してAIエージェント市場を比較した記録。",
+  "description": "複数ソース比較の結果、単一の市場シェア数値を確定できる根拠は不足している。採用判断には定義差と計測時点の明示が必要である。",
   "status": "draft",
   "publishedAt": null,
   "updatedAt": "2026-07-30",
@@ -387,24 +395,23 @@ edited
 
 1. 記事ID、ステータス、公開日、最終確認日
 2. 記事タイトル
-3. 結論のサマリー
-4. 重要ポイント
-5. 自分の考察・判断プロセス
-6. 検証条件
-7. 入力プロンプト全文
-8. プロンプトコピー操作
-9. 各AIエージェントの回答
-10. 制約・未確認事項
-11. 訂正・更新履歴
-12. Edit on GitHub
-13. コメント欄
-14. ライセンスと免責事項
+3. 中心結論の短いサマリー（`article.json` の `description`。タイトル直下に表示）
+4. 検討に至った背景
+5. 調査プロンプト（既定は折りたたみ）
+6. 各AIエージェントの回答
+7. 2回答の合成
+8. 合成結果の要約（資料版HTMLへのリンクを含む）
+9. Edit on GitHub
+10. コメント欄
+11. ライセンスと免責事項
 
-### 8.1 結論
+### 8.1 合成結果の要約
 
-結論は記事内で最も視覚的に目立つ領域とする。
+タイトル直下に `description` を短いサマリーとして表示し、記事を読み進めなくても中心結論を把握できるようにする。文言は2〜4行程度を目安とし、meta description / OGP と共用する。
 
-結論だけを読んでも、次を把握できる必要がある。
+詳細な要約（`conclusion.md` / `conclusion-plain.md`）は記事内で最も視覚的に目立つ領域とする。
+
+要約だけを読んでも、次を把握できる必要がある。
 
 - 何を調べたか
 - 何が分かったか
@@ -648,7 +655,8 @@ Pull Requestおよびmainへのpush時に次を実行する。
 ### AC-03 記事表示
 
 - タイトルが表示される
-- 結論が最も目立つ
+- 中心結論がタイトル直下で把握できる
+- 詳細な要約が最も目立つ
 - 考察が表示される
 - プロンプト全文が表示される
 - プロンプトをコピーできる
@@ -668,6 +676,7 @@ Pull Requestおよびmainへのpush時に次を実行する。
 
 - 未エスケープのAI回答がHTMLとして実行されない
 - 秘密情報検査が存在する
+- commit 前の Git hook / Cursor hook による検査ゲートが存在する
 - マスキングポリシーが存在する
 - 公開前チェックリストが存在する
 

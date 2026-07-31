@@ -31,8 +31,16 @@ from scripts.kb import (  # noqa: E402
 )
 
 
-REQUIRED_FILES = ("article.json", "conclusion.md", "analysis.md", "prompt.txt")
-SUMMARY_SOURCE = "conclusion.md"
+REQUIRED_FILES = (
+    "article.json",
+    "background.md",
+    "conclusion.md",
+    "conclusion-plain.md",
+    "analysis.md",
+    "analysis-plain.md",
+    "prompt.txt",
+)
+SUMMARY_SOURCE = "conclusion-plain.md"
 
 
 def build_summary_parts(conclusion_md: str) -> tuple[str, str]:
@@ -84,7 +92,7 @@ def build_summary_document_html(meta: dict, config: dict) -> str:
             "UPDATED_AT": html_escape(meta["updatedAt"]),
             "SUMMARY_TITLE": html_escape(first_line or "3ソース統合サマリー"),
             "SUMMARY_SUBTITLE": html_escape(
-                "ChatGPT / Claude / Gemini の回答を統合した要点資料。"
+                "合成結果を、わかりやすい言葉で短くまとめた資料版。"
             ),
             "TOC_HTML": toc_html,
             "BODY_HTML": body_html,
@@ -147,7 +155,10 @@ def build_article_html(meta: dict, config: dict) -> str:
             raise FileNotFoundError(f"missing {name} in {article_dir}")
 
     conclusion_html = markdown_to_html(read_text(article_dir / "conclusion.md"))
+    conclusion_plain_html = markdown_to_html(read_text(article_dir / "conclusion-plain.md"))
     analysis_html = markdown_to_html(read_text(article_dir / "analysis.md"))
+    analysis_plain_html = markdown_to_html(read_text(article_dir / "analysis-plain.md"))
+    background_html = markdown_to_html(read_text(article_dir / "background.md"))
     prompt_text = read_text(article_dir / "prompt.txt")
     agents_html = render_agent_sections(meta)
 
@@ -195,8 +206,11 @@ def build_article_html(meta: dict, config: dict) -> str:
             "UPDATED_AT": html_escape(meta["updatedAt"]),
             "LAST_VERIFIED_AT": html_escape(meta["lastVerifiedAt"]),
             "TAGS_HTML": tags_html,
+            "BACKGROUND_HTML": background_html,
             "CONCLUSION_HTML": conclusion_html,
+            "CONCLUSION_PLAIN_HTML": conclusion_plain_html,
             "ANALYSIS_HTML": analysis_html,
+            "ANALYSIS_PLAIN_HTML": analysis_plain_html,
             "PROMPT_TEXT": html_escape(prompt_text),
             "AGENTS_HTML": agents_html,
             "EDIT_URL": html_escape(edit_url),

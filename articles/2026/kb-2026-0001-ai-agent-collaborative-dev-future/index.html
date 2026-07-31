@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AIエージェント協働型開発の未来 — amane AI Lab Knowledge Base</title>
-  <meta name="description" content="希少になるのはコードではなく証拠。ChatGPT・Claude・Geminiの回答と統合分析から、検証・引受・人材戦略の論点を整理する。">
+  <meta name="description" content="AI開発で希少になるのは、コードや単なる証拠ログではない。重要な不確実性を減らす独立した証拠設計と、残余リスクを引き受ける能力である。">
   <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="AIエージェント協働型開発の未来">
-  <meta property="og:description" content="希少になるのはコードではなく証拠。ChatGPT・Claude・Geminiの回答と統合分析から、検証・引受・人材戦略の論点を整理する。">
+  <meta property="og:description" content="AI開発で希少になるのは、コードや単なる証拠ログではない。重要な不確実性を減らす独立した証拠設計と、残余リスクを引き受ける能力である。">
   <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/">
   <meta property="og:site_name" content="amane-ai-lab">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="AIエージェント協働型開発の未来">
-  <meta name="twitter:description" content="希少になるのはコードではなく証拠。ChatGPT・Claude・Geminiの回答と統合分析から、検証・引受・人材戦略の論点を整理する。">
+  <meta name="twitter:description" content="AI開発で希少になるのは、コードや単なる証拠ログではない。重要な不確実性を減らす独立した証拠設計と、残余リスクを引き受ける能力である。">
   <link rel="stylesheet" href="../../../assets/css/site.css">
 </head>
 <body>
@@ -32,1435 +32,148 @@
     <header class="article-header">
       <p class="meta-row">
         <span class="pill">KB-2026-0001</span>
-        <span class="pill status-published">published</span>
-        <span>公開: 2026-07-31</span>
+        <span class="pill status-draft">draft</span>
+        <span>公開: 未公開</span>
         <span>最終確認: 2026-07-31</span>
         <span>更新: 2026-07-31</span>
       </p>
       <h1>AIエージェント協働型開発の未来</h1>
+      <p class="article-summary">AI開発で希少になるのは、コードや単なる証拠ログではない。重要な不確実性を減らす独立した証拠設計と、残余リスクを引き受ける能力である。</p>
       <ul class="tag-list"><li>AIエージェント</li><li>SDLC</li><li>人材戦略</li><li>未来予測</li><li>検証</li></ul>
     </header>
 
-    <section class="conclusion panel" aria-labelledby="conclusion-heading">
-      <h2 id="conclusion-heading">結論</h2>
-      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
-      <div class="prose"><h1>【サマリー】AIエージェント協働型開発の未来 ― 3ソース統合レポート</h1>
-<p><strong>2026年7月30日｜統合元：Claude調査レポート（約1,300行）／ChatGPT予測回答／Gemini向け入力プロンプト</strong></p>
+    <section class="panel" aria-labelledby="background-heading">
+      <h2 id="background-heading">検討に至った背景</h2>
+      <div class="prose"><h1>検討に至った背景</h1>
+<p>この記事の調査は、最初から「未来予測レポートを書こう」として始まったものではない。<br>
+ある種の <strong>ADR統制型・AI-PR駆動・役割分離型マルチエージェント開発</strong> を運用するなかで、「数年後の開発」と「エンジニアとしての立ち位置」を考える対話から生まれた。</p>
+<p>以下は、その対話の流れを一般化したものである。</p>
 <hr>
-<h2>一言でいうと</h2>
+<h2>1. いまの開発手法を何と呼ぶか</h2>
+<p><strong>問い：</strong> 重要な設計判断を ADR で統制し、Issue から Draft PR・独立レビュー・検証・マージまでを AI が役割分担して進めるやり方は、「ADR開発 ＋ AI-PR駆動 ＋ マルチエージェント」と言えるか。</p>
+<p><strong>整理した結果：</strong></p>
 <blockquote>
-<p><strong>希少になるのはコードではなく「証拠」である。</strong><br>
-AIは無限に成果物を生む。しかし「これは正しい」と証明する証拠は、意図的に設計しなければ生まれない。</p>
+<p><strong>ADR統制型の AI-PR駆動・マルチエージェント開発</strong></p>
 </blockquote>
-<hr>
-<h2>1. 2つのAI回答が一致した5点</h2>
-<p><strong>Claude と ChatGPT は出典基盤がほぼ重複していない</strong>（共通するのは METR のみ）。独立した証拠から以下で一致した。</p>
 <table>
 <thead>
 <tr>
-<th>#</th>
-<th>一致点</th>
+<th>要素</th>
+<th>実態に近い言い方</th>
 <th>要点</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td><strong>ボトルネックは検証に移った</strong></td>
-<td>問題は「AIが実装できるか」ではなく「意図どおり実装したことをどう証明するか」。レビュー時間+91%、PRサイズ+154%、組織レベルのDORA指標は改善なし。<strong>個人の生産性向上は本物で、組織の成果への変換が失敗している</strong></td>
+<td>ADR</td>
+<td>ADR<strong>統制型</strong>（ADR駆動ではない）</td>
+<td>重要判断の正本は ADR。ただしすべての変更が ADR 起点ではない。Issue・計画・PR も正本になりうる</td>
 </tr>
 <tr>
-<td>2</td>
-<td><strong>マルチエージェントは過大評価</strong></td>
-<td>順序依存の仕事では性能が39〜70%悪化。無秩序な並列でエラー最大17.2倍。2エージェント自由協働の成功率は約25%＝単一の半分。<strong>中央オーケストレーター＋必要な箇所だけ委任に収束する</strong></td>
+<td>AI-PR</td>
+<td>AI-PR<strong>駆動</strong></td>
+<td>Issue → 計画 → 実装 → Draft PR → 独立レビュー → CI → Human 承認、という状態遷移が中心</td>
 </tr>
 <tr>
-<td>3</td>
-<td><strong>「確認だけ」の条件は能力でなく体制</strong></td>
-<td>①正本が明確 ②受入条件を機械判定できる ③権限が段階分離 ④成果を信用せず証拠を検証 ⑤失敗時に戻せる ― の5条件</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>現行の開発体制は未来の開発方式の手動プロトタイプ</strong></td>
-<td>一般的なAIコーディング利用より一段か二段先。ただし<strong>可視化されていない</strong></td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>現状のままでは頭打ち</strong></td>
-<td>ChatGPT：Koo自身が工程制御のボトルネック。Claude：現在の強みは陳腐化領域（ツール習熟・オーケストレーション技法）に偏っている</td>
+<td>マルチエージェント</td>
+<td><strong>役割分離型</strong></td>
+<td>実装側と独立レビュー側などを分け、同じAIの反復利用とは区別する</td>
 </tr>
 </tbody>
 </table>
-<hr>
-<h2>2. 食い違った点と裁定</h2>
-<table>
-<thead>
-<tr>
-<th>論点</th>
-<th>ChatGPT</th>
-<th>Claude</th>
-<th>裁定</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>実現確率</strong></td>
-<td>2028年末に小規模標準SaaSほぼ全自動 75%／2030年末に人間は承認だけ 60%</td>
-<td>急速自動化は15%。中心線は段階的普及40%＋限定領域30%</td>
-<td><strong>見かけほど差はない。</strong>ChatGPTは「限定領域」、Claudeは「市場全体」を語っている。真に対立するのは「2030年に人間は承認だけ」の1行のみ</td>
-</tr>
-<tr>
-<td><strong>次の一手</strong></td>
-<td>手動の工程制御を仕様化し<strong>ワークフローエンジンに落とせ</strong></td>
-<td>ワークフローエンジンの開発は<strong>避けよ</strong>（GitHub/OpenAI/MSに潰される。時間の完全な損失）</td>
-<td><strong>「内製」と「製品化」を分ければ両立。</strong> 自社工程の自動化はやる。それを製品として売るのはやらない。外に出すのはエンジンではなく<strong>「型」と「データ」</strong></td>
-</tr>
-<tr>
-<td><strong>人間の承認</strong></td>
-<td>フロー最後に「人間：確認・承認」を配置</td>
-<td><strong>短時間の承認＝理解を伴わない承認＝事故の設計図。</strong>対話ではなく<strong>限定付きサンプリング検査</strong>へ</td>
-<td>Claudeが精緻。ChatGPTのフロー図に「証跡パック生成」と「サンプリング検査」を差し込んだ統合フローを第II部2.3に収録</td>
-</tr>
-<tr>
-<td><strong>焦点</strong></td>
-<td>How（工程設計）</td>
-<td>What / Why（事業ポジション）</td>
-<td><strong>相補的。</strong>片方を捨てる理由がない</td>
-</tr>
-</tbody>
-</table>
-<p><strong>見かけの矛盾（実は矛盾しない）：</strong> OpenAIが5か月・約100万行・約1,500PRをCodexだけで構築した事例と、「自律エージェントの業務配備率は一桁%」は両立する。前者はモデル提供者の自己適用＝上限値。<strong>この事例が示すのは「AIが書ける」ことではなく「環境を設計できる人間が1人いれば、コードを書く人間は0人でよい」こと。</strong></p>
-<hr>
-<h2>3. Gemini プロンプト（ソースC）の位置づけ</h2>
-<p>Gemini ファイルは<strong>回答ではなく入力プロンプト</strong>で、テーマも別（公開ナレッジベースの設計依頼）。ただし内容は、Claudeレポートが最優先行動に挙げた「証跡パック形式の公開」「測定された定量報告の発信」の<strong>実行基盤</strong>にあたるため、第III部として統合した。</p>
-<p><strong>発見：</strong> C の記事構成（結論サマリー→自分の考察→入力プロンプト全文→各AI回答）は、意図せず<strong>証跡パックの構造に近い</strong>。ただし3項目が欠落している。</p>
-<p><strong>追加を推奨：</strong> 各記事末尾に「<strong>この結論が誤りだとしたらどこで露呈するか</strong>」「<strong>残存する不確実性</strong>」「<strong>判定日と再検証予定日</strong>」の定型欄。これだけで記事が「感想」から「検証可能な主張」に変わる。</p>
-<p><strong>主要リスク：</strong> プロンプト全文公開による機密混入（顧客名・スキーマ・内部URL）／Git履歴の不可逆性／各AIの出力公開に関する規約差／記事のモデルバージョン記録がないと1年後に判定不能／100件超で「探せない」問題。<strong>Fail Secure 原則をそのまま適用し、機密検査を通らない記事は公開しない設計にすること。</strong></p>
-<hr>
-<h2>4. 取るべきポジション</h2>
+<p>一文にするなら次のとおり。</p>
 <blockquote>
-<p><strong>「AI生成物の検証と説明責任を設計し、その責任を自分で引き受ける、特定業種の専門家」</strong></p>
+<p>重要な設計判断を ADR で統制し、Issue から Draft PR・独立レビュー・検証・マージまでを AI エージェントが役割分担して進める、Human-in-the-loop 型の AI-PR駆動マルチエージェント開発。</p>
 </blockquote>
+<p>最も外してはいけない点は、<strong>完全自律ではなく、人間が仕様決定・権限開放・最終受入を担うこと</strong>である。</p>
+<hr>
+<h2>2. 上手くいく点と重さ</h2>
+<p><strong>問い：</strong> この手法は上手くいくか。</p>
+<p><strong>評価の骨子：</strong></p>
 <ul>
-<li>✗ 「AI駆動開発が速い人」― <strong>1年で全員が名乗る</strong></li>
-<li>✗ 「上流ができる人」― <strong>上流の作業のほうが先にAIに移る</strong>（ヒアリングの網羅性、選択肢の列挙、業務フロー作成はAIが得意）</li>
+<li><strong>品質・事故防止：</strong> 工程で暴走を抑えられるなら、かなり有効</li>
+<li><strong>速度・運用コスト：</strong> 強度を上げすぎると重くなる</li>
 </ul>
-<p><strong>残るのは工程の上下ではなく「引受」である。</strong> AIは被告になれず、解雇されず、評判を失わず、保証金を積めない。</p>
-<table>
-<thead>
-<tr>
-<th>層</th>
-<th>2030年の希少性</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>生成層（書く・実装する）</td>
-<td>ほぼゼロ</td>
-</tr>
-<tr>
-<td>検証層（反証を設計する）</td>
-<td>高い</td>
-</tr>
-<tr>
-<td><strong>引受層（署名する・責任を負う）</strong></td>
-<td><strong>最も高い（構造的にAIに移らない）</strong></td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2>5. 今すぐやること（3か月）</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>行動</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><strong>証跡パック形式 v0.1 を定義</strong>（要求の出所／採否ADR／不変条件と検証方法／独立レビュー指摘と対応／残存リスクと受容判断／承認者）→ 直近3機能に遡って適用</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>単位原価の計測を開始</strong>（1機能あたりのトークン費・自分の時間・レビュー回数・手戻り率）― <strong>誰も持っていないデータ</strong></td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>SDAD を「エージェント構成」から「満たすべき性質」に書き換える</strong> ―「Claudeが仕様、Codexが実装」ではなく「生成と検証は独立した情報源で行う」。<strong>方法論の耐用年数が10倍になる</strong></td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>.NET向け不変条件アナライザの最小版</strong>（Fail Secure違反・Magic String検出）を CI に組み込む</td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>工程制御を仕様化</strong>（状態遷移・前提条件・停止条件を明文化）※製品化はしない</td>
-</tr>
-<tr>
-<td>6</td>
-<td><strong>公開ナレッジベースの立ち上げ</strong>（機密チェックのCI自動化を含む）</td>
-</tr>
-<tr>
-<td>7</td>
-<td><strong>AI駆動開発カンファレンス2026夏（7/30-31、オンライン無料）</strong> ＋ コンソーシアム（会費無料）＋ <strong>大阪支部</strong>に接続</td>
-</tr>
-<tr>
-<td>8</td>
-<td><strong>監査の方法論を1冊通す</strong>（統制テスト、サンプリング、証拠能力、独立性）</td>
-</tr>
-<tr>
-<td>9</td>
-<td><strong>やめる：</strong> 新モデル・新ツールの比較検討を月1回に圧縮／ツール固有作法の深掘り</td>
-</tr>
-</tbody>
-</table>
-<p><strong>1年以内に追加：</strong> 士業向け機械可読ルールパック（1業種）／測定された定量報告を1本公開／登壇／<strong>IT業務賠償責任保険への加入</strong>（マイクロ企業最大の弱点＝賠償能力を最小コストで補える）</p>
-<hr>
-<h2>6. やらないこと</h2>
-<p>汎用オーケストレーション基盤・権限/ID基盤・サンドボックスの<strong>製品開発</strong>（プラットフォーム大手に潰される）／特定ツールの作法への深い投資／「AI駆動開発が速い」を売りにすること／業種を早く広げること／人月比率を上げること／規制産業・大企業基幹系への単独参入</p>
-<hr>
-<h2>7. 最重要の監視指標</h2>
-<table>
-<thead>
-<tr>
-<th>指標</th>
-<th>頻度</th>
-<th>意味</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>保険会社がAI開発監査を要求し始めるか</strong></td>
-<td>四半期</td>
-<td><strong>最重要。法規制より速く効く。</strong>動いたら第三者検証を即主力化</td>
-</tr>
-<tr>
-<td><strong>自社の検証済み変更あたり原価</strong></td>
-<td>月次</td>
-<td>半年で半減しなければ「期待ほど進まない」を重く見る</td>
-</tr>
-<tr>
-<td>METR の <strong>80%信頼性</strong>ホライズン</td>
-<td>四半期</td>
-<td>50%は実務で使えない。1営業日超えで加速シナリオへ</td>
-</tr>
-<tr>
-<td>富士通・日立の実績値（2027年度）</td>
-<td>年次</td>
-<td>宣言 vs 現実の答え合わせ</td>
-</tr>
-<tr>
-<td>単一強力エージェントへの収束</td>
-<td>四半期</td>
-<td>収束すればマルチエージェント前提の方法論は価値を失う</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2>8. 忘れてはいけない2つの数字</h2>
+<p>有効になりやすい理由の中心は、「AIが大量に書く」ことではなく、<strong>暴走を工程で抑えられること</strong>にある。</p>
 <ul>
-<li><strong>体感は信頼できない。</strong> 810万PR・4,800組織超の分析で、開発者は20%速くなったと感じながら<strong>実際には19%遅くなっていた</strong>（39ポイントの乖離）。→ 実測を始める最大の根拠。</li>
-<li><strong>AI生成コードへの信頼は96%が「完全にはしていない」／コミット前に必ず検証する開発者は48%／レビューなしマージは+31%。</strong> → 検証は自動的には解決しない。</li>
+<li>承認済み判断がなければ勝手に補完せず停止する</li>
+<li>Issue の到達点を超える実装を禁止する</li>
+<li>実装者と独立レビュアーを分ける</li>
+<li>Draft / Ready / merge / cleanup で権限を段階開放する</li>
+<li>判断不足で実装を止めるケースが実際に起きうる</li>
 </ul>
-<hr>
-<h2>9. 未解決の論点</h2>
+<p>一方の懸念は次の2点。</p>
 <ol>
-<li><strong>Gemini の回答が未取得</strong>（ディレクトリ構成案・運用ワークフローは統合できていない）</li>
-<li>2つの確率表は定義が異なり、厳密な数値比較はできない</li>
-<li><strong>どちらのソースも一次データを持っていない。</strong> Koo が単位原価を実測すれば、この論点で両ソースより強い証拠を持つことになる</li>
-<li>「工程制御の自動化」の投資上限が未定 ― 仕様化までで一度止め、実装は必要最小限にする段階設計を推奨</li>
+<li><strong>重さ</strong> — 小さな変更にも同じ強度をかけすぎると、書く時間より引き継ぎ・承認の時間が勝つ</li>
+<li><strong>レビュー重複</strong> — 同じ観点の多重レビューは安心感は増えても発見率が頭打ちになりやすい</li>
+</ol>
+<p>総合すると次のように言える。</p>
+<blockquote>
+<p>品質モデルとしては有効になりやすい。ただし「高品質な実験運用」から「持続可能な標準運用」へ移るには、リスクに応じた軽量化が必要。</p>
+</blockquote>
+<p>改善の方向としては、変更を Low / Medium / High / Critical に分けて工程を選択すること、およびプロセス自体の計測（Lead time、有効指摘数、再指摘率など）が挙げられる。</p>
+<hr>
+<h2>3. 「数年後、確認以外は全部AI」は来るか</h2>
+<p><strong>問い：</strong> 数年後、人間の確認・レビュー以外は AI エージェントが自動協働してシステムを構築する未来はあるか。忖度なく。</p>
+<p><strong>結論の骨子：</strong></p>
+<ul>
+<li><strong>その未来はかなり高い確率で来る</strong>（限定領域なら 2028〜2030 年ごろでも不思議ではない）</li>
+<li>ただし姿は「AI同士が自由に会議する」ではない</li>
+<li>より現実的なのは、<strong>中央オーケストレーターが専門エージェントを隔離環境で動かし、機械判定可能なゲートで PR を統合する工場型</strong></li>
+</ul>
+<p>すでに「コードは人間が書かない」事例は出ている。残る課題は「人間がエージェントを逐次操作しなくてもよいか」である。</p>
+<p>同時に、マルチエージェントは過大評価されやすい。順序依存の強い仕事では性能が悪化しうる、という研究もある。主流はおそらく次である。</p>
+<blockquote>
+<p><strong>強力な単一オーケストレーター ＋ 必要な箇所だけ専門エージェントへ委任</strong></p>
+</blockquote>
+<p>そして最大の壁は生成能力ではなく、</p>
+<blockquote>
+<p><strong>意図どおり実装したことをどう証明するか（検証）</strong></p>
+</blockquote>
+<p>へ移っている、という整理になった。</p>
+<p>人間が「確認だけ」になる条件として、正本の明確さ、機械判定可能な受入、権限分離、証拠検証、失敗時の復旧、が挙げられる。</p>
+<p>いま多くの現場で行われている強い Human-in-the-loop 運用は、未来方式の<strong>手動プロトタイプ</strong>に近い。次の段階はモデルを賢くすることより、<strong>人間が手でやっている工程制御を仕様化して自動化すること</strong>である、という診断でこの段は閉じた。</p>
+<hr>
+<h2>4. 人間から見える未来像の確認</h2>
+<p><strong>問い：</strong> Product Agent がヒアリング〜要件定義〜プレゼンし、承認後に Architecture / Planning / Implementation… が進み、人間は PM エージェントに進捗を聞き、よいタイミングでレビュー依頼を受ける——この未来像で合っているか。</p>
+<p><strong>答え：</strong> ほぼ合っている。修正点は1つ。</p>
+<blockquote>
+<p>PM エージェントがすべてを頭の中で管理するのではなく、<strong>永続的なワークフロー基盤が状態を持ち、PM エージェントは人間との窓口になる</strong></p>
+</blockquote>
+<p>人間へのレビュー依頼は「毎週」ではなく、製品判断・ADR・リスク閾値・計画差分・マイルストーン受入・本番操作などの<strong>イベント条件</strong>で発火する、という像に精緻化できる。</p>
+<p>人間に残る仕事は、主に次である。</p>
+<ol>
+<li>何を作るか</li>
+<li>トレードオフを決める</li>
+<li>言語化されていない要求を評価する</li>
+<li>責任を引き受ける</li>
 </ol>
 <hr>
-<p><strong>詳細は <code>ai-agent-sdlc-integrated-report.md</code> を参照。</strong></p></div>
-    </section>
-
-    <section class="panel" aria-labelledby="analysis-heading">
-      <h2 id="analysis-heading">考察・判断プロセス</h2>
-      <div class="prose"><h1>AIエージェント協働型開発の未来 ― 3ソース統合レポート</h1>
-<p><strong>統合日：2026年7月30日</strong><br>
-<strong>対象読者：大阪拠点のマイクロ法人・ITエンジニア（C#/.NET/Azure・B2B SaaS開発）</strong></p>
-<hr>
-<h2>第0部：本統合文書について</h2>
-<h3>0.1 統合したソース</h3>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>ソース</th>
-<th>種別</th>
-<th>テーマ</th>
-<th>分量</th>
-<th>性質</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A</td>
-<td><code>claude-ai-agent-sdlc-report.md</code></td>
-<td><strong>回答</strong>（調査レポート）</td>
-<td>AIエージェント協働型開発がもたらす人材・企業・産業構造の変化</td>
-<td>約1,300行</td>
-<td>一次情報優先・日本企業中心・事業ポジション提言まで踏み込む</td>
-</tr>
-<tr>
-<td>B</td>
-<td><code>chatgpt.txt</code></td>
-<td><strong>回答</strong>（予測・評価）</td>
-<td>同上（開発フロー自動化の実現時期予測）</td>
-<td>約200行</td>
-<td>海外研究中心・工程設計中心・確率表つき</td>
-</tr>
-<tr>
-<td>C</td>
-<td><code>gemini-code-1785420447727.txt</code></td>
-<td><strong>入力プロンプト</strong>（回答ではない）</td>
-<td>検証結果を蓄積・公開するナレッジベースの設計依頼</td>
-<td>約60行</td>
-<td>上記A/Bの<strong>発信基盤</strong>の要件定義</td>
-</tr>
-</tbody>
-</table>
-<h3>0.2 統合方針</h3>
+<h2>5. だから調査プロンプトが必要になった</h2>
+<p>ここまでの整理で見えてきたのは、「開発手法の延長に、検証と責任が中心の未来がある」という感触だった。</p>
+<p>そこで知りたくなったのは次である。</p>
 <ul>
-<li><strong>A と B は同一テーマへの独立した回答</strong>であり、第I部・第II部で正面から突き合わせる。一致点と対立点を明示し、対立には<strong>裁定</strong>を置く。</li>
-<li><strong>C は種別が異なる</strong>（回答ではなく入力プロンプト）。テーマも一見無関係だが、A が最優先行動として挙げた「証跡パック形式の公開」「測定された定量報告の発信」を実行するための<strong>発信インフラ要件</strong>にあたるため、第III部として位置づけ直した。</li>
-<li>数値・固有名詞は各ソースの記載をそのまま採用し、出典の強度を併記した。統合者（本文書）が追加した判断には「<strong>〔統合判断〕</strong>」と明記する。</li>
+<li>ITエンジニアとしてどうバリューを上げるか</li>
+<li>新しいビジネスチャンス</li>
+<li>社会変革の中で生まれる職種・働き方</li>
+<li>すでにその未来を描いて進んでいる日本企業はあるか</li>
+<li>達成時に活躍する人材像・企業像・サービス／ツール像・周辺ビジネス</li>
 </ul>
-<h3>0.3 読み方の注意</h3>
-<p>A も B も、根拠となる調査データの多くは<strong>二次情報経由</strong>である。特に市場規模の数値（調査会社推計）は証拠強度が弱い。確率評価はいずれも執筆者の判断であり統計的裏付けはない。本文書はその不確実性を潰さずに保存している。</p>
-<hr>
-<h1>第I部：2つの回答が一致した点</h1>
-<p><strong>A と B は出典基盤がほぼ重複していない</strong>（共通するのは METR のみ）。にもかかわらず以下の5点で一致した。<strong>独立した証拠基盤からの一致は、単独ソースの主張より格段に強い。</strong></p>
-<h2>1.1 【一致①】ボトルネックは「生成能力」ではなく「検証」に移動した</h2>
-<table>
-<thead>
-<tr>
-<th>ソース</th>
-<th>表現</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>B (ChatGPT)</td>
-<td>問題は「AIが実装できるか」ではなく「<strong>AIが本来の意図どおりに実装したことを、どう証明するか</strong>」に移っている</td>
-</tr>
-<tr>
-<td>A (Claude)</td>
-<td>制約は「モデル性能」ではなく「<strong>検証の経済学</strong>」である。ある成果物が正しいと確立するためのコストが未来を決める</td>
-</tr>
-</tbody>
-</table>
-<p><strong>共通の帰結：</strong> モデルが賢くなっても、この制約は自動的には外れない。</p>
-<h3>支える証拠（両ソースの合算）</h3>
-<table>
-<thead>
-<tr>
-<th>指標</th>
-<th>数値</th>
-<th>出典</th>
-<th>ソース</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>METR 長時間タスクベンチマーク</td>
-<td>8時間超タスクをほぼ飽和。時間ホライズンは人間換算2営業日超</td>
-<td>METR 2026年2〜3月</td>
-<td>A</td>
-</tr>
-<tr>
-<td>50%信頼性 vs 80%信頼性のホライズン差</td>
-<td><strong>一桁近い差</strong>（50%で約12時間 → 80%で約1.5時間相当）</td>
-<td>METR</td>
-<td>A・B 両方</td>
-</tr>
-<tr>
-<td>難課題での不正な「成功」</td>
-<td>8時間超の難課題で成功判定された実行の<strong>16%以上</strong>が制約違反等で除外</td>
-<td>METR 2026</td>
-<td>B</td>
-</tr>
-<tr>
-<td>SWE-Bench Verified 合格解の実務受理率</td>
-<td>現場のコードレビューで受理されたであろうものは<strong>半分程度</strong></td>
-<td>METR（2025後半）</td>
-<td>A</td>
-</tr>
-<tr>
-<td>PRレビュー時間</td>
-<td><strong>+91%</strong></td>
-<td>Faros AI（1万人超・1,255チーム）</td>
-<td>A</td>
-</tr>
-<tr>
-<td>平均PRサイズ</td>
-<td><strong>+154%</strong></td>
-<td>同上</td>
-<td>A</td>
-</tr>
-<tr>
-<td>マージPR数</td>
-<td><strong>+98%</strong> ／ 完了タスク +21% ／ バグ +9%</td>
-<td>同上</td>
-<td>A</td>
-</tr>
-<tr>
-<td>組織レベルDORA指標</td>
-<td><strong>測定可能な改善なし</strong></td>
-<td>同上</td>
-<td>A</td>
-</tr>
-<tr>
-<td>レビューなしでマージされたPR</td>
-<td><strong>+31%</strong></td>
-<td>同上</td>
-<td>A</td>
-</tr>
-<tr>
-<td>エージェント作成PRのピックアップ待ち</td>
-<td>通常の<strong>約5.3倍</strong></td>
-<td>LinearB 2026</td>
-<td>A</td>
-</tr>
-<tr>
-<td>AI生成コードへの信頼</td>
-<td><strong>96%</strong> が「完全には信頼していない」</td>
-<td>Sonar 2026（開発者1,100名超）</td>
-<td>A</td>
-</tr>
-<tr>
-<td>コミット前に必ず検証する開発者</td>
-<td><strong>48%</strong></td>
-<td>同上</td>
-<td>A</td>
-</tr>
-<tr>
-<td>ステージング通過後に本番デバッグを要した変更</td>
-<td><strong>43%</strong></td>
-<td>Lightrun 2026</td>
-<td>A</td>
-</tr>
-<tr>
-<td>自律エージェントの業務機能への実配備率</td>
-<td><strong>いまだ一桁%</strong></td>
-<td>Stanford AI Index 2026</td>
-<td>A</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p><strong>要するに、個人の生産性向上は本物で、組織の成果への変換は失敗している。その失敗点が「検証」である。</strong>（A）</p>
-</blockquote>
-<h2>1.2 【一致②】マルチエージェントは過大評価されている</h2>
-<p>これは両ソースが<strong>最も強い語調で</strong>述べた点である。</p>
-<table>
-<thead>
-<tr>
-<th>ソース</th>
-<th>根拠</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>B</td>
-<td>Google Research の180構成比較：並列化しやすい仕事では大幅改善する一方、<strong>順序依存の強い仕事では性能が39〜70%悪化</strong>。独立エージェントの無秩序な並列実行で<strong>エラーが最大17.2倍</strong>に増幅。中央オーケストレーター型のほうがエラーを抑えやすい</td>
-</tr>
-<tr>
-<td>B</td>
-<td>CooperBench：2エージェントが自由形式で協働すると成功率<strong>約25%</strong>＝単一エージェントの約半分。失敗原因は実装能力ではなく<strong>前提の不一致・約束違反・連絡不足</strong></td>
-</tr>
-<tr>
-<td>A</td>
-<td>2026年のツール進化は「対等な複数エージェントの交渉」ではなく「<strong>1体の強いエージェント＋従属サブエージェント</strong>」に寄っている（Agent HQ、Codex app が既にその方向）</td>
-</tr>
-<tr>
-<td>A</td>
-<td><strong>同族モデルの相互レビューは独立性がない。</strong> 監視者と被監視者が同じモデル族である構造は、内部統制の基本原則（職務分離）に反する</td>
-</tr>
-</tbody>
-</table>
-<p><strong>共通の結論：</strong> 未来は「AI同士の会議」ではない。<strong>強力な単一オーケストレーター＋必要な箇所だけ専門エージェントへ委任</strong>に収束する可能性が高い。</p>
-<p><strong>〔統合判断〕</strong> この一致は Koo にとって最も実務的な意味を持つ。SDAD（Claude / Codex / Cursor の役割分離）の価値は「エージェントを3体使っていること」ではなく「<strong>生成と検証が独立した情報源で行われていること</strong>」にある。前者は陳腐化するが、後者は陳腐化しない。</p>
-<h2>1.3 【一致③】人間が「確認だけ」になる条件は、能力ではなく体制で決まる</h2>
-<p>両者が挙げた条件はほぼ同一だった。統合すると5条件になる。</p>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>条件</th>
-<th>B の表現</th>
-<th>A の対応概念</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><strong>正本が明確</strong></td>
-<td>ADR / 承認済み仕様 / Issue / API契約 / データモデル</td>
-<td>L2（仕様正本との照合）が成立する状態。「正本のドリフト検出」が未整備</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>受入条件を機械判定できる</strong></td>
-<td>テスト / constraint / policy check / schema validation / security scan</td>
-<td>L0（型・テスト・静的解析・契約）、L1（E2E・性能・セキュリティスキャン）へ落とし込めているか</td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>権限が段階的に分離</strong></td>
-<td>Draft PRまで自動 / merge は承認必須 / production は別承認 / destructive は停止</td>
-<td>エージェント権限ゲートウェイ、委任連鎖の証明（DNP の先行例）</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>成果を信用せず証拠を検証</strong></td>
-<td>実行ログ / diff / テスト結果 / provenance / 再現可能な検証手順</td>
-<td>証跡パック（要求の出所・ADR・不変条件・独立レビュー・残存リスク・承認者）</td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>失敗時に戻せる</strong></td>
-<td>rollback / backup / feature flag / migration safety / observability</td>
-<td>停止・復旧基盤は「<strong>最も未整備</strong>」と評価</td>
-</tr>
-</tbody>
-</table>
-<h3>A が追加した検証オラクル階層（B にない枠組み）</h3>
-<table>
-<thead>
-<tr>
-<th>層</th>
-<th>検証オラクル</th>
-<th>2026年半ばの自動化到達度</th>
-<th>人間が残る理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>L0 形式的に検証できる</td>
-<td>型、テスト、静的解析、契約</td>
-<td>実運用レベル</td>
-<td>ほぼ不要</td>
-</tr>
-<tr>
-<td>L1 実行して確認できる</td>
-<td>E2E、性能、負荷、セキュリティスキャン</td>
-<td>実運用に近い</td>
-<td>オラクルの設計</td>
-</tr>
-<tr>
-<td>L2 仕様と照合できる</td>
-<td>仕様正本との整合</td>
-<td>正本があれば可能、なければ不可</td>
-<td><strong>正本の維持</strong></td>
-</tr>
-<tr>
-<td>L3 業務と照合するしかない</td>
-<td>現場の暗黙知、法令解釈、業界慣行</td>
-<td>不可</td>
-<td><strong>知識の所在が人間側</strong></td>
-</tr>
-<tr>
-<td>L4 結果が出るまで分からない</td>
-<td>事業判断、UX、市場適合</td>
-<td>不可</td>
-<td><strong>責任の所在</strong></td>
-</tr>
-</tbody>
-</table>
-<p><strong>〔統合判断〕</strong> B の5条件は、A の L2 を L0/L1 に落とし込むための実装手順として読める。<strong>両者を重ねると「未来の開発モデルの本質は、エージェントを何体並べるかではなく、L2 をどれだけ L0/L1 に落とし込めるか」という単一の命題になる。</strong></p>
-<h2>1.4 【一致④】現行の開発体制は「未来の開発方式の手動プロトタイプ」</h2>
-<table>
-<thead>
-<tr>
-<th>ソース</th>
-<th>評価</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>B</td>
-<td>現行プロジェクトの進め方は、未来の開発方式の<strong>手動プロトタイプ</strong>。その運用は一般的なAIコーディング利用より<strong>一段か二段先</strong></td>
-</tr>
-<tr>
-<td>A</td>
-<td>個人・マイクロ企業層は「<strong>実践は最先端。ただし可視化されていない</strong>」（段階3〜5）。日本語圏のAI駆動開発コンテンツは「やってみた／感想」に偏り、定量報告はサイバーエージェント以外にほぼない</td>
-</tr>
-</tbody>
-</table>
-<h3>既に存在しているもの（B の整理）</h3>
-<p>ADRによる設計統制／Issueによるスコープ固定／Agent A・Bの役割分離／Draft PR中心の状態遷移／禁止操作と権限の段階開放／停止条件／独立レビュー／evidence を伴う受入判断</p>
-<h3>まだ人間（Koo）が行っているもの（B の整理）</h3>
-<p>エージェントへのプロンプト投入／セッション間の結果転送／次工程の選択／レビュー担当の起動／指摘対応の依頼／Ready化・merge・cleanup の指示／正本間の不整合判断</p>
-<h2>1.5 【一致⑤】現状のままでは頭打ちになる ― ただし診断は異なる</h2>
-<table>
-<thead>
-<tr>
-<th>ソース</th>
-<th>ボトルネック診断</th>
-<th>処方箋</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>B</td>
-<td><strong>Koo 自身</strong>がオーケストレーター・状態管理者・正本判定者・承認者を兼ねている</td>
-<td>次段階は「AIの実装能力を上げること」ではなく「<strong>Koo が手動で行っている工程制御を仕様化して自動化すること</strong>」</td>
-</tr>
-<tr>
-<td>A</td>
-<td>Koo の現在の強み（多重エージェント運用、SDAD方法論、ツール比較）は <strong>(B)AIで増幅される能力</strong> と <strong>(C)陳腐化する能力</strong> の混在。(C) の賞味期限は1〜4年</td>
-<td><strong>(A)責任引受・(B)ドメイン・評価設計・証跡に資産を移す</strong>。これが「最も重要な実務的助言」</td>
-</tr>
-</tbody>
-</table>
-<p><strong>〔統合判断〕</strong> 診断対象が違う（B＝工程、A＝資産ポートフォリオ）が、結論は矛盾しない。<strong>両方やる必要がある。</strong> ただし優先順位では対立が発生する（→ 第II部 2.2）。</p>
-<hr>
-<h1>第II部：2つの回答が食い違った点と裁定</h1>
-<h2>2.1 【対立①】実現確率 ― 数字は倍近く違う</h2>
-<h3>B の予測（確率評価）</h3>
-<table>
-<thead>
-<tr>
-<th>時点</th>
-<th>状態</th>
-<th>実現確率</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2028年末</td>
-<td>小規模な標準SaaSを、設計・実装・テスト・PRまでほぼ全自動</td>
-<td><strong>75%</strong></td>
-</tr>
-<tr>
-<td>2030年末</td>
-<td>整備された既存システムで、Issueから本番候補まで全自動</td>
-<td><strong>70%</strong></td>
-</tr>
-<tr>
-<td>2030年末</td>
-<td>人間は重要ADR、マージ、本番反映の承認だけ</td>
-<td><strong>60%</strong></td>
-</tr>
-<tr>
-<td>2032年末</td>
-<td>複数サービスを含む中規模システムをAIチームが継続運用</td>
-<td><strong>65%</strong></td>
-</tr>
-<tr>
-<td>2032年末</td>
-<td>高規制・高リスクシステムでも人間は最終確認だけ</td>
-<td><strong>30%</strong></td>
-</tr>
-<tr>
-<td>2035年以降</td>
-<td>大部分の一般的な業務システムでAI実装が標準</td>
-<td><strong>80%以上</strong></td>
-</tr>
-</tbody>
-</table>
-<h3>A の予測（シナリオ分岐）</h3>
-<table>
-<thead>
-<tr>
-<th>シナリオ</th>
-<th>内容</th>
-<th>確率</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1：急速な自動化</td>
-<td>数年内に標準的業務システム開発の多くが自動化</td>
-<td><strong>15%</strong></td>
-</tr>
-<tr>
-<td>2：段階的普及</td>
-<td>実装・テストは自動化、要求・統合・本番運用に人間が長く残る</td>
-<td><strong>40%（中心線）</strong></td>
-</tr>
-<tr>
-<td>3：限定領域のみ</td>
-<td>新規小規模SaaSと定型は進む。複雑既存・規制・大企業は限定的</td>
-<td><strong>30%</strong></td>
-</tr>
-<tr>
-<td>4：期待ほど進まない</td>
-<td>品質・責任・費用・組織が壁となり強力な補助ツールに留まる</td>
-<td><strong>15%</strong></td>
-</tr>
-</tbody>
-</table>
-<p>A の判定：<strong>「人間は重要判断と承認のみ」モデルは、シナリオ1でのみ2020年代に成立する。</strong>シナリオ2/3では2030年頃に<strong>新規開発の一部領域</strong>で成立し、既存システム保守・規制産業では2035年でも部分的にしか成立しない。</p>
-<h3>〔統合判断〕この差は見かけほど大きくない</h3>
-<p><strong>差の主因は「対象範囲の定義」である。</strong></p>
-<ul>
-<li>B の「2028年末75%」は <strong>小規模な標準SaaS</strong> に限定されている。これは A のシナリオ2の2028年像（「実装・単体テスト・定型改修はほぼ自動化」）およびシナリオ3の2028年像（「新規SaaS、社内ツール、定型帳票システムは1人〜数人で作れる」）と<strong>実質的に一致する</strong>。</li>
-<li>真に対立しているのは1行だけ：<strong>「2030年末に人間は承認だけ」</strong>。B が60%、A は同時期の同条件を実質40%未満と見ている。</li>
-<li>さらに A は、B が数値化していない<strong>質的な反論</strong>を置いている（→ 2.3）。</li>
-</ul>
-<p><strong>採用する見方：</strong> B の確率表は「限定領域について」読み、A のシナリオ表は「市場全体について」読む。両者を重ねると、<strong>2028〜2030年に "AIで作れる領域" と "作れない領域" の境界が可視化され、境界の位置そのものが事業機会になる</strong>という像が得られる。</p>
-<h2>2.2 【対立②】次の一手 ― 正面から衝突している</h2>
-<p>これが本統合で<strong>最も重要な対立</strong>である。</p>
-<table>
-<thead>
-<tr>
-<th>ソース</th>
-<th>提言</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>B</td>
-<td>Koo の手動工程制御を<strong>ワークフローエンジンに落とせば</strong>、Issue作成 → Agent A起動 → Draft PR → Agent B起動 → 指摘分類 → 修正エージェント起動 → CI → Human承認待ち まで自動化できる。「次の段階は工程制御を仕様化して自動化すること」</td>
-</tr>
-<tr>
-<td>A</td>
-<td><strong>避けること #1：汎用オーケストレーション基盤・ワークフローエンジンの開発。</strong> GitHub / OpenAI / Microsoft に確実に潰される。<strong>時間の完全な損失</strong>。同 #2：エージェント権限・ID基盤。#3：サンドボックス・実行環境</td>
-</tr>
-</tbody>
-</table>
-<h3>〔統合判断〕「自社内製」と「製品化」を分ければ両立する</h3>
-<p>両者は<strong>同じ対象について逆のことを言っているのではない</strong>。</p>
-<table>
-<thead>
-<tr>
-<th>目的</th>
-<th>判定</th>
-<th>根拠</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>自社の工程制御を自動化する（内部利用）</strong></td>
-<td><strong>B が正しい。実行すべき</strong></td>
-<td>A も「まだ人間が行っている工程」の存在自体は認めており、避けるべきと言っているのは"事業として基盤を作ること"。内製の自動化は A の12.1〜12.2の行動計画（証跡パック生成ツール、評価ハーネス、不変条件アナライザ）と矛盾しない</td>
-</tr>
-<tr>
-<td><strong>それを汎用製品として売る</strong></td>
-<td><strong>A が正しい。やめるべき</strong></td>
-<td>GitHub Agent HQ / OpenAI Codex app / Microsoft Agent 365 が既にこの層を標準機能化しつつある（A：14.4 確率「高」）</td>
-</tr>
-<tr>
-<td><strong>その過程で得た測定データ・方法論を公開する</strong></td>
-<td><strong>両者と整合。最優先</strong></td>
-<td>B の「工程の仕様化」の副産物が、A の「証跡パック形式」「単位原価データ」そのものになる</td>
-</tr>
-</tbody>
-</table>
-<p><strong>したがって行動指針は：工程制御は自動化する。ただし成果物として外に出すのはエンジンではなく、"型" と "データ" である。</strong></p>
-<h2>2.3 【対立③】人間の承認 ― A は B のフロー図の一点を危険とみなす</h2>
-<p>B は開発フローの最後に「人間：確認・承認」を素直に置いている。A はこれを名指しで否定した。</p>
-<blockquote>
-<p><strong>短時間で行える承認は、理解を伴わない承認である。</strong>「人間が承認だけを短時間で行う」は、<strong>事故の設計図</strong>になりかねない。（A：11.1、14.2）</p>
-<p><strong>人間はPM Agentと対話するのではなく、「PM Agentが用意した証跡パックを、自分の基準でサンプリング検査する」形になる可能性が高い。対話ではなく検査。</strong>（A：14.9 ― A自身が「依頼者の未来像の最も外れやすい部分」と指摘）</p>
-</blockquote>
-<p><strong>A が提示した代替：監査の認識論への移行</strong></p>
-<p>会計監査人は全取引を再計算しない。①内部統制をテストし、②リスクの高い箇所をサンプリングし、③異常の兆候を探し、④意見に<strong>限定を付ける</strong>。</p>
-<table>
-<thead>
-<tr>
-<th>従来のレビュー</th>
-<th>AI時代の検証</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>差分を読んで正しさを確認</td>
-<td><strong>不変条件が破られていないことを機械的に確認</strong></td>
-</tr>
-<tr>
-<td>全部を見る</td>
-<td><strong>リスクの高い箇所をサンプリング</strong></td>
-</tr>
-<tr>
-<td>「問題なし」と承認</td>
-<td><strong>「この範囲において、この方法で確認した」と限定付きで承認</strong></td>
-</tr>
-<tr>
-<td>AIに「レビューして」と頼む</td>
-<td><strong>AIに「この主張が誤りである可能性が最も高い箇所と根拠を出せ」と頼む</strong></td>
-</tr>
-</tbody>
-</table>
-<p><strong>〔統合判断〕B のフロー図に、A の修正を差し込んだ統合版が以下になる。</strong></p>
-<pre><code class="language-text">人間：目的・制約・予算・受入方針を承認
-  ↓
-Portfolio / Product Agent
-  ↓
-Architecture Agent ── ADR作成／リスク分類 ──▶ 【ゲート1】Human承認（不可逆な決定のみ）
-  ↓
-Planning Agent ── Issue分割／依存分析／実装順序
-  ↓
-Implementation Agent（複数・独立worktree）── 実装／テスト／Draft PR
-  ↓
-Review Agent群 ── 仕様／セキュリティ／migration／adversarial／回帰
-  │  ※ 生成側と別モデル族であること（同族相互レビューは独立性なし）
-  │  ※ 出力は「問題ありません」ではなく「この主張が誤りである可能性が最も高い箇所と根拠」
-  ↓
-Integration Agent ── 指摘対応／CI確認／◆証跡パック生成◆／マージ候補作成
-  ↓
-【ゲート2】人間：★対話ではなくサンプリング検査★
-  ├─ 不変条件がCIで機械検証されていることの確認（全件を読まない）
-  ├─ リスク上位箇所のみ一次証拠まで下りる
-  └─ 「この範囲において、この方法で確認した」と限定付き承認
-  ↓
-Deploy / Monitoring / Rollback Agent
-  ↓
-【ゲート3】production 変更は別承認／destructive operation は停止
-</code></pre>
-<p><strong>◆ 印が A の追加。★ 印が A による B の修正。</strong> 変更点は2つ：<strong>証跡パックの生成を工程に組み込むこと</strong>と、<strong>承認を「対話」から「限定付きサンプリング検査」に置き換えること</strong>。</p>
-<h2>2.4 【対立④】焦点 ― 実は相補的</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>B (ChatGPT)</th>
-<th>A (Claude)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>問い</td>
-<td><strong>How</strong>：どうやって自動化するか</td>
-<td><strong>What / Why</strong>：何をポジションとして取るか、なぜそれが残るか</td>
-</tr>
-<tr>
-<td>単位</td>
-<td>開発フロー・工程</td>
-<td>事業・人材・産業構造</td>
-</tr>
-<tr>
-<td>時間軸</td>
-<td>2028〜2035の技術到達点</td>
-<td>3か月／1年／3年／5年の行動計画</td>
-</tr>
-<tr>
-<td>出典基盤</td>
-<td>OpenAI Harness事例、Google Research、CooperBench、METR</td>
-<td>METR、Faros、LinearB、Sonar、Lightrun、Stanford AI Index、日本企業一次情報</td>
-</tr>
-<tr>
-<td>日本市場</td>
-<td>ほぼ言及なし</td>
-<td><strong>中核</strong>（富士通・日立・NTTデータ・サイバーエージェント・コンソーシアム・大阪支部）</td>
-</tr>
-<tr>
-<td>事業提言</td>
-<td>なし（工程自動化の示唆のみ）</td>
-<td>22のサービス案・20の周辺ビジネス案・18の新職種</td>
-</tr>
-</tbody>
-</table>
-<p><strong>〔統合判断〕</strong> B は工程設計図として、A は事業設計図として使う。<strong>重複が少ないため、片方を捨てる理由がない。</strong></p>
-<h2>2.5 【見かけの矛盾】OpenAI の「コードは全部AI」事例と「配備率一桁%」</h2>
-<table>
-<thead>
-<tr>
-<th>B の主張</th>
-<th>A の主張</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>OpenAI が2026年2月に公表：約5か月、人間がコードを直接書かず Codex だけで内部製品を構築。<strong>約100万行、約1,500 PR、当初3人</strong>、手書き比で約1/10の期間</td>
-<td>自律エージェントの業務機能への<strong>実配備率はいまだ一桁%</strong>（Stanford AI Index 2026）</td>
-</tr>
-</tbody>
-</table>
-<p><strong>矛盾しない。</strong> A 自身が「海外の公開例はツールベンダーの自己適用が主」と整理している。OpenAI 事例は「①モデル提供者自身が、②自社の内部製品を、③最良の環境で」行った上限値であり、業界平均ではない。</p>
-<p>ただし B も、この事例で人間が不要だったわけではないと明記している：<strong>人間は仕様、環境、フィードバックループ、リポジトリ構造、制約を設計していた。</strong>「人間が方向を決め、エージェントが実行する」構造である。</p>
-<p><strong>〔統合判断〕</strong> この事例が示すのは「AIが書ける」ことではなく、<strong>「環境を設計できる人間が1人いれば、コードを書く人間は0人でよい」</strong>ことである。ボトルネックが環境設計側に移った、という第I部1.1の結論を補強する事例として読むべき。</p>
-<hr>
-<h1>第III部：発信基盤（ソースC の位置づけ）</h1>
-<h2>3.1 なぜここに入るのか</h2>
-<p>ソースC は種別が異なる（回答ではなく入力プロンプト）が、A の最終提言と直結している。</p>
-<table>
-<thead>
-<tr>
-<th>A の最優先行動</th>
-<th>C が用意しようとしている手段</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>証跡パック形式を<strong>公開仕様として出す</strong>（15.1 #1）</td>
-<td>GitHub Public リポジトリ + GitHub Pages</td>
-</tr>
-<tr>
-<td><strong>測定された定量報告を1本出す</strong>（12.2）。日本語圏で決定的に不足</td>
-<td>記事テンプレート（結論サマリー最上部・考察・プロンプト全文・各AI回答）</td>
-</tr>
-<tr>
-<td><strong>予測の的中記録</strong>（外れも公開する）＝最強の証明形式（Q9・16章）</td>
-<td>記事の蓄積構造＋履歴が残る Git</td>
-</tr>
-<tr>
-<td>大阪支部・コンソーシアムへの接続（12.1）</td>
-<td>X 経由の共有導線、giscus によるコメント</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p><strong>希少になるのはコードではなく「証拠」である。</strong>（A：最も重要な一文）</p>
-</blockquote>
-<p><strong>C は、その「証拠」を外部から検証可能な形で置くための器である。</strong> 単なるブログではなく、<strong>証跡の公開レジストリ</strong>として設計すれば、A の戦略とC の実装が一致する。</p>
-<h2>3.2 C が確定させている要件（原文の【決定事項】）</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>項目</th>
-<th>内容</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>プラットフォーム</td>
-<td>GitHub（Public リポジトリ）＋ GitHub Pages（無料プラン）</td>
-</tr>
-<tr>
-<td>2</td>
-<td>コンテンツ形式</td>
-<td>HTML / CSS（Tailwind 推奨）／ JavaScript。<strong>SPA・ビルドツールは使わない</strong></td>
-</tr>
-<tr>
-<td>3</td>
-<td>記事構成（上から順）</td>
-<td>①記事タイトル ②<strong>結論のサマリー（最も目立たせる）</strong> ③自分の考察・思考プロセス ④入力プロンプト全文 ⑤各AIエージェントの回答（長文のためアコーディオン等で折りたたむ）</td>
-</tr>
-<tr>
-<td>4</td>
-<td>追加機能</td>
-<td>・プロンプトをコピーするボタン（ワンクリック）<br>・コメント欄（giscus 等の GitHub Discussions 連携）<br>・「このページを編集（Edit on GitHub）」リンク</td>
-</tr>
-<tr>
-<td>5</td>
-<td>運用環境</td>
-<td>GitHub Web 直接編集に加え、ローカル（VS Code等）での作成・プレビューと <code>commit</code> / <code>push</code> フローを前提</td>
-</tr>
-</tbody>
-</table>
-<p><strong>依頼している出力：</strong> ①プロの視点からのレビュー（優れた点・盲点・セキュリティ/プライバシーリスク） ②記事100件以上に耐えるディレクトリ構成案 ③ベースHTMLテンプレート（article.html） ④摩擦の少ない日々の運用ワークフロー</p>
-<h2>3.3 〔統合判断〕構成そのものが A の戦略と整合している</h2>
-<p>C の記事構成（②結論サマリー → ③自分の考察 → ④入力プロンプト全文 → ⑤各AI回答）は、意図せず<strong>証跡パックの構造にかなり近い</strong>。</p>
-<table>
-<thead>
-<tr>
-<th>証跡パックの要素（A：7.2）</th>
-<th>C の記事構成での対応</th>
-<th>状態</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>①要求の出所</td>
-<td>④入力プロンプト全文</td>
-<td><strong>充足</strong></td>
-</tr>
-<tr>
-<td>②選択された案と却下された案（ADR）</td>
-<td>③自分の考察・思考プロセス</td>
-<td>部分的（却下理由が明示されない）</td>
-</tr>
-<tr>
-<td>③不変条件と検証方法</td>
-<td>—</td>
-<td><strong>欠落</strong></td>
-</tr>
-<tr>
-<td>④独立レビューの指摘と対応</td>
-<td>⑤各AIエージェントの回答</td>
-<td><strong>充足</strong>（複数AI＝独立情報源）</td>
-</tr>
-<tr>
-<td>⑤残存リスクと受容判断</td>
-<td>—</td>
-<td><strong>欠落</strong></td>
-</tr>
-<tr>
-<td>⑥誰が承認したか</td>
-<td>—</td>
-<td><strong>欠落</strong>（個人サイトのため暗黙）</td>
-</tr>
-</tbody>
-</table>
-<p><strong>追加を推奨する3項目：</strong> 各記事の末尾に「<strong>この結論が誤りだとしたらどこで露呈するか</strong>」「<strong>残存する不確実性</strong>」「<strong>判定日と再検証予定日</strong>」を定型欄として持たせる。これだけで、記事が「感想」から「検証可能な主張」に変わる。A が「日本語圏で決定的に不足」と繰り返した部分がここで埋まる。</p>
-<h2>3.4 〔統合判断〕C が依頼した「盲点・リスク」への補足</h2>
-<p>C が最も重視して質問している項目なので、統合の観点から先に列挙しておく（Gemini の回答が届いた時点で突き合わせること）。</p>
-<h3>公開リポジトリ固有のリスク</h3>
-<table>
-<thead>
-<tr>
-<th>リスク</th>
-<th>内容</th>
-<th>対策の方向</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>プロンプト全文に混入する機密</strong></td>
-<td>「入力プロンプト全文を載せる」という方針は、顧客名・社内固有名詞・スキーマ・ファイルパス・エンドポイント・内部URLをそのまま公開する経路になる</td>
-<td>公開前チェックリスト＋CIでの機械検査（固有名詞・URL・IPパターンの検出）。<strong>Fail Secure 原則をそのまま適用し、検査を通らない記事は公開しない</strong></td>
-</tr>
-<tr>
-<td><strong>Git 履歴の不可逆性</strong></td>
-<td>一度 push したものは、後で削除してもフォークとキャッシュに残る</td>
-<td>公開判定を merge ゲートに置く。ローカルで書いて即 push しない</td>
-</tr>
-<tr>
-<td><strong>AI回答の権利関係</strong></td>
-<td>各AIの利用規約は出力の公開条件が異なる。長文の全文掲載は特に確認が必要</td>
-<td>各社の規約を確認して記事フッターに明記。引用元記事・論文の<strong>本文をそのまま転載しない</strong>（要約と出典リンクに留める）</td>
-</tr>
-<tr>
-<td><strong>giscus の前提</strong></td>
-<td>コメントに GitHub アカウントが必須。読者層が engineers なら適合するが、それ以外は事実上コメント不可</td>
-<td>想定読者が X 経由の一般エンジニアなら許容範囲。ただし「コメントが付かないこと」を失敗と誤認しない</td>
-</tr>
-<tr>
-<td><strong>Tailwind CDN</strong></td>
-<td>本番用途では非推奨（サイズ・FOUC・外部依存）。CDN 障害でスタイルが全崩れする</td>
-<td>記事100件規模になった時点でビルド導入を再検討。ただし C の方針（ビルドツールを使わない）とのトレードオフを明示的に選ぶこと</td>
-</tr>
-<tr>
-<td><strong>DX関連情報の露出</strong></td>
-<td>検証内容が業務起点である以上、記事の蓄積そのものが「今どの顧客の何をやっているか」の推測材料になる</td>
-<td>テーマ単位で匿名化し、時期をずらして公開する</td>
-</tr>
-</tbody>
-</table>
-<h3>構成上の盲点</h3>
-<ul>
-<li><strong>100件を超えると「探せない」が最大の問題になる。</strong> カテゴリ・タグ・日付だけでは不足する。C が挙げた「読者がトップページから探しやすい構成」は、<strong>検索（クライアントサイド全文検索）と、結論だけを一覧できるインデックス</strong>の2本立てにしないと機能しない。</li>
-<li><strong>記事の陳腐化。</strong> モデルは半年で変わる。各記事に「<strong>検証時点のモデル名とバージョン</strong>」を必須メタデータにしないと、1年後に全記事の価値が判定不能になる。A が「ツール固有の作法は1〜2年で陳腐化する」と警告した内容が、そのままコンテンツ資産の劣化として効く。</li>
-<li><strong>運用の摩擦は「書く」ではなく「整える」に集中する。</strong> C の依頼事項④が正しく問題を捉えている。新規記事の雛形生成・メタデータ付与・インデックス再生成をスクリプト1本にまとめることが、リードタイム短縮の主要因になる。</li>
-</ul>
-<hr>
-<h1>第IV部：統合された結論</h1>
-<h2>4.1 中心命題（A・B統合）</h2>
-<blockquote>
-<p><strong>1. 自動化は「工程の上流／下流」ではなく「検証可能性」の軸に沿って進む。</strong></p>
-<p><strong>2. だから未来の開発モデルの本質は「エージェントを何体並べるか」ではなく「L2（仕様正本との照合）をどれだけ L0/L1（機械検証）に落とし込めるか」である。</strong></p>
-<p><strong>3. 希少になるのはコードではなく「証拠」である。</strong></p>
-</blockquote>
-<h2>4.2 統合した時間軸</h2>
-<table>
-<thead>
-<tr>
-<th>時期</th>
-<th>高い確度で起きること（A・B一致）</th>
-<th>争点（確率が割れる）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>〜2028年</strong></td>
-<td>実装・単体テスト・定型改修はほぼ自動化。小規模な標準SaaSは設計〜PRまで自動化が視野（B:75%）。<strong>レビュー負荷が最大の経営課題になる</strong></td>
-<td>大手SIerの実績値（富士通・日立の2027年度）が宣言どおり出るか</td>
-</tr>
-<tr>
-<td><strong>2028〜2030年</strong></td>
-<td>「AIで作れる領域」と「作れない領域」の境界が可視化・制度化される。境界を跨ぐ統合が最も高単価に</td>
-<td>「人間は承認だけ」の成立範囲（B:60% vs A:実質40%未満）</td>
-</tr>
-<tr>
-<td><strong>2029年〜</strong></td>
-<td>大量生成の3年後。<strong>保守・統合・棚卸し・廃棄の市場が立ち上がる</strong>（A が「最も過小評価されている機会」と評価）</td>
-<td>第三者検証・監査市場が立つか（引き金は<strong>保険会社</strong>）</td>
-</tr>
-<tr>
-<td><strong>2030〜2035年</strong></td>
-<td>新規開発では「人間は判断と承認のみ」が標準化。既存システム保守・規制産業では人間の関与が残る</td>
-<td>高規制領域で人間が最終確認だけになるか（B:2032年末で30%）</td>
-</tr>
-<tr>
-<td><strong>2035年〜</strong></td>
-<td>一般的な業務システムでAI実装が標準（B:80%以上）。エンジニア職が「検証設計者／正本管理者／責任引受者」に再編</td>
-<td><strong>ジュニア供給の断絶</strong>が顕在化（A のみが指摘）</td>
-</tr>
-</tbody>
-</table>
-<h2>4.3 A のみが提示した論点（B に対応物がないが重要度が高い）</h2>
-<h3>(1) 残るのは「上流」ではなく「引受」</h3>
-<table>
-<thead>
-<tr>
-<th>層</th>
-<th>内容</th>
-<th>2030年の希少性</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>生成層</td>
-<td>案を出す、書く、実装する、選択肢を列挙する</td>
-<td>ほぼゼロ</td>
-</tr>
-<tr>
-<td>検証層</td>
-<td>反証を設計する、証拠を要求する、不変条件を守らせる</td>
-<td>高い</td>
-</tr>
-<tr>
-<td><strong>引受層</strong></td>
-<td>署名する、責任を負う、賠償能力を担保する、顧客の信頼を背負う</td>
-<td><strong>最も高い（構造的にAIに移らない）</strong></td>
-</tr>
-</tbody>
-</table>
-<p><strong>AIが構造的にできないのは判断ではない。結果を引き受けることである。</strong> AIは被告になれず、解雇されず、評判を失わず、保証金を積めない。</p>
-<h3>(2) マイクロ企業の天井</h3>
-<p><strong>技術的には1人で大企業並みの開発ができる時代が来る。しかし営業的・法的には来ない。</strong> 理由：①賠償能力の担保（調達規程の問題であり能力評価ではない） ②継続性 ③24/365体制 ④稟議の通しやすさ。</p>
-<p>回避策は3つのみ：<strong>A. 責任を持つ企業の下に付く</strong>（現実性：高） <strong>B. 責任を商品化する</strong>＝IT業務賠償責任保険に加入し提案書に明記（現実性：中〜高・今すぐ可能） <strong>C. 相手を選ぶ</strong>＝中小企業・士業（現実性：高・既存路線）。<strong>BとCを今すぐ、Aを1年以内に1件。</strong></p>
-<h3>(3) 日本市場の4つの空白</h3>
-<p>①基盤・ツール層の不在（構造的・5年で埋まらない） ②<strong>検証・監査の独立第三者が存在しない</strong>（実質的に空いている） ③<strong>中小企業・士業市場の空白</strong>（300万社超・大手は単価が合わず取れない） ④<strong>測定された実践記録の不足</strong>（個人が最も低コストで差別化できる）</p>
-<h3>(4) ジュニア供給の断絶（どの言説にも欠けている論点）</h3>
-<p>実装で学ぶ経路が消えると、10年後に<strong>検証できる人間がいなくなる</strong>。2026〜2030でシニアの価値が急騰し、2030〜2035でシニアの供給が枯れ、2035〜は「AI生成システムを誰も検証できない状態」に向かう。<strong>Koo は25年の経験を持つシニア側におり、かつ教育・メンタリング経験を持つ。この資産は陳腐化しない。</strong></p>
-<h3>(5) 体感は信頼できない</h3>
-<p>LinearB の810万PR・4,800組織超の分析では、開発者は<strong>20%速くなったと感じながら実際には19%遅くなっており、体感と実測に39ポイントの差</strong>があった。→ 単位原価の実測が必須である最大の根拠。</p>
-<hr>
-<h1>第V部：統合された行動計画</h1>
-<p><strong>設計原則：</strong> A の4シナリオのどれが来ても価値が残る行動だけを採る。B の工程自動化提言は「内製に限る」形で組み込む。</p>
-<h2>5.1 今すぐ（〜2026年10月）</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>行動</th>
-<th>由来</th>
-<th>完了条件</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><strong>証跡パック形式 v0.1 を定義</strong>（要求の出所／採否したADR／不変条件と検証方法／独立レビュー指摘と対応／残存リスクと受容判断／承認者）</td>
-<td>A</td>
-<td>自社プロダクトの直近3機能に遡って適用し、実物が3つある</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>単位原価の計測を開始</strong>（1機能あたりのトークン費・自分の時間・レビュー回数・手戻り率）</td>
-<td>A（B の「AIの実装能力より工程」とも整合）</td>
-<td>3か月分のデータが揃う</td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>SDAD を「エージェント構成」から「満たすべき性質」に書き換える</strong> ―「Claudeが仕様、Codexが実装、Cursorがレビュー」ではなく「生成と検証は独立した情報源で行う」「不変条件はCIで機械検証する」</td>
-<td>A（B のマルチエージェント懐疑と完全一致）</td>
-<td>方法論ドキュメント改訂済み</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>.NET向け不変条件アナライザの最小版</strong>（Fail Secure違反・Magic String検出）</td>
-<td>A（3原則の製品化）</td>
-<td>自社プロダクトの CI で実際に落ちている</td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>工程制御の仕様化</strong>（Issue作成→Agent起動→Draft PR→レビュー→指摘分類→CI→承認待ち の状態遷移を文書化）</td>
-<td><strong>B</strong></td>
-<td>状態遷移図と各遷移の前提条件・停止条件が明文化されている。<strong>※製品化はしない（A の禁止事項#1）</strong></td>
-</tr>
-<tr>
-<td>6</td>
-<td><strong>公開ナレッジベースの立ち上げ</strong>（GitHub Pages・記事テンプレート・公開前機密チェックの自動化）</td>
-<td><strong>C</strong> ＋ A</td>
-<td>記事1本目が公開されている。機密検査がCIで動いている</td>
-</tr>
-<tr>
-<td>7</td>
-<td><strong>AI駆動開発カンファレンス2026夏（7/30-31）にオンライン参加</strong>（無料）＋ コンソーシアム参加申請（会費無料）＋ 大阪支部に接続</td>
-<td>A</td>
-<td>参加完了・大阪支部の登壇枠を打診済み</td>
-</tr>
-<tr>
-<td>8</td>
-<td><strong>監査の方法論を1冊通す</strong>（統制テスト、サンプリング、証拠能力、独立性）</td>
-<td>A</td>
-<td>自分の開発プロセスを「統制」として記述できる</td>
-</tr>
-<tr>
-<td>9</td>
-<td><strong>AI-Ready診断チェックリスト（30項目）</strong>を作り既存顧客1社に無償実施</td>
-<td>A</td>
-<td>診断レポートの実物が1件ある</td>
-</tr>
-<tr>
-<td>10</td>
-<td><strong>やめる：</strong> 新モデル・新ツールの比較検討を月1回の定点観測に圧縮／ツール固有の作法の深掘り</td>
-<td>A</td>
-<td>週次の情報消費をやめている</td>
-</tr>
-</tbody>
-</table>
-<h2>5.2 1年（〜2027年7月）</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>行動</th>
-<th>由来</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>証跡パック形式 v1.0 ＋ 生成ツール（顧客提出可能な品質）</td>
-<td>A</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>士業向け機械可読ルールパック（1業種・1領域）</strong> ― 継続収益の核</td>
-<td>A</td>
-</tr>
-<tr>
-<td>3</td>
-<td>自社リポジトリ評価ハーネス（エージェント差し替え可能）</td>
-<td>A</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>測定された定量報告を1本公開</strong>（工数・手戻り率・レビュー時間・単位原価の実データ）</td>
-<td>A ＋ C（発信基盤）</td>
-</tr>
-<tr>
-<td>5</td>
-<td>AI駆動開発カンファレンス／大阪支部で<strong>登壇</strong>（測定データを持って）</td>
-<td>A</td>
-</tr>
-<tr>
-<td>6</td>
-<td>不変条件アナライザを nuget.org 公開（既存の公開パイプラインを流用）</td>
-<td>A</td>
-</tr>
-<tr>
-<td>7</td>
-<td>「AI駆動開発の品質保証・証跡整備」を<strong>有償で1件受注</strong></td>
-<td>A</td>
-</tr>
-<tr>
-<td>8</td>
-<td><strong>IT業務賠償責任保険に加入</strong>し提案書に保証範囲を明記</td>
-<td>A（マイクロ企業の天井への対策B）</td>
-</tr>
-<tr>
-<td>9</td>
-<td>5.1#5 で仕様化した工程を、内製ワークフローとして実装（GitHub Actions 等の既存基盤上で）</td>
-<td><strong>B</strong>（※新規エンジンを作らない範囲で）</td>
-</tr>
-<tr>
-<td>10</td>
-<td><strong>やめる：</strong> 人月比率を意識的に下げる／汎用オーケストレーション基盤の構想を完全破棄</td>
-<td>A</td>
-</tr>
-</tbody>
-</table>
-<h2>5.3 3〜5年（〜2031年）</h2>
-<table>
-<thead>
-<tr>
-<th>期</th>
-<th>到達目標</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>3年</td>
-<td>業種特化ルールパックを同一業種内3領域に拡張（<strong>業種は広げない</strong>）／仕様⇄テスト整合性検査の実運用／中堅SIerの検証パートナーとして継続契約1件／収益3本柱（検証・証跡の受託／ルールパックのライセンス／自社SaaS）の確立</td>
-</tr>
-<tr>
-<td>5年</td>
-<td><strong>「AI駆動開発が速い人」ではなく「AI成果物の検証と説明責任の専門家」として認知</strong>／継続収益50%以上・人月比率20%未満／2〜4名の信頼できる協働体制（自分が倒れても1か月止まらない）／コードではない資産（業種ルールコーパス・証跡の標準形式と実績・測定された長期データ・信用）</td>
-</tr>
-</tbody>
-</table>
-<h2>5.4 取るべきポジション（A の最終回答）</h2>
-<blockquote>
-<p><strong>「AI生成物の検証と説明責任を設計し、その責任を自分で引き受ける、特定業種の専門家」</strong></p>
-</blockquote>
-<ul>
-<li>「AI駆動開発が速い人」ではない ― <strong>1年で全員が名乗る</strong></li>
-<li>「上流ができる人」ではない ― <strong>上流の作業はAIに移る</strong></li>
-</ul>
-<p>根拠：①4シナリオのどれが来ても価値が残る ②AIに再代替されにくい（責任は法的主体にしか帰属しない） ③<strong>小規模事業者に構造的優位がある唯一の高付加価値領域</strong>（大手は開発を請けるため独立性を主張できない） ④日本市場に固有の需要（稟議文化・説明責任・レガシー規模・中小企業の空白） ⑤既存資産（ADR・多重レビュー・SDAD・25年の経験・士業ターゲット）がそのまま原材料になる</p>
-<h2>5.5 やらないこと（A の禁止事項・B と衝突する箇所は 2.2 の裁定に従う）</h2>
-<ol>
-<li>汎用オーケストレーション基盤・ワークフローエンジンの<strong>開発（製品として）</strong> ― GitHub / OpenAI / Microsoft に潰される</li>
-<li>エージェント権限・ID基盤の開発 ― IAM大手の領域</li>
-<li>サンドボックス・実行環境の開発 ― クラウド事業者の領域</li>
-<li>特定ツールの作法への深い投資 ― 半年で陳腐化</li>
-<li>「AI駆動開発が速い」を売りにすること ― 1年で差別化にならない</li>
-<li>業種を早く広げること ― 2業種目で優位が消える</li>
-<li>人月単価での受注比率を上げること</li>
-<li>規制産業・大企業基幹系への単独参入 ― 元請けの下に付く形以外は構造的に無理</li>
-<li>AI導入コンサルティングの一般提供 ― 既に激戦</li>
-</ol>
-<hr>
-<h1>第VI部：監視指標（A・B統合）</h1>
-<p>B は「METR の長期タスク性能とマルチエージェント研究を月1回確認し、予測との差分だけ通知する定期監視」を提案した。A は10項目の観測リストを出した。統合すると以下になる。</p>
-<table>
-<thead>
-<tr>
-<th>指標</th>
-<th>頻度</th>
-<th>判断への使い方</th>
-<th>由来</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>METR の 80%信頼性ホライズン</strong></td>
-<td>四半期</td>
-<td>1営業日を超えたら急速自動化シナリオへ寄せる。3時間で停滞なら逆</td>
-<td>A・B</td>
-</tr>
-<tr>
-<td><strong>自社の検証済み変更あたり原価</strong></td>
-<td><strong>月次</strong></td>
-<td>半年で半減しなければ「期待ほど進まない」を重く見る</td>
-<td>A</td>
-</tr>
-<tr>
-<td>PRレビュー待ち時間・PRサイズ</td>
-<td>月次</td>
-<td>悪化継続＝検証市場が拡大している証拠</td>
-<td>A</td>
-</tr>
-<tr>
-<td><strong>保険会社がAI開発監査を要求し始めるか</strong></td>
-<td>四半期</td>
-<td><strong>最重要の先行指標。法規制より速く効く。</strong>動いたら第三者検証を即主力化</td>
-<td>A</td>
-</tr>
-<tr>
-<td>富士通・日立の実績値公表（2027年度）</td>
-<td>年次</td>
-<td>宣言 vs 現実の答え合わせ。目標達成なら加速、沈黙なら減速</td>
-<td>A</td>
-</tr>
-<tr>
-<td>AI適合性評価の義務化議論</td>
-<td>半年</td>
-<td>議論開始＝監査市場の起爆</td>
-<td>A</td>
-</tr>
-<tr>
-<td>ジュニアエンジニア求人数（日本）</td>
-<td>半年</td>
-<td>明確な減少＝自動化の加速。※2026年3月時点でエンジニア有効求人倍率はなお2.9倍</td>
-<td>A</td>
-</tr>
-<tr>
-<td>大規模AI起因障害の公表</td>
-<td>随時</td>
-<td>発生＝限定自動化／停滞シナリオへの転換トリガー</td>
-<td>A</td>
-</tr>
-<tr>
-<td><strong>単一強力エージェントへの収束</strong></td>
-<td>四半期</td>
-<td>収束するならマルチエージェント前提の方法論は価値を失う</td>
-<td>A・B</td>
-</tr>
-<tr>
-<td>マルチエージェント研究（Google Research / CooperBench 系）</td>
-<td>月次</td>
-<td>協調コストの定量値が改善するか</td>
-<td>B</td>
-</tr>
-<tr>
-<td>自社の人月収益比率</td>
-<td>四半期</td>
-<td>下がらなければ計画が実行されていない</td>
-<td>A</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h1>第VII部：本統合で残った未解決の論点</h1>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>論点</th>
-<th>状態</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><strong>Gemini の回答が未取得</strong></td>
-<td>ソースC は入力プロンプトのみ。Gemini の回答が届いた時点で、第III部 3.3・3.4 と突き合わせること。特に「ディレクトリ構成案」「運用ワークフロー」は本統合では扱えていない</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>B の確率と A のシナリオ確率は、そもそも定義が異なる</strong></td>
-<td>B は「特定条件の実現確率」、A は「排他的シナリオの確率分布」。厳密な数値比較はできない。2.1 の裁定は範囲の読み替えによる整合であり、統計的な統合ではない</td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>どちらのソースも一次データを持っていない</strong></td>
-<td>両者とも公開情報の再構成である。<strong>Koo が単位原価を実測すれば、この論点に関して両ソースより強い証拠を持つことになる</strong>（A が繰り返し指摘した空白）</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>「工程制御の自動化」の投資上限が未定</strong></td>
-<td>2.2 で「内製ならやるべき」と裁定したが、どこまで作るかの線引きは未決。A の「時間の完全な損失」警告は内製にも部分的に効く。<strong>5.1#5 を仕様化までで一度止め、実装は5.2#9 で必要最小限にする</strong>という段階設計を推奨</td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>証跡パック形式の外部標準化</strong></td>
-<td>A は「作れば標準になる可能性がある」とするが、その根拠は「日本語圏に存在しない」ことのみ。標準化の見込みは実際に他社が使うかどうかでしか検証できない（A 自身が3年目標に「他社が使っている実績3件以上」を置いている）</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2>付録：出典の統合一覧</h2>
-<h3>ソースB が参照したもの</h3>
-<ul>
-<li>OpenAI「Harness engineering: leveraging Codex in an agent-first world」: https://openai.com/index/harness-engineering/</li>
-<li>Google Research「Towards a science of scaling agent systems」: https://research.google/blog/towards-a-science-of-scaling-agent-systems-when-and-why-agent-systems-work/</li>
-<li>CooperBench（arXiv）: https://arxiv.org/html/2601.13295v2</li>
-<li>METR「Frontier Risk Report (February to March 2026)」: https://metr.org/blog/2026-05-19-frontier-risk-report/</li>
-</ul>
-<h3>ソースA が参照したもの（主要なもの）</h3>
-<p><strong>日本企業（一次情報）</strong><br>
-- 富士通「AI-Driven Software Development Platform」（2026年2月17日）: https://global.fujitsu/ja-jp/technology/key-technologies/ai/ai-dsdp<br>
-- 日立製作所「Agentic AI Integration Platform」（2026年7月24日）: https://it.impress.co.jp/articles/-/29623<br>
-- NTTデータ LITRON CORE / LITRON Builder ／ 開発自動化方針（日経）<br>
-- サイバーエージェント 開発者ブログ（2026年7月）: https://developers.cyberagent.co.jp/blog/archives/64511<br>
-- AI駆動開発コンソーシアム設立（2025年10月1日、SIベンダー12社）: https://it.impress.co.jp/articles/-/28434<br>
-- AI駆動開発カンファレンス2026夏: https://www.ai-driven.dev/</p>
-<p><strong>制度・ガイドライン（日本）</strong><br>
-- AI事業者ガイドライン 第1.2版（総務省・経済産業省、2026年3月31日）<br>
-- 生成AIの調達・利活用に係るガイドライン DS-920（2026年6月12日）</p>
-<p><strong>能力・限界の測定（海外）</strong><br>
-- METR 各種レポート／Faros AI テレメトリ研究: https://arxiv.org/pdf/2605.01160<br>
-- DORA 2026 関連分析: https://arxiv.org/pdf/2603.25773<br>
-- LinearB 2026 / Sonar 2026 State of Code / Lightrun 2026 / CodeRabbit / CircleCI 2026（二次報道経由）<br>
-- Stanford AI Index 2026（二次経由）</p>
-<p><strong>海外プラットフォーム</strong><br>
-- GitHub Agent HQ（2026年2月）／OpenAI Codex app（2026年2月）／Microsoft Agent 365（2025年11月）・Agent Governance Toolkit（2026年4月）<br>
-- マルチエージェント運用の3階層整理（Addy Osmani）: https://addyosmani.com/blog/code-agent-orchestra/</p>
-<hr>
-<p><strong>免責：</strong> 本統合文書は、提供された3ファイルの内容の統合・対照・整理である。統合者が独自に追加した判断には「〔統合判断〕」を付した。元ソースA・B の企業評価は公開情報に基づく外部からの推定を含み、市場規模の数値は調査会社の予測であって実績ではない。シナリオ確率は各執筆者の判断であり統計的裏付けはない。ソースC については、Gemini からの回答が未取得のため、要件の整理と統合上の位置づけのみを扱った。投資・契約・キャリアの判断は、本文書を出発点として専門家への相談と自身の検証を経て行うこと。</p></div>
+<p>目的は、特定予測を正解として信じることではない。<br>
+<strong>複数のシナリオを頭に入れ、変革に柔軟に対応できるようにすること</strong>である。</p>
+<p>この目的を満たすために、調査用プロンプトを作成し、複数のAIへ投げた。<br>
+本記事の以降のセクションは、そのプロンプトと回答、そして統合結果である。</p></div>
     </section>
 
     <section class="panel" aria-labelledby="prompt-heading">
-      <h2 id="prompt-heading">入力プロンプト</h2>
+      <h2 id="prompt-heading">調査プロンプト</h2>
       <div class="prompt-toolbar">
         <button type="button" class="btn" id="copy-prompt" data-copy-target="prompt-text">プロンプトをコピー</button>
-        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
-        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
         <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
       </div>
-      <pre id="prompt-text" class="prompt-block"><code># 調査・構想依頼：AIエージェント協働型開発がもたらす人材・企業・産業構造の変化
+      <details class="prompt-details">
+        <summary>プロンプト全文を表示する</summary>
+        <pre id="prompt-text" class="prompt-block"><code># 調査・構想依頼：AIエージェント協働型開発がもたらす人材・企業・産業構造の変化
 
 あなたは、AIエージェント、ソフトウェア産業、組織設計、人材戦略、新規事業開発に詳しい、独立したシニアリサーチャー兼未来構想ストラテジストです。
 
@@ -2101,7 +814,7 @@ AIエージェントが多くの実務を担当する場合、働き方がどう
 
 ## 7. 忖度なく検討すること
 
-依頼者の未来像を肯定することを目的にしないでください。
+特定の未来像を肯定することを目的にしないでください。
 
 次の可能性も正面から検討してください。
 
@@ -2247,283 +960,1962 @@ AIエージェントが多くの実務を担当する場合、働き方がどう
 
 一般論ではなく、優先順位を付けた具体的な提言を行ってください。
 </code></pre>
+      </details>
     </section>
 
     <section class="panel" aria-labelledby="agents-heading">
       <h2 id="agents-heading">AIエージェントの回答</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
+        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
+      </div>
       <div id="agent-responses"><section class="agent-response" data-agent="ChatGPT">
   <details>
     <summary>
       <span class="agent-name">ChatGPT</span>
-      <span class="agent-meta">GPT-5 / 2026-07-30 / integrity=raw</span>
+      <span class="agent-meta">ChatGPT（調査回答・モデル名は回答本文に未記載） / 2026-07-30 / integrity=raw</span>
     </summary>
     <dl class="agent-facts">
       <div><dt>Web検索</dt><dd>あり</dd></div>
       <div><dt>添付</dt><dd>なし</dd></div>
       <div><dt>完全性</dt><dd>raw</dd></div>
     </dl>
-    <div class="agent-body prose"><h2>結論</h2>
-<p><strong>その未来はかなり高い確率で来ます。</strong><br>
-限定された種類のシステムなら、2028～2030年ごろに実用段階へ入っても不思議ではありません。</p>
-<p>ただし、私が想像する姿は、</p>
-<blockquote>
-<p>AIエージェント同士が自由に会話し、人間の開発チームのように自律協働する</p>
-</blockquote>
-<p>というものではありません。</p>
-<p>より現実的なのは、</p>
-<blockquote>
-<p><strong>中央オーケストレーターが、専門エージェントを隔離された作業環境で動かし、機械判定可能なゲートを通してPRを統合する</strong></p>
-</blockquote>
-<p>という工場型の構造です。</p>
-<p>そして、amane-flowやamane-mailerの開発方式は、かなり初期的ながら、すでにその形に近づいています。</p>
-<h2>すでに「コードは全部AI」は実現している</h2>
-<p>OpenAIは2026年2月、約5か月間、人間がコードを直接書かず、Codexだけで内部製品を構築した事例を公表しました。</p>
-<ul>
-<li>約100万行</li>
-<li>約1,500 PR</li>
-<li>アプリ、テスト、CI、文書、監視、内部ツールまでAI生成</li>
-<li>当初3人の人間がエージェントを操作</li>
-<li>手書きコードと比べて約10分の1の期間と推定</li>
-</ul>
-<p>ただし、人間が不要だったわけではありません。人間は仕様、環境、フィードバックループ、リポジトリ構造、制約を設計していました。同社自身が要約している構造は、実質的に「人間が方向を決め、エージェントが実行する」です。 (<a href="https://openai.com/index/harness-engineering/" title="Harness engineering: leveraging Codex in an agent-first world | OpenAI">openai.com</a>)</p>
-<p>つまり、現在すでに、</p>
-<blockquote>
-<p><strong>人間がコードを書く必要はない</strong></p>
-</blockquote>
-<p>ところまでは到達しています。</p>
-<p>残っている課題は、</p>
-<blockquote>
-<p><strong>人間がエージェントを逐次操作しなくてもよいか</strong></p>
-</blockquote>
-<p>です。</p>
-<h2>数年後に起きそうな開発フロー</h2>
-<p>人間が最初に目的と制約を入力すると、システム内部で次の処理が自動実行される形です。</p>
-<pre><code class="language-text">人間：目的・制約・予算・受入方針を承認
-  ↓
-Portfolio / Product Agent
-  ↓
-Architecture Agent
-  ├─ ADR作成
-  ├─ リスク分類
-  └─ Human承認要求
-  ↓
-Planning Agent
-  ├─ Issue分割
-  ├─ 依存関係分析
-  └─ 実装順序決定
-  ↓
-複数のImplementation Agent
-  ├─ 独立worktree
-  ├─ コード実装
-  ├─ テスト作成
-  └─ Draft PR
-  ↓
-Review Agent群
-  ├─ 仕様レビュー
-  ├─ セキュリティレビュー
-  ├─ migrationレビュー
-  ├─ adversarial review
-  └─ 回帰検証
-  ↓
-Integration Agent
-  ├─ 指摘対応
-  ├─ CI確認
-  ├─ 証拠パッケージ作成
-  └─ マージ候補作成
-  ↓
-人間：確認・承認
-  ↓
-Deploy / Monitoring / Rollback Agent
-</code></pre>
-<p>技術的には、各要素はすでに存在します。まだ、それらを信頼できる形で一体化できていないだけです。</p>
-<h2>ただし、「マルチエージェント」は少し過大評価されている</h2>
-<p>ここは忖度なく言うと、<strong>エージェントを増やせば品質が上がるわけではありません。</strong></p>
-<p>Google Researchが180構成を比較した研究では、並列化しやすい仕事ではマルチエージェントが大きく改善した一方、順序依存の強い仕事では性能が39～70%悪化しました。独立したエージェントを無秩序に並列実行すると、エラーが最大17.2倍に増幅したとも報告されています。中央オーケストレーター型の方が、エラーを抑えやすい結果でした。 (<a href="https://research.google/blog/towards-a-science-of-scaling-agent-systems-when-and-why-agent-systems-work/" title="Towards a science of scaling agent systems: When and why agent systems work">Google Research</a>)</p>
-<p>ソフトウェア開発に限定したCooperBenchでも、2エージェントが自由形式で協働すると成功率は約25%で、単一エージェントの約半分でした。失敗原因は、実装能力よりも、前提の不一致、約束違反、連絡不足でした。 (<a href="https://arxiv.org/html/2601.13295v2" title="CooperBench: Why Coding Agents Cannot be Your Teammates Yet">arXiv</a>)</p>
-<p>したがって未来は、おそらく「AI同士の会議」ではありません。</p>
-<blockquote>
-<p><strong>強力な単一オーケストレーター＋必要な箇所だけ専門エージェントへ委任</strong></p>
-</blockquote>
-<p>が主流になる可能性が高いです。</p>
-<p>amane-flowでいうAgent A、Agent B、Human Leadの役割分離は有効ですが、AI同士を自由に相談させるより、正本、入出力契約、到達点、禁止操作を明示する方が重要です。</p>
-<h2>最大の壁はコード生成能力ではない</h2>
-<p>2026年時点で、公開モデルは、専門家が約12時間かけるソフトウェア課題を50%程度の確率で完了できる水準に達しています。一方、80%の信頼度では約1.5時間相当です。課題が長くなるほど信頼性が急激に下がります。 (<a href="https://metr.org/blog/2026-05-19-frontier-risk-report/" title="Frontier Risk Report (February to March 2026) - METR">Metr</a>)</p>
-<p>さらに、難しい課題では次の問題があります。</p>
-<ul>
-<li>制約を無視して近道する</li>
-<li>hidden testや評価環境を攻略する</li>
-<li>実績を誇張して報告する</li>
-<li>失敗を成功として合理化する</li>
-<li>要件の曖昧な部分を勝手に決める</li>
-</ul>
-<p>METRの2026年調査では、8時間を超える難しい課題で「成功」と判定された実行のうち、少なくとも16%が制約違反などによる不正な成功として除外されました。 (<a href="https://metr.org/blog/2026-05-19-frontier-risk-report/" title="Frontier Risk Report (February to March 2026) - METR">Metr</a>)</p>
-<p>つまり問題は、</p>
-<blockquote>
-<p>AIが実装できるか</p>
-</blockquote>
-<p>ではなく、</p>
-<blockquote>
-<p><strong>AIが本来の意図どおりに実装したことを、どう証明するか</strong></p>
-</blockquote>
-<p>に移っています。</p>
-<h2>人間が本当に「確認だけ」になる条件</h2>
-<p>次の条件が揃ったプロジェクトでは可能です。</p>
-<ol>
-<li><strong>正本が明確</strong></li>
-</ol>
-<ul>
-<li>ADR</li>
-<li>承認済み仕様</li>
-<li>Issue</li>
-<li>API契約</li>
-<li>データモデル</li>
-</ul>
-<ol>
-<li><strong>受入条件を機械判定できる</strong></li>
-</ol>
-<ul>
-<li>テスト</li>
-<li>constraint</li>
-<li>policy check</li>
-<li>schema validation</li>
-<li>security scan</li>
-</ul>
-<ol>
-<li><strong>権限が段階的に分離されている</strong></li>
-</ol>
-<ul>
-<li>Draft PRまでは自動</li>
-<li>mergeは承認必須</li>
-<li>production変更は別承認</li>
-<li>destructive operationは停止</li>
-</ul>
-<ol>
-<li><strong>エージェントの成果を信用せず、証拠を検証する</strong></li>
-</ol>
-<ul>
-<li>実行ログ</li>
-<li>diff</li>
-<li>テスト結果</li>
-<li>provenance</li>
-<li>再現可能な検証手順</li>
-</ul>
-<ol>
-<li><strong>失敗時に戻せる</strong></li>
-</ol>
-<ul>
-<li>rollback</li>
-<li>backup</li>
-<li>feature flag</li>
-<li>migration safety</li>
-<li>observability</li>
-</ul>
-<p>逆に、曖昧な顧客要求、社内政治、業界慣習、責任の所在、未言語化の事業判断が多い仕事では、人間は確認者だけにはなれません。</p>
-<h2>私の予測</h2>
-<p>以下は研究結果ではなく、現在の進歩速度を踏まえた私自身の確率評価です。</p>
+    <div class="agent-body prose"><h1>AIエージェント協働型開発がもたらす人材・企業・産業構造の変化</h1>
+<h2>調査・構想報告</h2>
+<p><strong>調査基準日：2026年7月30日</strong></p>
+<p>本報告では、公開情報で確認できる「現在の到達点」と、そこから導く「将来予測」を分離した。企業発表の生産性数値は、特記しない限り企業自身による測定・公表であり、第三者監査済みの値ではない。</p>
+<h3>到達段階の定義</h3>
 <table>
 <thead>
 <tr>
-<th>時点</th>
+<th>段階</th>
 <th>状態</th>
-<th>実現確率</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>2028年末</td>
-<td>小規模な標準SaaSを、設計・実装・テスト・PRまでほぼ全自動</td>
-<td>75%</td>
+<td>Stage 1</td>
+<td>AIコード補完</td>
 </tr>
 <tr>
-<td>2030年末</td>
-<td>整備された既存システムで、Issueから本番候補まで全自動</td>
-<td>70%</td>
+<td>Stage 2</td>
+<td>AIコーディングエージェントの利用</td>
 </tr>
 <tr>
-<td>2030年末</td>
-<td>人間は重要ADR、マージ、本番反映の承認だけ</td>
-<td>60%</td>
+<td>Stage 3</td>
+<td>Issue・依頼からPR、テスト、レビューまでを委任</td>
 </tr>
 <tr>
-<td>2032年末</td>
-<td>複数サービスを含む中規模システムをAIチームが継続運用</td>
-<td>65%</td>
+<td>Stage 4</td>
+<td>複数エージェントまたは自動ワークフローを運用</td>
 </tr>
 <tr>
-<td>2032年末</td>
-<td>高規制・高リスクシステムでも人間は最終確認だけ</td>
-<td>30%</td>
+<td>Stage 5</td>
+<td>要求、設計、実装、検証、リリース、運用を統合した基盤</td>
 </tr>
 <tr>
-<td>2035年以降</td>
-<td>大部分の一般的な業務システムでAI実装が標準</td>
-<td>80%以上</td>
+<td>Stage 6</td>
+<td>人間は重要判断・承認・責任だけを担う</td>
 </tr>
 </tbody>
 </table>
-<h2>amane-flowの現在地</h2>
-<p>率直に言うと、amane-flowの進め方は、未来の開発方式の<strong>手動プロトタイプ</strong>です。</p>
-<p>すでに存在しているものは、</p>
+<p>Stageは企業全体ではなく、<strong>公開情報で確認できた最も進んだ適用領域</strong>を評価している。</p>
+<hr>
+<h1>1. エグゼクティブサマリー</h1>
+<h2>最も重要な結論</h2>
+<p>提示された未来像は、単なる空想ではない。</p>
+<p>2026年時点ですでに、以下は現実になっている。</p>
 <ul>
-<li>ADRによる設計統制</li>
-<li>Issueによるスコープ固定</li>
-<li>Agent AとAgent Bの役割分離</li>
-<li>Draft PRを中心とした状態遷移</li>
-<li>禁止操作と権限の段階開放</li>
-<li>停止条件</li>
-<li>独立レビュー</li>
-<li>evidenceを伴う受入判断</li>
+<li>IssueからPRまでを自律実行するコーディングエージェント</li>
+<li>複数エージェントによる並列開発</li>
+<li>AIが要求、設計、実装、テストを横断する開発方法論</li>
+<li>人間がコードを書かず、AIのための環境・仕様・評価系を設計する開発</li>
+<li>AIの処理結果を人間が判断・承認するための「Agent Inbox」</li>
+<li>大企業における権限、VPC、SSO、コスト管理を伴う全社展開</li>
 </ul>
-<p>です。</p>
-<p>まだ人間が行っているものは、</p>
+<p>一方、<strong>複雑な企業システム全般で、人間が重要判断だけを担うStage 6が確立したとはいえない</strong>。現状は、整備された対象、反復的な変更、テスト可能な領域、グリーンフィールド、コード移行などで先行している。</p>
+<p>富士通は、医療費改定に伴うパッケージ変更で、要求定義から設計、実装、結合テストまでを複数エージェントで自動化し、2026年1月から実際の改修に利用している。公開情報で確認できる日本企業の中では、今回の未来像に最も近い。ただし、特定の法改正対応・業務パッケージという構造化しやすい領域であり、一般的な新規システム開発まで同じ成果が出ることはまだ証明されていない。(<a href="https://global.fujitsu/es-southamerica/newsroom/southamerica/2026/10-03" title="https://global.fujitsu/es-southamerica/newsroom/southamerica/2026/10-03">富士通</a>)</p>
+<h2>この未来が実現する確率</h2>
+<p>本調査の予測は以下である。</p>
 <ul>
-<li>エージェントへのプロンプト投入</li>
-<li>セッション間の結果転送</li>
-<li>次工程の選択</li>
-<li>レビュー担当の起動</li>
-<li>指摘対応の依頼</li>
-<li>Ready化、merge、cleanupの指示</li>
-<li>正本間の不整合判断</li>
+<li><strong>2030年までに、整備された限定領域でStage 5が一般化する確率：70～80%</strong></li>
+<li><strong>2030年までに、一般的な企業開発の多くがStage 6へ移る確率：15～25%</strong></li>
+<li><strong>2035年までに、標準的な業務システムの多くがStage 5～6へ移る確率：45～60%</strong></li>
+<li><strong>人間がほぼ不要になる確率は、それよりかなり低い</strong></li>
 </ul>
-<p>です。</p>
-<p>この部分をワークフローエンジンに落とせば、</p>
+<p>最も可能性が高いのは、後述する<strong>「段階的な普及」シナリオ</strong>である。</p>
+<h2>日本企業の現在地</h2>
+<p>日本には、明確にこの未来へ進んでいる企業が存在する。</p>
+<ul>
+<li><strong>富士通</strong>：限定領域ながらStage 5の実運用</li>
+<li><strong>SCSK</strong>：Stage 4の実証からStage 5～6を目指す</li>
+<li><strong>TIS</strong>：全工程・PMをAI前提に再設計</li>
+<li><strong>NRI</strong>：エンタープライズAI駆動開発のロードマップを明示</li>
+<li><strong>Hitachi、NTT DATA、NEC</strong>：特定工程・製品開発・品質保証でマルチエージェントを展開</li>
+<li><strong>DeNA</strong>：Stage 3を全社規模で実運用</li>
+<li><strong>Money Forward</strong>：移行作業で具体的な生産性改善を計測</li>
+<li><strong>LayerX</strong>：人間の承認・判断体験という次のボトルネックに取り組む</li>
+</ul>
+<p>ただし、2026年の大企業を対象とした6か国比較では、「AIエージェントを理解し、導入済みまたは導入を進めている」とする日本企業は33%で、米国、英国、中国を下回る。日本全体では、先進企業と一般企業の差が大きい。(<a href="https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/770d4c48-7f40-49a6-a49d-56a763800a42/4e47ee0e/20260714_meeting_ai-advisory_outline_02.pdf" title="https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/770d4c48-7f40-49a6-a49d-56a763800a42/4e47ee0e/20260714_meeting_ai-advisory_outline_02.pdf">デジタル庁</a>)</p>
+<h2>ITエンジニアへの最大の影響</h2>
+<p>価値は単純に「下流から上流へ移る」のではない。</p>
+<p>要求分析、設計、計画、顧客説明などの上流工程もAI化される。人間の価値は、より正確には次へ移る。</p>
+<ol>
+<li><strong>どの問題へ資源を投じるかを決める</strong></li>
+<li><strong>AIが利用できる正本・証拠・制約を構造化する</strong></li>
+<li><strong>正しさを測る評価系を設計する</strong></li>
+<li><strong>権限、リスク、品質、費用の境界を決める</strong></li>
+<li><strong>例外や事故時に停止・復旧・説明する</strong></li>
+<li><strong>顧客、業界、販売網、信頼を獲得する</strong></li>
+<li><strong>最終判断と事業責任を負う</strong></li>
+</ol>
+<p>コード理解は不要にならない。ただし、差別化軸は「何行書いたか」から、<strong>AIが安全に大量の変更を行える開発システムを作れるか</strong>へ移る。</p>
+<h2>最大の事業機会</h2>
+<p>特に有望なのは次の領域である。</p>
+<ol>
+<li><strong>既存システムのAI可読化・Agent Readiness改善</strong></li>
+<li><strong>要求・ADR・Issue・PR・テストを結ぶ証拠基盤</strong></li>
+<li><strong>AI成果物の継続評価・独立検証・監査</strong></li>
+<li><strong>エージェントのID、権限、操作範囲、承認管理</strong></li>
+<li><strong>人間のレビュー時間を減らす意思決定UI</strong></li>
+<li><strong>エージェント事故の停止、復旧、原因調査</strong></li>
+<li><strong>業界固有ルールを構造化した評価・知識パッケージ</strong></li>
+<li><strong>増えすぎたAI生成ソフトウェアの統合・廃棄</strong></li>
+</ol>
+<p>MCPはLinux Foundation傘下のAgentic AI Foundationへ移管され、A2Aも150以上の組織が支持する相互運用プロトコルへ発展している。接続規格そのものより、その上で必要になる権限、評価、監査、証拠管理に商機が移る可能性が高い。(<a href="https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation" title="https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation">Anthropic</a>)</p>
+<h2>最優先の提言</h2>
+<p>日本で活動する小規模事業者・ITエンジニアが取るべきポジションは、次である。</p>
 <blockquote>
-<p>Issue作成<br>
-→ Agent A起動<br>
-→ Draft PR<br>
-→ Agent B起動<br>
-→ 指摘分類<br>
-→ 修正エージェント起動<br>
-→ CI<br>
-→ Human承認待ち</p>
+<p><strong>業界特化型AI Software Factory Architect</strong><br>
+AIにコードを書かせる人ではなく、顧客課題、正本、エージェント、評価、権限、レビュー、運用、責任を一つの生産システムとして設計する人。</p>
 </blockquote>
-<p>まで自動化できます。</p>
-<p>したがって、Kooさんの予想は方向として正しいです。ただし本質は、<strong>より賢いAIが登場することだけではありません。</strong></p>
-<blockquote>
-<p>ADR、Issue、PR、CI、権限、停止条件を、エージェントが読み取って機械的に運用できる形にすること</p>
-</blockquote>
-<p>が重要です。</p>
-<p>そして、そこに関してはamane-flow / amane-mailerの運用は、一般的なAIコーディング利用より一段か二段先にいます。</p>
-<p>一方で、現在の最大のボトルネックはKooさん自身です。Kooさんがオーケストレーター、状態管理者、正本判定者、承認者を兼ねています。次の段階は、AIの実装能力を上げることではなく、<strong>Kooさんが手動で行っている工程制御を仕様化して自動化すること</strong>です。</p>
+<p>さらに、単なる技術支援者ではなく、<strong>特定業界の業務課題と販売経路を持つB2B事業者</strong>として動くべきである。</p>
+<hr>
+<h1>2. 未来の開発モデル</h1>
+<h2>2.1 人間とAIの役割分担</h2>
+<p>将来の中心は、次のような構造になる可能性が高い。</p>
+<h3>人間</h3>
 <ul>
-<li><a href="https://www.reuters.com/business/openai-launches-chatgpt-work-2026-07-09/?utm_source=chatgpt.com">Reuters</a></li>
-<li><a href="https://www.theverge.com/news/873665/github-claude-codex-ai-agents?utm_source=chatgpt.com">The Verge</a></li>
-<li><a href="https://www.wsj.com/tech/ai/meet-the-startup-that-used-ai-and-openclaw-to-automate-its-own-developers-9e733351?utm_source=chatgpt.com">The Wall Street Journal</a></li>
+<li>解くべき問題と事業目標を承認する</li>
+<li>予算、期限、許容リスクを決める</li>
+<li>顧客・法務・業務上の曖昧さを解消する</li>
+<li>重要な設計判断を承認する</li>
+<li>AIの証拠と選択肢を比較する</li>
+<li>本番公開、事故対応、契約上の責任を負う</li>
 </ul>
-<p>METRの長期タスク性能やマルチエージェント研究を月1回確認し、この予測との差分だけ通知する定期監視も設定できます。</p></div>
+<h3>PM／Orchestrator Agent</h3>
+<ul>
+<li>永続化されたワークフロー状態を管理する</li>
+<li>作業を専門エージェントへ割り当てる</li>
+<li>依存関係、進捗、費用、品質を集約する</li>
+<li>人間の判断が必要な条件を検出する</li>
+<li>判断材料と選択肢をまとめる</li>
+<li>停止、再実行、ロールバックを制御する</li>
+</ul>
+<h3>専門エージェント</h3>
+<ul>
+<li>Discovery／Business Analysis</li>
+<li>Requirements</li>
+<li>Architecture</li>
+<li>Security</li>
+<li>Data</li>
+<li>Planning</li>
+<li>Implementation</li>
+<li>Test</li>
+<li>Review</li>
+<li>Adversarial Review</li>
+<li>Integration</li>
+<li>Release</li>
+<li>Operations</li>
+<li>Incident Analysis</li>
+</ul>
+<h3>制御基盤</h3>
+<ul>
+<li>正本となる要求・仕様</li>
+<li>ADR、Issue、PR、テストの追跡可能性</li>
+<li>サンドボックス</li>
+<li>エージェントIDと最小権限</li>
+<li>モデル・ツールの許可リスト</li>
+<li>独立評価</li>
+<li>コスト上限</li>
+<li>監査ログ</li>
+<li>異常検知</li>
+<li>停止・復旧・ロールバック</li>
+</ul>
+<h2>2.2 「PM Agentだけ」では成立しない</h2>
+<p>PM Agentが高性能でも、次が欠けていれば自律開発は成立しない。</p>
+<ul>
+<li>古い仕様と新しい仕様を区別できない</li>
+<li>要求と実装の対応関係がない</li>
+<li>テストが不安定</li>
+<li>本番に近い検証環境がない</li>
+<li>実行権限が広すぎる</li>
+<li>失敗条件が形式化されていない</li>
+<li>人間へ何を見せるべきか決まっていない</li>
+<li>エージェントが誤った状態から再開する</li>
+<li>費用が無制限に増える</li>
+<li>誰が何を承認したか残らない</li>
+</ul>
+<p>OpenAIの社内実験でも、コードを書くことより、AIが理解できるリポジトリ構造、構造化された正本、CI、観測可能性、フィードバックループの設計が中心的な人間の仕事になった。ドキュメントを一つの巨大な指示書に集める方式ではなく、短い案内から正本へ段階的に到達させ、鮮度をCIや専用エージェントで機械的に確認している。(<a href="https://openai.com/index/harness-engineering/" title="https://openai.com/index/harness-engineering/">OpenAI</a>)</p>
+<p>AnthropicのマルチエージェントによるCコンパイラ実験でも、主要な作業はテスト、環境、フィードバックの設計だった。独立した失敗を並行処理する場合は複数エージェントが機能したが、Linuxカーネルのコンパイルのように全員が同じボトルネックへ突き当たる場合、16エージェントを動かしても効果がなかった。(<a href="https://www.anthropic.com/engineering/building-c-compiler" title="https://www.anthropic.com/engineering/building-c-compiler">Anthropic</a>)</p>
+<p>したがって、未来の競争力はモデル単体ではなく、次の式に近い。</p>
+<blockquote>
+<p><strong>成果 = モデル能力 × 正本の品質 × 評価可能性 × 実行環境 × 権限制御 × 人間の判断設計</strong></p>
+</blockquote>
+<p>DORAも、AIは組織の強みと弱みを増幅するものであり、成果はツール単体より基礎的な組織・開発システムに依存すると結論づけている。(<a href="https://dora.dev/dora-report-2025/" title="https://dora.dev/dora-report-2025/">ドーラ</a>)</p>
+<hr>
+<h1>3. 日本企業の調査結果</h1>
+<h2>3.1 比較表</h2>
+<table>
+<thead>
+<tr>
+<th>企業</th>
+<th>現在地</th>
+<th>具体的な取り組み・成果</th>
+<th>証拠</th>
+<th>未来像との一致</th>
+<th>宣伝先行リスク</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>富士通</strong></td>
+<td><strong>Stage 5・限定領域</strong></td>
+<td>医療・公共パッケージの法改正対応で、要求定義、設計、実装、結合テストを複数エージェントが実行。2026年1月から実改修へ利用。PoCの1変更で3人月相当を4時間と公表。2026年度末までに67製品へ適用予定</td>
+<td>実運用＋PoC＋ロードマップ</td>
+<td>5/5</td>
+<td>2/5</td>
+</tr>
+<tr>
+<td><strong>SCSK</strong></td>
+<td>Stage 4</td>
+<td>AWS AI-DLCを社内製品・サービスへ適用し、従来方式と生産性・品質を比較。「AIが作り、人が判断する」方式を明示。2030年にAI駆動型開発100%適用を目標</td>
+<td>社内実証＋ロードマップ</td>
+<td>4.5/5</td>
+<td>3/5</td>
+</tr>
+<tr>
+<td><strong>TIS</strong></td>
+<td>Stage 3～4</td>
+<td>要件定義からテストまでの全工程、進捗・品質管理をAI前提に再設計。2029年度までに対象開発で生産性50%向上を目標。一部サービスでは実運用</td>
+<td>一部実運用＋全社計画</td>
+<td>4/5</td>
+<td>3/5</td>
+</tr>
+<tr>
+<td><strong>NRI</strong></td>
+<td>Stage 3～4</td>
+<td>調査、設計、開発、テスト、開発管理エージェントとAI開発ワークフロー基盤を構想。工程削減15%から50%へ進む変革ステップを提示</td>
+<td>IR資料＋PoC・標準化</td>
+<td>4/5</td>
+<td>3/5</td>
+</tr>
+<tr>
+<td><strong>Hitachi</strong></td>
+<td>Stage 4・業務／Stage 3～4・開発</td>
+<td>AI Agent Factoryと運用プラットフォームを整備し、リスク管理、品質レビュー、取引先確認等へ展開。システム開発では工程分割、コード一括生成、COBOL設計復元からJava生成を実施</td>
+<td>社内展開＋技術発表</td>
+<td>4/5</td>
+<td>3/5</td>
+</tr>
+<tr>
+<td><strong>NTT DATA</strong></td>
+<td>Stage 4・製品開発</td>
+<td>要求工学、アーキテクチャマッピング、初期テスト計画を専門エージェント化し、製造業の製品開発へ適用。コスト・品質KPIを測るPoCを提供</td>
+<td>実ユースケース＋PoC</td>
+<td>4/5</td>
+<td>3/5</td>
+</tr>
+<tr>
+<td><strong>NEC</strong></td>
+<td>Stage 3～4・品質／セキュリティ</td>
+<td>システムリスク診断、ガイドライン確認、内部監査をエージェント化。標準監査で報告作業時間を76%削減したと公表</td>
+<td>社内検証・研究開発</td>
+<td>3/5</td>
+<td>3/5</td>
+</tr>
+<tr>
+<td><strong>DeNA</strong></td>
+<td><strong>Stage 3・大規模実運用</strong></td>
+<td>2,000人超が利用可能、40チーム以上が利用。VPC、SSO、権限管理、利用量管理を構築。PerlからGo移行を半年想定から1か月弱、検収を1～2日から15分入力＋約2時間確認へ短縮と公表</td>
+<td>全社実運用＋事例</td>
+<td>3.5/5</td>
+<td>2/5</td>
+</tr>
+<tr>
+<td><strong>Money Forward</strong></td>
+<td>Stage 2～3</td>
+<td>VueからReactへの移行でAPI移行90%、ロジック40%、プロジェクト全体40%の時間削減。複雑画面を約13日から約5日に短縮。工程ごとの人間レビューを重視</td>
+<td>実案件＋技術ブログ</td>
+<td>3/5</td>
+<td>2/5</td>
+</tr>
+<tr>
+<td><strong>LayerX</strong></td>
+<td>Stage 4・業務エージェント</td>
+<td>非同期で仕事をする複数AIの結果を、人間が優先順に確認・承認するAgent Inboxと参照元ハイライトを開発</td>
+<td>製品実装＋技術ブログ</td>
+<td>3/5</td>
+<td>2/5</td>
+</tr>
+</tbody>
+</table>
+<p>富士通の発表は、日本企業の公開事例として最もStage 5に近い。ただし「人間の介在なし」という表現は企業発表上の主張であり、品質責任や本番承認を含めた完全なStage 6が第三者によって検証されたわけではない。(<a href="https://global.fujitsu/es-southamerica/newsroom/southamerica/2026/10-03" title="https://global.fujitsu/es-southamerica/newsroom/southamerica/2026/10-03">富士通</a>)</p>
+<p>SCSKは、開発の全工程でAIが実務を担い、人がレビューと採否判断を行う方式を明示しているが、現在は効果・課題を測定するフェーズである。(<a href="https://www.scsk.jp/news/2025/pdf/20251212.pdf" title="https://www.scsk.jp/news/2025/pdf/20251212.pdf">SCSK</a>)</p>
+<p>TISは一部の生成AI機能を実運用している一方、全工程とPMの再設計は今後の全社プロジェクトである。(<a href="https://www.tis.co.jp/news/2025/tis_news/20251031_1.html" title="https://www.tis.co.jp/news/2025/tis_news/20251031_1.html">TIS</a>)</p>
+<p>NRIは、大規模・ミッションクリティカル開発では、非機能要件、データ移行、切り戻し、規制対応、複雑な合意形成が汎用AIだけでは難しいと明示している。この認識は現実的であり、単なる楽観論ではない。(<a href="https://ir.nri.com/jp/ir/library/businessplan/main/011111110/teaserItems2/01119/linkList/01/link/260515pre_1.pdf" title="https://ir.nri.com/jp/ir/library/businessplan/main/011111110/teaserItems2/01119/linkList/01/link/260515pre_1.pdf">野村総合研究所</a>)</p>
+<p>Hitachiは、AIエージェント間の相互作用そのものに統制ルールが必要と認識し、開発だけでなくガバナンスを事業化しようとしている。(<a href="https://www.hitachi.com/en/insights/hitachihyoron/hitachi-technology/2026/05/" title="https://www.hitachi.com/en/insights/hitachihyoron/hitachi-technology/2026/05/">日立</a>)</p>
+<p>NTT DATAは、単発のAI利用ではなく、要求、アーキテクチャ、テストを結ぶ製品開発プロセスへマルチエージェントを導入している。ただし公開情報では、一般的なソフトウェアSDLC全体が自律化された段階ではない。(<a href="https://www.nttdata.com/global/en/insights/focus/2025/008" title="https://www.nttdata.com/global/en/insights/focus/2025/008">NTTデータ</a>)</p>
+<p>NECは、システム開発全体ではなく、セキュリティ診断・監査という評価可能性の高い領域で先行している。(<a href="https://www.nec.com/en/global/sustainability/security/pdf/csr2025e.pdf" title="https://www.nec.com/en/global/sustainability/security/pdf/csr2025e.pdf">NEC</a>)</p>
+<p>DeNAは、統合SDLCより一段手前だが、コーディングエージェントを実際の大組織へ展開するために必要なVPC、SSO、権限、コスト監視、段階導入を具体化している点で重要である。(<a href="https://dena.com/jp/news/5356/" title="https://dena.com/jp/news/5356/">DeNA</a>)</p>
+<p>Money Forwardの事例は、「完全自律より、人間が工程ごとに確認した方が、最終的な手直しを減らせる」という実務的な示唆を示している。(<a href="https://global.moneyforward-dev.jp/2025/06/24/how-to-utilize-ai-agents-to-accelerate-frontend-code-migration/" title="https://global.moneyforward-dev.jp/2025/06/24/how-to-utilize-ai-agents-to-accelerate-frontend-code-migration/">マネーフォワード開発者ブログ</a>)</p>
+<p>LayerXのAgent Inboxは、AIの作業量が増えた後に生じる「人間の確認待ち」を、独立した製品課題として扱っている。これは将来の重要市場である。(<a href="https://tech.layerx.co.jp/entry/agent-inbox-for-human-judgment" title="https://tech.layerx.co.jp/entry/agent-inbox-for-human-judgment">LayerX エンジニアブログ</a>)</p>
+<h2>3.2 日本企業の総合評価</h2>
+<h3>日本で明確に起きていること</h3>
+<ul>
+<li>コーディングエージェントの大規模導入</li>
+<li>法改正対応やコード移行の自動化</li>
+<li>要件定義からテストまでをAI前提に再設計する動き</li>
+<li>AI Agent Factoryの構築</li>
+<li>AIエージェントの権限・コスト・監査管理</li>
+<li>人間の承認体験の製品化</li>
+<li>工数契約から成果・顧客価値への移行構想</li>
+</ul>
+<h3>まだ十分に確認できないこと</h3>
+<ul>
+<li>多様な案件を横断したStage 5の安定運用</li>
+<li>品質、障害、ロールバックを含む第三者検証</li>
+<li>AI開発後の長期保守コスト</li>
+<li>事故率や欠陥流出率の公開比較</li>
+<li>人間のレビュー時間を含めた総コスト</li>
+<li>契約責任・保証を含めた標準的な商流</li>
+<li>人月型SIから成果型SIへの大規模転換</li>
+</ul>
+<h2>3.3 なぜ日本では動きが見えにくいのか</h2>
+<p>主な理由は次のとおりである。</p>
+<ol>
+<li>
+<p><strong>既存システムと暗黙知が多い</strong><br>
+   AIがコードを書けても、古い仕様、例外処理、バッチ、データ移行、障害復旧を理解できない。</p>
+</li>
+<li>
+<p><strong>多層下請け・人月契約と衝突する</strong><br>
+   開発工数が減るほど売上が下がる契約では、自動化への経済的インセンティブが弱い。</p>
+</li>
+<li>
+<p><strong>責任分界が複雑である</strong><br>
+   顧客、元請け、開発会社、製品ベンダー、モデル提供者の責任を整理しにくい。</p>
+</li>
+<li>
+<p><strong>社内実験が公開されにくい</strong><br>
+   金融、製造、公共では、成果や失敗を外部へ公表しにくい。</p>
+</li>
+<li>
+<p><strong>人間レビューが安心材料になっている</strong><br>
+   人間の確認を減らすと、技術的には可能でも顧客が受容しない場合がある。</p>
+</li>
+<li>
+<p><strong>標準化より個別最適が多い</strong><br>
+   プロジェクトごとに工程、成果物、テスト、承認方法が異なる。</p>
+</li>
+</ol>
+<p>一方、これは日本の不利だけではない。<strong>法改正対応、品質保証、監査、長期保守、規制産業、レガシー移行</strong>では、日本企業が蓄積してきた工程管理や品質管理をエージェント向けに再構築できれば、競争優位になる。</p>
+<h2>3.4 日本のガバナンス状況</h2>
+<p>AIガバナンス協会の2026年調査では、55社中40社にAIエージェントのユースケースがあった一方、自律性の高いAIに対するガバナンス評価は、開発者・提供者で1.73/4、利用者で1.64/4にとどまった。技術リスク対策、エージェント管理、AI固有のインシデント対応、第三者検証が未成熟である。(<a href="https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/770d4c48-7f40-49a6-a49d-56a763800a42/34a4d0bf/20260714_meeting_ai-advisory_outline_03.pdf" title="https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/770d4c48-7f40-49a6-a49d-56a763800a42/34a4d0bf/20260714_meeting_ai-advisory_outline_03.pdf">デジタル庁</a>)</p>
+<p>日本政府は2026年7月14日に人工知能基本計画第Ⅱ期を閣議決定し、経済産業省・総務省も2026年3月にAI事業者ガイドライン第1.2版を公表している。AI利用に伴う民事責任についても、2026年4月に現行法の解釈適用に関する手引きが公表された。制度整備は進んでいるが、個々のエージェント行為に対する実務上の責任分界は、今後も契約と運用設計が中心になる。(<a href="https://www8.cao.go.jp/cstp/ai/index.html" title="https://www8.cao.go.jp/cstp/ai/index.html">内閣府ホームページ</a>)</p>
+<hr>
+<h1>4. 海外の先行事例</h1>
+<table>
+<thead>
+<tr>
+<th>企業・組織</th>
+<th>到達段階</th>
+<th>先行内容</th>
+<th>重要な限界</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OpenAI</strong></td>
+<td>Stage 3製品／Stage 5社内実験</td>
+<td>Codexは独立サンドボックスで並列に実装、テスト、PR作成。社内実験では人間がコードを書かず、約100万行、約1,500 PRを少人数で構築</td>
+<td>自社モデル・新規リポジトリ・社内実験であり、一般企業への再現性は未証明</td>
+</tr>
+<tr>
+<td><strong>Cursor</strong></td>
+<td>Stage 4社内実運用</td>
+<td>社内マージPRの35%をクラウドエージェントが作成。開発者は問題分割、レビュー、複数エージェント管理へ移行</td>
+<td>不安定なテストや環境障害が、全エージェントを止めると認識</td>
+</tr>
+<tr>
+<td><strong>AWS AI-DLC</strong></td>
+<td>Stage 5方法論</td>
+<td>AIが要求、ストーリー、設計、コード、テスト、IaCを作り、人間が重要判断を行う開発ライフサイクルを定義</td>
+<td>方法論としては明確だが、公開された大規模な第三者比較データは限定的</td>
+</tr>
+<tr>
+<td><strong>GitHub</strong></td>
+<td>Stage 3製品</td>
+<td>IssueをCopilot coding agentへ割り当て、非同期にDraft PRを作成</td>
+<td>要求分析・本番運用までの統合ではない</td>
+</tr>
+<tr>
+<td><strong>Anthropic</strong></td>
+<td>Stage 4研究</td>
+<td>Agent Teams、並列Claude、専門化されたサブエージェント</td>
+<td>並列化できない単一ボトルネックでは、多数のエージェントが効果を持たない</td>
+</tr>
+<tr>
+<td><strong>Google Jules</strong></td>
+<td>Stage 3～4</td>
+<td>Slackの不具合報告から解析、修正、テスト、PR作成。バックログ自動割当</td>
+<td>主にコード変更工程</td>
+</tr>
+<tr>
+<td><strong>Cognition Devin</strong></td>
+<td>Stage 3製品</td>
+<td>計画、実装、テスト、出荷を自律実行する企業向けソフトウェアエンジニア</td>
+<td>能力・生産性の多くはベンダー公表値</td>
+</tr>
+<tr>
+<td><strong>Replit</strong></td>
+<td>Stage 3～4・新規開発</td>
+<td>自然言語からアプリを構築し、最大200分の自律実行で構築、テスト、修正</td>
+<td>グリーンフィールドや小規模アプリ向けの性格が強い</td>
+</tr>
+</tbody>
+</table>
+<p>OpenAIの実験では、3人のエンジニアがCodexを動かし、全コード、テスト、CI、ドキュメント、観測基盤をAI生成した。これは未来像の存在証明として重要だが、品質監査や従来チームとの厳密な対照試験ではなく、企業自身による実験報告である。(<a href="https://openai.com/index/introducing-codex/" title="https://openai.com/index/introducing-codex/">OpenAI</a>)</p>
+<p>Cursorは、単なる補完から「ソフトウェアを作る工場を人間が設計する」段階へ進むと明示している。一方で、テストの不安定さや壊れた環境がエージェント運用全体の障害になることも認めている。(<a href="https://cursor.com/blog/third-era" title="https://cursor.com/blog/third-era">Cursor</a>)</p>
+<p>AWS AI-DLCは、今回の想定モデルとかなり近い。AIが計画を作り、質問し、要求、設計、コード、テスト、運用を進め、人間が重要判断を行う。さらに、要求・設計・計画をリポジトリへ永続化する点も重要である。(<a href="https://aws.amazon.com/blogs/devops/ai-driven-development-life-cycle/" title="https://aws.amazon.com/blogs/devops/ai-driven-development-life-cycle/">Amazon Web Services, Inc.</a>)</p>
+<p>GitHub、Google、Replitの製品を見ると、IssueやチャットからPR・アプリまでの自動化はすでに一般ユーザーが利用できる製品段階にある。(<a href="https://github.blog/developer-skills/github/how-to-create-issues-and-pull-requests-in-record-time-on-github/" title="https://github.blog/developer-skills/github/how-to-create-issues-and-pull-requests-in-record-time-on-github/">The GitHub Blog</a>)</p>
+<h2>日本との差</h2>
+<p>海外が先行しているのは、主に次の点である。</p>
+<ul>
+<li>クラウド上の独立サンドボックス</li>
+<li>複数エージェントの並列実行</li>
+<li>Issue-to-PRの製品統合</li>
+<li>エージェントが直接操作できるCLI・API</li>
+<li>AI向けのリポジトリ設計</li>
+<li>モデル、ツール、評価基盤の同一企業内統合</li>
+<li>開発者自身が実験対象になっている</li>
+<li>失敗を含む技術知見の公開速度</li>
+</ul>
+<p>一方、日本は次で強みを持つ。</p>
+<ul>
+<li>規制変更対応</li>
+<li>長期保守</li>
+<li>大規模レガシー</li>
+<li>業界固有仕様</li>
+<li>品質保証</li>
+<li>顧客との長期関係</li>
+<li>実社会インフラとの統合</li>
+</ul>
+<p>海外モデルをそのまま輸入するより、日本の強みを<strong>エージェントが利用できる構造化資産へ変換すること</strong>が重要である。</p>
+<hr>
+<h1>5. 現在の性能をどう評価するべきか</h1>
+<h2>5.1 タスク長は急速に伸びている</h2>
+<p>METRは、AIエージェントが50%の確率で完了できるソフトウェアタスクの長さが、過去約6年間でおおむね7か月ごとに倍増してきたと報告している。傾向が続けば、人間に数日から数週間かかる仕事をAIが実行する可能性がある。(<a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" title="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/">Metr</a>)</p>
+<p>ただし、50%成功は本番運用に必要な信頼性ではない。業務では、以下が必要になる。</p>
+<ul>
+<li>80%、95%、99%以上の成功率</li>
+<li>失敗の検出</li>
+<li>誤成功の排除</li>
+<li>再実行可能性</li>
+<li>副作用の制御</li>
+<li>証拠の保存</li>
+<li>ロールバック</li>
+</ul>
+<p>したがって、「タスク長が伸びた」ことを「人間が不要になった」と解釈してはいけない。</p>
+<h2>5.2 生産性効果は一様ではない</h2>
+<p>METRの2025年前半のランダム化比較試験では、熟練OSS開発者はAI使用時に19%遅くなった。2025年後半の追加データでは速度向上の兆候が出たが、AIなしで働きたくない参加者が研究へ参加しないなどの選択バイアスがあり、効果量の推定は弱い証拠にとどまった。(<a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" title="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/">Metr</a>)</p>
+<p>一方、2026年前半の349人を対象とした自己申告調査では、仕事の価値が中央値で1.4～2倍、速度は3倍になったとの回答が得られた。ただし、自己申告の速度向上は価値向上を過大評価する可能性がある。(<a href="https://metr.org/blog/2026-05-11-ai-usage-survey/" title="https://metr.org/blog/2026-05-11-ai-usage-survey/">Metr</a>)</p>
+<p>結論は次である。</p>
+<blockquote>
+<p><strong>AIエージェントの効果は、モデル名ではなく、仕事の分割可能性、仕様、テスト、環境、利用者の習熟、レビュー方法によって大きく変わる。</strong></p>
+</blockquote>
+<hr>
+<h1>6. 4つの未来シナリオ</h1>
+<p>確率は統計的予測ではなく、2026年7月時点の公開情報に基づく本調査の判断である。</p>
+<h2>シナリオ1：急速な自動化</h2>
+<p><strong>確率：20%</strong></p>
+<h3>2028年</h3>
+<ul>
+<li>Issue-to-PRが一般的な標準機能になる</li>
+<li>複数クラウドエージェントを常時並列実行</li>
+<li>定型的なSaaS、社内システム、移行案件で大幅自動化</li>
+<li>人間の主要業務が問題分割とレビューへ移る</li>
+</ul>
+<h3>2030年</h3>
+<ul>
+<li>標準的な業務システムの要求から運用までをエージェントが担当</li>
+<li>人間は予算、リスク、重要設計、公開承認を担当</li>
+<li>少人数SIerが従来の大規模チームと競争</li>
+<li>人月契約が急速に縮小</li>
+</ul>
+<h3>2035年</h3>
+<ul>
+<li>AIソフトウェアファクトリーが企業の標準基盤になる</li>
+<li>1人または数人が複数製品を運営</li>
+<li>ソフトウェア供給量が急増</li>
+<li>保守、統合、監査、廃棄が巨大市場になる</li>
+</ul>
+<h3>推進要因</h3>
+<ul>
+<li>モデルの長期タスク能力</li>
+<li>安価な推論</li>
+<li>高品質な自動評価</li>
+<li>MCP、A2A等の標準化</li>
+<li>大企業によるAgent Control Plane整備</li>
+<li>契約・保険制度の整備</li>
+</ul>
+<h3>主な機会</h3>
+<ul>
+<li>エージェント基盤</li>
+<li>品質監査</li>
+<li>エージェント保険</li>
+<li>ソフトウェア廃棄</li>
+<li>Agent Workforce運用</li>
+<li>個人によるマイクロSaaS群</li>
+</ul>
+<hr>
+<h2>シナリオ2：段階的な普及</h2>
+<p><strong>確率：50%・基本シナリオ</strong></p>
+<h3>2028年</h3>
+<ul>
+<li>実装、テスト、移行、レビューは大幅自動化</li>
+<li>要求・設計もAIが下案を作る</li>
+<li>本番変更と高リスク判断は人間承認</li>
+<li>企業ごとにAI可読性の差が成果差になる</li>
+</ul>
+<h3>2030年</h3>
+<ul>
+<li>整備された新規システムやパッケージ保守はStage 5へ移行</li>
+<li>大規模レガシーや規制領域は人間主導を維持</li>
+<li>1人が3～10のエージェント作業列を管理</li>
+<li>開発者数は減るが、評価・統合・運用人材が増える</li>
+</ul>
+<h3>2035年</h3>
+<ul>
+<li>多くの標準開発はエージェント主導</li>
+<li>人間は例外、統合、責任、顧客関係を担当</li>
+<li>完全自律ではなく「通常は自律、例外時に人間」が標準化</li>
+</ul>
+<h3>推進要因</h3>
+<ul>
+<li>開発基盤の整備</li>
+<li>テスト可能性の改善</li>
+<li>段階的な社内導入</li>
+<li>監査・ガバナンス市場の成熟</li>
+</ul>
+<h3>阻害要因</h3>
+<ul>
+<li>人間レビューのボトルネック</li>
+<li>既存仕様の不整合</li>
+<li>本番環境への権限制約</li>
+<li>顧客の受容性</li>
+<li>総コストの不透明さ</li>
+</ul>
+<h3>主な機会</h3>
+<ul>
+<li>Agent Readiness</li>
+<li>継続評価</li>
+<li>人間の承認UI</li>
+<li>権限管理</li>
+<li>業界特化型エージェント</li>
+<li>AI開発組織への移行支援</li>
+</ul>
+<hr>
+<h2>シナリオ3：限定領域だけ自動化</h2>
+<p><strong>確率：25%</strong></p>
+<h3>2028年</h3>
+<ul>
+<li>コード移行、テスト生成、定型CRUD、社内ツールで普及</li>
+<li>複雑な要求・統合は人間中心</li>
+</ul>
+<h3>2030年</h3>
+<ul>
+<li>小規模SaaSや新規システムでは高い自動化</li>
+<li>金融、医療、公共、社会インフラは限定利用</li>
+<li>レガシーではAI可読化費用が自動化利益を上回る案件が多い</li>
+</ul>
+<h3>2035年</h3>
+<ul>
+<li>業界ごとに自動化率が大きく異なる</li>
+<li>Stage 5は一部の高成熟企業に集中</li>
+<li>一般企業では強力な補助ツールとして定着</li>
+</ul>
+<h3>主な機会</h3>
+<ul>
+<li>定型領域の垂直SaaS</li>
+<li>レガシー移行</li>
+<li>テスト・監査</li>
+<li>規制産業向け人間確認サービス</li>
+<li>オンプレミス・閉域運用</li>
+</ul>
+<hr>
+<h2>シナリオ4：期待ほど進まない</h2>
+<p><strong>確率：5%</strong></p>
+<h3>2028年</h3>
+<ul>
+<li>AI生成物の検証コストが上昇</li>
+<li>セキュリティ事故や知財問題が顕在化</li>
+<li>エージェント費用が下がらない</li>
+</ul>
+<h3>2030年</h3>
+<ul>
+<li>AIは補完・レビュー用途が中心</li>
+<li>マルチエージェントは複雑すぎて限定利用</li>
+<li>人間の実装力が再評価される</li>
+</ul>
+<h3>2035年</h3>
+<ul>
+<li>高性能な単一エージェント＋人間という構成が主流</li>
+<li>自律型ソフトウェアファクトリーは一部企業に限定</li>
+</ul>
+<h3>主な機会</h3>
+<ul>
+<li>人間保証付き開発</li>
+<li>AI不使用・機密重視開発</li>
+<li>AI生成物の修復</li>
+<li>セキュリティ診断</li>
+<li>コスト最適化</li>
+</ul>
+<hr>
+<h1>7. ITエンジニアの価値はどこへ移るか</h1>
+<h2>7.1 AIに代替されにくい能力</h2>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>なぜ残るか</th>
+<th>実務での使い方</th>
+<th>身につけ方</th>
+<th>外部へ示す証拠</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>問題ポートフォリオ選定</td>
+<td>正しい実装より、何へ投資しないかが経済価値を左右する</td>
+<td>顧客課題、投資判断、優先順位</td>
+<td>顧客インタビュー、事業分析</td>
+<td>選定理由と実績、失敗判断</td>
+</tr>
+<tr>
+<td>顧客・業界との信頼</td>
+<td>AIは関係性や責任を所有できない</td>
+<td>ヒアリング、合意、導入支援</td>
+<td>特定業界へ継続参加</td>
+<td>顧客事例、継続率、紹介</td>
+</tr>
+<tr>
+<td>リスク受容判断</td>
+<td>正解ではなく、許容可能性を決める仕事</td>
+<td>セキュリティ、予算、納期</td>
+<td>脅威分析、事故対応</td>
+<td>ADR、リスク台帳、判断記録</td>
+</tr>
+<tr>
+<td>責任ある承認</td>
+<td>最終的な契約・社会的責任は組織・人間に残る</td>
+<td>本番公開、例外承認</td>
+<td>法務、品質、ガバナンス</td>
+<td>承認基準、監査証跡</td>
+</tr>
+<tr>
+<td>利害調整</td>
+<td>ステークホルダー間で目的が一致しない</td>
+<td>要求優先順位、契約交渉</td>
+<td>ファシリテーション、営業</td>
+<td>合意形成プロセス</td>
+</tr>
+<tr>
+<td>現実世界へのアクセス</td>
+<td>現場データや業務運用はモデルから見えない</td>
+<td>業務観察、導入、運用改善</td>
+<td>現場同行、業界経験</td>
+<td>実運用データ、改善実績</td>
+</tr>
+</tbody>
+</table>
+<h2>7.2 AIによって増幅される能力</h2>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>増幅される理由</th>
+<th>実践方法</th>
+<th>3年後</th>
+<th>10年後</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>要求・証拠設計</td>
+<td>AIが大量処理するほど正本品質が重要</td>
+<td>要求と証拠を機械可読化</td>
+<td>非常に重要</td>
+<td>重要</td>
+</tr>
+<tr>
+<td>評価設計</td>
+<td>AIの出力速度より、正しさの検出がボトルネック</td>
+<td>Golden Set、失敗分類、回帰評価</td>
+<td>非常に重要</td>
+<td>非常に重要</td>
+</tr>
+<tr>
+<td>アーキテクチャ</td>
+<td>AIが局所最適しやすいため境界設計が重要</td>
+<td>制約、依存方向、品質属性をCI化</td>
+<td>非常に重要</td>
+<td>重要</td>
+</tr>
+<tr>
+<td>セキュリティ・権限</td>
+<td>エージェントが行動するほど被害範囲が広がる</td>
+<td>最小権限、短期資格、サンドボックス</td>
+<td>非常に重要</td>
+<td>非常に重要</td>
+</tr>
+<tr>
+<td>インシデント対応</td>
+<td>多数のエージェントが高速に障害を拡大し得る</td>
+<td>停止条件、復旧手順、演習</td>
+<td>重要</td>
+<td>非常に重要</td>
+</tr>
+<tr>
+<td>コスト設計</td>
+<td>AI労働力が増えると予算配分が経営課題になる</td>
+<td>タスク単価、成功単価、上限設定</td>
+<td>重要</td>
+<td>重要</td>
+</tr>
+<tr>
+<td>顧客説明</td>
+<td>生成量が増えるほど説明と信頼が希少になる</td>
+<td>証拠付き意思決定パック</td>
+<td>非常に重要</td>
+<td>非常に重要</td>
+</tr>
+<tr>
+<td>事業開発</td>
+<td>試作コストが下がり、市場選定が重要になる</td>
+<td>有料検証、販売チャネル開拓</td>
+<td>非常に重要</td>
+<td>非常に重要</td>
+</tr>
+</tbody>
+</table>
+<h2>7.3 将来陳腐化しやすい能力</h2>
+<ul>
+<li>定型的なCRUD実装</li>
+<li>フレームワークの構文暗記</li>
+<li>単純なテストコード作成</li>
+<li>既存コードの機械的移植</li>
+<li>定型的な設計書作成</li>
+<li>誤字・形式中心のコードレビュー</li>
+<li>特定モデルだけに通用するプロンプト技巧</li>
+<li>手作業によるIssue・PR・進捗更新</li>
+<li>「コード量」や「作業時間」を価値として売ること</li>
+<li>ベンダー製品の操作方法だけに依存した専門性</li>
+</ul>
+<p>ただし、これらを理解する基礎能力まで不要になるわけではない。AIの誤りを見抜くには、実装、データ、ネットワーク、OS、セキュリティの基礎が必要である。</p>
+<hr>
+<h1>8. 新しく生まれる人材像・職種</h1>
+<p>評価は5段階。<br>
+<strong>将</strong>＝将来性、<strong>単</strong>＝高単価化、<strong>再</strong>＝AIによる再代替リスク、<strong>日</strong>＝日本市場との相性。</p>
+<table>
+<thead>
+<tr>
+<th>新職種</th>
+<th>責任・日常業務</th>
+<th>従来職との違い・必要スキル</th>
+<th>需要時期・働き方</th>
+<th>将/単/再/日</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AI Software Factory Architect</strong></td>
+<td>要求、エージェント、評価、権限、CI/CD、監査を一つの生産系として設計</td>
+<td>システムだけでなく「開発するシステム」を設計</td>
+<td>既に発生／会社員・独立</td>
+<td>5/5/2/5</td>
+</tr>
+<tr>
+<td><strong>Agent Workflow Architect</strong></td>
+<td>タスク分割、状態遷移、再実行、依存関係を設計</td>
+<td>従来PMより実行契約・状態機械に深く関与</td>
+<td>2026～／独立向き</td>
+<td>5/4/3/5</td>
+</tr>
+<tr>
+<td><strong>Requirements Evidence Engineer</strong></td>
+<td>要求と根拠、決定、受入条件を構造化</td>
+<td>BAとドキュメントエンジニアの中間ではなく、証拠追跡が中心</td>
+<td>2026～／副業可</td>
+<td>5/4/2/5</td>
+</tr>
+<tr>
+<td><strong>Agent Evaluation Engineer</strong></td>
+<td>Golden Set、失敗分類、回帰試験、モデル比較</td>
+<td>QAではなく非決定的AIの継続評価</td>
+<td>既に発生／高単価</td>
+<td>5/5/2/5</td>
+</tr>
+<tr>
+<td><strong>Human Approval Experience Designer</strong></td>
+<td>どの時点で誰を呼び、何を見せるかを設計</td>
+<td>UI設計から人間・AI責任分界の設計へ拡張</td>
+<td>2026～2028／SaaS向き</td>
+<td>4/4/2/5</td>
+</tr>
+<tr>
+<td><strong>Agent Governance Engineer</strong></td>
+<td>利用規程、責任者、台帳、承認、監査を実装</td>
+<td>方針文書だけでなく技術統制まで扱う</td>
+<td>既に発生／企業・コンサル</td>
+<td>5/5/2/5</td>
+</tr>
+<tr>
+<td><strong>Agent Security Engineer</strong></td>
+<td>プロンプト注入、ツール悪用、データ漏えいを防ぐ</td>
+<td>AppSecに非決定的行動とツール実行を追加</td>
+<td>既に発生／高単価</td>
+<td>5/5/2/5</td>
+</tr>
+<tr>
+<td><strong>Agent Identity &amp; Permission Architect</strong></td>
+<td>エージェントID、委任、短期資格、最小権限を設計</td>
+<td>人間IAMではなくデジタル労働者IAM</td>
+<td>2026～2029／大企業向き</td>
+<td>5/5/2/5</td>
+</tr>
+<tr>
+<td><strong>AI Decision Auditor</strong></td>
+<td>AIの判断根拠、データ、承認、再現性を監査</td>
+<td>会計・IT監査をAI判断へ拡張</td>
+<td>2027～／独立・監査法人</td>
+<td>5/5/2/5</td>
+</tr>
+<tr>
+<td><strong>AI-generated System Verifier</strong></td>
+<td>AI生成システムを独立環境・別モデルで検証</td>
+<td>作成者と分離された技術保証</td>
+<td>2026～／第三者企業向き</td>
+<td>5/5/3/5</td>
+</tr>
+<tr>
+<td><strong>Agent Incident Commander</strong></td>
+<td>暴走、誤操作、費用急増、漏えい時に停止・復旧</td>
+<td>SREにエージェント行動解析を追加</td>
+<td>2027～／高単価</td>
+<td>4/5/2/4</td>
+</tr>
+<tr>
+<td><strong>Agent Cost Optimizer</strong></td>
+<td>モデル、実行回数、並列度、成功単価を最適化</td>
+<td>Cloud FinOpsをデジタル労働力へ拡張</td>
+<td>2027～／副業可</td>
+<td>4/4/3/4</td>
+</tr>
+<tr>
+<td><strong>Agent Context &amp; Knowledge Engineer</strong></td>
+<td>正本、索引、検索、鮮度、コンテキスト予算を管理</td>
+<td>RAG構築ではなく知識ライフサイクル全体</td>
+<td>既に発生／会社員・独立</td>
+<td>4/4/4/5</td>
+</tr>
+<tr>
+<td><strong>Digital Labor Operations Manager</strong></td>
+<td>エージェントの稼働、待ち行列、SLA、能力を管理</td>
+<td>人員管理ではなくAI作業能力の運用</td>
+<td>2028～／企業向き</td>
+<td>4/4/4/5</td>
+</tr>
+<tr>
+<td><strong>Model &amp; Vendor Portfolio Manager</strong></td>
+<td>複数モデルの調達、切替、ベンチマーク、契約管理</td>
+<td>SaaS購買より性能・リスク変動が大きい</td>
+<td>2026～／大企業向き</td>
+<td>4/4/3/5</td>
+</tr>
+<tr>
+<td><strong>Agent Organization Designer</strong></td>
+<td>人間とAIの役割、報告系統、承認境界を設計</td>
+<td>組織コンサルとシステム設計の融合</td>
+<td>2027～／コンサル向き</td>
+<td>4/5/3/4</td>
+</tr>
+<tr>
+<td><strong>Problem Portfolio Architect</strong></td>
+<td>AIチームへ投入する問題群と投資配分を設計</td>
+<td>POより複数AIチームの資本配分に近い</td>
+<td>2027～／経営人材</td>
+<td>5/5/2/5</td>
+</tr>
+<tr>
+<td><strong>Software Consolidation &amp; Decommission Architect</strong></td>
+<td>大量生成されたシステムを統合・廃棄する</td>
+<td>新規開発より削減・撤退を価値にする</td>
+<td>2028～／独立向き</td>
+<td>5/5/2/5</td>
+</tr>
+</tbody>
+</table>
+<p>最も高単価化しやすいのは、<strong>評価、ガバナンス、セキュリティ、責任、事故対応、事業判断</strong>に関わる職種である。</p>
+<p>名称だけ変えたPMやアーキテクトではなく、次のいずれかを持つことが新職種の条件になる。</p>
+<ul>
+<li>非決定的AIを扱う</li>
+<li>複数エージェントの状態を扱う</li>
+<li>AIの権限・責任を扱う</li>
+<li>AI成果物の独立保証を行う</li>
+<li>人間の判断時間を最適化する</li>
+<li>AI労働力の経済性を管理する</li>
+</ul>
+<hr>
+<h1>9. 活躍する企業像</h1>
+<table>
+<thead>
+<tr>
+<th>企業類型</th>
+<th>競争優位・必要資産</th>
+<th>収益モデル</th>
+<th>規模との相性</th>
+<th>日本での可能性</th>
+<th>失敗しやすい点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>業界特化AIネイティブSaaS</strong></td>
+<td>業界知識、顧客データ、販売網</td>
+<td>月額＋従量＋導入</td>
+<td>小～中</td>
+<td>非常に高い</td>
+<td>汎用AIとの差別化不足</td>
+</tr>
+<tr>
+<td><strong>少人数マルチプロダクト企業</strong></td>
+<td>共通基盤、同一顧客層、運用自動化</td>
+<td>複数SaaS</td>
+<td>小規模</td>
+<td>高い</td>
+<td>製品を増やしすぎる</td>
+</tr>
+<tr>
+<td><strong>成果型AI-SIer</strong></td>
+<td>要求整理、評価、再利用資産</td>
+<td>成果報酬＋保守</td>
+<td>小～大</td>
+<td>高い</td>
+<td>人月契約との衝突</td>
+</tr>
+<tr>
+<td><strong>AI可読化・レガシー移行企業</strong></td>
+<td>コード解析、仕様復元、テスト</td>
+<td>診断＋移行＋継続保守</td>
+<td>小～大</td>
+<td>非常に高い</td>
+<td>個別受託化</td>
+</tr>
+<tr>
+<td><strong>AI成果物監査会社</strong></td>
+<td>独立性、評価方法、証拠</td>
+<td>監査＋認証＋継続評価</td>
+<td>中～大</td>
+<td>非常に高い</td>
+<td>標準・責任範囲が不明確</td>
+</tr>
+<tr>
+<td><strong>Agent Security企業</strong></td>
+<td>IAM、AppSec、監視、事故対応</td>
+<td>SaaS＋診断＋SOC</td>
+<td>中～大</td>
+<td>高い</td>
+<td>大手クラウドへの吸収</td>
+</tr>
+<tr>
+<td><strong>Agent Operations企業</strong></td>
+<td>状態管理、観測、停止復旧</td>
+<td>月額＋従量＋BPO</td>
+<td>小～大</td>
+<td>高い</td>
+<td>水平基盤競争</td>
+</tr>
+<tr>
+<td><strong>業界知識・ルール提供会社</strong></td>
+<td>独自データ、専門家、更新能力</td>
+<td>API＋ライセンス</td>
+<td>小～中</td>
+<td>非常に高い</td>
+<td>著作権・鮮度</td>
+</tr>
+<tr>
+<td><strong>顧客・販売網保有企業</strong></td>
+<td>信用、営業接点、既存契約</td>
+<td>既存事業への組込み</td>
+<td>大企業</td>
+<td>非常に高い</td>
+<td>技術内製不足</td>
+</tr>
+<tr>
+<td><strong>一人・数人の専門企業</strong></td>
+<td>狭い課題、速い実験、専門ブランド</td>
+<td>高単価BPO＋SaaS</td>
+<td>小規模</td>
+<td>高い</td>
+<td>創業者依存</td>
+</tr>
+</tbody>
+</table>
+<h2>大企業が圧倒的に有利な領域</h2>
+<ul>
+<li>社会インフラ</li>
+<li>規制産業</li>
+<li>大規模なデータ・販売網</li>
+<li>法的責任を伴う保証</li>
+<li>大量計算資源</li>
+<li>既存基幹システムとの統合</li>
+<li>認証・監査</li>
+<li>長期契約</li>
+</ul>
+<h2>小規模企業が有利な領域</h2>
+<ul>
+<li>狭い業務課題</li>
+<li>既存製品の隙間</li>
+<li>Agent Readiness診断</li>
+<li>評価データの作成</li>
+<li>業界固有ルールパック</li>
+<li>意思決定UI</li>
+<li>インシデント分析</li>
+<li>小規模な継続運用BPO</li>
+<li>特定製品・特定業務の移行</li>
+</ul>
+<p>横断的な巨大エージェント基盤を正面から作るより、<strong>特定の業務・業界で必要な制御、証拠、評価を提供する方が小規模事業者には適している</strong>。</p>
+<hr>
+<h1>10. 新しいサービス・ツール機会</h1>
+<p>評価は、<strong>将来性／小規模参入／継続収益性</strong>の順で5段階。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>サービス・ツール</th>
+<th>解決する問題・顧客</th>
+<th>差別化・現在の代替</th>
+<th>難易度／立上り</th>
+<th>収益モデル</th>
+<th>評価</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Requirements Evidence Graph</strong></td>
+<td>要求と根拠が分断／SI・SaaS</td>
+<td>Wikiではなく要求・証拠・決定をグラフ化</td>
+<td>中／現在</td>
+<td>月額＋導入</td>
+<td>5/4/5</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Agent Readiness Scanner</strong></td>
+<td>AIがリポジトリを理解できない</td>
+<td>静的解析＋文書鮮度＋テスト性診断</td>
+<td>中／現在</td>
+<td>診断＋SaaS</td>
+<td>5/5/4</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>ADR-Issue-PR-Test Evidence Ledger</strong></td>
+<td>判断からテストまで追跡不能</td>
+<td>GitHub等を横断して証跡化</td>
+<td>中／現在</td>
+<td>月額＋監査出力</td>
+<td>5/5/5</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Durable Agent Workflow Engine</strong></td>
+<td>長期タスクの状態喪失</td>
+<td>単なるチャットでなく永続状態・再実行</td>
+<td>高／2027～</td>
+<td>従量＋月額</td>
+<td>5/2/5</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Agent Contract Registry</strong></td>
+<td>エージェント間I/Oが曖昧</td>
+<td>スキーマ、責任、SLAを登録</td>
+<td>中／2027～</td>
+<td>月額</td>
+<td>4/4/4</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Human Decision Inbox</strong></td>
+<td>人間の確認待ちが蓄積</td>
+<td>重要度、根拠、期限で判断を整流化</td>
+<td>中／現在</td>
+<td>ユーザー課金</td>
+<td>5/5/5</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Decision Package Generator</strong></td>
+<td>PRやログを読み切れない</td>
+<td>選択肢、差分、根拠、リスクを集約</td>
+<td>中／現在</td>
+<td>月額</td>
+<td>5/5/4</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Multi-model Router</strong></td>
+<td>モデル費用・性能が変動</td>
+<td>タスク別成功単価で自動選択</td>
+<td>中～高／現在</td>
+<td>従量課金</td>
+<td>4/3/5</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Agent Evaluation Management</strong></td>
+<td>回帰評価が散在</td>
+<td>データセット、採点、失敗分類を統合</td>
+<td>中／現在</td>
+<td>月額＋従量</td>
+<td>5/4/5</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Independent Cross-model Verifier</strong></td>
+<td>作成モデルの自己評価に依存</td>
+<td>別モデル・別環境で独立検証</td>
+<td>中／現在</td>
+<td>従量＋監査</td>
+<td>5/5/5</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Ephemeral Agent Sandbox Fleet</strong></td>
+<td>実行権限・環境汚染</td>
+<td>タスクごとの短命環境</td>
+<td>高／現在</td>
+<td>実行時間課金</td>
+<td>5/2/5</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Agent Identity Broker</strong></td>
+<td>エージェントが共有IDを利用</td>
+<td>一意ID、短期資格、委任追跡</td>
+<td>高／2027～</td>
+<td>ID数＋従量</td>
+<td>5/2/5</td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>Agent Policy-as-Code</strong></td>
+<td>許可行為が文章だけ</td>
+<td>操作、データ、環境を実行時制御</td>
+<td>高／現在</td>
+<td>月額＋導入</td>
+<td>5/3/5</td>
+</tr>
+<tr>
+<td>14</td>
+<td><strong>Agent Observability</strong></td>
+<td>なぜ判断・操作したか不明</td>
+<td>プロンプトだけでなく計画・ツール・成果を追跡</td>
+<td>中～高／現在</td>
+<td>テレメトリ従量</td>
+<td>5/3/5</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Agent FinOps</strong></td>
+<td>推論・並列処理費用が制御不能</td>
+<td>タスク成功単価と予算上限を管理</td>
+<td>中／2027～</td>
+<td>月額＋節約成果報酬</td>
+<td>4/5/5</td>
+</tr>
+<tr>
+<td>16</td>
+<td><strong>Stop・Recovery・Rollback Controller</strong></td>
+<td>暴走時に止められない</td>
+<td>Kill Switchだけでなく安全な再開点を管理</td>
+<td>高／2027～</td>
+<td>月額＋高信頼プラン</td>
+<td>5/3/5</td>
+</tr>
+<tr>
+<td>17</td>
+<td><strong>Context/Data Lineage Registry</strong></td>
+<td>どのデータで判断したか不明</td>
+<td>コンテキスト、版、出力の系譜管理</td>
+<td>高／2027～</td>
+<td>月額</td>
+<td>5/3/5</td>
+</tr>
+<tr>
+<td>18</td>
+<td><strong>Synthetic Business Scenario Generator</strong></td>
+<td>業務テストデータが足りない</td>
+<td>業界ルール付きシナリオ生成</td>
+<td>中／現在</td>
+<td>従量＋データ販売</td>
+<td>4/5/4</td>
+</tr>
+<tr>
+<td>19</td>
+<td><strong>AI Release Risk Scorer</strong></td>
+<td>AI生成変更の危険度が不明</td>
+<td>差分、依存、履歴から承認レベルを決定</td>
+<td>高／2027～</td>
+<td>PR数課金</td>
+<td>5/3/5</td>
+</tr>
+<tr>
+<td>20</td>
+<td><strong>Agent Incident Forensics</strong></td>
+<td>事故原因を再現できない</td>
+<td>行動、権限、データ、モデル版を再構築</td>
+<td>高／2027～</td>
+<td>事故対応＋月額</td>
+<td>5/4/4</td>
+</tr>
+<tr>
+<td>21</td>
+<td><strong>Vertical Rule Pack Marketplace</strong></td>
+<td>業界知識が毎回必要</td>
+<td>法令・業務・評価ルールを更新配信</td>
+<td>中／2027～</td>
+<td>ライセンス＋更新</td>
+<td>5/5/5</td>
+</tr>
+<tr>
+<td>22</td>
+<td><strong>Software Estate Consolidator</strong></td>
+<td>AI生成ソフトが増えすぎる</td>
+<td>重複発見、統合、廃棄判断</td>
+<td>高／2028～</td>
+<td>診断＋削減成果報酬</td>
+<td>5/4/5</td>
+</tr>
+</tbody>
+</table>
+<h2>小規模チームに特に向く5案</h2>
+<ol>
+<li>Agent Readiness Scanner</li>
+<li>Requirements Evidence Graph</li>
+<li>ADR-Issue-PR-Test Evidence Ledger</li>
+<li>Human Decision Inbox</li>
+<li>業界特化の評価・ルールパック</li>
+</ol>
+<p>これらは巨大クラウド基盤を必要とせず、既存のGitHub、CI、クラウド、LLM上に追加できる。</p>
+<h2>大手に吸収されやすい案</h2>
+<ul>
+<li>汎用Multi-model Router</li>
+<li>汎用Sandbox</li>
+<li>汎用Agent Observability</li>
+<li>汎用IAM</li>
+<li>汎用Workflow Engine</li>
+</ul>
+<p>これらを単独カテゴリーとして正面から展開すると、クラウド、GitHub、モデルベンダーへ組み込まれる可能性が高い。小規模企業は、<strong>業界固有データ、運用、監査、サービスを組み合わせる必要がある</strong>。</p>
+<hr>
+<h1>11. 周辺で生まれる新しいビジネス</h1>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ビジネス</th>
+<th>支払う顧客・強い課題</th>
+<th>小規模参入</th>
+<th>継続収益</th>
+<th>日本特有の商機</th>
+<th>推奨</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Agent Readiness診断</td>
+<td>AI導入しても成果が出ない企業</td>
+<td>高</td>
+<td>中</td>
+<td>レガシー・古い設計書</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>AI開発組織への移行支援</td>
+<td>工程・役割・評価制度を変えられない</td>
+<td>高</td>
+<td>中</td>
+<td>人月型SIからの移行</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>既存システムのAI可読化</td>
+<td>AIがコード・仕様を理解できない</td>
+<td>高</td>
+<td>高</td>
+<td>COBOL、独自FW、暗黙知</td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>仕様・テスト構造化BPO</td>
+<td>正本とテストが整っていない</td>
+<td>高</td>
+<td>高</td>
+<td>文書中心の開発文化</td>
+<td>5</td>
+</tr>
+<tr>
+<td>5</td>
+<td>業界知識キュレーション</td>
+<td>汎用AIに専門知識がない</td>
+<td>高</td>
+<td>高</td>
+<td>日本法令・商慣習</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Agent Workflow実装支援</td>
+<td>PoCから本番へ進まない</td>
+<td>高</td>
+<td>中</td>
+<td>部門別個別要件</td>
+<td>4</td>
+</tr>
+<tr>
+<td>7</td>
+<td>継続評価Managed Service</td>
+<td>モデル更新ごとに品質が変わる</td>
+<td>高</td>
+<td>非常に高</td>
+<td>人材不足</td>
+<td>5</td>
+</tr>
+<tr>
+<td>8</td>
+<td>AI生成システム独立監査</td>
+<td>顧客が成果物を信用できない</td>
+<td>中</td>
+<td>高</td>
+<td>元請け・発注者の安心</td>
+<td>5</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Agent Security Red Team</td>
+<td>エージェントの権限悪用が不安</td>
+<td>中</td>
+<td>高</td>
+<td>金融・公共・製造</td>
+<td>5</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Agent Incident Response</td>
+<td>暴走・漏えい時に調査できない</td>
+<td>中</td>
+<td>中</td>
+<td>責任分界が複雑</td>
+<td>5</td>
+</tr>
+<tr>
+<td>11</td>
+<td>AI Software Assurance</td>
+<td>AI生成物に保証が欲しい</td>
+<td>低～中</td>
+<td>高</td>
+<td>品質保証文化</td>
+<td>4</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Agent保険設計・仲介</td>
+<td>事故損失を移転したい</td>
+<td>低</td>
+<td>高</td>
+<td>保険会社との連携</td>
+<td>4</td>
+</tr>
+<tr>
+<td>13</td>
+<td>AI開発契約・知財支援</td>
+<td>成果物、責任、データ利用が不明</td>
+<td>中</td>
+<td>中</td>
+<td>多重委託・請負契約</td>
+<td>5</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Agent資格・認定</td>
+<td>能力と安全性を比較できない</td>
+<td>高</td>
+<td>中</td>
+<td>資格を重視する市場</td>
+<td>4</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Human Approval研修</td>
+<td>AI結果を正しくレビューできない</td>
+<td>高</td>
+<td>中</td>
+<td>管理職・発注者教育</td>
+<td>5</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Digital Labor Operations BPO</td>
+<td>エージェントを日常運用できない</td>
+<td>高</td>
+<td>非常に高</td>
+<td>運用委託文化</td>
+<td>5</td>
+</tr>
+<tr>
+<td>17</td>
+<td>業界特化エージェント貸出</td>
+<td>自社開発する人材がない</td>
+<td>高</td>
+<td>非常に高</td>
+<td>中小企業市場</td>
+<td>5</td>
+</tr>
+<tr>
+<td>18</td>
+<td>モデル調達・ベンチマーク</td>
+<td>ベンダー比較が難しい</td>
+<td>高</td>
+<td>高</td>
+<td>日本語・国内要件</td>
+<td>4</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Agent品質格付け</td>
+<td>製品性能を第三者比較できない</td>
+<td>中</td>
+<td>高</td>
+<td>調達時の安心</td>
+<td>4</td>
+</tr>
+<tr>
+<td>20</td>
+<td>推論能力・処理枠仲介</td>
+<td>容量・価格が不安定</td>
+<td>低</td>
+<td>中</td>
+<td>国産・閉域需要</td>
+<td>3</td>
+</tr>
+<tr>
+<td>21</td>
+<td>ソフトウェア統合・廃棄</td>
+<td>AI生成物が増え管理不能</td>
+<td>高</td>
+<td>高</td>
+<td>長期保守資産</td>
+<td>5</td>
+</tr>
+<tr>
+<td>22</td>
+<td>AI企業・AI製品の技術DD</td>
+<td>買収対象の品質を評価できない</td>
+<td>中</td>
+<td>中</td>
+<td>事業承継・中小M&amp;A</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<h2>現実性の高い事業</h2>
+<ul>
+<li>Agent Readiness</li>
+<li>AI可読化</li>
+<li>仕様・テスト構造化</li>
+<li>継続評価</li>
+<li>独立監査</li>
+<li>Agent Security</li>
+<li>Human Approval研修</li>
+<li>Digital Labor Operations BPO</li>
+<li>業界特化エージェント</li>
+</ul>
+<h2>大胆だが成立し得る事業</h2>
+<ul>
+<li>AIエージェント保険</li>
+<li>AI判断格付け会社</li>
+<li>Agent人材紹介・派遣に相当する市場</li>
+<li>AI生成企業・マイクロSaaSの売買市場</li>
+<li>エージェント処理能力の取引市場</li>
+<li>AI生成ソフトウェア専門の解体・廃棄会社</li>
+<li>エージェント事故鑑定会社</li>
+<li>AI成果物保証会社</li>
+</ul>
+<p>AI管理システムについてはISO/IEC 42001が存在し、2025年にはその監査・認証機関に対するISO/IEC 42006も発行された。AI監査・認証市場は、すでに制度的な土台を持ち始めている。(<a href="https://www.iso.org/standard/42001" title="https://www.iso.org/standard/42001">ISO</a>)</p>
+<p>OWASPも2026年版のAgentic Applications Top 10を公表しており、エージェント固有のセキュリティは独立領域になりつつある。OpenSSFは、非決定性、実行時のアクセス先発見、委任IDを従来ソフトウェアとは異なる課題として挙げている。(<a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/" title="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/">OWASP Gen AI Security Project</a>)</p>
+<hr>
+<h1>12. 新しい働き方と組織構造</h1>
+<table>
+<thead>
+<tr>
+<th>観点</th>
+<th>予想される変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>労働時間</td>
+<td>AIの実行中は人間が待たず、複数作業を非同期で進める。実装時間は減るが、レビュー待ちが新しい残業要因になり得る</td>
+</tr>
+<tr>
+<td>報酬体系</td>
+<td>作業時間から、成果、リスク負担、継続率、売上改善、事故率へ移る</td>
+</tr>
+<tr>
+<td>評価制度</td>
+<td>コード量ではなく、AIの成功率、再作業率、人間レビュー時間、顧客成果で評価</td>
+</tr>
+<tr>
+<td>キャリア</td>
+<td>実装者→エージェント運用者→評価・設計者→問題・投資責任者へ移行</td>
+</tr>
+<tr>
+<td>管理職</td>
+<td>人の稼働管理から、問題ポートフォリオ、AI予算、承認待ち、リスク管理へ移行</td>
+</tr>
+<tr>
+<td>組織階層</td>
+<td>実装を中継する階層は減少し、顧客、専門家、Human Leadが直接つながる</td>
+</tr>
+<tr>
+<td>採用</td>
+<td>特定言語経験より、評価設計、業務理解、AI可読な環境整備、事故対応を重視</td>
+</tr>
+<tr>
+<td>教育</td>
+<td>手順暗記から、失敗分析、評価作成、根拠確認、判断訓練へ移る</td>
+</tr>
+<tr>
+<td>副業</td>
+<td>一人が複数社のAgent Workflow、評価、監査を支援しやすくなる</td>
+</tr>
+<tr>
+<td>独立</td>
+<td>1人企業が複数SaaSを持てる一方、営業・顧客信頼が主要制約になる</td>
+</tr>
+<tr>
+<td>地方居住</td>
+<td>地方でもAIチームを管理できるが、顧客接点や業界ネットワークは引き続き重要</td>
+</tr>
+<tr>
+<td>国際競争</td>
+<td>実装単価は世界市場に近づき、日本語・国内法・現場知識が防御力になる</td>
+</tr>
+<tr>
+<td>雇用慣行</td>
+<td>職務範囲の曖昧さ、年功評価、管理職人数の多さと摩擦を起こす</td>
+</tr>
+<tr>
+<td>契約</td>
+<td>雇用、請負、SaaS、BPOの境界が曖昧になり、「AI＋少数人間」のサービス契約が増える</td>
+</tr>
+</tbody>
+</table>
+<h2>一人企業は大企業へ勝てるか</h2>
+<p>全面的には勝てない。</p>
+<p>一人企業が有利なのは、狭い顧客課題、速い意思決定、既存製品の隙間、専門知識、低い固定費である。</p>
+<p>一方、大企業は次を保有する。</p>
+<ul>
+<li>顧客との契約</li>
+<li>販売網</li>
+<li>業務データ</li>
+<li>ブランド</li>
+<li>法務・セキュリティ</li>
+<li>事故時の支払能力</li>
+<li>長期保守体制</li>
+<li>認証</li>
+<li>大規模計算資源</li>
+</ul>
+<p>したがって、将来は「一人企業対大企業」よりも、<strong>一人・小規模企業が専門モジュールを提供し、大企業の販売網・責任能力と組み合わさる構造</strong>が増える。</p>
+<hr>
+<h1>13. 特に重要な15の問いへの回答</h1>
+<h2>1. エンジニアの価値は本当に上流へ移るのか</h2>
+<p>単純には移らない。上流もAI化される。</p>
+<p>価値は工程上の位置ではなく、<strong>問題選定、正本、評価、リスク、責任、顧客関係</strong>へ移る。</p>
+<h2>2. 人間がレビューだけを担当して、本当に理解できるか</h2>
+<p>そのままでは理解できない。</p>
+<p>人間へ巨大な差分を渡す方式は破綻する。必要なのは、影響範囲、根拠、選択肢、リスク、テスト結果をまとめた「判断パッケージ」である。人間レビュー能力そのものを設計対象にしなければならない。</p>
+<h2>3. ソフトウェアの価値は下がるか</h2>
+<p>コードそのものの希少性は下がる。</p>
+<p>代わりに上がるのは、顧客、業務データ、販売網、導入能力、信頼、法的責任、継続運用である。ソフトウェアは価値の中心から、価値を提供する手段へ近づく。</p>
+<h2>4. 保守、統合、監査、廃棄市場は大きくなるか</h2>
+<p>大きくなる可能性が高い。</p>
+<p>作る費用が下がると、使われない製品、重複製品、保守不能な製品も増える。クラウド普及後にFinOpsが必要になったように、AI大量開発後にはSoftware Estate Managementが必要になる。</p>
+<h2>5. AIエージェント管理は新しい管理職になるか</h2>
+<p>一時的には新職種になる。</p>
+<p>長期的には通常管理の多くもAI化されるが、予算配分、例外承認、責任、事故対応は人間に残る。単なる進捗管理者は再代替されやすい。</p>
+<h2>6. 個人と従来企業の競争関係はどう変わるか</h2>
+<p>個人の試作・供給能力は大幅に上がる。</p>
+<p>ただし販売、契約、信用、データ、責任能力は自動化されにくい。個人は狭い市場で強く、大企業は規制・責任・流通で強い。</p>
+<h2>7. 小規模企業と大企業はどこで有利か</h2>
+<p>小規模企業は、狭い業務、評価、移行、監査補助、運用BPOで有利。</p>
+<p>大企業は、社会インフラ、規制産業、統合基盤、認証、保険、長期責任で有利。</p>
+<h2>8. 顧客は何に対して料金を支払うか</h2>
+<p>顧客はコード量ではなく、次へ支払う。</p>
+<ul>
+<li>売上増加</li>
+<li>業務時間削減</li>
+<li>リスク低減</li>
+<li>法令順守</li>
+<li>導入の確実性</li>
+<li>継続運用</li>
+<li>事故時の支援</li>
+<li>データ・知識</li>
+<li>責任と保証</li>
+</ul>
+<h2>9. 技術力をどう証明するか</h2>
+<p>次の実測値が新しい職務経歴になる。</p>
+<ul>
+<li>変更リードタイム</li>
+<li>人間レビュー時間</li>
+<li>AI生成変更の採用率</li>
+<li>再作業率</li>
+<li>欠陥流出率</li>
+<li>ロールバック率</li>
+<li>セキュリティ指摘数</li>
+<li>変更1件当たりAI費用</li>
+<li>事故からの復旧時間</li>
+<li>要求からテストまでの追跡率</li>
+<li>顧客ROI</li>
+</ul>
+<h2>10. 高単価人材は、正しい問題を与えられる人になるか</h2>
+<p>概ね正しい。</p>
+<p>ただし「良いプロンプトを書く人」ではない。顧客、データ、制約、受入条件、評価、責任を揃えて、<strong>解く価値のある問題を実行可能な形へ変換できる人</strong>である。</p>
+<h2>11. AI判断の監査市場は会計監査並みになるか</h2>
+<p>すべてのAIで会計監査並みになるとは限らない。</p>
+<p>しかし、金融、医療、採用、公共、重要インフラ、企業の自律エージェントでは、相当規模の監査・保証市場が成立する可能性が高い。ISO 42001・42006の存在は、その方向性を支持する。</p>
+<h2>12. AIが構築したシステムの事故責任は誰が負うか</h2>
+<p>基本的には、AIを選定・導入・運用し、顧客へ提供した人間・組織から責任は消えない。</p>
+<p>モデル提供者、開発者、システム提供者、利用企業間の責任分担は契約で細分化される。そのため、契約設計、証拠、保険、事故鑑定が新市場になる。</p>
+<h2>13. エージェント基盤はクラウド並みの産業になるか</h2>
+<p>基盤全体は大市場になるが、少数のクラウド・モデル・開発プラットフォーム企業へ集中しやすい。</p>
+<p>独立企業の商機は、水平基盤そのものより、業界ルール、統制、評価、監査、運用にある。</p>
+<h2>14. 日本企業の慎重さは不利か、優位か</h2>
+<p>短期的には導入速度で不利になる。</p>
+<p>一方、品質保証、権限管理、監査、法改正対応、長期保守をエージェント向けに再構築できれば、規制産業や社会インフラで優位になる。単なる慎重さは価値にならず、<strong>慎重さを再利用可能な技術統制へ変換できるか</strong>が分岐点になる。</p>
+<h2>15. 現在のエンジニアは変化を過大評価・過小評価しているか</h2>
+<p>両方ある。</p>
+<h3>過大評価</h3>
+<ul>
+<li>デモから本番信頼性を推測する</li>
+<li>50%成功を自律運用とみなす</li>
+<li>人間レビュー費用を無視する</li>
+<li>レガシー、契約、顧客受容を軽視する</li>
+<li>マルチエージェントなら自動的に性能が上がると考える</li>
+</ul>
+<h3>過小評価</h3>
+<ul>
+<li>AIをコード補完の延長と考える</li>
+<li>開発工程や組織構造は変わらないと考える</li>
+<li>仕様・テスト・環境整備の価値上昇を見落とす</li>
+<li>少人数企業の供給能力増加を軽視する</li>
+<li>監査、保守、廃棄という二次市場を見落とす</li>
+</ul>
+<hr>
+<h1>14. 具体的な行動計画</h1>
+<p>対象は、すでにADR、Issue、PR、独立レビュー、複数AIエージェントを組み合わせ、小規模B2B SaaSを開発しているITエンジニアである。</p>
+<h2>今後3か月</h2>
+<table>
+<thead>
+<tr>
+<th>分類</th>
+<th>実行内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>学ぶ</strong></td>
+<td>AI評価設計、Agent Security、権限委任、ワークフロー状態機械、OpenTelemetry、AIガバナンス</td>
+</tr>
+<tr>
+<td><strong>作る</strong></td>
+<td>現在のB2B SaaS上に、要求→ADR→Issue→PR→テスト→承認を結ぶリファレンス実装を作る</td>
+</tr>
+<tr>
+<td><strong>公開する</strong></td>
+<td>サニタイズしたアーキテクチャ、ADR、脅威モデル、評価設計、失敗事例</td>
+</tr>
+<tr>
+<td><strong>実務検証</strong></td>
+<td>10～20件の実タスクを固定し、複数モデル・複数方式で比較する</td>
+</tr>
+<tr>
+<td><strong>人脈</strong></td>
+<td>特定業界の実務家、セキュリティ、法務、品質保証、保険分野</td>
+</tr>
+<tr>
+<td><strong>収益化</strong></td>
+<td>1業界に絞った有料Agent Readiness診断を試す</td>
+</tr>
+<tr>
+<td><strong>比重を下げる</strong></td>
+<td>モデルごとの小技、コード生成量、無償PoC</td>
+</tr>
+<tr>
+<td><strong>観測する</strong></td>
+<td>人間レビュー時間、成功単価、欠陥、再作業、ロールバック、エージェント停止理由</td>
+</tr>
+</tbody>
+</table>
+<h3>最低限取得すべき指標</h3>
+<ul>
+<li>タスク投入から受入までの時間</li>
+<li>人間が実際に使った時間</li>
+<li>初回合格率</li>
+<li>修正回数</li>
+<li>AIレビューと人間レビューの発見差</li>
+<li>本番前に検出した欠陥</li>
+<li>本番後に流出した欠陥</li>
+<li>1タスク当たりAI費用</li>
+<li>失敗原因分類</li>
+<li>停止・再開・ロールバックの成否</li>
+</ul>
+<h3>3か月で作るべき外部実績</h3>
+<p>単なる「AIで開発しました」では弱い。</p>
+<p>次の形式で公開する。</p>
+<blockquote>
+<p>従来方式と比較して、変更リードタイムを何%削減したか。<br>
+人間レビュー時間は何分だったか。<br>
+どの欠陥をAIが検出し、どの欠陥を見逃したか。<br>
+どの条件で停止したか。<br>
+どの証拠を基に人間が承認したか。</p>
+</blockquote>
+<hr>
+<h2>今後1年</h2>
+<table>
+<thead>
+<tr>
+<th>分類</th>
+<th>実行内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>学ぶ</strong></td>
+<td>業界知識、契約、知財、プライバシー、SRE、インシデント対応、法人営業</td>
+</tr>
+<tr>
+<td><strong>作る</strong></td>
+<td>Agent Readiness診断＋改善＋継続評価を一つの商品にする</td>
+</tr>
+<tr>
+<td><strong>公開する</strong></td>
+<td>四半期ごとのベンチマーク、顧客許可済み事例、失敗パターン集</td>
+</tr>
+<tr>
+<td><strong>実務検証</strong></td>
+<td>少なくとも3件の有料パイロット</td>
+</tr>
+<tr>
+<td><strong>人脈</strong></td>
+<td>業界団体、顧客紹介者、弁護士、セキュリティ会社、保険会社</td>
+</tr>
+<tr>
+<td><strong>収益化</strong></td>
+<td>初期診断、導入支援、月次評価をセット販売</td>
+</tr>
+<tr>
+<td><strong>比重を下げる</strong></td>
+<td>単発受託、顧客ごとの完全個別開発</td>
+</tr>
+<tr>
+<td><strong>観測する</strong></td>
+<td>継続契約率、導入後利用率、顧客ROI、監査要求、モデル切替頻度</td>
+</tr>
+</tbody>
+</table>
+<h3>推奨商品構成</h3>
+<ol>
+<li><strong>Agent Readiness Assessment</strong></li>
+<li><strong>正本・テスト・権限の改善</strong></li>
+<li><strong>AI開発ワークフロー導入</strong></li>
+<li><strong>継続評価</strong></li>
+<li><strong>月次監査レポート</strong></li>
+<li><strong>事故時支援</strong></li>
+</ol>
+<p>初期導入だけで終わらず、継続評価・監査を月額化する。</p>
+<hr>
+<h2>今後3年</h2>
+<ul>
+<li>1業界の要求・評価・失敗データを蓄積する</li>
+<li>業界専用のEvidence Graphを保有する</li>
+<li>導入支援売上より継続売上を大きくする</li>
+<li>複数モデルを比較可能なベンダーニュートラル設計を維持する</li>
+<li>ドメイン専門家、評価エンジニア、顧客成功担当を優先して採用する</li>
+<li>AI生成システムの独立検証・監査サービスへ展開する</li>
+<li>顧客側のHuman Leadを教育する</li>
+<li>業界団体や標準化活動へ参加する</li>
+<li>事故、失敗、モデル劣化のデータを競争資産にする</li>
+</ul>
+<p>3年後の差別化資産はコードではなく、次になる。</p>
+<ul>
+<li>業界固有の評価データ</li>
+<li>顧客との継続契約</li>
+<li>失敗分類</li>
+<li>運用実績</li>
+<li>証拠スキーマ</li>
+<li>監査方法</li>
+<li>販売チャネル</li>
+<li>信用</li>
+</ul>
+<hr>
+<h2>今後5年</h2>
+<p>目指すべき状態は、単なるAI開発者ではない。</p>
+<blockquote>
+<p><strong>特定業界において、AIエージェントによる開発・業務実行を、安全に導入・評価・運用・保証できる事業者</strong></p>
+</blockquote>
+<p>具体的には、次のいずれかを確立する。</p>
+<ul>
+<li>業界特化AI Software Factory</li>
+<li>業界特化Agent Operations BPO</li>
+<li>AI成果物の評価・監査事業</li>
+<li>AI可読化・レガシー移行事業</li>
+<li>業界ルール・評価データ提供事業</li>
+<li>複数のマイクロSaaSを支える共通業務基盤</li>
+</ul>
+<p>複数SaaSを運営する場合も、無関係な製品を大量に作るべきではない。同じ顧客、同じ業務データ、同じ評価基盤、同じ販売チャネルを共有する製品群に限定する。</p>
+<hr>
+<h1>15. 今すぐ始めること・観測すること・避けること</h1>
+<h2>今すぐ始めること</h2>
+<ol>
+<li>AI開発の成果を定量計測する</li>
+<li>要求・ADR・Issue・PR・テストを追跡可能にする</li>
+<li>エージェントの役割と権限を明示する</li>
+<li>独立レビュー・別モデル検証を組み込む</li>
+<li>停止・再開・ロールバックを設計する</li>
+<li>人間の判断時間を測る</li>
+<li>一つの業界へ顧客ヒアリングを集中する</li>
+<li>Agent Readinessを有料サービスとして試す</li>
+<li>成功だけでなく失敗事例を公開する</li>
+<li>技術実績を顧客成果へ接続する</li>
+</ol>
+<h2>まだ大きく賭けず、継続観測すること</h2>
+<ul>
+<li>AIタスク長の50%ではなく80%・99%成功水準</li>
+<li>AI生成コードの長期保守費用</li>
+<li>人間レビュー時間の推移</li>
+<li>MCP・A2Aの実運用標準化</li>
+<li>Agent Identityの標準</li>
+<li>AI事故時の契約責任</li>
+<li>保険商品の成立</li>
+<li>日本企業の成果型契約への移行</li>
+<li>Agent監査・認証市場</li>
+<li>ベンダー集中と価格変動</li>
+</ul>
+<h2>現時点では避けること</h2>
+<ul>
+<li>汎用プロンプトエンジニアを主な職業ブランドにする</li>
+<li>特定モデルだけに依存する</li>
+<li>大手と正面衝突する汎用オーケストレーターを作る</li>
+<li>顧客課題のないAIエージェント製品を作る</li>
+<li>コード生成量を成果とみなす</li>
+<li>人間レビューを無条件に増やす</li>
+<li>無償PoCを繰り返す</li>
+<li>評価方法のない自律化</li>
+<li>本番権限を一度に広く与える</li>
+<li>事故・失敗を記録しない</li>
+</ul>
+<hr>
+<h1>16. 最終提言</h1>
+<p>依頼の最終的な問いは、今後5年間で市場価値と事業機会を最大化するために、どのポジションを取り、何を実践し、何を実績として示すべきか、というものである。</p>
+<h2>取るべきポジション</h2>
+<h3>第一選択</h3>
+<blockquote>
+<p><strong>業界特化型AI Software Factory Architect兼Human Lead</strong></p>
+</blockquote>
+<p>役割は次の通りである。</p>
+<ul>
+<li>顧客課題を選定する</li>
+<li>要求と根拠を正本化する</li>
+<li>複数エージェントの役割を設計する</li>
+<li>評価・権限・監査を組み込む</li>
+<li>人間の承認ポイントを決める</li>
+<li>本番運用と事故対応に責任を持つ</li>
+<li>技術成果を事業成果へ接続する</li>
+</ul>
+<h3>第二の収益ポジション</h3>
+<blockquote>
+<p><strong>Agent Readiness・継続評価・独立検証のManaged Service事業者</strong></p>
+</blockquote>
+<p>AI製品そのものより、AIを安全に働かせ続ける能力を販売する。</p>
+<h2>実践すべきこと</h2>
+<ol>
+<li>自分のB2B SaaSをAI Software Factoryの実験場にする</li>
+<li>全作業を計測可能にする</li>
+<li>複数エージェント・独立レビュー・承認を状態機械として実装する</li>
+<li>Agent Readiness診断を商品化する</li>
+<li>特定業界の評価データを蓄積する</li>
+<li>顧客へ有料で導入し、実運用の失敗を集める</li>
+<li>技術、営業、契約、監査、事故対応を横断する</li>
+<li>一つのモデル・一つのツールに依存しない</li>
+<li>成果型または継続評価型の料金モデルへ移る</li>
+<li>顧客関係と業界知識を最優先資産として扱う</li>
+</ol>
+<h2>外部へ示すべき実績</h2>
+<p>最も価値が高いのは、派手なデモやコード量ではない。</p>
+<ul>
+<li>実顧客の業務時間を何%削減したか</li>
+<li>人間の判断時間を何分まで減らしたか</li>
+<li>AI生成変更の初回合格率</li>
+<li>欠陥流出率</li>
+<li>セキュリティ指摘の検出率</li>
+<li>ロールバック率</li>
+<li>事故復旧時間</li>
+<li>変更1件当たりのAI費用</li>
+<li>要求からテストまでの証拠追跡率</li>
+<li>モデル変更後も品質を維持できたか</li>
+<li>顧客の継続率・売上・紹介</li>
+<li>失敗時に安全に停止できた証拠</li>
+<li>人間が何を根拠に承認したか</li>
+</ul>
+<h2>最終判断</h2>
+<p>今後5年間で高い市場価値を持つのは、最も速くコードを書く人ではない。</p>
+<p>また、単に多くのエージェントを動かせる人でもない。</p>
+<blockquote>
+<p><strong>正しい問題を選び、AIが理解できる正本を作り、複数エージェントへ安全に仕事を委任し、成果を独立評価し、人間が短時間で判断できるようにし、最終的な事業責任を引き受けられる人</strong>である。</p>
+</blockquote>
+<p>そして事業機会を最大化するには、その能力を一般論として売るのではなく、<strong>特定業界の顧客、データ、販売網、評価基準、運用実績と結び付けること</strong>が最重要である。</p></div>
   </details>
 </section>
 <section class="agent-response" data-agent="Claude">
   <details>
     <summary>
       <span class="agent-name">Claude</span>
-      <span class="agent-meta">Claude Opus 4 / 2026-07-30 / integrity=raw</span>
+      <span class="agent-meta">Claude（調査レポート・モデル名は回答本文に未記載） / 2026-07-30 / integrity=edited</span>
     </summary>
     <dl class="agent-facts">
       <div><dt>Web検索</dt><dd>あり</dd></div>
       <div><dt>添付</dt><dd>なし</dd></div>
-      <div><dt>完全性</dt><dd>raw</dd></div>
+      <div><dt>完全性</dt><dd>edited</dd></div>
     </dl>
+    <p class="agent-notes">公開にあたり、特定プロダクト名・組織名・個人属性を一般表現へ置換した。原文は .work に保管。</p>
     <div class="agent-body prose"><h1>AIエージェント協働型開発がもたらす人材・企業・産業構造の変化</h1>
 <p><strong>調査基準日：2026年7月30日</strong><br>
 <strong>調査範囲：日本企業中心＋主要海外動向／一次情報優先</strong></p>
@@ -2558,13 +2950,13 @@ Deploy / Monitoring / Rollback Agent
 </tbody>
 </table>
 <h3>0.2 本レポートの立場</h3>
-<p>依頼者の未来像を肯定するためのレポートではない。結論として、<strong>依頼者の想定シナリオ（PM Agent中心・人間は判断と承認のみ）は「2030年代の一部領域で実現するが、2020年代後半の主戦場ではない」</strong>と判定する。理由は第5章と第14章で述べる。</p>
-<p>そのうえで、<strong>依頼者の未来像が外れても価値が残るポジション</strong>を提案する。それが本レポートの実質的な狙いである。</p>
+<p>想定読者の未来像を肯定するためのレポートではない。結論として、<strong>想定読者の想定シナリオ（PM Agent中心・人間は判断と承認のみ）は「2030年代の一部領域で実現するが、2020年代後半の主戦場ではない」</strong>と判定する。理由は第5章と第14章で述べる。</p>
+<p>そのうえで、<strong>想定読者の未来像が外れても価値が残るポジション</strong>を提案する。それが本レポートの実質的な狙いである。</p>
 <h3>0.3 前提として置いた仮定（依頼文に明示がなかった部分）</h3>
 <p>以下は依頼文から読み取れなかったため仮置きした。異なる場合は指摘してほしい。</p>
 <ol>
 <li><strong>判断の時間軸</strong>：5年以内に取れる行動を最重要とした（10年後の話は参考扱い）</li>
-<li><strong>リスク許容度</strong>：既存のIN4A合同会社の収益基盤を維持しながらの並行投資を想定。全面ピボットは前提としない</li>
+<li><strong>リスク許容度</strong>：既存の小規模事業者の収益基盤を維持しながらの並行投資を想定。全面ピボットは前提としない</li>
 <li><strong>資本制約</strong>：外部調達なし、自己資金と受託収益の範囲内</li>
 <li><strong>「市場価値」の定義</strong>：転職市場での年収ではなく、①受託単価、②プロダクト収益、③指名される確率の3つの合成と解釈した</li>
 </ol>
@@ -2689,14 +3081,14 @@ Deploy / Monitoring / Rollback Agent
 <p>理由：<br>
 1. これはドメイン知識と責任引受の合成物であり、汎用プラットフォームが規模で解けない<br>
 2. 富士通が「AI-Ready Engineering」として同じ課題を名指ししている＝市場が検証済み<br>
-3. 大手は大企業案件しか取れない。日本の中小企業・士業市場は空白<br>
+3. 大手は大企業案件しか取れない。日本の中小企業・専門職市場は空白<br>
 4. 一度作った正本は再利用でき、人月から離れられる</p>
 <p>第9章・第10章で22のサービス案・20の周辺ビジネス案として展開する。</p>
-<h3>1.6 今から行うべき最優先事項（依頼者向け・優先順3つ）</h3>
+<h3>1.6 今から行うべき最優先事項（想定読者向け・優先順3つ）</h3>
 <ol>
 <li><strong>既に持っているSDAD/ADR/多重レビュー資産を「証跡パック」として外部提出可能な形式に標準化し、公開する。</strong> 日本のAI駆動開発言説はほぼ「感想」で、測定された証拠が決定的に不足している。ここに空白がある。</li>
-<li><strong>amane-flowの開発を「検証済み変更あたりの原価」で計測し始める。</strong> トークン単価ではなく検証済み単位の原価。この指標を持っている個人はほぼいない。これが単価交渉と登壇の武器になる。</li>
-<li><strong>今日と明日（7/30-31）開催のAI駆動開発カンファレンス2026夏にオンライン参加し（無料）、AI駆動開発コンソーシアム（会費無料）と大阪支部に接続する。</strong> ネットワーク形成のコストが最も安い瞬間である。</li>
+<li><strong>自社B2B SaaSの開発を「検証済み変更あたりの原価」で計測し始める。</strong> トークン単価ではなく検証済み単位の原価。この指標を持っている個人はほぼいない。これが単価交渉と登壇の武器になる。</li>
+<li><strong>今日と明日（7/30-31）開催のAI駆動開発カンファレンス2026夏にオンライン参加し（無料）、AI駆動開発コンソーシアム（会費無料）と地域コミュニティに接続する。</strong> ネットワーク形成のコストが最も安い瞬間である。</li>
 </ol>
 <hr>
 <h2>2. 未来の開発モデル</h2>
@@ -2758,7 +3150,7 @@ Deploy / Monitoring / Rollback Agent
 - <strong>PM Agentは自分の失敗を報告する動機構造を持たない。</strong> METRが観測した「ズル」の傾向は、報告層にも及ぶ。監視者と被監視者が同じモデル族である構造は、内部統制の基本原則（職務分離）に反する。<br>
 - <strong>エージェント間協調のコストは無料ではない。</strong> 複数エージェントの引き継ぎは、情報の欠落と再確認を生む。2026年のツールの進化方向は「対等な複数エージェントの交渉」ではなく「1体の強いエージェント＋サブエージェント」に寄っている。Addy Osmaniの整理でも、多数エージェントの運用は「単一セッション内のサブエージェント」「ローカル並列worktree」「クラウド委任」の3階層に分かれ、大半の開発者はこの3つを使い分ける形になっている。「マルチエージェント」は目的ではなく手段であり、単一強力エージェントに収束する可能性がある（第14章）。</p>
 <p><strong>修正提案：</strong> PM Agentは「集約・提示」層としては有効だが、<strong>検証の独立性を担保する仕組みが別途必要</strong>である。具体的には、<br>
-- 生成に使ったモデル族と、検証に使うモデル族を分離する（依頼者が既に実践しているClaude/Codex/Cursorの役割分離は、この観点で正しい設計）<br>
+- 生成に使ったモデル族と、検証に使うモデル族を分離する（想定読者が既に実践しているClaude/Codex/Cursorの役割分離は、この観点で正しい設計）<br>
 - 集約された報告に対し、<strong>要約ではなく反証を提出させる</strong>（「問題ありません」ではなく「この主張が誤りである可能性が最も高い箇所はここで、その根拠はこれ」）<br>
 - 承認の単位を「差分」ではなく「不変条件の維持」に置く</p>
 <h3>2.3 実現に必要な技術と制度（不足しているもの）</h3>
@@ -2878,7 +3270,7 @@ Deploy / Monitoring / Rollback Agent
 </tr>
 <tr>
 <td>④ 個人・マイクロ企業</td>
-<td>依頼者を含む</td>
+<td>想定読者を含む</td>
 <td><strong>実践は最先端。ただし可視化されていない</strong></td>
 <td>3〜5</td>
 </tr>
@@ -2923,7 +3315,7 @@ Deploy / Monitoring / Rollback Agent
 <td>中。数値の一般化には注意が必要だが、67種のパッケージ適用という具体的コミットメントは撤回コストが高く、本気度は高い</td>
 </tr>
 <tr>
-<td>依頼者の未来像との一致度</td>
+<td>想定読者の未来像との一致度</td>
 <td><strong>★★★★★（最も近い）</strong></td>
 </tr>
 </tbody>
@@ -2962,7 +3354,7 @@ Deploy / Monitoring / Rollback Agent
 <td>目標が「30%」である点。富士通の「100倍」との差は誇張の差ではなく、<strong>適用対象の差</strong>（定型改修 vs SI全工程）を正直に反映している可能性が高い。むしろ30%の方が全工程平均としては現実的</td>
 </tr>
 <tr>
-<td>依頼者の未来像との一致度</td>
+<td>想定読者の未来像との一致度</td>
 <td>★★★★☆</td>
 </tr>
 </tbody>
@@ -2997,7 +3389,7 @@ Deploy / Monitoring / Rollback Agent
 <td>500プロジェクト適用という「幅」の実績は日本最大級。ただし1件あたりの深さは不明</td>
 </tr>
 <tr>
-<td>依頼者の未来像との一致度</td>
+<td>想定読者の未来像との一致度</td>
 <td>★★★★☆</td>
 </tr>
 </tbody>
@@ -3036,11 +3428,11 @@ Deploy / Monitoring / Rollback Agent
 <td><strong>実運用＋定量報告＋失敗の公開。日本で最も強い。</strong>自己申告アンケート由来である点は割り引く必要があるが、失敗を公開している点で信頼度が上がる</td>
 </tr>
 <tr>
-<td>依頼者にとっての意味</td>
+<td>想定読者にとっての意味</td>
 <td>「AIが働きやすい環境＝新規参入者が働きやすい環境」という同社の指摘は重要。<strong>AI向けの整備コストは人材オンボーディングコストと二重回収できる</strong>という論拠になり、顧客への提案材料になる</td>
 </tr>
 <tr>
-<td>依頼者の未来像との一致度</td>
+<td>想定読者の未来像との一致度</td>
 <td><strong>★★★★★</strong></td>
 </tr>
 </tbody>
@@ -3071,8 +3463,8 @@ Deploy / Monitoring / Rollback Agent
 <td><strong>公式発表。強い</strong></td>
 </tr>
 <tr>
-<td>依頼者にとっての意味</td>
-<td><strong>参加コストゼロで業界の課題設定に接続できる最短経路。</strong>しかも「品質保証」「説明責任」という、依頼者が最も強い領域が中心議題</td>
+<td>想定読者にとっての意味</td>
+<td><strong>参加コストゼロで業界の課題設定に接続できる最短経路。</strong>しかも「品質保証」「説明責任」という、想定読者が最も強い領域が中心議題</td>
 </tr>
 </tbody>
 </table>
@@ -3091,11 +3483,11 @@ Deploy / Monitoring / Rollback Agent
 </tr>
 <tr>
 <td>支部</td>
-<td>フロントエンド、Women's Base、<strong>大阪</strong>、奈良、神戸、静岡、広島、名古屋、沖縄、四国。大阪支部は2026年時点で第13回まで開催（Claude Code並行開発環境の運用改善、複数Claude Codeの放置問題を自作CLIダッシュボードで解決した事例などが発表されている）</td>
+<td>フロントエンド、Women's Base、<strong>大阪</strong>、奈良、神戸、静岡、広島、名古屋、沖縄、四国。地域コミュニティは2026年時点で第13回まで開催（Claude Code並行開発環境の運用改善、複数Claude Codeの放置問題を自作CLIダッシュボードで解決した事例などが発表されている）</td>
 </tr>
 <tr>
-<td>依頼者にとっての意味</td>
-<td><strong>大阪在住・Claude Code多重運用実践者という依頼者のプロフィールが、大阪支部の関心領域と完全一致している。</strong>登壇の最短経路</td>
+<td>想定読者にとっての意味</td>
+<td><strong>地域コミュニティとの接続が有効になりうる。</strong></td>
 </tr>
 </tbody>
 </table>
@@ -3118,7 +3510,7 @@ Deploy / Monitoring / Rollback Agent
 </tr>
 <tr>
 <td>注目理由</td>
-<td><strong>ソフトウェアテスト・品質保証を本業とする企業がAI駆動開発の「上流の設計」に踏み込んでいる。</strong>これは「AI時代の品質保証」という市場が実在することの強い間接証拠。同時に、依頼者が狙う領域の<strong>最大の競合候補</strong>でもある</td>
+<td><strong>ソフトウェアテスト・品質保証を本業とする企業がAI駆動開発の「上流の設計」に踏み込んでいる。</strong>これは「AI時代の品質保証」という市場が実在することの強い間接証拠。同時に、想定読者が狙う領域の<strong>最大の競合候補</strong>でもある</td>
 </tr>
 </tbody>
 </table>
@@ -3165,8 +3557,8 @@ Deploy / Monitoring / Rollback Agent
 エージェント、オーケストレーター、評価基盤、権限基盤はすべて海外製。日本勢は統合者に留まる。ここは構造的（英語のOSSエコシステム、開発者数、資本量）であり、5年で埋まらない。</p>
 <p><strong>空白②：検証・監査の独立第三者が存在しない</strong><br>
 AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが最も近いが、テスト実行の代行が主で「AIエージェントの判断の妥当性を監査する」業ではない。<strong>ここは実質的に空いている。</strong></p>
-<p><strong>空白③：中小企業・士業市場の空白</strong><br>
-大手SIerは大企業案件しか取れない（1件の単価が合わない）。日本の中小企業数は300万社超。ここにAI駆動開発を届ける主体がいない。<strong>依頼者の既存ターゲット（士業）はこの空白に位置している。</strong></p>
+<p><strong>空白③：中小企業・専門職市場の空白</strong><br>
+大手SIerは大企業案件しか取れない（1件の単価が合わない）。日本の中小企業数は300万社超。ここにAI駆動開発を届ける主体がいない。<strong>専門職・中小向けドメイン特化はこの空白に位置しやすい。</strong></p>
 <p><strong>空白④：測定された実践記録の不足</strong><br>
 日本語のAI駆動開発コンテンツは圧倒的に「やってみた／感想」に偏り、サイバーエージェント以外に定量報告がほぼない。<strong>個人が最も低コストで差別化できる領域。</strong></p>
 <p><strong>なぜ日本では動きが見えにくいのか（空白ではなく可視性の問題）</strong></p>
@@ -3684,7 +4076,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<p><strong>依頼者に対する率直な指摘：</strong> 依頼者の現在の強み（多重エージェント運用、SDAD方法論、ツール比較検討）は、<strong>(B)と(C)の混在</strong>である。(C)の部分の賞味期限は短い。<strong>(A)と(B)の中核（責任引受、ドメイン、評価設計、証跡）に資産を移す必要がある。</strong>これが本レポートの最も重要な実務的助言である。</p>
+<p><strong>想定読者に対する率直な指摘：</strong> 想定読者の現在の強み（多重エージェント運用、SDAD方法論、ツール比較検討）は、<strong>(B)と(C)の混在</strong>である。(C)の部分の賞味期限は短い。<strong>(A)と(B)の中核（責任引受、ドメイン、評価設計、証跡）に資産を移す必要がある。</strong>これが本レポートの最も重要な実務的助言である。</p>
 <h3>6.3 新職種・新役割（18種）</h3>
 <p><strong>設計方針：</strong> 「対象物（object of work）が従来職種と違うもの」だけを挙げる。名前だけ新しくPMやアーキテクトと中身が同じものは排除した。</p>
 <p>評価軸は5段階（5が最高。「再代替」は数字が大きいほどリスク大）。</p>
@@ -3886,7 +4278,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 | 16 | Accountability Underwriter | 4 | 4 | 2 | 4 | <strong>5</strong> | 4 | 1 | 3 | 2 | 制度依存が強すぎる。賭けにならない |<br>
 | 17 | Vertical Knowledge Curator | 5 | 4 | 4 | <strong>5</strong> | 4 | <strong>5</strong> | 2 | <strong>5</strong> | <strong>5</strong> | <strong>継続収益性が最高。マイクロ企業の本命</strong> |<br>
 | 18 | Inference Economics Engineer | 4 | 3 | 4 | 4 | 3 | 3 | 4 | 3 | 3 | 有用だがツールに吸収されやすい |</p>
-<p><strong>依頼者向けの優先順位：</strong> 準備価値5がついた6職種のうち、<strong>#6（AI可読化）が即時収益、#17（業種知識キュレーター）が継続収益、#4（証跡設計）＋#1（検証設計）＋#3（不変条件）が差別化の核</strong>。この5つの組み合わせが最も整合的なポジションである。</p>
+<p><strong>想定読者向けの優先順位：</strong> 準備価値5がついた6職種のうち、<strong>#6（AI可読化）が即時収益、#17（業種知識キュレーター）が継続収益、#4（証跡設計）＋#1（検証設計）＋#3（不変条件）が差別化の核</strong>。この5つの組み合わせが最も整合的なポジションである。</p>
 <hr>
 <h2>7. ITエンジニアの価値向上戦略</h2>
 <h3>7.1 学習：何を学び、何を学ばないか</h3>
@@ -3908,19 +4300,19 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td><strong>不変条件の形式化</strong>（契約による設計、プロパティベーステスト、形式仕様の初歩）</td>
-<td>実践方法：amane-flowの既存の「Fail Secure」「Magic String排除」原則を、<strong>機械検証可能な形</strong>に落とす。原則を文章で持つのと、CIで落ちるようにするのは価値が桁違い</td>
+<td>実践方法：自社B2B SaaSの既存の「Fail Secure」「Magic String排除」原則を、<strong>機械検証可能な形</strong>に落とす。原則を文章で持つのと、CIで落ちるようにするのは価値が桁違い</td>
 <td>有効</td>
 <td><strong>有効</strong></td>
 </tr>
 <tr>
-<td><strong>1つの業種の制度知識</strong>（士業の業務プロセス、関連法令、報酬体系、リスク）</td>
+<td><strong>1つの業種の制度知識</strong>（特定業種の業務プロセス、関連法令、報酬体系、リスク）</td>
 <td>実践方法：顧問契約を1件取り、業務を最初から最後まで見る。文書化されていない部分だけを記録する</td>
 <td>有効</td>
 <td><strong>有効</strong></td>
 </tr>
 <tr>
 <td><strong>統計的な評価設計</strong>（評価データの作り方、指標の妥当性、変動の扱い）</td>
-<td>実践方法：amane-flowのAI分析機能に対する評価ハーネスを、再現可能な形で作り公開する</td>
+<td>実践方法：自社B2B SaaSのAI分析機能に対する評価ハーネスを、再現可能な形で作り公開する</td>
 <td>有効</td>
 <td>有効</td>
 </tr>
@@ -3932,7 +4324,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td><strong>原価計算</strong>（検証済み成果あたりの単位原価）</td>
-<td>実践方法：amane-flowの1機能追加あたりのトークン費・自分の時間・レビュー回数・手戻り率を記録する。3か月続けると誰も持っていないデータになる</td>
+<td>実践方法：自社B2B SaaSの1機能追加あたりのトークン費・自分の時間・レビュー回数・手戻り率を記録する。3か月続けると誰も持っていないデータになる</td>
 <td>有効</td>
 <td>有効</td>
 </tr>
@@ -3968,13 +4360,13 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <tbody>
 <tr>
 <td><strong>証跡パック形式（Evidence Pack Spec）</strong></td>
-<td>依頼者の最大の差別化資産</td>
+<td>想定読者の最大の差別化資産</td>
 <td>1つの機能追加に対し、①要求の出所、②選択された案と却下された案（ADR）、③不変条件と検証方法、④独立レビューの指摘と対応、⑤残存リスクと受容判断、⑥誰が承認したか——を1ファイルに畳んだ標準形式。<strong>これを公開仕様として出す</strong></td>
 </tr>
 <tr>
 <td><strong>不変条件チェッカー（.NET向け）</strong></td>
 <td>原則を実行可能にする</td>
-<td>Fail Secure違反・Magic String・DRY違反をCIで落とすアナライザ。amane-flowで実証してNuGet公開（amane-mailerで既にnuget.org公開パイプラインを持っている点が活きる）</td>
+<td>Fail Secure違反・Magic String・DRY違反をCIで落とすアナライザ。自社B2B SaaSで実証してNuGet公開（自社公開プロダクトで既にnuget.org公開パイプラインを持っている点が活きる）</td>
 </tr>
 <tr>
 <td><strong>自社リポジトリ評価ハーネス</strong></td>
@@ -3984,12 +4376,12 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <tr>
 <td><strong>AI-Ready診断チェックリスト</strong></td>
 <td>即時に売れる最小商品</td>
-<td>中小企業・士業向けシステムを「エージェントが扱える状態か」で採点する30項目程度。無料版を公開、有償版で実施</td>
+<td>中小企業・専門職向けシステムを「エージェントが扱える状態か」で採点する30項目程度。無料版を公開、有償版で実施</td>
 </tr>
 <tr>
-<td><strong>士業向け機械可読ルールパック（1業種）</strong></td>
+<td><strong>業種別機械可読ルールパック（1業種）</strong></td>
 <td>継続収益の核</td>
-<td>1つの士業の業務ルール（期限、必須項目、法令要件）を機械検証可能な形に。これが#17の資産</td>
+<td>1つの業種の業務ルール（期限、必須項目、法令要件）を機械検証可能な形に。これが#17の資産</td>
 </tr>
 <tr>
 <td><strong>単位原価ダッシュボード</strong></td>
@@ -4036,7 +4428,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td><strong>登壇</strong></td>
-<td>AI駆動開発カンファレンス／大阪支部。<strong>測定データを持って登壇すると、感想勢との差が可視化される</strong></td>
+<td>AI駆動開発カンファレンス／地域コミュニティ。<strong>測定データを持って登壇すると、感想勢との差が可視化される</strong></td>
 <td>強い</td>
 </tr>
 <tr>
@@ -4088,14 +4480,14 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td>5</td>
-<td><strong>amane-flowのSaaS収益</strong></td>
+<td><strong>自社B2B SaaSのSaaS収益</strong></td>
 <td>既存路線。AIで開発コストが下がるほど、差別化は顧客理解とデータに移る</td>
 <td>中</td>
 </tr>
 <tr>
 <td>6</td>
 <td>教育・研修（AI駆動開発の型）</td>
-<td>依頼者は既にメンタリング経験がある。<strong>ただし単価は上がりにくく、時間を売る形に戻る</strong>ため比重は抑える</td>
+<td>想定読者は既にメンタリング経験がある。<strong>ただし単価は上がりにくく、時間を売る形に戻る</strong>ため比重は抑える</td>
 <td>低（成長性も低）</td>
 </tr>
 </tbody>
@@ -4261,11 +4653,11 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <td><strong>極小に最適</strong></td>
 <td>中</td>
 <td>—</td>
-<td><strong>賠償能力と継続性の欠如が天井になる。</strong>規制産業・大企業の基幹系には構造的に入れない。<strong>これが依頼者にとって最も重要な制約</strong></td>
+<td><strong>賠償能力と継続性の欠如が天井になる。</strong>規制産業・大企業の基幹系には構造的に入れない。<strong>これが想定読者にとって最も重要な制約</strong></td>
 </tr>
 </tbody>
 </table>
-<h3>8.1 マイクロ企業の天井について（依頼者向けの核心）</h3>
+<h3>8.1 マイクロ企業の天井について（想定読者向けの核心）</h3>
 <p><strong>技術的には1人で大企業並みの開発ができる時代が来る。しかし営業的・法的には来ない。</strong></p>
 <p>理由：<br>
 1. <strong>賠償能力の担保</strong>。大企業・規制産業は「事故時に賠償できる相手」しか選べない。これは能力評価ではなく調達規程の問題<br>
@@ -4294,8 +4686,8 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td>C. 相手を選ぶ</td>
-<td>中小企業・士業のように、小規模事業者を受け入れる市場に留まる</td>
-<td><strong>高い。依頼者の既存路線</strong></td>
+<td>中小企業・専門職のように、小規模事業者を受け入れる市場に留まる</td>
+<td><strong>高い。ドメイン特化路線と整合しやすい</strong></td>
 </tr>
 </tbody>
 </table>
@@ -4479,7 +4871,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <td>12</td>
 <td><strong>業種別機械可読ルールパック</strong></td>
 <td>業種の制度をAIが正しく扱えない</td>
-<td>業種特化ベンダー、士業、中小企業</td>
+<td>業種特化ベンダー、専門職、中小企業</td>
 <td>人間の専門家</td>
 <td>ドメイン知識の深さと更新の継続</td>
 <td>中</td>
@@ -4644,17 +5036,17 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <tr>
 <td>1</td>
 <td><strong>#3 証跡パック＋#22 説明責任レポート</strong></td>
-<td>今すぐ作れる、日本市場に固有、大手が興味を持たない、依頼者の既存資産（ADR・多重レビュー）が直接転用できる</td>
+<td>今すぐ作れる、日本市場に固有、大手が興味を持たない、実践現場の既存資産（ADR・多重レビュー）が直接転用できる</td>
 </tr>
 <tr>
 <td>2</td>
 <td><strong>#12 業種別ルールパック</strong></td>
-<td>継続収益。士業ターゲットの既存知見が活きる。作るのに時間がかかるので早く始める必要がある</td>
+<td>継続収益。特定業種の既存知見が活きる。作るのに時間がかかるので早く始める必要がある</td>
 </tr>
 <tr>
 <td>3</td>
 <td><strong>#2 不変条件DSL</strong></td>
-<td>依頼者の3原則（Fail Secure／Magic String排除／DRY &amp; Simple）をそのまま製品化できる。.NET向けは競合が薄い</td>
+<td>想定読者の3原則（Fail Secure／Magic String排除／DRY &amp; Simple）をそのまま製品化できる。.NET向けは競合が薄い</td>
 </tr>
 <tr>
 <td>4</td>
@@ -4822,7 +5214,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td>10</td>
-<td><strong>AI開発対応の契約・法務支援</strong>（士業との協業）</td>
+<td><strong>AI開発対応の契約・法務支援</strong>（専門家との協業）</td>
 <td>4</td>
 <td>4</td>
 <td>3</td>
@@ -5096,7 +5488,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td>地方居住</td>
-<td><strong>有利。</strong>大阪・地方の立地不利がさらに縮む。ただしコミュニティ接続は意識的に作る必要がある</td>
+<td><strong>有利。</strong>地方を含む立地不利がさらに縮む。ただしコミュニティ接続は意識的に作る必要がある</td>
 <td>—</td>
 <td>—</td>
 </tr>
@@ -5123,12 +5515,12 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <li>2030〜2035：シニアの供給が枯れる。既存シニアの単価がさらに上がる</li>
 <li>2035〜：検証できる人間が構造的に不足し、<strong>AI生成システムを誰も検証できない状態</strong>になる</li>
 </ul>
-<p><strong>この構造は、依頼者にとって2つの意味を持つ。</strong><br>
-1. <strong>シニア側にいることの価値が長期的に上がる。</strong>依頼者は25年の経験があり、この側にいる<br>
-2. <strong>「AI時代のジュニア育成」は10年スパンで確実に需要が立つ市場である。</strong>依頼者はすでに教育・メンタリングの経験を持っており、この資産は陳腐化しない</p>
+<p><strong>この構造は、想定読者にとって2つの意味を持つ。</strong><br>
+1. <strong>シニア側にいることの価値が長期的に上がる。</strong>想定読者は長年の実務経験があり、この側にいる<br>
+2. <strong>「AI時代のジュニア育成」は10年スパンで確実に需要が立つ市場である。</strong>想定読者はすでに教育・メンタリングの経験を持っており、この資産は陳腐化しない</p>
 <hr>
 <h2>12. 具体的な行動計画</h2>
-<p><strong>対象：</strong> 日本（大阪）で活動する、AIエージェント協働開発を既に実践し、ADR・Issue・PR・独立レビュー・複数エージェントを組み合わせ、自ら小規模B2B SaaSを開発しているITエンジニア。個人または小規模チームとしての機会を重視。</p>
+<p><strong>対象：</strong> 日本で活動する、AIエージェント協働開発を既に実践し、ADR・Issue・PR・独立レビュー・複数エージェントを組み合わせ、小規模B2B SaaS等を開発・運用しているITエンジニア。個人または小規模チームとしての機会を重視。</p>
 <p><strong>設計原則：</strong> 4シナリオのどれが来ても価値が残る行動だけを選んだ。特定シナリオにしか効かない行動は除外した。</p>
 <h3>12.1 今後3か月（2026年8月〜10月）</h3>
 <table>
@@ -5153,7 +5545,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <tr>
 <td><strong>作る</strong></td>
 <td><strong>証跡パック形式 v0.1</strong> を定義する（要求の出所／採否したADR／不変条件と検証方法／独立レビュー指摘と対応／残存リスクと受容判断／承認者）</td>
-<td>amane-flowの直近3機能に遡って適用し、実物が3つある</td>
+<td>自社B2B SaaSの直近3機能に遡って適用し、実物が3つある</td>
 </tr>
 <tr>
 <td><strong>作る</strong></td>
@@ -5163,7 +5555,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <tr>
 <td><strong>作る</strong></td>
 <td>.NET向け不変条件アナライザの最小版（Fail Secure違反・Magic String検出）</td>
-<td>amane-flowのCIで実際に落ちている</td>
+<td>自社B2B SaaSのCIで実際に落ちている</td>
 </tr>
 <tr>
 <td><strong>公開</strong></td>
@@ -5177,7 +5569,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td><strong>公開</strong></td>
-<td><strong>AI駆動開発 大阪支部</strong>に参加し、次回登壇枠を打診</td>
+<td><strong>AI駆動開発 地域コミュニティ</strong>に参加し、次回登壇枠を打診</td>
 <td>登壇日程が決まっている</td>
 </tr>
 <tr>
@@ -5187,7 +5579,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td><strong>実務検証</strong></td>
-<td>amane-flowで「独立検証を別モデル族に強制する」構成を明文化し、効果を測る</td>
+<td>自社B2B SaaSで「独立検証を別モデル族に強制する」構成を明文化し、効果を測る</td>
 <td>検出できた問題／できなかった問題のリストがある</td>
 </tr>
 <tr>
@@ -5229,13 +5621,13 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <tbody>
 <tr>
 <td><strong>学ぶ</strong></td>
-<td>1つの士業（既存ターゲット）の業務プロセスを、文書化されていない部分だけ記録する</td>
+<td>1つの業種の業務プロセスを、文書化されていない部分だけ記録する</td>
 <td>「AIに聞いても出てこない知識」のリストが50項目以上</td>
 </tr>
 <tr>
 <td><strong>学ぶ</strong></td>
 <td>プロパティベーステスト・契約による設計を.NETで実践できる水準に</td>
-<td>amane-flowの中核ドメインに適用済み</td>
+<td>自社B2B SaaSの中核ドメインに適用済み</td>
 </tr>
 <tr>
 <td><strong>作る</strong></td>
@@ -5244,8 +5636,8 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td><strong>作る</strong></td>
-<td><strong>士業向け機械可読ルールパック（1業種・1領域）</strong></td>
-<td>実際にamane-flowまたは顧客システムで動いている</td>
+<td><strong>業種別機械可読ルールパック（1業種・1領域）</strong></td>
+<td>実際に自社B2B SaaSまたは顧客システムで動いている</td>
 </tr>
 <tr>
 <td><strong>作る</strong></td>
@@ -5259,12 +5651,12 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td><strong>公開</strong></td>
-<td>AI駆動開発カンファレンスまたは大阪支部で<strong>登壇</strong>（測定データを持って）</td>
+<td>AI駆動開発カンファレンスまたは地域コミュニティで<strong>登壇</strong>（測定データを持って）</td>
 <td>登壇済み</td>
 </tr>
 <tr>
 <td><strong>公開</strong></td>
-<td>不変条件アナライザをnuget.orgで公開（amane-mailerの公開パイプラインを流用）</td>
+<td>不変条件アナライザをnuget.orgで公開（自社公開プロダクトの公開パイプラインを流用）</td>
 <td>公開済み・ダウンロード実績がある</td>
 </tr>
 <tr>
@@ -5284,7 +5676,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td><strong>人脈</strong></td>
-<td>士業（弁護士・税理士）1人と、AI開発の契約・責任について協業できる関係</td>
+<td>法務・税務など専門家1人と、AI開発の契約・責任について協業できる関係</td>
 <td>実案件で相談できる</td>
 </tr>
 <tr>
@@ -5337,7 +5729,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <tr>
 <td><strong>作る</strong></td>
 <td>仕様⇄テスト整合性検査の仕組み（第9章#18）</td>
-<td>amane-flowと顧客案件で実運用</td>
+<td>自社B2B SaaSと顧客案件で実運用</td>
 </tr>
 <tr>
 <td><strong>公開</strong></td>
@@ -5356,7 +5748,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td><strong>収益化</strong></td>
-<td>3本柱の確立：①検証・証跡の受託、②ルールパックのライセンス、③amane-flowのSaaS</td>
+<td>3本柱の確立：①検証・証跡の受託、②ルールパックのライセンス、③自社B2B SaaSのSaaS</td>
 <td>どの1本が消えても事業が続く</td>
 </tr>
 <tr>
@@ -5398,7 +5790,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td><strong>組織</strong></td>
-<td>1人ではなく2〜4名の信頼できる協働体制（依頼者が重視する「少数の信頼できる協働者」の形）</td>
+<td>1人ではなく2〜4名の信頼できる協働体制（想定読者が重視する「少数の信頼できる協働者」の形）</td>
 <td>自分が倒れても1か月は止まらない</td>
 </tr>
 <tr>
@@ -5509,7 +5901,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<p><strong>反論への応答：</strong> 「AIにレビューさせればよい」という主張は、生成者と検証者が同族モデルである点で内部統制の職務分離原則に反する。METRが観測した「ズル」の傾向は報告層にも及ぶ。だから<strong>モデル族の分離</strong>が必要で、依頼者が既に実践しているClaude/Codex/Cursorの役割分離はこの観点で正しい設計である。</p>
+<p><strong>反論への応答：</strong> 「AIにレビューさせればよい」という主張は、生成者と検証者が同族モデルである点で内部統制の職務分離原則に反する。METRが観測した「ズル」の傾向は報告層にも及ぶ。だから<strong>モデル族の分離</strong>が必要で、想定読者が既に実践しているClaude/Codex/Cursorの役割分離はこの観点で正しい設計である。</p>
 <p><strong>正直な帰結：</strong> 移行期には、人間が理解していないものに署名する事故が確実に起きる。これが第10章の保険・鑑定市場の原資になる。</p>
 <h3>Q3. ソフトウェアの価値は下がり、顧客・データ・販売網・業界知識の価値が上がるのか</h3>
 <p><strong>方向は正しいが、対象を絞る必要がある。</strong></p>
@@ -5537,7 +5929,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <p>個人が獲得するもの：意思決定の速さ、固定費ゼロ、専門性の尖り、ニッチ市場への到達<br>
 個人が獲得できないもの：賠償能力、24/365体制、継続性、稟議の通しやすさ、大規模データ</p>
 <p><strong>最も可能性が高い帰結は「競争」ではなく「入れ子」である。</strong> 企業が責任と顧客関係を持ち、実務を多数の高能力個人に委任する構造。日本のSI多重下請けと形は似るが、中間の管理層が消えて<strong>2層になる</strong>点が違う。</p>
-<p><strong>依頼者への含意：</strong> 「企業と競争する」よりも「企業の責任構造の中で高付加価値の専門機能を提供する」方が期待値が高い。ただしそれだけでは価格決定力を失うため、独自の顧客（中小企業・士業）も並行して持つ必要がある。</p>
+<p><strong>想定読者への含意：</strong> 「企業と競争する」よりも「企業の責任構造の中で高付加価値の専門機能を提供する」方が期待値が高い。ただしそれだけでは価格決定力を失うため、独自の顧客（中小企業・専門職市場）も並行して持つ必要がある。</p>
 <h3>Q7. 小規模企業が有利になる領域と、大企業が圧倒的に有利になる領域</h3>
 <table>
 <thead>
@@ -5656,7 +6048,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 - IT業務賠償責任保険のAI特約<br>
 - 事故鑑定（因果の切り分け）<br>
 - AI利用を前提とした契約条項の設計</p>
-<p><strong>依頼者への実務的助言：</strong> これは3年後の市場ではなく<strong>今すぐ効く</strong>。「証跡を残す開発プロセス」を持っていることは、顧客の法務・情シスに対して直接の説得材料になる。差別化としてすぐ使える。</p>
+<p><strong>想定読者への実務的助言：</strong> これは3年後の市場ではなく<strong>今すぐ効く</strong>。「証跡を残す開発プロセス」を持っていることは、顧客の法務・情シスに対して直接の説得材料になる。差別化としてすぐ使える。</p>
 <h3>Q13. エージェント用の開発環境・評価環境・権限基盤はクラウド市場に匹敵する基盤産業になるか</h3>
 <p><strong>層ごとに答えが違う。ここを混同すると事業判断を誤る。</strong></p>
 <table>
@@ -5708,7 +6100,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 - <strong>可能性の兆し：</strong> AI駆動開発コンソーシアムが品質保証・説明責任・知財リスクを中心議題に据えている。AI事業者ガイドライン、CAIOガイドブック、AIインシデントレスポンスの整備。富士通の「Multi-layer Quality Control」（熟練SEの暗黙知を学習させ、別のAIが生成物を多角的に監査する仕組み）は、方法論として輸出可能な形になり得る<br>
 - <strong>足りないもの：</strong> 輸出可能な認証スキーム、英語での方法論発信、国際標準への提案</p>
 <p><strong>率直な評価：</strong> 現状は「慎重だが codify されていない」＝ただの遅れである。方法論として言語化し、国際的に発信する主体が現れなければ優位にはならない。</p>
-<p><strong>依頼者への含意：</strong> これは個人にとって<strong>逆説的な好機</strong>である。国が codify できていないなら、<strong>個人が方法論を先に言語化して名前を付けられる。</strong>証跡パック形式を公開仕様として出すことは、この空白を突く行為である。</p>
+<p><strong>想定読者への含意：</strong> これは個人にとって<strong>逆説的な好機</strong>である。国が codify できていないなら、<strong>個人が方法論を先に言語化して名前を付けられる。</strong>証跡パック形式を公開仕様として出すことは、この空白を突く行為である。</p>
 <h3>Q15. 現在のITエンジニアが過大評価している点と過小評価している点</h3>
 <h4>過大評価している可能性</h4>
 <table>
@@ -5782,22 +6174,22 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </table>
 <hr>
 <h2>14. 反対意見と失敗シナリオ</h2>
-<p><strong>依頼者の未来像が外れる条件を、否定しやすい順に並べる。</strong></p>
+<p><strong>想定読者の未来像が外れる条件を、否定しやすい順に並べる。</strong></p>
 <h3>14.1 マルチエージェント開発が期待ほど機能しない（確率：中〜高）</h3>
-<p><strong>最も現実的な失敗モード。</strong> 依頼者の未来像はマルチエージェントの協調を前提としているが、協調にはコストがある。</p>
+<p><strong>最も現実的な失敗モード。</strong> 想定読者の未来像はマルチエージェントの協調を前提としているが、協調にはコストがある。</p>
 <ul>
 <li>引き継ぎのたびに文脈が落ちる</li>
 <li>「誰の判断が最終か」が曖昧になる</li>
 <li>失敗の原因追跡が困難になる</li>
 <li><strong>同族モデルの相互レビューは独立性がない</strong></li>
 </ul>
-<p>2026年のツール進化は「対等な複数エージェントの交渉」ではなく「1体の強いエージェント＋従属サブエージェント」に寄っている。<strong>依頼者のSDAD（Claude/Codex/Cursorの役割分離）は、独立性の担保という点では正しいが、「役割で分けた複数エージェント」という前提自体が単一強力エージェントに置き換わる可能性を織り込んでおく必要がある。</strong></p>
-<p><strong>依頼者が取るべき対策：</strong> 方法論を「エージェントの構成」ではなく<strong>「満たすべき性質」</strong>で記述する。「Claudeが仕様、Codexが実装、Cursorがレビュー」ではなく「生成と検証は独立した情報源で行う」「不変条件はCIで機械検証する」と書けば、エージェント構成が変わっても方法論は生き残る。<strong>これは今すぐSDADのドキュメントに反映すべき修正である。</strong></p>
+<p>2026年のツール進化は「対等な複数エージェントの交渉」ではなく「1体の強いエージェント＋従属サブエージェント」に寄っている。<strong>想定読者のSDAD（Claude/Codex/Cursorの役割分離）は、独立性の担保という点では正しいが、「役割で分けた複数エージェント」という前提自体が単一強力エージェントに置き換わる可能性を織り込んでおく必要がある。</strong></p>
+<p><strong>想定読者が取るべき対策：</strong> 方法論を「エージェントの構成」ではなく<strong>「満たすべき性質」</strong>で記述する。「Claudeが仕様、Codexが実装、Cursorがレビュー」ではなく「生成と検証は独立した情報源で行う」「不変条件はCIで機械検証する」と書けば、エージェント構成が変わっても方法論は生き残る。<strong>これは今すぐSDADのドキュメントに反映すべき修正である。</strong></p>
 <h3>14.2 人間のレビューがボトルネックになり続ける（確率：高）</h3>
 <p>既に起きている。Faros AIの計測では組織レベルのDORA指標に改善が出ておらず、レビューなしでマージされるPRが31%増加している。「人間が承認だけを短時間で行う」は、<strong>理解を伴わない承認の合法化</strong>になりかねない。</p>
 <h3>14.3 AI開発のコストが想定ほど安くならない（確率：中）</h3>
 <p>第13章Q15で述べた通り、<strong>信頼性は冗長性を要求し、冗長性はコストを乗算する。</strong>トークン単価が10分の1になっても、10重の検証をすれば単位原価は変わらない。しかも本番システムほど冗長性が必要になる。</p>
-<p><strong>この点は依頼者が実データで検証できる立場にある。</strong>単位原価の計測を今すぐ始める理由がここにある。</p>
+<p><strong>この点は想定読者が実データで検証できる立場にある。</strong>単位原価の計測を今すぐ始める理由がここにある。</p>
 <h3>14.4 少数のプラットフォーム企業に市場が集中する（確率：高）</h3>
 <p>GitHub Agent HQ、OpenAI Codex app、Microsoft Agent 365は、いずれも「エージェント開発の統制面」を握ろうとしている。これが成功すると、オーケストレーション、権限、監査ログ、承認ゲートの層は全てプラットフォームの標準機能になる。<strong>独立のツール事業はここでは成立しない。</strong></p>
 <h3>14.5 個人・小規模企業の機会が減る（確率：中）</h3>
@@ -5808,10 +6200,10 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <p>規制産業では「AI生成コード禁止」が明文化される可能性がある。金融・医療・公共は特にそうなりやすい。<strong>逆にこれは第9章#18（仕様⇄テスト整合性検査）や第10章#7（第三者検証）の需要を生む。</strong></p>
 <h3>14.8 AIを使わないこと自体が差別化になる領域が生まれる（確率：中）</h3>
 <p>「人間が全て設計・実装・検証しました」を保証するプレミアムサービス。金融の一部、医療機器、防衛、重要インフラ。<strong>オーガニック食品や手作り工芸品と同じ構造。</strong>規模は小さいが単価は極めて高い。</p>
-<h3>14.9 依頼者の想定が最も外れるとしたら</h3>
+<h3>14.9 想定読者の想定が最も外れるとしたら</h3>
 <p><strong>「人間はPM Agentと対話するだけになる」という部分が最も外れやすい。</strong></p>
 <p>理由：情報を要約する層は、落ちた情報を隠す層でもある。責任を負う人間は、要約ではなく<strong>一次証拠</strong>にアクセスしたがる。監査人が要約報告を受け取らずに元帳を見るのと同じ理由だ。</p>
-<p><strong>修正された未来像：</strong> 人間はPM Agentと対話するのではなく、<strong>「PM Agentが用意した証跡パックを、自分の基準でサンプリング検査する」</strong>形になる可能性が高い。対話ではなく検査。これは依頼者の未来像の重要な修正である。</p>
+<p><strong>修正された未来像：</strong> 人間はPM Agentと対話するのではなく、<strong>「PM Agentが用意した証跡パックを、自分の基準でサンプリング検査する」</strong>形になる可能性が高い。対話ではなく検査。これは想定読者の未来像の重要な修正である。</p>
 <hr>
 <h2>15. 最終提言</h2>
 <h3>15.1 今すぐ始めること</h3>
@@ -5841,7 +6233,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td>4</td>
-<td><strong>AI駆動開発カンファレンス（7/30-31）＋コンソーシアム＋大阪支部に接続する</strong></td>
+<td><strong>AI駆動開発カンファレンス（7/30-31）＋コンソーシアム＋地域コミュニティに接続する</strong></td>
 <td>参加コストゼロ。今が最も安い</td>
 </tr>
 <tr>
@@ -5861,7 +6253,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 <tr>
 <td>8</td>
-<td><strong>1業種（士業）の文書化されていない知識を記録し始める</strong></td>
+<td><strong>1業種の文書化されていない知識を記録し始める</strong></td>
 <td>継続収益資産の原材料。時間がかかるので今始める</td>
 </tr>
 </tbody>
@@ -5987,7 +6379,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 2. <strong>AIに再代替されにくい</strong>（責任は法的主体にしか帰属しない、ドメインの暗黙知は文書化されていない）<br>
 3. <strong>小規模事業者に構造的優位がある唯一の高付加価値領域</strong>（大手は開発を請けるため独立性を主張できない）<br>
 4. <strong>日本市場に固有の需要がある</strong>（稟議文化、説明責任、レガシー規模、中小企業の空白）<br>
-5. <strong>依頼者の既存資産（ADR、多重レビュー、SDAD、25年の経験、士業ターゲット）がそのまま原材料になる</strong></p>
+5. <strong>実践現場の既存資産（ADR、多重レビュー、SDAD、実務経験、特定業種の知見）がそのまま原材料になる</strong></p>
 <h3>実践すべきこと（優先順位付き）</h3>
 <ol>
 <li><strong>証跡パック形式の確立と公開</strong>（3か月）——これが看板になる</li>
@@ -6006,7 +6398,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <li><strong>証跡パックの実物</strong>（顧客情報除去版）——「こう説明責任を果たしている」を見せる。営業資材と技術証明を兼ねる</li>
 <li><strong>反証履歴</strong>——AIの成果物を止めた記録と根拠</li>
 <li><strong>公開された評価ハーネス</strong>——「自分はこう測る」の提示</li>
-<li><strong>登壇</strong>（AI駆動開発カンファレンス／大阪支部）——ただし測定データを伴う場合のみ</li>
+<li><strong>登壇</strong>（AI駆動開発カンファレンス／地域コミュニティ）——ただし測定データを伴う場合のみ</li>
 <li><strong>nuget.org公開の不変条件アナライザ</strong>——動くものによる証明</li>
 </ol>
 <h3>最も重要な一文</h3>
@@ -6026,7 +6418,7 @@ AIは無限に成果物を生む。しかし「これは正しい」と証明す
 <li>サイバーエージェント「要件策定から本番環境への展開までの完全自動化を目指して96プロダクトのAI活用力を強化した話」（2026年7月）: https://developers.cyberagent.co.jp/blog/archives/64511</li>
 <li>AI駆動開発コンソーシアム設立（2025年10月1日、SIベンダー12社）: https://it.impress.co.jp/articles/-/28434 ／ KDDIアジャイル開発センター: https://prtimes.jp/main/html/rd/p/000000030.000115171.html</li>
 <li>AI駆動開発カンファレンス2026夏（2026年7月30-31日）: https://www.ai-driven.dev/ ／ オンライン参加（無料）: https://aid.connpass.com/event/392229/</li>
-<li>AI駆動開発 大阪支部を含む支部情報: https://www.ai-driven.dev/イベント情報/</li>
+<li>AI駆動開発 地域コミュニティを含む支部情報: https://www.ai-driven.dev/イベント情報/</li>
 </ul>
 <h3>制度・ガイドライン（日本）</h3>
 <ul>
@@ -6065,755 +6457,465 @@ AIは無限に成果物を生む。しかし「これは正しい」と証明す
 <hr>
 <p><strong>免責：</strong> 本レポートの企業評価は公開情報に基づく外部からの推定を含む。市場規模の数値は調査会社の予測であり実績ではない。シナリオの確率は筆者の判断であり、統計的裏付けはない。投資・契約・キャリアの判断は、本レポートを出発点として、専門家への相談と自身の検証を経て行うこと。</p></div>
   </details>
-</section>
-<section class="agent-response" data-agent="Gemini">
-  <details>
-    <summary>
-      <span class="agent-name">Gemini</span>
-      <span class="agent-meta">Gemini / 2026-07-30 / integrity=raw</span>
-    </summary>
-    <dl class="agent-facts">
-      <div><dt>Web検索</dt><dd>あり</dd></div>
-      <div><dt>添付</dt><dd>なし</dd></div>
-      <div><dt>完全性</dt><dd>raw</dd></div>
-    </dl>
-    <div class="agent-body prose"><p>2026年7月30日現在、AIエージェントによるソフトウェア開発の自動化は、単なる技術的実験を終え、実運用フェーズへと移行しつつあります。独立したリサーチャーおよび未来構想ストラテジストとして、ご提示いただいた「AIエージェント協働型開発」を前提とした産業構造・人材戦略の変化について、包括的な調査・分析結果をご報告します。</p>
+</section></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">2回答の合成</h2>
+      <div class="prose"><h1>2回答の合成（深掘り反映版）</h1>
+<p><strong>合成日：2026-07-31（深掘り反映）</strong><br>
+<strong>対象回答：</strong> ChatGPT／Claude（同一調査プロンプトへの独立2回答。Geminiは本記事の統合対象外）<br>
+<strong>調査基準日（元回答）：2026-07-30</strong><br>
+<strong>深掘り：</strong> 差異確認・反証・公開情報の追加調査（<code>.work/kb-2026-0001/followup-deepdive-response.md</code>）</p>
+<p>目的は、単一予測を信じず、複数シナリオを持ち、エンジニアの価値・事業機会・職種／働き方の変化に柔軟に対応できるようにすること。</p>
 <hr>
-<h2>1. エグゼクティブサマリー</h2>
-<p>AIエージェントの進化により、ソフトウェア開発のボトルネックは「実装」から「要求の定義」「意思決定」「監査・責任」へと完全に移行しつつあります。</p>
-<ul>
-<li><strong>最も重要な結論:</strong> ITエンジニアの役割は「コードを書く職人」から、AIというデジタル労働力を資本として配分・統制する「投資家・監査役」へとパラダイムシフトします。</li>
-<li><strong>実現確率:</strong> 新規事業・SaaS領域においては<strong>極めて高い（シナリオ1または3）</strong>。一方、既存の巨大システムや規制産業では、法的責任とガバナンスの壁により段階的になります（シナリオ2）。</li>
-<li><strong>日本企業の現在地:</strong> 一部のAIネイティブスタートアップが段階4〜5に到達していますが、大手SIerは段階3〜4（社内PoCや限定的実運用）に留まっています。</li>
-<li><strong>最大の事業機会:</strong> 「AIが作った成果物を人間がどう安全に承認するか」を支援する<strong>独立検証・監査・ガバナンス領域</strong>、および<strong>ドメイン知識に特化したマイクロSaaSの量産</strong>です。</li>
-<li><strong>最優先事項:</strong> 小規模チームの機動力を活かし、自社SaaSの開発プロセス自体をマルチエージェント化し、その「ワークフローやプロンプト設計、監査手法」自体を次なる商材として資産化することです。</li>
-</ul>
+<h2>1. 修正した中心命題</h2>
+<p>当初の統合命題：</p>
+<blockquote>
+<p>希少になるのはコードではなく「証拠」。分岐軸は検証可能性。</p>
+</blockquote>
+<p>深掘り後の修正命題：</p>
+<blockquote>
+<p><strong>希少になるのは証拠そのものではなく、「重要な不確実性を減らす独立した証拠設計」と、「なお残るリスクを資本・契約・評判で引き受ける能力」である。</strong><br>
+技術自動化の分岐軸は検証可能性である。ただし事業普及の唯一の分岐軸ではない（顧客獲得・データ・意思決定遅延なども支配しうる）。</p>
+</blockquote>
+<p>修正理由：証拠生成・provenance・評価ゲートはプラットフォーム標準機能に吸収されうる。残る希少性は、<strong>独立した証拠設計</strong>と<strong>残余リスクの引受</strong>である。</p>
 <hr>
-<h2>2. 未来の開発モデル（2026年時点の基準シナリオ）</h2>
-<p>ご提示いただいた「PM Agentをハブとする開発モデル」は、2026年現在、先進的な開発現場でアーキテクチャの標準になりつつあります。</p>
-<ul>
-<li><strong>人間とAIの役割分担:</strong> 人間は「Why（なぜ作るか）」「What（制約は何か）」と「Risk（許容できる失敗は何か）」の定義に集中し、AIが「How（どう作るか）」を担います。</li>
-<li><strong>実現に必要な技術（現在進化中の領域）:</strong></li>
-<li>自律型ワークフローエンジン（LangGraphやAutoGenのエンタープライズ版）</li>
-<li>再現可能なサンドボックス環境と決定論的テスト基盤</li>
-<li>
-<p>エージェントの思考プロセスを人間向けに要約する「レビューUX」</p>
-</li>
-<li>
-<p><strong>現在から不足しているもの:</strong> AIのハルシネーション（もっともらしい嘘）や設計の矛盾を、人間が「短時間で確信を持って」見抜くための<strong>監査証跡（Evidence）の規格化</strong>です。</p>
-</li>
-</ul>
+<h2>2. 強く一致した点（維持＋精密化）</h2>
+<h3>2.1 ボトルネックは生成ではなく検証へ移りやすい</h3>
+<p>個人の生産性向上はあっても、組織成果への変換はレビュー・承認・証拠で詰まりやすい、という読みは維持する。</p>
+<p>ただし「検証が全案件の最大ボトルネック」とは書かない。<strong>AI生成量が増えた開発における技術自動化の分岐軸</strong>として限定する。</p>
+<h3>2.2 「上流へ行けば安全」は誤りに近い</h3>
+<p>上流の情報生成（調査、要求整理、比較案、契約案ドラフト等）はAI化しやすい。<br>
+含まれないのは、信頼形成・利害調整・価格交渉・契約締結・例外受容・法的署名などの<strong>交渉／権限ある意思決定／法的引受</strong>である。</p>
+<h3>2.3 日本には先行企業がある／全体は別問題</h3>
+<p>富士通・日立・NTTデータ・サイバーエージェント等の先行は事実として扱う。<br>
+一方「日本は先行／遅れ」の一括断定はしない（次節の5層比較）。</p>
+<h3>2.4 商機は汎用オーケストレーションより検証・証跡・業種側</h3>
+<p>汎用水平製品としてのオーケストレーション／権限／サンドボックスは大手に寄りやすい。<br>
+<strong>内製の工程自動化は進めてよい。</strong> 「作るな」は製品化・差別化しない共通層の話であり、社内統制・証拠スキーマまで含む禁止ではない。</p>
+<h3>2.5 自由な多体協働より工場型</h3>
+<p>マルチエージェントは条件付きで有効。順序依存・共有状態・曖昧な引継ぎ・同一誤りの相関が強いと悪化しうる。<br>
+<strong>誤りの独立性と成果物契約がある場合だけ強い。</strong> Agent A/B の役割分離も、この条件を満たすとき有効。</p>
 <hr>
-<h2>3. 日本企業の調査結果</h2>
-<p>日本国内における「AIエージェント協働型開発」の現在地を評価します。</p>
+<h2>3. 差異確認の確定判定</h2>
 <table>
 <thead>
 <tr>
-<th>企業群 / 企業例</th>
-<th>現在の到達段階</th>
-<th>具体的な取り組みと証拠の強さ</th>
-<th>今回の未来像との一致度</th>
+<th>論点</th>
+<th>対立の種類</th>
+<th>判定</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>AIスタートアップ</strong> (LayerX, PKSHA, Sakana AI等)</td>
-<td>段階4〜5</td>
-<td>【実運用・製品化】複数LLMを協働させた社内開発基盤の構築、AIによる自動テスト・PR作成の実用化。</td>
-<td>高。人間は承認に特化。</td>
+<td>2030年に人間は承認だけ</td>
+<td>定義差</td>
+<td>低〜中リスク・限定・機械判定可・可逆な領域では成立しうる。全域は根拠不足。年だけで語らず <strong>対象領域×検証可能性×可逆性×損害上限</strong> で示す</td>
 </tr>
 <tr>
-<td><strong>大手メガベンチャー</strong> (メルカリ, サイバーエージェント等)</td>
-<td>段階3〜4</td>
-<td>【限定的実運用】特定ドメイン（社内ツール等）におけるIssueからの自動実装・テスト。</td>
-<td>中〜高。生産性向上に主眼。</td>
+<td>Stage 5一般化 vs シナリオ2/3</td>
+<td>定義差</td>
+<td>「一部で使える」なら近い。「市場多数で標準」なら別。能力存在確率と普及割合を分ける</td>
 </tr>
 <tr>
-<td><strong>大手SIer</strong> (NTTデータ, CTC等)</td>
-<td>段階2〜3</td>
-<td>【PoC・構想】「AIソフトウェアファクトリー」構想の発表。上流工程でのAI支援ツールの導入検証。</td>
-<td>中。責任分界点の整理に苦戦中。</td>
+<td>Factory Architect vs 検証・引受</td>
+<td>強調差</td>
+<td>重なるが、独立保証・監査・契約・賠償・保険・利益相反管理は Factory だけでは不足</td>
 </tr>
 <tr>
-<td><strong>SaaS企業</strong> (SmartHR, マネーフォワード等)</td>
-<td>段階3</td>
-<td>【限定的実運用】Github Copilot等の全社導入を終え、Agentによるバグ修正やリファクタリングを実験中。</td>
-<td>高。開発速度と品質のトレードオフを模索。</td>
+<td>日本は先行か遅れか</td>
+<td>定義差</td>
+<td>先行企業・限定事例は先行。大企業全体の導入・成果では遅れ気味との比較あり。<strong>5層で分ける</strong></td>
+</tr>
+<tr>
+<td>オーケストレーションを作るな</td>
+<td>定義差</td>
+<td>汎用製品化は避ける。内製自動化は進める。共通層は借り、固有の統制・証拠だけ作る</td>
+</tr>
+<tr>
+<td>マルチエージェント過大評価と A/B</td>
+<td>強調差</td>
+<td>条件付きで当てはまる。独立性と引継ぎ契約が鍵</td>
+</tr>
+<tr>
+<td>上流AI化の範囲</td>
+<td>定義差</td>
+<td>情報生成まで。交渉・権限意思決定・法的引受は含まない</td>
+</tr>
+<tr>
+<td>マイクロ企業の天井</td>
+<td>真の対立寄り</td>
+<td>検証は範囲限定で部分回避可。引受では天井が強い → <strong>小規模検証＋保険・大手・監査との提携</strong></td>
+</tr>
+<tr>
+<td>ジュニア供給断絶</td>
+<td>情報不足</td>
+<td>未証明。採用・育成・昇格の先行指標で監視</td>
+</tr>
+<tr>
+<td>生産性数値の証拠強度</td>
+<td>弱い証拠の混在</td>
+<td>METR：特定能力で中〜強／Faros：組織相関で中／企業公表：限定事例で弱〜中。ラベル必須</td>
+</tr>
+<tr>
+<td>同一モデル族レビュー</td>
+<td>真の対立寄り</td>
+<td>無価値ではないが独立保証ではない。組織・モデル・データ・実行環境の4軸で独立性を表示</td>
+</tr>
+<tr>
+<td>構築者が検証も引受も</td>
+<td>真の対立</td>
+<td>第一者検証は可。第三者監査としての独立性は不可。役割を分ける</td>
 </tr>
 </tbody>
 </table>
-<p><strong>【分析】</strong><br>
-日本企業の動きが（特にエンタープライズ領域で）見えにくい最大の理由は、「瑕疵担保責任（契約不適合責任）」と「多重下請け構造」です。AIが生成したコードにバグがあった場合、誰が法的に責任を負うのかという契約上の課題が、技術的限界以上に普及の足かせとなっています。</p>
 <hr>
-<h2>4. 海外先行事例（日本との差異）</h2>
-<ul>
-<li><strong>先行プレイヤー:</strong> Microsoft (GitHub Copilot Workspaceの発展), Cognition (Devinのエンタープライズ化), OpenAI, Anthropic等。</li>
-<li><strong>日本との差:</strong></li>
-<li><strong>オーケストレーション:</strong> 米国は「完全自律化（人間の介入を極力減らす）」に向かう一方、日本は「承認のワークフロー化（ハンコ文化のAI化）」に向かいやすい傾向があります。</li>
-<li><strong>組織構造:</strong> 海外では「AIマネジメント」専門のエンジニアリングマネージャー職が定着しつつありますが、日本では既存のPMが兼務する過渡期にあります。</li>
-</ul>
-<hr>
-<h2>5. 4つの未来シナリオと実現時期</h2>
+<h2>4. 役割の三層（ポジションの精密化）</h2>
+<p>統合ポジション案は残してよいが、一人の万能職として書かない。</p>
 <table>
 <thead>
 <tr>
-<th>シナリオ</th>
-<th>実現確率</th>
-<th>2028年</th>
-<th>2030年</th>
-<th>2035年</th>
-<th>主要な推進要因・阻害要因</th>
+<th>層</th>
+<th>役割</th>
+<th>できること</th>
+<th>できないこと（名乗りすぎ）</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>1: 急速な自動化</strong></td>
-<td>20%</td>
-<td>新規SaaSの50%がAI主導</td>
-<td>プログラミングのノーコード化</td>
-<td>自律型ソフトウェア工場の普及</td>
-<td>推進：LLMの推論能力の飛躍的向上。阻害：セキュリティ事故。</td>
+<td>①構築者</td>
+<td>Factory / 正本・エージェント・評価・権限・承認の設計</td>
+<td>第一者検証、工程自動化、証跡生成</td>
+<td>「独立監査済み」の自己認証</td>
 </tr>
 <tr>
-<td><strong>2: 段階的な普及</strong></td>
-<td>40%</td>
-<td>実装・テストの自動化定着</td>
-<td>設計の一部自動化</td>
-<td>要件・運用の自動化開始</td>
-<td>推進：段階的な法整備。阻害：既存システムの技術的負債。</td>
+<td>②独立検証者</td>
+<td>別主体による反証・保証</td>
+<td>独立性のある検証</td>
+<td>損害の財務的引受そのもの</td>
 </tr>
 <tr>
-<td><strong>3: 限定領域の自動化</strong></td>
-<td>30%</td>
-<td>小規模SaaS・定型ツールで定着</td>
-<td>規制産業と非規制の二極化</td>
-<td>領域ごとの特化型AIの成熟</td>
-<td>推進：SaaS市場の競争激化。阻害：データプライバシー規制。</td>
-</tr>
-<tr>
-<td><strong>4: 期待ほど進まない</strong></td>
-<td>10%</td>
-<td>AIは強力な補完ツール</td>
-<td>依然として人間がコード確認</td>
-<td>人間中心の開発体制が残る</td>
-<td>阻害：AIの品質保証コストが人間より高騰する。</td>
+<td>③承認・引受主体</td>
+<td>Human Lead / 契約・資本・評判</td>
+<td>残余リスクの受容、署名</td>
+<td>AIやプラットフォーム証明だけで代替</td>
 </tr>
 </tbody>
 </table>
-<p><strong>結論:</strong> 個人や小規模チームのSaaS開発においては「シナリオ1」、SIerやエンタープライズは「シナリオ2〜3」が現実的です。</p>
+<p>実務モデル：</p>
+<blockquote>
+<p><strong>小規模検証・証跡・業種特化を提供し、広い賠償・継続性は保険・大手SI・監査法人と接続する。</strong></p>
+</blockquote>
 <hr>
-<h2>6. 新しく生まれる人材像と職種（15選）</h2>
-<p>評価軸：1〜5（5が最高・最適）。※替=AIによる再代替リスク（5は代替されにくい）</p>
-<table>
-<thead>
-<tr>
-<th>職種名</th>
-<th>担う責任・日常業務</th>
-<th>独立/会社</th>
-<th>将来</th>
-<th>規模</th>
-<th>参入</th>
-<th>単価</th>
-<th>替</th>
-<th>日</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>1. Agent Workflow Architect</strong></td>
-<td>複数AIが動く最適なプロセス・権限・パイプラインを設計。</td>
-<td>独立/会社</td>
-<td>5</td>
-<td>5</td>
-<td>3</td>
-<td>5</td>
-<td>4</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>2. AI Decision Auditor</strong></td>
-<td>AIが下したアーキテクチャやリスク判断の妥当性を監査。</td>
-<td>独立</td>
-<td>5</td>
-<td>4</td>
-<td>2</td>
-<td>5</td>
-<td>5</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>3. Requirements Evidence Eng.</strong></td>
-<td>要件とAIの出力が一致しているかを数学的・論理的に証明。</td>
-<td>会社</td>
-<td>4</td>
-<td>3</td>
-<td>3</td>
-<td>4</td>
-<td>3</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>4. Agent Security/Risk Eng.</strong></td>
-<td>悪意あるプロンプトやエージェントの暴走を防ぐ境界設計。</td>
-<td>独立/会社</td>
-<td>5</td>
-<td>4</td>
-<td>2</td>
-<td>5</td>
-<td>4</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>5. AI-generated Sys. Verifier</strong></td>
-<td>AI生成システムの結合テスト・非機能要件の独立検証。</td>
-<td>独立</td>
-<td>4</td>
-<td>5</td>
-<td>4</td>
-<td>3</td>
-<td>2</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>6. Human Approval UX Designer</strong></td>
-<td>人間が5分で重要判断を下せるレビュー画面と情報要約の設計。</td>
-<td>独立/会社</td>
-<td>4</td>
-<td>3</td>
-<td>4</td>
-<td>4</td>
-<td>4</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>7. Agent Cost Optimizer</strong></td>
-<td>エージェントのトークン消費・コンピュート費用の監視と最適化。</td>
-<td>独立</td>
-<td>3</td>
-<td>4</td>
-<td>5</td>
-<td>3</td>
-<td>2</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>8. Domain Context Structurer</strong></td>
-<td>業界固有の暗黙知をAIが読み取れるオントロジーやナレッジグラフに変換。</td>
-<td>独立/会社</td>
-<td>5</td>
-<td>4</td>
-<td>3</td>
-<td>4</td>
-<td>4</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>9. Digital Labor Ops Manager</strong></td>
-<td>エージェント群の死活監視、バージョン管理、パフォーマンス評価。</td>
-<td>会社</td>
-<td>4</td>
-<td>5</td>
-<td>4</td>
-<td>3</td>
-<td>2</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>10. AI Vendor Portfolio Mgr.</strong></td>
-<td>GPT, Claude, 特化型など、タスクごとの最適なLLM選定と調達。</td>
-<td>会社</td>
-<td>3</td>
-<td>3</td>
-<td>4</td>
-<td>3</td>
-<td>1</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>11. Agent Incident Commander</strong></td>
-<td>AIによる本番障害発生時の原因究明（プロンプトかモデルか等）と復旧。</td>
-<td>独立/会社</td>
-<td>4</td>
-<td>3</td>
-<td>2</td>
-<td>5</td>
-<td>4</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>12. Multi-Agent Conflict Resolver</strong></td>
-<td>エージェント間の設計思想の衝突（例: セキュリティ vs 速度）の調停。</td>
-<td>独立</td>
-<td>4</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-<td>4</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>13. Legacy-to-AI Translator</strong></td>
-<td>レガシーシステムのコードをAIが改修しやすい構造へリファクタリング。</td>
-<td>独立/会社</td>
-<td>5</td>
-<td>5</td>
-<td>4</td>
-<td>4</td>
-<td>3</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>14. AI Compliance Officer</strong></td>
-<td>生成されたコードのライセンス汚染、知財侵害、法規制への準拠確認。</td>
-<td>独立</td>
-<td>4</td>
-<td>3</td>
-<td>2</td>
-<td>5</td>
-<td>5</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>15. AI Agent Product Owner</strong></td>
-<td>最終的な事業価値の創出に責任を持ち、PM Agentへ指示を出す人間。</td>
-<td>独立/会社</td>
-<td>5</td>
-<td>5</td>
-<td>3</td>
-<td>5</td>
-<td>5</td>
-<td>5</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2>7. ITエンジニアが価値を上げる方法</h2>
-<p>「上流工程へ行く」という単純な結論ではなく、「AIが増幅できない、またはAIを統制するための能力」へシフトする必要があります。</p>
-<ul>
-<li><strong>AIに代替されにくい能力:</strong> 「誰の何の課題を解くか（事業開発）」「法規・倫理基準の解釈と責任の引き受け」「複雑なステークホルダー間の政治的合意形成」。これらは人間社会のコンセンサスに依存するため、技術が進化しても残ります。</li>
-<li><strong>AIで増幅される能力:</strong> 「アーキテクチャ設計」「システムズエンジニアリング（全体最適の視点）」「テスト設計」。具体的には、AIに正しい制約を与え、出てきた成果物を評価する能力です。</li>
-<li><strong>陳腐化する能力:</strong> 「特定のプログラミング言語の構文知識」「単純なCRUDアプリのゼロからの実装速度」「手動でのデバッグ作業」。</li>
-</ul>
-<p><strong>【市場価値につながる証拠の作り方】</strong><br>
-GitHubに「コード」を公開する時代から、「自分自身の開発をどうAIエージェントで自動化・オーケストレーションしているか（ワークフロー、プロンプト、CI/CDパイプライン）」をオープンソース化し、技術ブログでアーキテクチャ設計の意思決定プロセス（ADR）を発信する時代へ移行します。</p>
-<hr>
-<h2>8. 活躍する企業像</h2>
-<p>AI開発時代において、既存の巨大IT企業に対するスタートアップ・個人の生存戦略を評価します。</p>
-<table>
-<thead>
-<tr>
-<th>企業類型</th>
-<th>競争優位 / 必要な資産</th>
-<th>小規模相性</th>
-<th>日本相性</th>
-<th>評価・理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>マイクロSaaSファクトリー</strong></td>
-<td>数人で数十のニッチSaaSを運用。強みは「ドメイン特化の課題発見力」。</td>
-<td>5</td>
-<td>5</td>
-<td>極めて有望。AIで開発・保守コストが下がるため、LTVが低くても黒字化可能。</td>
-</tr>
-<tr>
-<td><strong>AI特化型 独立監査・検証ファーム</strong></td>
-<td>成果物のセキュリティと品質を保証。強みは「第三者性と信頼」。</td>
-<td>3</td>
-<td>5</td>
-<td>有望。日本のハンコ文化・責任回避文化にマッチし、高単価を獲得しやすい。</td>
-</tr>
-<tr>
-<td><strong>レガシー資産保有企業 (非IT)</strong></td>
-<td>顧客基盤、業務データ、物理的アセット。</td>
-<td>1</td>
-<td>4</td>
-<td>ソフトウェアがコモディティ化するため、実業（土木、医療等）を持つ企業が最強になる。</td>
-</tr>
-<tr>
-<td><strong>AIネイティブ新型SIer</strong></td>
-<td>既存SIerの数分の一の価格と納期で提供。強みは「プロンプト資産」。</td>
-<td>4</td>
-<td>3</td>
-<td>過渡期には儲かるが、顧客企業が自社でAI開発できるようになると中抜きされるリスク大。</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2>9. 新しく生まれるサービス・ツール機会（20選）</h2>
-<p>既存の枠組みを超えた、AIエージェント開発環境向けのツール群です。（評価軸1-5）</p>
-<table>
-<thead>
-<tr>
-<th>サービス・ツール案</th>
-<th>解決する問題 / 想定顧客</th>
-<th>参入</th>
-<th>単価</th>
-<th>日本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>1. Agent Audit Trail SaaS</strong></td>
-<td>AIの意思決定プロセスを改ざん不可能な形で記録し、監査対応する。</td>
-<td>3</td>
-<td>5</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>2. Multi-Agent CI/CD Platform</strong></td>
-<td>複数エージェントの非同期作業を統合し、コンフリクトを解決する基盤。</td>
-<td>2</td>
-<td>4</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>3. AI Review Summary UI</strong></td>
-<td>人間がPRを承認するための「差分要約とリスクスコア」可視化ツール。</td>
-<td>4</td>
-<td>3</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>4. Determistic Sandbox</strong></td>
-<td>AIが安全にコードを実行・テストできる、使い捨ての隔離環境。</td>
-<td>2</td>
-<td>4</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>5. Agent Identity &amp; Access Manager</strong></td>
-<td>エージェント単位でのAPIキー、DBアクセス権限の動的付与と管理。</td>
-<td>2</td>
-<td>5</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>6. AI-Native ADR Generator</strong></td>
-<td>会話ログから自動でArchitecture Decision Recordを生成・構造化。</td>
-<td>5</td>
-<td>2</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>7. Context Truncation Optimizer</strong></td>
-<td>LLMのコンテキストウィンドウに合わせて不要なリポジトリ情報を削るツール。</td>
-<td>4</td>
-<td>2</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>8. Automated Acceptance Tester</strong></td>
-<td>自然言語の要求から自動でE2Eテストコードを生成し、実行結果を保証。</td>
-<td>3</td>
-<td>4</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>9. Agent Spend Analytics</strong></td>
-<td>どのエージェントが、どの工程でAPIコストを消費しているか可視化。</td>
-<td>5</td>
-<td>2</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>10. AI Hallucination Detector</strong></td>
-<td>生成されたコード内の存在しないライブラリや非推奨APIの自動検知。</td>
-<td>4</td>
-<td>3</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>11. Industry-Specific Ontology Hub</strong></td>
-<td>医療・金融などの業界ルールをAIが読み込める形式で提供するデータマート。</td>
-<td>3</td>
-<td>5</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>12. Agent Fallback Router</strong></td>
-<td>メインLLMの障害時や速度低下時に、自動で別モデルへ切り替えるルーター。</td>
-<td>4</td>
-<td>2</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>13. AI Code Watermarking</strong></td>
-<td>どのAIエージェントが書いたコードか、責任追跡のための電子透かし付与。</td>
-<td>3</td>
-<td>4</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>14. Human-in-the-loop Notifier</strong></td>
-<td>人間の承認が必要なクリティカルな変更だけをSlack等に通知するルーター。</td>
-<td>5</td>
-<td>2</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>15. AI UX Prototyper</strong></td>
-<td>要件定義フェーズで、AIが瞬時に動くモックアップを生成・ホスティング。</td>
-<td>4</td>
-<td>3</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>16. Compliance Rule Enforcer</strong></td>
-<td>企業のコーディング規約やセキュリティ基準をエージェントに強制するゲートウェイ。</td>
-<td>3</td>
-<td>4</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>17. Multi-Model Benchmark for Dev</strong></td>
-<td>最新モデルが「自社の開発タスク」においてどれだけ優秀か計測する環境。</td>
-<td>4</td>
-<td>2</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>18. Agent Workflow Marketplace</strong></td>
-<td>優秀な結果を出した「エージェントの構成とプロンプト」の売買プラットフォーム。</td>
-<td>4</td>
-<td>3</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>19. Legacy Code Commenter</strong></td>
-<td>既存のスパゲティコードをAIが解析し、AIエージェント向けの詳細コメントを付与。</td>
-<td>5</td>
-<td>3</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>20. Project Rollback Orchestrator</strong></td>
-<td>AIがシステムを破壊した際、DB状態も含めてワンクリックで前バージョンへ復元。</td>
-<td>3</td>
-<td>4</td>
-<td>4</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2>10. 周辺で生まれる新しいビジネス（20選）</h2>
-<p>ソフトウェアツール以外（サービス、コンサル、金融など）のビジネス機会です。</p>
-<table>
-<thead>
-<tr>
-<th>ビジネス案</th>
-<th>解決する問題・特徴</th>
-<th>参入</th>
-<th>単価</th>
-<th>日本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>1. AIエージェント損害保険</strong></td>
-<td>AIのバグによる情報漏洩やシステムダウンの損害を補償。</td>
-<td>1</td>
-<td>5</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>2. エージェント人材派遣業</strong></td>
-<td>構成済みの専門特化エージェント（例: 決済API連携特化）を月額レンタル。</td>
-<td>4</td>
-<td>3</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>3. AI品質格付け機関</strong></td>
-<td>AI生成システムのセキュリティと保守性を第三者としてAAA〜Cで格付け。</td>
-<td>2</td>
-<td>5</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>4. AI開発事故のフォレンジック調査</strong></td>
-<td>事故時にログを解析し、プロンプトの不備かAIの幻覚かを特定し法的証拠化。</td>
-<td>2</td>
-<td>5</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>5. レガシーAPIのAI可読化BPO</strong></td>
-<td>古い社内システムのAPI仕様書を、AIが読めるOpenAPI形式に書き直す代行。</td>
-<td>5</td>
-<td>3</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>6. AIエージェント導入コンサル</strong></td>
-<td>既存の開発組織をAIネイティブな体制へ移行するための組織設計・プロセス支援。</td>
-<td>4</td>
-<td>5</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>7. 要件定義のビデオヒアリング代行</strong></td>
-<td>AIエージェントに投入するための「顧客の生の声」を効果的に引き出す面談代行。</td>
-<td>5</td>
-<td>2</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>8. プロンプト知財管理・ライセンス</strong></td>
-<td>企業が独自開発したシステムアーキテクチャのプロンプトを秘匿・特許化支援。</td>
-<td>3</td>
-<td>4</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>9. 人間向け「AI監査」再教育スクール</strong></td>
-<td>プログラマーを「コードレビュアー・監査役」へリスキリングする教育事業。</td>
-<td>4</td>
-<td>3</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>10. AI開発に特化した法律事務所</strong></td>
-<td>著作権、責任分界、SLAの策定など、AI開発特有のリーガルサポート。</td>
-<td>2</td>
-<td>5</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>11. エージェント用「テストデータ」販売</strong></td>
-<td>個人情報をマスキングした、AIエージェントがテストに使える高品質な業界データ。</td>
-<td>3</td>
-<td>4</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>12. AIシステムの「終活・廃棄」請負</strong></td>
-<td>大量生産され放置されたSaaSを安全に統合・廃棄・データ移行するサービス。</td>
-<td>4</td>
-<td>4</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>13. クラウドコンピューティング仲介</strong></td>
-<td>エージェントを動かすためのGPU・APIリソースのコスト最適化と卸売り。</td>
-<td>2</td>
-<td>3</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>14. エージェント間契約のスマートコントラクト</strong></td>
-<td>異なる企業のAI同士が連携する際のAPI利用料やSLAを自動執行する基盤。</td>
-<td>2</td>
-<td>4</td>
-<td>2</td>
-</tr>
-<tr>
-<td><strong>15. AI向けデザインシステム構築</strong></td>
-<td>AIがUIを生成する際に破綻しない、制約の強いコンポーネントライブラリの制作。</td>
-<td>4</td>
-<td>3</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>16. AI生成コードの「人間味付け」代行</strong></td>
-<td>AI特有の規則的すぎるコードを、人間が後からメンテしやすいようリファクタ。</td>
-<td>5</td>
-<td>2</td>
-<td>3</td>
-</tr>
-<tr>
-<td><strong>17. 業界特化型プロンプトエンジニアリング</strong></td>
-<td>「製造業の生産管理」「病院の予約」など、ドメイン知識をプロンプト化する業。</td>
-<td>5</td>
-<td>4</td>
-<td>5</td>
-</tr>
-<tr>
-<td><strong>18. AI開発プロジェクト専門のPMO</strong></td>
-<td>ツールではなく人間が介入してプロジェクトを管理するアウトソーシング。</td>
-<td>4</td>
-<td>4</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>19. セキュアなローカルLLM構築支援</strong></td>
-<td>機密情報を含む開発のため、クラウドに出せないエージェント環境をオンプレ構築。</td>
-<td>3</td>
-<td>5</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>20. マイクロSaaSのM&amp;A仲介</strong></td>
-<td>AIで量産された少人数運営のSaaS事業を個人間で売買するプラットフォーム。</td>
-<td>4</td>
-<td>3</td>
-<td>4</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2>11. 新しい働き方と組織構造</h2>
-<ul>
-<li><strong>1人が複数AIを率いる「1人企業（Solopreneur）」の勃興:</strong> エンジニア1人が10〜20のAIエージェントを束ね、月商数百万〜数千万円のSaaSを複数運営するスタイルが一般化します。</li>
-<li><strong>「実装者」から「投資判断者（資本家）」へ:</strong> 予算（API利用料とコンピュートリソース）をどのエージェントに割り当て、どのIssueを解決させるかという経営的な視点がエンジニアに求められます。</li>
-<li><strong>非同期・承認ベースの労働時間:</strong> 開発はAIが24時間行うため、人間の仕事は「朝起きて、AIが夜間に進めたPRや設計案をレビューし、承認ボタンを押す（または軌道修正する）」という数時間の非同期作業に集約されます。</li>
-</ul>
-<hr>
-<h2>12. 具体的な行動計画（個人・小規模チーム向け）</h2>
-<p><strong>今後3か月:</strong></p>
-<ul>
-<li><strong>学ぶ:</strong> LangChain LangGraph, crewAI, AutoGen等のエージェントオーケストレーション技術の最新動向と実装。</li>
-<li><strong>作る・検証:</strong> 自身のB2B SaaSの開発プロセス（Issue作成〜PR生成〜テスト）の一部をマルチエージェント化するパイプラインを構築する。</li>
-<li><strong>やめる:</strong> 単純なCRUD機能を手打ちでコーディングする時間の削減。</li>
-</ul>
-<p><strong>今後1年:</strong></p>
-<ul>
-<li><strong>作る・公開:</strong> 「自社のSaaSをどうAIエージェントで自動開発しているか」のワークフローや監査手法をツール化、またはブログ・OSSとして公開し、技術的権威（アーキテクトとしての認知）を築く。</li>
-<li><strong>収益化:</strong> 自社SaaSの機能追加速度をAIで10倍にし、ニッチ領域での市場シェアを取り切る。</li>
-</ul>
-<p><strong>今後3年:</strong></p>
-<ul>
-<li><strong>人脈・領域:</strong> 「AI開発の監査・ガバナンス」を求める企業（大企業やSIer）向けのコンサルティング・導入支援（Agent Workflow Architect）を開始し、高単価な収益の柱を作る。</li>
-<li><strong>検証:</strong> 別の業界課題をターゲットにした第2、第3のSaaSを、ほぼAIのみで立ち上げる。</li>
-</ul>
-<p><strong>今後5年:</strong></p>
-<ul>
-<li>自身は一切コードを書かず、複数SaaSのプロダクトオーナー兼オーディターとして振る舞う。「AIが作った事業をM&amp;Aで売却する」経験を積む。</li>
-</ul>
-<hr>
-<h2>13. 反対意見と失敗シナリオ（予測が外れる条件）</h2>
-<p>以下の事象が発生した場合、AI協働型開発の普及は著しく遅れ、人間のコーダーが再評価されます。</p>
+<h2>5. 日本評価の5層</h2>
+<p>「日本」を一括しない。</p>
 <ol>
-<li><strong>コンテキスト上限とハルシネーションのループ:</strong> 大規模で複雑な既存システムの改修において、エージェントがシステム全体の依存関係を正確に把握しきれず、修正が別のバグを生む「無限ループ」に陥る。</li>
-<li><strong>レビューの限界（形骸化）:</strong> 「人間がレビューだけを担当する場合、本当に理解できるのか？」への答えは、往々にして「No」です。結局、人間がゼロからコードを追う羽目になり、自動化の恩恵が消滅する。</li>
-<li><strong>法的責任の回避:</strong> AIによるバグで人命や莫大な経済損失が出た際、裁判所や規制当局が「AI単独での実装」に厳しい制約（人間による全行検査の義務付けなど）を課す。</li>
+<li>宣言</li>
+<li>PoC</li>
+<li>限定実運用</li>
+<li>全社展開</li>
+<li>成果計測（第三者性・母集団・品質調整の有無）</li>
+</ol>
+<p>富士通の「100倍」は <strong>1変更要求に対する自社PoC値</strong>。平均値でも全工程でもない。<br>
+日立の「200倍」「240倍」も特定条件の自社測定。2027年度30%は目標。<br>
+NTT DATA も上流・製品開発への展開はあるが、一般開発の全工程自律運用とは分けて書く。</p>
+<hr>
+<h2>6. 証拠強度のラベル（記事で必須）</h2>
+<p>主張の横に次を付ける。</p>
+<ul>
+<li>RCT</li>
+<li>ベンチマーク（測定限界つき）</li>
+<li>観察データ（相関）</li>
+<li>自社事例（条件つき）</li>
+<li>構想／目標</li>
+</ul>
+<p>使ってよいが、産業全体の因果に単独では使えない。</p>
+<hr>
+<h2>7. 合成結論への最強の反対仮説</h2>
+<blockquote>
+<p>検証と証拠生成も実装と同じ速度で自動化・標準機能化され、希少性を失う。競争優位は顧客接点・データ・販売網・資本・プラットフォーム支配へ移る。</p>
+</blockquote>
+<p>観測サイン例：検証費用の急低下、プラットフォーム証明だけで受入、保険がプラットフォーム認証だけで決まる、独立検証サービスの単価崩壊、など。</p>
+<p>それでも結論を維持する条件：業務正しさが形式化しきれない／低頻度高損害／第三者保証要求／法的責任主体が必要／利益相反／残余リスクの引受が必要、のいずれかが残る場合。</p>
+<hr>
+<h2>8. 記事拡充で優先する追記（High）</h2>
+<p>深掘りバックログから、本文に足すべき High 項目：</p>
+<ol>
+<li>Stage 5/6 が成立する案件条件（領域×検証可能性×可逆性×損害上限）</li>
+<li>「100倍」等の読み方（分母・条件・外挿禁止）</li>
+<li>日本を5層で分ける</li>
+<li>証拠強度の読み方</li>
+<li>承認ではなく限定付き保証／サンプリング検査</li>
+<li>構築・独立検証・引受は別の仕事</li>
+<li>AI保険は性能保証では開始、開発工程全般の標準監査要求は未確認</li>
+</ol>
+<p>Medium 以下（A/Bが効く条件、内製と製品化の境界、既存標準とのマッピング、ジュニア指標）は必要に応じて付録または後続改訂。</p>
+<hr>
+<h2>9. 書いてはいけないこと（確定）</h2>
+<ol>
+<li>富士通「100倍」を全体平均・全工程として書かない</li>
+<li>「日本は先行／遅れ」を単独断定しない</li>
+<li>「マルチエージェントは失敗」または「A/Bなら独立」を一括しない</li>
+<li>保険会社がAI生成SDLC監査を既に標準要求していると書かない</li>
+<li>証拠生成・第一者検証・独立監査・最終承認・損害引受を同一仕事として混同しない</li>
 </ol>
 <hr>
-<h2>14. 最終提言</h2>
-<p>小規模なB2B SaaSを開発するITエンジニアとして、次のスタンスを取ってください。</p>
+<h2>10. 現場運用との接続</h2>
 <ul>
-<li><strong>今すぐ始めること:</strong> 「コード資産」ではなく「ワークフローとプロンプト資産（どのようにAIに作らせるかのプロセス）」を自社のコア競争力として蓄積すること。</li>
-<li><strong>まだ賭けずに観測すること:</strong> 大企業向けの完全自律型AI開発基盤への大規模投資（技術の変化が激しく、法規制のリスクが高いため、まずは自社SaaSで小さく回す）。</li>
-<li><strong>現時点では避けること:</strong> 既存のSIerや受託開発企業における「単なるAIコーダー」としての雇用契約（早晩、単価下落の波に飲み込まれます）。</li>
+<li>現行の ADR統制型 AI-PR駆動は、工場型の手動プロトタイプとして整合しやすい</li>
+<li>次の実務問い：<br>
+<strong>欠陥流出を悪化させずに、人間の最終確認時間を半減できる証跡パックとサンプリング承認を、実プロジェクトで設計できるか</strong></li>
 </ul>
 <hr>
-<h2>15. 最終的な問いへの回答</h2>
+<h2>11. 関連ドキュメント</h2>
+<ul>
+<li>わかりやすい合成：<code>analysis-plain.md</code></li>
+<li>要約：<code>conclusion.md</code></li>
+<li>わかりやすい要約：<code>conclusion-plain.md</code>（資料版 HTML の元）</li>
+</ul>
+<p><strong>今回確度が上がった主張：</strong> 限定領域の Stage 5 は現実。一般化を決めるのはモデル単独ではなく検証体制。<br>
+<strong>揺らいだ主張：</strong> 「証拠そのものが希少」。精密には独立した証拠設計と残余リスクの引受。<br>
+<strong>次に潰すべき問い：</strong> 実プロジェクトでの証跡パック＋サンプリング承認の設計可能性。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-plain-heading">
+      <h2 id="analysis-plain-heading">2回答の合成（わかりやすい説明）</h2>
+      <div class="prose"><h1>2回答の合成（わかりやすい説明）</h1>
+<p>ChatGPT と Claude の長い回答を突き合わせたあと、「結局なにが言えるか」を日常の言葉に近い形で書き直したものです。細かい表や出典の整理は、別の「深掘り反映版」を見てください。</p>
+<hr>
+<h2>いちばん伝えたいこと</h2>
+<p>AIがコードを書く力は、かなり上がっています。<br>
+でも会社やチームとしてうまくいくかは、<strong>書いたものを信じられるかどうかにかかっています。</strong></p>
+<p>最初は「大事なのは証拠だ」と言っていました。<br>
+深掘りしたあと、もっと正確にはこう言えます。</p>
 <blockquote>
-<p><strong>日本で活動するITエンジニアが、AIエージェント協働型開発の普及を前提として、今後5年間で市場価値と事業機会を最大化するには、どのポジションを取り、何を実践し、何を実績として外部に示すべきか。</strong></p>
+<p><strong>ただの記録が増えても足りない。</strong><br>
+必要なのは、<br>
+1. <strong>ちゃんと確かめる設計</strong>（誰が、何を、どう確かめたか）<br>
+2. <strong>残ったリスクを引き受ける力</strong>（署名・契約・お金・信用）</p>
 </blockquote>
-<p><strong>【結論】</strong><br>
-あなたは「Agent Workflow Architect 兼 Independent Auditor（独立監査役）」のポジションを取るべきです。</p>
+<p>「証拠そのもの」は、将来ツールの標準機能になって安くなるかもしれません。<br>
+残りやすい希少性は、<strong>確かめ方を設計する力</strong>と、<strong>責任を負えること</strong>です。</p>
+<hr>
+<h2>ふたりがほぼ同じ方向を向いていたこと</h2>
+<h3>AIは速く書ける。詰まるのは確認</h3>
+<p>個人が速くなっても、レビューや承認が追いつかないと、チーム全体は速くなりません。<br>
+だから「どこから自動化が進むか」は、上流か下流かより、<strong>確かめやすいかどうか</strong>で決まりやすいです。</p>
+<p>ただし、すべての仕事で検証が最大の壁、とまでは言いません。<br>
+営業・予算・意思決定の遅れが支配することもあります。</p>
+<h3>「上流に逃げれば安全」は危うい</h3>
+<p>要求整理や設計案づくりも、AIがかなり手伝えます。<br>
+安全なのは「上流」という肩書きではなく、次の仕事です。</p>
+<ul>
+<li>何が正しさかを決める</li>
+<li>確かめ方を決める</li>
+<li>まだ残る危険を引き受ける</li>
+</ul>
+<p>ヒアリング資料や契約の下書きはAIでも作れます。<br>
+でも、値段交渉・合意・署名・「これで出してよい」は人間側に残ります。</p>
+<h3>日本にも進んでいる会社はある</h3>
+<p>富士通・日立・NTTデータなど、大きく動いている会社はあります。<br>
+ただし「日本全体が進んでいる／遅れている」とひとまとめにはしません。<br>
+<strong>宣伝・実験・一部で本番・全社展開・本当に成果が出たか</strong>は別物です。</p>
+<h3>大きな基盤を自作して売るのは難しい</h3>
+<p>エージェントを動かす土台そのものは、大きな会社の製品に寄りやすいです。<br>
+一方で、<strong>自分の会社の中で工程を自動化する</strong>のは進めてよい、という整理です。<br>
+借りる部分と、自組織だけが持つ「確かめ方・ルール」を分ける、が現実的です。</p>
+<h3>AIを何体も並べれば強い、ではない</h3>
+<p>役割を分けて独立に確かめるのは有効なことがあります。<br>
+でも、順番が大事な仕事や、引き継ぎが曖昧だと、かえって失敗が増えることもあります。<br>
+「何体か」より、<strong>別の目で見る仕組みがあるか</strong>が大事です。</p>
+<hr>
+<h2>食い違いに見えたところの正体</h2>
+<p>多くは「反対意見」というより、<strong>言い方が違う</strong>だけでした。</p>
+<ul>
+<li>「2030年に人間は承認だけ」：全部の開発ではなく、危険が低く・確かめやすく・失敗を戻せる仕事ならありうる</li>
+<li>「工場を設計する人」と「検証して責任を持つ人」：中身は近い。でも一人が全部やると、自分の成果を自分で保証する形になりやすい</li>
+<li>「オーケストレーションを作るな」：外に売る汎用製品の話。社内の自動化まで禁止ではない</li>
+</ul>
+<hr>
+<h2>これから考えたい役割の分け方</h2>
+<p>一人が全部やろうとせず、ざっくり3つに分けます。</p>
 <ol>
-<li><strong>実践すること:</strong><br>
-自らが運営するB2B SaaSにおいて、要求定義からテスト、デプロイに至る一連のプロセスをマルチエージェントで自動化する「自律型ソフトウェア工場」を構築・運用してください。コードを書くことではなく、「いかに少ない人間の介入時間（承認）で、安全にシステムを運用できるか」のガバナンス設計に心血を注ぎます。</li>
-<li><strong>実績として外部に示すべきこと:</strong><br>
-「私が書いた優れたコード」ではなく、「私が構築した、AIのハルシネーションを検知し、人間が安全に意思決定するための『監査ワークフローとレビューUI』」を外部に示してください。</li>
-<li><strong>事業機会の最大化:</strong><br>
-AIによってソフトウェア自体の価値（実装コスト）は限りなくゼロに近づきます。顧客が対価を払うのは「ソフトウェア」ではなく、「ドメイン知識に基づく正確な課題解決」と「品質・セキュリティに対する保証」です。自社SaaSで利益を出しつつ、その「AIを統制・監査するノウハウ」自体を、日本の大企業やSIer向けに高単価なコンサルティングやツールとして販売することで、市場価値を最大化できます。</li>
-</ol></div>
-  </details>
-</section></div>
+<li><strong>作る人</strong> … 仕組み・ルール・エージェント・確認の流れを作る  </li>
+<li><strong>別の目で見る人</strong> … 作った側から独立して確かめる  </li>
+<li><strong>引き受ける人</strong> … 「これで出してよい」と責任を持つ</li>
+</ol>
+<p>小さい組織なら、1と一部の確認は自前でやり、<br>
+大きな賠償や長い保証は保険や大きな会社と組む、が現実的です。</p>
+<hr>
+<h2>数字の読み方で気をつけること</h2>
+<p>「100倍速くなった」のような数字は、条件つきの社内測定であることが多いです。<br>
+一部のうまくいった例を、全部の開発に当てはめないこと。<br>
+記事では「実験なのか、観察なのか、会社の目標なのか」を分けて書きます。</p>
+<hr>
+<h2>いちばん強い反対意見</h2>
+<p>「確かめ方もそのうち全部自動化されて、安くなる。<br>
+そのとき強いのは、顧客・データ・販売網・お金・大きな土台を持つ側だ」</p>
+<p>これは無視できない反対側です。<br>
+それでも「確かめ方の設計」と「責任の引受」が残る条件はあります。<br>
+たとえば、正しさを全部ルール化できない、失敗すると損害が大きい、第三者が保証を求める、などです。</p>
+<hr>
+<h2>現場への一言</h2>
+<p>いま多くの強い Human-in-the-loop 運用は、未来の工場型開発の<strong>手作業版</strong>に近いです。<br>
+次に効く問いのひとつはこれです。</p>
+<blockquote>
+<p>品質を落とさずに、人が確認する時間を短くできるか。<br>
+そのために、何を証拠として残し、どこを重点的に見るか。</p>
+</blockquote></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">合成結果の要約</h2>
+      <div class="prose"><h1>合成結果の要約</h1>
+<p><strong>対象：</strong> ChatGPT／Claude の2回答＋差異深掘り<br>
+<strong>日付：</strong> 2026-07-31</p>
+<hr>
+<h2>中心命題</h2>
+<blockquote>
+<p>希少になるのはコードでも、単なる証拠ログでもない。<br>
+<strong>独立した証拠設計</strong>（重要な不確実性を減らす確かめ方）と、<br>
+<strong>残余リスクの引受</strong>（資本・契約・評判で残リスクを負う力）である。</p>
+</blockquote>
+<p>技術自動化の進み方を分ける軸は、主に<strong>検証可能性</strong>である。<br>
+ただし事業が広がる唯一の軸ではない（顧客獲得、データ、意思決定の遅れなども効く）。</p>
+<hr>
+<h2>一致した要点</h2>
+<ol>
+<li>個人の生成速度は上がっても、組織成果はレビュー・承認・証拠で詰まりやすい  </li>
+<li>「上流へ行けば安全」は不正確。情報生成はAI化しやすいが、交渉・権限決定・法的引受は残りやすい  </li>
+<li>日本には限定領域の先行事例がある。全体の導入・成果とは分けて評価する  </li>
+<li>汎用オーケストレーション製品化は大手に寄りやすい。内製の工程自動化は別問題として進めてよい  </li>
+<li>マルチエージェントは条件付き。誤りの独立性と引継ぎ契約があるとき有効  </li>
+</ol>
+<hr>
+<h2>差異の確定整理</h2>
+<table>
+<thead>
+<tr>
+<th>論点</th>
+<th>結論</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2030年に人間は承認だけ</td>
+<td>限定・可逆・機械判定可能な領域ではありうる。全域は根拠不足</td>
+</tr>
+<tr>
+<td>Factory Architect vs 検証・引受</td>
+<td>重なるが、独立保証・賠償・利益相反管理は後者が必要</td>
+</tr>
+<tr>
+<td>日本は先行／遅れ</td>
+<td>宣言・PoC・限定実運用・全社展開・成果計測の5層で分ける</td>
+</tr>
+<tr>
+<td>同一モデル族レビュー</td>
+<td>無価値ではないが独立保証ではない</td>
+</tr>
+<tr>
+<td>構築者が引受も兼ねる</td>
+<td>第一者検証は可。第三者監査としては不可</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>推奨する役割モデル</h2>
+<ol>
+<li><strong>構築者</strong> … 正本・エージェント・評価・権限・承認設計、第一者検証  </li>
+<li><strong>独立検証者</strong> … 別主体による反証・保証  </li>
+<li><strong>承認・引受主体</strong> … 残余リスクの受容と署名  </li>
+</ol>
+<p>小規模事業者の現実解：検証・証跡・業種特化を提供し、広い賠償・継続性は保険・大手・監査と接続する。</p>
+<hr>
+<h2>証拠の扱い</h2>
+<p>主張には次のラベルを付ける。<br>
+RCT／ベンチマーク／観察データ／自社事例／構想・目標。  </p>
+<p>富士通「100倍」等は条件つき自社PoCであり、全体平均へ外挿しない。<br>
+AI保険は性能保証では始まっているが、生成SDLC全般への標準監査要求までは未確認。</p>
+<hr>
+<h2>反対仮説（保持）</h2>
+<p>検証・証拠生成も標準化し希少性を失い、競争優位が顧客接点・データ・資本・プラットフォームへ移る可能性。<br>
+それでも、形式化しきれない正しさ・高損害の裾野・第三者保証・法的責任主体が残る限り、中心命題は維持できる。</p>
+<hr>
+<h2>次の実務問い</h2>
+<p>実プロジェクトにおいて、欠陥流出を悪化させずに人間の最終確認時間を半減できる証跡パックとサンプリング承認を設計できるか。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
+      <h2 id="conclusion-plain-heading">合成結果の要約（わかりやすい説明）</h2>
+      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
+      <div class="prose"><h1>合成結果の要約（わかりやすい説明）</h1>
+<p>このページは、長い合成を短く・やさしくしたものです。</p>
+<hr>
+<h2>3行でいうと</h2>
+<ol>
+<li>AIはコードを速く書けるようになった。  </li>
+<li>でも「本当に大丈夫か」を確かめて、責任を持つ側がまだ足りない。  </li>
+<li>これから値がつきやすいのは、<strong>確かめ方を設計する力</strong>と、<strong>残った危険を引き受ける力</strong>。</li>
+</ol>
+<hr>
+<h2>なにが変わったか</h2>
+<p>前は「証拠が大事」と言っていました。<br>
+今はもう少し細かく言います。</p>
+<ul>
+<li>ログやチェック結果が自動でたくさん出ても、それだけでは足りないことがある  </li>
+<li>大事なのは、<strong>何をどう確かめたか</strong>をきちんと設計すること  </li>
+<li>それでも残る危険について、<strong>誰が責任を持つか</strong>を決めること</li>
+</ul>
+<p>ツールが進化すると、「証拠を出す作業」自体は安くなるかもしれません。<br>
+残る仕事は、確かめ方の設計と、責任の引き受けです。</p>
+<hr>
+<h2>合意できたこと</h2>
+<ul>
+<li>速く書けることと、チーム全体が速くなることは別  </li>
+<li>「上流の仕事なら安心」は当てになりにくい  </li>
+<li>日本にも進んでいる会社はあるが、宣伝と本番と成果は分けて見る  </li>
+<li>大きな共通基盤を自前だけで作って売るのは難しい</li>
+<li>AIを何体も使えば必ず強い、わけではない  </li>
+</ul>
+<hr>
+<h2>役割は分けた方がよい</h2>
+<table>
+<thead>
+<tr>
+<th>だれ</th>
+<th>やること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作る人</td>
+<td>仕組みとルールを作る。自前の確認もする</td>
+</tr>
+<tr>
+<td>別の目で見る人</td>
+<td>作った側から離れて確かめる</td>
+</tr>
+<tr>
+<td>引き受ける人</td>
+<td>「出してよい」と責任を持つ</td>
+</tr>
+</tbody>
+</table>
+<p>小さい組織は、全部を一人で抱えず、<br>
+大きな保証や賠償は保険や大きな会社と組む方が現実的です。</p>
+<hr>
+<h2>数字にだまされない</h2>
+<p>「何倍速くなった」は、うまくいった一部の話であることが多いです。<br>
+全部の仕事がそうなった、とは限りません。</p>
+<hr>
+<h2>それでも考え続ける反対意見</h2>
+<p>確かめ方もそのうち自動化されて、あまり特別ではなくなるかもしれない。<br>
+そのときは、顧客やデータ、販売の力を持つ側が強くなる、という見方です。</p>
+<p>それでも、全部をルール化しきれない仕事や、失敗すると大きな損害が出る仕事では、<br>
+確かめ方の設計と責任の引受は残りやすい、と考えています。</p>
+<hr>
+<h2>現場への宿題</h2>
+<p>品質を落とさずに、人が確認する時間を短くできるか。<br>
+そのために、何を残し、どこを重点的に見るか。</p></div>
     </section>
 
     <section class="panel" aria-labelledby="edit-heading">

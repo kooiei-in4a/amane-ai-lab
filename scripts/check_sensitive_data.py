@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -97,7 +98,7 @@ def is_policy_doc(rel: str) -> bool:
     return any(rel == p or rel.startswith(p) for p in DOC_POLICY_PREFIXES)
 
 
-def scan_file(path: Path, rel: str) -> list[tuple[int, str, str]]:
+def scan_text(text: str, rel: str) -> list[tuple[int, str, str]]:
     """Return findings without returning the matched secret value.
 
     Redaction placeholders are removed before matching. A placeholder therefore
@@ -106,11 +107,6 @@ def scan_file(path: Path, rel: str) -> list[tuple[int, str, str]]:
     """
 
     findings: list[tuple[int, str, str]] = []
-    try:
-        text = path.read_text(encoding="utf-8")
-    except UnicodeDecodeError:
-        return findings
-
     for lineno, line in enumerate(text.splitlines(), start=1):
         scan_line = REDACTED_TOKEN_RE.sub("", line)
         for kind, pattern in HIGH.items():
@@ -131,25 +127,115 @@ def scan_file(path: Path, rel: str) -> list[tuple[int, str, str]]:
     return findings
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Scan repository for sensitive data candidates")
-    parser.add_argument("--root", default=str(ROOT))
-    args = parser.parse_args()
-    root = Path(args.root).resolve()
+def scan_file(path: Path, rel: str) -> list[tuple[int, str, str]]:
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        return []
+    return scan_text(text, rel)
 
-    findings_total = 0
-    scanned = 0
+
+def iter_repo_files(root: Path) -> list[tuple[Path, str]]:
+    files: list[tuple[Path, str]] = []
     for path in sorted(root.rglob("*")):
         if not path.is_file() or should_skip(path.relative_to(root)):
             continue
         if not is_text_file(path):
             continue
-        scanned += 1
         rel = str(path.relative_to(root)).replace("\\", "/")
+        files.append((path, rel))
+    return files
+
+
+def list_staged_rels(root: Path) -> list[str]:
+    result = subprocess.run(
+        [
+            "git",
+            "-C",
+            str(root),
+            "diff",
+            "--cached",
+            "--name-only",
+            "--diff-filter=ACMR",
+            "-z",
+        ],
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        err = (result.stderr or result.stdout or b"").decode("utf-8", errors="replace").strip()
+        raise RuntimeError(f"git diff --cached failed: {err or 'unknown error'}")
+    rels: list[str] = []
+    for item in result.stdout.split(b"\0"):
+        if not item:
+            continue
+        rel = item.decode("utf-8", errors="replace").replace("\\", "/")
+        if rel:
+            rels.append(rel)
+    return rels
+
+
+def read_staged_text(root: Path, rel: str) -> str | None:
+    result = subprocess.run(
+        ["git", "-C", str(root), "show", f":{rel}"],
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        return None
+    try:
+        return result.stdout.decode("utf-8")
+    except UnicodeDecodeError:
+        return None
+
+
+def scan_staged(root: Path) -> tuple[int, int]:
+    findings_total = 0
+    scanned = 0
+    for rel in list_staged_rels(root):
+        path = Path(rel)
+        if should_skip(path):
+            continue
+        if not is_text_file(path):
+            continue
+        text = read_staged_text(root, rel)
+        if text is None:
+            continue
+        scanned += 1
+        for lineno, kind, _ in scan_text(text, rel):
+            findings_total += 1
+            print(f"{rel}:{lineno}: {kind}")
+    return scanned, findings_total
+
+
+def scan_tree(root: Path) -> tuple[int, int]:
+    findings_total = 0
+    scanned = 0
+    for path, rel in iter_repo_files(root):
+        scanned += 1
         for lineno, kind, _ in scan_file(path, rel):
             findings_total += 1
             # Never echo the matched line: CI logs must not become a second leak.
             print(f"{rel}:{lineno}: {kind}")
+    return scanned, findings_total
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Scan repository for sensitive data candidates")
+    parser.add_argument("--root", default=str(ROOT))
+    parser.add_argument(
+        "--staged",
+        action="store_true",
+        help="Scan only staged Git contents (for pre-commit)",
+    )
+    args = parser.parse_args()
+    root = Path(args.root).resolve()
+
+    try:
+        scanned, findings_total = scan_staged(root) if args.staged else scan_tree(root)
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
 
     print(f"scanned_files={scanned} findings={findings_total}")
     return 1 if findings_total else 0

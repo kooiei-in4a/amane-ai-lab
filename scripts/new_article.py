@@ -131,10 +131,22 @@ def main() -> int:
         "supersededBy": None,
     }
     write_json(article_dir / "article.json", meta)
-    write_text(article_dir / "conclusion.md", "# 結論\n\n（結論を書く）\n")
-    write_text(article_dir / "analysis.md", "# 考察\n\n（考察を書く）\n")
+    write_text(
+        article_dir / "background.md",
+        "# 検討に至った背景\n\n（調査に至った経緯を書く）\n",
+    )
     write_text(article_dir / "prompt.txt", "（入力プロンプトを書く）\n")
     write_text(responses / "chatgpt.md", "# ChatGPT回答\n\n（回答を貼る）\n")
+    write_text(article_dir / "analysis.md", "# 2回答の合成\n\n（合成結果を書く）\n")
+    write_text(
+        article_dir / "analysis-plain.md",
+        "# 2回答の合成（わかりやすい説明）\n\n（平易な合成を書く）\n",
+    )
+    write_text(article_dir / "conclusion.md", "# 合成結果の要約\n\n（要約を書く）\n")
+    write_text(
+        article_dir / "conclusion-plain.md",
+        "# 合成結果の要約（わかりやすい説明）\n\n（平易な要約を書く）\n",
+    )
 
     print(f"created: {article_dir}")
     print(f"id: {article_id}")

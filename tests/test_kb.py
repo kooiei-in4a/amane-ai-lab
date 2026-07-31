@@ -95,8 +95,11 @@ class GiscusConfigurationTest(unittest.TestCase):
             article_dir = Path(tmp)
             (article_dir / "responses").mkdir()
             (article_dir / "article.json").write_text("{}", encoding="utf-8")
+            (article_dir / "background.md").write_text("# 背景\n", encoding="utf-8")
             (article_dir / "conclusion.md").write_text("# 結論\n", encoding="utf-8")
+            (article_dir / "conclusion-plain.md").write_text("# 平易な要約\n", encoding="utf-8")
             (article_dir / "analysis.md").write_text("# 考察\n", encoding="utf-8")
+            (article_dir / "analysis-plain.md").write_text("# 平易な合成\n", encoding="utf-8")
             (article_dir / "prompt.txt").write_text("prompt\n", encoding="utf-8")
             (article_dir / "responses" / "chatgpt.md").write_text("# ok\n", encoding="utf-8")
 
@@ -184,6 +187,15 @@ class SensitiveScanTest(unittest.TestCase):
     def test_env_files_are_scanned_as_text(self):
         self.assertTrue(is_text_file(Path(".env")))
         self.assertTrue(is_text_file(Path(".env.production")))
+
+    def test_scan_text_detects_api_key_assignment(self):
+        from scripts.check_sensitive_data import scan_text
+
+        key_name = "api_" + "key"
+        secret_value = "actual-" + "secret-value"
+        findings = scan_text(f'{key_name}="{secret_value}"\n', "tmp.txt")
+        kinds = [k for _, k, _ in findings]
+        self.assertIn("api_key_assignment", kinds)
 
 
 if __name__ == "__main__":

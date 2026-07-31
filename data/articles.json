@@ -6,9 +6,9 @@
       "id": "KB-2026-0001",
       "slug": "ai-agent-collaborative-dev-future",
       "title": "AIエージェント協働型開発の未来",
-      "description": "希少になるのはコードではなく証拠。ChatGPT・Claude・Geminiの回答と統合分析から、検証・引受・人材戦略の論点を整理する。",
-      "status": "published",
-      "publishedAt": "2026-07-31",
+      "description": "AI開発で希少になるのは、コードや単なる証拠ログではない。重要な不確実性を減らす独立した証拠設計と、残余リスクを引き受ける能力である。",
+      "status": "draft",
+      "publishedAt": null,
       "updatedAt": "2026-07-31",
       "lastVerifiedAt": "2026-07-31",
       "tags": [
@@ -20,8 +20,7 @@
       ],
       "agents": [
         "ChatGPT",
-        "Claude",
-        "Gemini"
+        "Claude"
       ],
       "url": "/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/",
       "year": "2026"

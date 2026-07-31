@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AIエージェント協働型開発の未来 — 資料版 — amane AI Lab Knowledge Base</title>
-  <meta name="description" content="希少になるのはコードではなく証拠。ChatGPT・Claude・Geminiの回答と統合分析から、検証・引受・人材戦略の論点を整理する。">
+  <meta name="description" content="AI開発で希少になるのは、コードや単なる証拠ログではない。重要な不確実性を減らす独立した証拠設計と、残余リスクを引き受ける能力である。">
   <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/summary/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="AIエージェント協働型開発の未来 — 資料版">
-  <meta property="og:description" content="希少になるのはコードではなく証拠。ChatGPT・Claude・Geminiの回答と統合分析から、検証・引受・人材戦略の論点を整理する。">
+  <meta property="og:description" content="AI開発で希少になるのは、コードや単なる証拠ログではない。重要な不確実性を減らす独立した証拠設計と、残余リスクを引き受ける能力である。">
   <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/summary/">
   <meta property="og:site_name" content="amane-ai-lab">
   <meta name="twitter:card" content="summary">
@@ -34,15 +34,18 @@
         <span class="pill">資料版</span>
         <span>更新: 2026-07-31</span>
       </p>
-      <h1>【サマリー】AIエージェント協働型開発の未来 ― 3ソース統合レポート</h1>
-      <p class="summary-doc-subtitle">ChatGPT / Claude / Gemini の回答を統合した要点資料。</p>
+      <h1>合成結果の要約（わかりやすい説明）</h1>
+      <p class="summary-doc-subtitle">合成結果を、わかりやすい言葉で短くまとめた資料版。</p>
       <nav class="summary-source-links" aria-label="記事本文の関連セクション">
         <p class="summary-source-links-label">記事本文の関連セクション</p>
         <ul>
-          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#conclusion-heading">結論</a></li>
-          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#analysis-heading">考察・判断プロセス</a></li>
-          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#prompt-heading">入力プロンプト</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#background-heading">検討に至った背景</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#prompt-heading">調査プロンプト</a></li>
           <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#agents-heading">AIエージェントの回答</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#analysis-heading">2回答の合成</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#analysis-plain-heading">合成（わかりやすい説明）</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#conclusion-heading">要約</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#conclusion-plain-heading">要約（わかりやすい説明）</a></li>
         </ul>
       </nav>
       <p class="summary-doc-nav">
@@ -51,248 +54,90 @@
     </header>
 
     <div class="summary-doc-layout">
-      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol><li><a href="#section-1">一言でいうと</a></li><li><a href="#section-2">1. 2つのAI回答が一致した5点</a></li><li><a href="#section-3">2. 食い違った点と裁定</a></li><li><a href="#section-4">3. Gemini プロンプト（ソースC）の位置づけ</a></li><li><a href="#section-5">4. 取るべきポジション</a></li><li><a href="#section-6">5. 今すぐやること（3か月）</a></li><li><a href="#section-7">6. やらないこと</a></li><li><a href="#section-8">7. 最重要の監視指標</a></li><li><a href="#section-9">8. 忘れてはいけない2つの数字</a></li><li><a href="#section-10">9. 未解決の論点</a></li></ol></nav>
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol><li><a href="#section-1">3行でいうと</a></li><li><a href="#section-2">なにが変わったか</a></li><li><a href="#section-3">合意できたこと</a></li><li><a href="#section-4">役割は分けた方がよい</a></li><li><a href="#section-5">数字にだまされない</a></li><li><a href="#section-6">それでも考え続ける反対意見</a></li><li><a href="#section-7">現場への宿題</a></li></ol></nav>
       <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
-        <h1>【サマリー】AIエージェント協働型開発の未来 ― 3ソース統合レポート</h1>
-<p><strong>2026年7月30日｜統合元：Claude調査レポート（約1,300行）／ChatGPT予測回答／Gemini向け入力プロンプト</strong></p>
+        <h1>合成結果の要約（わかりやすい説明）</h1>
+<p>このページは、長い合成を短く・やさしくしたものです。</p>
 <hr>
-<h2 id="section-1">一言でいうと</h2>
-<blockquote>
-<p><strong>希少になるのはコードではなく「証拠」である。</strong><br>
-AIは無限に成果物を生む。しかし「これは正しい」と証明する証拠は、意図的に設計しなければ生まれない。</p>
-</blockquote>
-<hr>
-<h2 id="section-2">1. 2つのAI回答が一致した5点</h2>
-<p><strong>Claude と ChatGPT は出典基盤がほぼ重複していない</strong>（共通するのは METR のみ）。独立した証拠から以下で一致した。</p>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>一致点</th>
-<th>要点</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><strong>ボトルネックは検証に移った</strong></td>
-<td>問題は「AIが実装できるか」ではなく「意図どおり実装したことをどう証明するか」。レビュー時間+91%、PRサイズ+154%、組織レベルのDORA指標は改善なし。<strong>個人の生産性向上は本物で、組織の成果への変換が失敗している</strong></td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>マルチエージェントは過大評価</strong></td>
-<td>順序依存の仕事では性能が39〜70%悪化。無秩序な並列でエラー最大17.2倍。2エージェント自由協働の成功率は約25%＝単一の半分。<strong>中央オーケストレーター＋必要な箇所だけ委任に収束する</strong></td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>「確認だけ」の条件は能力でなく体制</strong></td>
-<td>①正本が明確 ②受入条件を機械判定できる ③権限が段階分離 ④成果を信用せず証拠を検証 ⑤失敗時に戻せる ― の5条件</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>現行の開発体制は未来の開発方式の手動プロトタイプ</strong></td>
-<td>一般的なAIコーディング利用より一段か二段先。ただし<strong>可視化されていない</strong></td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>現状のままでは頭打ち</strong></td>
-<td>ChatGPT：Koo自身が工程制御のボトルネック。Claude：現在の強みは陳腐化領域（ツール習熟・オーケストレーション技法）に偏っている</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="section-3">2. 食い違った点と裁定</h2>
-<table>
-<thead>
-<tr>
-<th>論点</th>
-<th>ChatGPT</th>
-<th>Claude</th>
-<th>裁定</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>実現確率</strong></td>
-<td>2028年末に小規模標準SaaSほぼ全自動 75%／2030年末に人間は承認だけ 60%</td>
-<td>急速自動化は15%。中心線は段階的普及40%＋限定領域30%</td>
-<td><strong>見かけほど差はない。</strong>ChatGPTは「限定領域」、Claudeは「市場全体」を語っている。真に対立するのは「2030年に人間は承認だけ」の1行のみ</td>
-</tr>
-<tr>
-<td><strong>次の一手</strong></td>
-<td>手動の工程制御を仕様化し<strong>ワークフローエンジンに落とせ</strong></td>
-<td>ワークフローエンジンの開発は<strong>避けよ</strong>（GitHub/OpenAI/MSに潰される。時間の完全な損失）</td>
-<td><strong>「内製」と「製品化」を分ければ両立。</strong> 自社工程の自動化はやる。それを製品として売るのはやらない。外に出すのはエンジンではなく<strong>「型」と「データ」</strong></td>
-</tr>
-<tr>
-<td><strong>人間の承認</strong></td>
-<td>フロー最後に「人間：確認・承認」を配置</td>
-<td><strong>短時間の承認＝理解を伴わない承認＝事故の設計図。</strong>対話ではなく<strong>限定付きサンプリング検査</strong>へ</td>
-<td>Claudeが精緻。ChatGPTのフロー図に「証跡パック生成」と「サンプリング検査」を差し込んだ統合フローを第II部2.3に収録</td>
-</tr>
-<tr>
-<td><strong>焦点</strong></td>
-<td>How（工程設計）</td>
-<td>What / Why（事業ポジション）</td>
-<td><strong>相補的。</strong>片方を捨てる理由がない</td>
-</tr>
-</tbody>
-</table>
-<p><strong>見かけの矛盾（実は矛盾しない）：</strong> OpenAIが5か月・約100万行・約1,500PRをCodexだけで構築した事例と、「自律エージェントの業務配備率は一桁%」は両立する。前者はモデル提供者の自己適用＝上限値。<strong>この事例が示すのは「AIが書ける」ことではなく「環境を設計できる人間が1人いれば、コードを書く人間は0人でよい」こと。</strong></p>
-<hr>
-<h2 id="section-4">3. Gemini プロンプト（ソースC）の位置づけ</h2>
-<p>Gemini ファイルは<strong>回答ではなく入力プロンプト</strong>で、テーマも別（公開ナレッジベースの設計依頼）。ただし内容は、Claudeレポートが最優先行動に挙げた「証跡パック形式の公開」「測定された定量報告の発信」の<strong>実行基盤</strong>にあたるため、第III部として統合した。</p>
-<p><strong>発見：</strong> C の記事構成（結論サマリー→自分の考察→入力プロンプト全文→各AI回答）は、意図せず<strong>証跡パックの構造に近い</strong>。ただし3項目が欠落している。</p>
-<p><strong>追加を推奨：</strong> 各記事末尾に「<strong>この結論が誤りだとしたらどこで露呈するか</strong>」「<strong>残存する不確実性</strong>」「<strong>判定日と再検証予定日</strong>」の定型欄。これだけで記事が「感想」から「検証可能な主張」に変わる。</p>
-<p><strong>主要リスク：</strong> プロンプト全文公開による機密混入（顧客名・スキーマ・内部URL）／Git履歴の不可逆性／各AIの出力公開に関する規約差／記事のモデルバージョン記録がないと1年後に判定不能／100件超で「探せない」問題。<strong>Fail Secure 原則をそのまま適用し、機密検査を通らない記事は公開しない設計にすること。</strong></p>
-<hr>
-<h2 id="section-5">4. 取るべきポジション</h2>
-<blockquote>
-<p><strong>「AI生成物の検証と説明責任を設計し、その責任を自分で引き受ける、特定業種の専門家」</strong></p>
-</blockquote>
-<ul>
-<li>✗ 「AI駆動開発が速い人」― <strong>1年で全員が名乗る</strong></li>
-<li>✗ 「上流ができる人」― <strong>上流の作業のほうが先にAIに移る</strong>（ヒアリングの網羅性、選択肢の列挙、業務フロー作成はAIが得意）</li>
-</ul>
-<p><strong>残るのは工程の上下ではなく「引受」である。</strong> AIは被告になれず、解雇されず、評判を失わず、保証金を積めない。</p>
-<table>
-<thead>
-<tr>
-<th>層</th>
-<th>2030年の希少性</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>生成層（書く・実装する）</td>
-<td>ほぼゼロ</td>
-</tr>
-<tr>
-<td>検証層（反証を設計する）</td>
-<td>高い</td>
-</tr>
-<tr>
-<td><strong>引受層（署名する・責任を負う）</strong></td>
-<td><strong>最も高い（構造的にAIに移らない）</strong></td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="section-6">5. 今すぐやること（3か月）</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>行動</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><strong>証跡パック形式 v0.1 を定義</strong>（要求の出所／採否ADR／不変条件と検証方法／独立レビュー指摘と対応／残存リスクと受容判断／承認者）→ 直近3機能に遡って適用</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>単位原価の計測を開始</strong>（1機能あたりのトークン費・自分の時間・レビュー回数・手戻り率）― <strong>誰も持っていないデータ</strong></td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>SDAD を「エージェント構成」から「満たすべき性質」に書き換える</strong> ―「Claudeが仕様、Codexが実装」ではなく「生成と検証は独立した情報源で行う」。<strong>方法論の耐用年数が10倍になる</strong></td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>.NET向け不変条件アナライザの最小版</strong>（Fail Secure違反・Magic String検出）を CI に組み込む</td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>工程制御を仕様化</strong>（状態遷移・前提条件・停止条件を明文化）※製品化はしない</td>
-</tr>
-<tr>
-<td>6</td>
-<td><strong>公開ナレッジベースの立ち上げ</strong>（機密チェックのCI自動化を含む）</td>
-</tr>
-<tr>
-<td>7</td>
-<td><strong>AI駆動開発カンファレンス2026夏（7/30-31、オンライン無料）</strong> ＋ コンソーシアム（会費無料）＋ <strong>大阪支部</strong>に接続</td>
-</tr>
-<tr>
-<td>8</td>
-<td><strong>監査の方法論を1冊通す</strong>（統制テスト、サンプリング、証拠能力、独立性）</td>
-</tr>
-<tr>
-<td>9</td>
-<td><strong>やめる：</strong> 新モデル・新ツールの比較検討を月1回に圧縮／ツール固有作法の深掘り</td>
-</tr>
-</tbody>
-</table>
-<p><strong>1年以内に追加：</strong> 士業向け機械可読ルールパック（1業種）／測定された定量報告を1本公開／登壇／<strong>IT業務賠償責任保険への加入</strong>（マイクロ企業最大の弱点＝賠償能力を最小コストで補える）</p>
-<hr>
-<h2 id="section-7">6. やらないこと</h2>
-<p>汎用オーケストレーション基盤・権限/ID基盤・サンドボックスの<strong>製品開発</strong>（プラットフォーム大手に潰される）／特定ツールの作法への深い投資／「AI駆動開発が速い」を売りにすること／業種を早く広げること／人月比率を上げること／規制産業・大企業基幹系への単独参入</p>
-<hr>
-<h2 id="section-8">7. 最重要の監視指標</h2>
-<table>
-<thead>
-<tr>
-<th>指標</th>
-<th>頻度</th>
-<th>意味</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>保険会社がAI開発監査を要求し始めるか</strong></td>
-<td>四半期</td>
-<td><strong>最重要。法規制より速く効く。</strong>動いたら第三者検証を即主力化</td>
-</tr>
-<tr>
-<td><strong>自社の検証済み変更あたり原価</strong></td>
-<td>月次</td>
-<td>半年で半減しなければ「期待ほど進まない」を重く見る</td>
-</tr>
-<tr>
-<td>METR の <strong>80%信頼性</strong>ホライズン</td>
-<td>四半期</td>
-<td>50%は実務で使えない。1営業日超えで加速シナリオへ</td>
-</tr>
-<tr>
-<td>富士通・日立の実績値（2027年度）</td>
-<td>年次</td>
-<td>宣言 vs 現実の答え合わせ</td>
-</tr>
-<tr>
-<td>単一強力エージェントへの収束</td>
-<td>四半期</td>
-<td>収束すればマルチエージェント前提の方法論は価値を失う</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="section-9">8. 忘れてはいけない2つの数字</h2>
-<ul>
-<li><strong>体感は信頼できない。</strong> 810万PR・4,800組織超の分析で、開発者は20%速くなったと感じながら<strong>実際には19%遅くなっていた</strong>（39ポイントの乖離）。→ 実測を始める最大の根拠。</li>
-<li><strong>AI生成コードへの信頼は96%が「完全にはしていない」／コミット前に必ず検証する開発者は48%／レビューなしマージは+31%。</strong> → 検証は自動的には解決しない。</li>
-</ul>
-<hr>
-<h2 id="section-10">9. 未解決の論点</h2>
+<h2 id="section-1">3行でいうと</h2>
 <ol>
-<li><strong>Gemini の回答が未取得</strong>（ディレクトリ構成案・運用ワークフローは統合できていない）</li>
-<li>2つの確率表は定義が異なり、厳密な数値比較はできない</li>
-<li><strong>どちらのソースも一次データを持っていない。</strong> Koo が単位原価を実測すれば、この論点で両ソースより強い証拠を持つことになる</li>
-<li>「工程制御の自動化」の投資上限が未定 ― 仕様化までで一度止め、実装は必要最小限にする段階設計を推奨</li>
+<li>AIはコードを速く書けるようになった。  </li>
+<li>でも「本当に大丈夫か」を確かめて、責任を持つ側がまだ足りない。  </li>
+<li>これから値がつきやすいのは、<strong>確かめ方を設計する力</strong>と、<strong>残った危険を引き受ける力</strong>。</li>
 </ol>
 <hr>
-<p><strong>詳細は <code>ai-agent-sdlc-integrated-report.md</code> を参照。</strong></p>
+<h2 id="section-2">なにが変わったか</h2>
+<p>前は「証拠が大事」と言っていました。<br>
+今はもう少し細かく言います。</p>
+<ul>
+<li>ログやチェック結果が自動でたくさん出ても、それだけでは足りないことがある  </li>
+<li>大事なのは、<strong>何をどう確かめたか</strong>をきちんと設計すること  </li>
+<li>それでも残る危険について、<strong>誰が責任を持つか</strong>を決めること</li>
+</ul>
+<p>ツールが進化すると、「証拠を出す作業」自体は安くなるかもしれません。<br>
+残る仕事は、確かめ方の設計と、責任の引き受けです。</p>
+<hr>
+<h2 id="section-3">合意できたこと</h2>
+<ul>
+<li>速く書けることと、チーム全体が速くなることは別  </li>
+<li>「上流の仕事なら安心」は当てになりにくい  </li>
+<li>日本にも進んでいる会社はあるが、宣伝と本番と成果は分けて見る  </li>
+<li>大きな共通基盤を自前だけで作って売るのは難しい</li>
+<li>AIを何体も使えば必ず強い、わけではない  </li>
+</ul>
+<hr>
+<h2 id="section-4">役割は分けた方がよい</h2>
+<table>
+<thead>
+<tr>
+<th>だれ</th>
+<th>やること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作る人</td>
+<td>仕組みとルールを作る。自前の確認もする</td>
+</tr>
+<tr>
+<td>別の目で見る人</td>
+<td>作った側から離れて確かめる</td>
+</tr>
+<tr>
+<td>引き受ける人</td>
+<td>「出してよい」と責任を持つ</td>
+</tr>
+</tbody>
+</table>
+<p>小さい組織は、全部を一人で抱えず、<br>
+大きな保証や賠償は保険や大きな会社と組む方が現実的です。</p>
+<hr>
+<h2 id="section-5">数字にだまされない</h2>
+<p>「何倍速くなった」は、うまくいった一部の話であることが多いです。<br>
+全部の仕事がそうなった、とは限りません。</p>
+<hr>
+<h2 id="section-6">それでも考え続ける反対意見</h2>
+<p>確かめ方もそのうち自動化されて、あまり特別ではなくなるかもしれない。<br>
+そのときは、顧客やデータ、販売の力を持つ側が強くなる、という見方です。</p>
+<p>それでも、全部をルール化しきれない仕事や、失敗すると大きな損害が出る仕事では、<br>
+確かめ方の設計と責任の引受は残りやすい、と考えています。</p>
+<hr>
+<h2 id="section-7">現場への宿題</h2>
+<p>品質を落とさずに、人が確認する時間を短くできるか。<br>
+そのために、何を残し、どこを重点的に見るか。</p>
       </article>
     </div>
 
     <footer class="summary-doc-footer panel">
-      <p class="note">この資料は記事の「結論」セクション（<code>conclusion.md</code>）から自動生成しています。</p>
+      <p class="note">この資料は記事の「合成結果の要約（わかりやすい説明）」（<code>conclusion-plain.md</code>）から自動生成しています。</p>
       <p>
-        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#conclusion-heading">結論</a> ·
-        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#analysis-heading">考察</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#background-heading">背景</a> ·
         <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#prompt-heading">プロンプト</a> ·
         <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#agents-heading">AI回答</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#analysis-heading">合成</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#analysis-plain-heading">合成（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#conclusion-heading">要約</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/#conclusion-plain-heading">要約（平易）</a> ·
         <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
       </p>
     </footer>

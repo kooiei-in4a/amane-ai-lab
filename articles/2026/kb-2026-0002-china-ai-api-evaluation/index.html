@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画 — amane AI Lab Knowledge Base</title>
-  <meta name="description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として個人開発向けにDeepSeek V4 Flash／Proなどを整理し、さらにコーディングベンチマークとAPI費用の再比較で、Coding Agent用途ではProを既定主力とせずFlash-0731やLuna／Terra／GLMを優先する見直しを追加した。">
+  <meta name="description" content="第1層は3つのAI調査による評価方法と中国製系列候補（DeepSeek／Qwen／GLM／Kimi／MiniMax）の整理で、単一勝者は決めない。第2層の2026-08-01個人開発向け追記は、DeepSeek／GLM／Kimiの一次情報で価格・接続を具体化する。第3層のコーディング再比較は公表ベンチとAPI費用でCoding Agent向け段階ルーティングを見直し、Flash-0731やGLM-5.2に加えGPT-5.6 Luna／Terra／SolとClaude Opus 5も含む。法人導入は第1層の検証計画を優先する。">
   <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画">
-  <meta property="og:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として個人開発向けにDeepSeek V4 Flash／Proなどを整理し、さらにコーディングベンチマークとAPI費用の再比較で、Coding Agent用途ではProを既定主力とせずFlash-0731やLuna／Terra／GLMを優先する見直しを追加した。">
+  <meta property="og:description" content="第1層は3つのAI調査による評価方法と中国製系列候補（DeepSeek／Qwen／GLM／Kimi／MiniMax）の整理で、単一勝者は決めない。第2層の2026-08-01個人開発向け追記は、DeepSeek／GLM／Kimiの一次情報で価格・接続を具体化する。第3層のコーディング再比較は公表ベンチとAPI費用でCoding Agent向け段階ルーティングを見直し、Flash-0731やGLM-5.2に加えGPT-5.6 Luna／Terra／SolとClaude Opus 5も含む。法人導入は第1層の検証計画を優先する。">
   <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/">
   <meta property="og:site_name" content="amane-ai-lab">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画">
-  <meta name="twitter:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として個人開発向けにDeepSeek V4 Flash／Proなどを整理し、さらにコーディングベンチマークとAPI費用の再比較で、Coding Agent用途ではProを既定主力とせずFlash-0731やLuna／Terra／GLMを優先する見直しを追加した。">
+  <meta name="twitter:description" content="第1層は3つのAI調査による評価方法と中国製系列候補（DeepSeek／Qwen／GLM／Kimi／MiniMax）の整理で、単一勝者は決めない。第2層の2026-08-01個人開発向け追記は、DeepSeek／GLM／Kimiの一次情報で価格・接続を具体化する。第3層のコーディング再比較は公表ベンチとAPI費用でCoding Agent向け段階ルーティングを見直し、Flash-0731やGLM-5.2に加えGPT-5.6 Luna／Terra／SolとClaude Opus 5も含む。法人導入は第1層の検証計画を優先する。">
   <link rel="stylesheet" href="../../../assets/css/site.css">
 </head>
 <body>
@@ -38,12 +38,12 @@
         <span>更新: 2026-08-01</span>
       </p>
       <h1>中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画</h1>
-      <p class="article-summary">3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として個人開発向けにDeepSeek V4 Flash／Proなどを整理し、さらにコーディングベンチマークとAPI費用の再比較で、Coding Agent用途ではProを既定主力とせずFlash-0731やLuna／Terra／GLMを優先する見直しを追加した。</p>
+      <p class="article-summary">第1層は3つのAI調査による評価方法と中国製系列候補（DeepSeek／Qwen／GLM／Kimi／MiniMax）の整理で、単一勝者は決めない。第2層の2026-08-01個人開発向け追記は、DeepSeek／GLM／Kimiの一次情報で価格・接続を具体化する。第3層のコーディング再比較は公表ベンチとAPI費用でCoding Agent向け段階ルーティングを見直し、Flash-0731やGLM-5.2に加えGPT-5.6 Luna／Terra／SolとClaude Opus 5も含む。法人導入は第1層の検証計画を優先する。</p>
       <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
       <ul class="tag-list"><li>中国製AIモデル</li><li>API</li><li>コーディング</li><li>AIエージェント</li><li>モデル評価</li><li>セキュリティ</li></ul>
     </header>
 
-    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-chatgpt">ChatGPT</span> <a class="tldr-link" href="#agents-heading">ChatGPT調査は、Qwen、DeepSeek、GLMなどを役割別の有力候補として提示した。</a></li><li><span class="tldr-source tldr-source-gemini">Gemini</span> <a class="tldr-link" href="#agents-heading">2つのGemini調査もDeepSeek、Qwen、GLM、Kimiを主要候補に含めたが、対象モデルと順位は一致しなかった。</a></li><li><span class="tldr-source tldr-source-review">レビュー</span> <a class="tldr-link" href="#analysis-heading">日本カード、価格、最大出力、契約経路、データ条件には採用判断を左右する矛盾が残った。</a></li><li><span class="tldr-source tldr-source-synthesis">統合</span> <a class="tldr-link" href="#analysis-heading">複数回答の一致は候補選定には使えるが、一次情報と実API検証の代わりにはならない。</a></li><li><span class="tldr-source tldr-source-synthesis">推奨</span> <a class="tldr-link" href="#conclusion-heading">PoCは統一APIで横比較し、本番候補は公式または固定Providerで再試験する。</a></li><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#conclusion-heading">単一ランキングではなく、主力・低価格補助・長時間Agent・高難度比較の役割別に採用する。</a></li><li><span class="tldr-source tldr-source-synthesis">個人開発</span> <a class="tldr-link" href="#conclusion-heading">個人開発ではFlashを標準、Proを上位として切り替え、同じDeepSeek APIで費用を抑えやすい。</a></li><li><span class="tldr-source tldr-source-synthesis">追記</span> <a class="tldr-link" href="#conclusion-heading">2026-08-01時点の個人開発向け第一候補は、DeepSeek V4 Flash／Proの組み合わせである。</a></li><li><span class="tldr-source tldr-source-synthesis">再比較</span> <a class="tldr-link" href="#conclusion-heading">コーディングAgent向け再比較ではFlash-0731を優先し、Luna／Terra／GLMを常用候補、Opusは難しいバグ修正向けとする。</a></li><li><span class="tldr-source tldr-source-synthesis">費用</span> <a class="tldr-link" href="#conclusion-heading">API従量課金ではLuna／Flashが有利で、次にGLM／Terra。Opus／Solはスポット利用向きである。</a></li></ol></section>
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-chatgpt">ChatGPT</span> <a class="tldr-link" href="#agents-heading">ChatGPT調査は、Qwen、DeepSeek、GLMなどを役割別の有力候補として提示した。</a></li><li><span class="tldr-source tldr-source-gemini">Gemini</span> <a class="tldr-link" href="#agents-heading">2つのGemini調査もDeepSeek、Qwen、GLM、Kimiを主要候補に含めたが、対象モデルと順位は一致しなかった。</a></li><li><span class="tldr-source tldr-source-review">レビュー</span> <a class="tldr-link" href="#analysis-heading">日本カード、価格、最大出力、契約経路、データ条件には採用判断を左右する矛盾が残った。</a></li><li><span class="tldr-source tldr-source-synthesis">統合</span> <a class="tldr-link" href="#analysis-heading">複数回答の一致は候補選定には使えるが、一次情報と実API検証の代わりにはならない。</a></li><li><span class="tldr-source tldr-source-synthesis">推奨</span> <a class="tldr-link" href="#conclusion-heading">PoCは統一APIで横比較し、本番候補は公式または固定Providerで再試験する。</a></li><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#conclusion-heading">単一ランキングではなく、主力・低価格補助・長時間Agent・高難度比較の役割別に採用する。</a></li><li><span class="tldr-source tldr-source-synthesis">個人開発</span> <a class="tldr-link" href="#conclusion-heading">中国製の一次整理ではFlashを低価格標準、GLM-5.2を定額大量利用、Kimiを高難度枠として扱った。</a></li><li><span class="tldr-source tldr-source-synthesis">見直し</span> <a class="tldr-link" href="#conclusion-heading">Coding Agent用途ではProを標準昇格先とせず、Flash-0731優先／中国製主力はGLM-5.2とする。</a></li><li><span class="tldr-source tldr-source-synthesis">再比較</span> <a class="tldr-link" href="#conclusion-heading">横断比較ではLuna／Terraが常用有力、Opusは難しいバグ修正、Sol／K3は高難度スポット。</a></li><li><span class="tldr-source tldr-source-synthesis">費用</span> <a class="tldr-link" href="#conclusion-heading">API従量ではFlash／Lunaが安く、GLM／Terraが中間、Opus／Solはスポット向き。</a></li></ol></section>
     <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-chatgpt">ChatGPT</a><ul><li class="toc-item toc-level-2"><a href="#agent-chatgpt-エグゼクティブサマリー">エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-主要候補の役割分担">主要候補の役割分担</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-api提供経路">API提供経路</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-cursorと周辺ツール">Cursorと周辺ツール</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-評価方法">評価方法</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-api検証計画">API検証計画</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-データセキュリティ">データ・セキュリティ</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-最終提案">最終提案</a></li></ul></li><li><a href="#agent-gemini-pro">Gemini Pro</a><ul><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-エグゼクティブサマリー">エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-モデル別の位置づけ">モデル別の位置づけ</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-推奨順位の考え方">推奨順位の考え方</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-cursorと開発ツール">Cursorと開発ツール</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-api検証">API検証</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-最終提案">最終提案</a></li></ul></li><li><a href="#agent-gemini">Gemini 思考</a><ul><li class="toc-item toc-level-2"><a href="#agent-gemini-調査対象と除外">調査対象と除外</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-エグゼクティブサマリー">エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-モデルの役割">モデルの役割</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-総合評価">総合評価</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-導入分類">導入分類</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-検証計画">検証計画</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-データと契約">データと契約</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-最終提案">最終提案</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
 
     <section class="panel" aria-labelledby="background-heading">
@@ -67,6 +67,7 @@
 <li>提供された3つのAI調査から、どの中国製AIモデルを導入候補として残せるか</li>
 <li>回答間の矛盾や未確認情報がある状態で、どこまで結論を出してよいか</li>
 </ol>
+<p>公開後の2026-08-01追記は、「個人のコーディング用途で、いま試す現行モデルIDはどれか」に答える追加確認です。調査時点の慎重な法人導入判断を置き換えるものではありません。</p>
 <h2 id="background-入力資料の構成"><a class="heading-permalink" href="#background-入力資料の構成" aria-label="この見出しへのリンク">#</a>入力資料の構成</h2>
 <p>今回の入力は、主たる調査プロンプト、ChatGPTの回答1件、Geminiの回答2件、3回答の純粋マージ、統合要約、矛盾点レビューで構成されています。</p>
 <table>
@@ -116,6 +117,7 @@
 </tbody>
 </table>
 <p>統合要約は純粋マージの派生資料であり、独立したAI回答としては数えていません。矛盾点一覧も新しい調査回答ではなく、3回答を比較したレビューとして扱います。</p>
+<p>2026-08-01の個人開発向け追記とコーディング再比較は、上記3調査の入力には含まれません。結論本文（<code>conclusion.md</code> / <code>conclusion-plain.md</code>）へ後から足した公開後確認であり、元のAI回答や純粋マージを書き換えた正本ではありません。</p>
 <h2 id="background-対象範囲"><a class="heading-permalink" href="#background-対象範囲" aria-label="この見出しへのリンク">#</a>対象範囲</h2>
 <p>対象は、API経由で利用でき、次の用途に関係する中国製AIモデルです。</p>
 <ul>
@@ -135,10 +137,17 @@
 <li>契約書、DPA、ZDR、保存期間の法的評価</li>
 <li>実APIを使った速度、障害率、Tool Calling成功率</li>
 <li>セルフホストに必要な正確な設備費</li>
-<li>2026年7月31日以後の価格やモデル更新</li>
+<li>2026-08-01追記で名前を挙げた一部モデル以外の価格・モデル更新、および今後の変更</li>
 </ul>
+<p>名前を挙げた中国製モデルについては、2026-08-01の追記で公開価格やモデルIDを再確認しています。それ以外のモデル・Providerや、その後の更新は未確認のままです。</p>
 <h2 id="background-読み方"><a class="heading-permalink" href="#background-読み方" aria-label="この見出しへのリンク">#</a>読み方</h2>
-<p>AI回答内のモデル名、料金、仕様、ランキングは、回答時点の調査結果または主張です。この記事では、複数回答が一致しただけで事実認定せず、一次情報と実APIで再確認すべき項目を明確に分けます。</p></div>
+<p>この記事は、根拠の異なる3層で読んでください。</p>
+<ol>
+<li><strong>第1層（3調査の統合）:</strong> 評価方法と中国製系列の候補群。単一の勝者は決めません。</li>
+<li><strong>第2層（個人開発向け追記）:</strong> DeepSeek／GLM／Kimiなど特定中国製モデルの一次情報による価格・接続整理。</li>
+<li><strong>第3層（コーディング再比較）:</strong> 公表ベンチマークとAPI従量単価によるCoding Agent向け再比較。費用・性能の文脈ではGPT-5.6やClaude Opus 5など中国製以外も含みます。</li>
+</ol>
+<p>AI回答内のモデル名、料金、仕様、ランキングは、回答時点の調査結果または主張です。複数回答が一致しただけで事実認定せず、一次情報と実APIで再確認すべき項目を明確に分けます。後ろの追記は前の調査回答を上書きした正本ではなく、公開後の追加確認です。</p></div>
     </section>
 
     <section class="panel" aria-labelledby="prompt-heading">
@@ -1160,6 +1169,7 @@ DeepSeek / Qwen / GLM / MiniMax / Kimi
 <li>「統合要約」は、純粋マージと矛盾点を短くした派生資料です。</li>
 </ul>
 <p>純粋マージと統合要約は、元の回答を置き換える正本ではありません。数値や結論が異なる場合は、元回答と矛盾点レビューへ戻って判断します。</p>
+<p>結論本文にある2026-08-01の個人開発向け追記とコーディング再比較は、公開後の追加確認です。調査回答・純粋マージ・矛盾点レビューを置き換える正本ではありません。</p>
 <h2 id="analysis-2-3回答の共通認識"><a class="heading-permalink" href="#analysis-2-3回答の共通認識" aria-label="この見出しへのリンク">#</a>2. 3回答の共通認識</h2>
 <p>3回答は、細部では大きく食い違いますが、実務上の候補群と導入上の論点については一定の共通点があります。</p>
 <h3 id="analysis-21-候補は数系列へ収束する"><a class="heading-permalink" href="#analysis-21-候補は数系列へ収束する" aria-label="この見出しへのリンク">#</a>2.1 候補は数系列へ収束する</h3>
@@ -1206,6 +1216,50 @@ DeepSeek / Qwen / GLM / MiniMax / Kimi
 </tbody>
 </table>
 <p>ここで重要なのは、系列名の一致と、同一モデルの一致は別だという点です。特にQwenとMiniMaxは、回答ごとに異なる世代や用途のモデルを代表として選んでいます。</p>
+<h3 id="analysis-211-公開後追記との関係"><a class="heading-permalink" href="#analysis-211-公開後追記との関係" aria-label="この見出しへのリンク">#</a>2.1.1 公開後追記との関係</h3>
+<p>2026-08-01追記は、上記の系列候補のうち一部を現行モデルIDへ具体化したものです。</p>
+<table>
+<thead>
+<tr>
+<th>調査時点の役割候補</th>
+<th>追記での具体化</th>
+<th>状態</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeepSeek（主力・低価格）</td>
+<td>V4 Flash-0731を低価格標準。ProはCoding Agent標準としては再比較で保留</td>
+<td>具体化済み（用途により見直しあり）</td>
+</tr>
+<tr>
+<td>GLM（長時間エージェント）</td>
+<td>GLM-5.2／Coding Plan</td>
+<td>具体化済み</td>
+</tr>
+<tr>
+<td>Kimi（高難度）</td>
+<td>K3はスポット、K2.7 Codeは代替レビュー枠</td>
+<td>具体化済み</td>
+</tr>
+<tr>
+<td>Qwen（日本語・法人）</td>
+<td>—</td>
+<td>追記未実施のまま</td>
+</tr>
+<tr>
+<td>MiniMax（追加比較）</td>
+<td>—</td>
+<td>追記未実施のまま</td>
+</tr>
+<tr>
+<td>（再比較層のみ）</td>
+<td>GPT-5.6 Luna／Terra／Sol、Claude Opus 5</td>
+<td>中国製候補の代替ではなく、Coding費用・性能の横断比較枠</td>
+</tr>
+</tbody>
+</table>
+<p>GPT／Claudeは第1層の中国製候補選定には入りません。第3層のCoding Agent費用・性能再比較でのみ登場します。</p>
 <h3 id="analysis-22-初期比較と本番採用を分ける"><a class="heading-permalink" href="#analysis-22-初期比較と本番採用を分ける" aria-label="この見出しへのリンク">#</a>2.2 初期比較と本番採用を分ける</h3>
 <p>3回答は程度の差はあるものの、OpenRouterなどの第三者APIが初期比較に便利だと評価しています。複数モデルを同じ形式で呼び出し、日本のカードで少額から検証しやすいためです。</p>
 <p>一方、本番では次を固定し直す必要があります。</p>
@@ -1303,12 +1357,14 @@ DeepSeek / Qwen / GLM / MiniMax / Kimi
 <li>2026年の各モデルの正確な性能順位</li>
 <li>特定モデルがGPTやClaudeの特定世代を上回るという断定</li>
 <li>日本カードが必ず通るという断定</li>
-<li>最大出力やコンテキストの大きな数値</li>
+<li>最大出力やコンテキストの大きな数値（調査回答内の主張）</li>
 <li>APIデータが一律に学習・保存されないという断定</li>
 <li>Cursorの全機能で直接利用できるという断定</li>
 <li>GitHub Star、ダウンロード数、APIシェアから実務品質まで推定すること</li>
 <li>今後6か月から1年の勝者予測</li>
+<li>実APIでのTool Calling成功率、build/test通過率、人間修正量</li>
 </ul>
+<p>2026-08-01追記では、名前を挙げた一部モデルについて公開価格とモデルIDを再確認しました。それでも、絶対順位、日本カードの成功、実APIでのTool Calling／build成功率は未検証のままです。</p>
 <p>これらは、一次情報の再確認または実API試験が必要です。</p>
 <h2 id="analysis-7-事実推測将来予測の区別"><a class="heading-permalink" href="#analysis-7-事実推測将来予測の区別" aria-label="この見出しへのリンク">#</a>7. 事実、推測、将来予測の区別</h2>
 <table>
@@ -1412,7 +1468,15 @@ DeepSeek / Qwen / GLM / MiniMax / Kimi
 <li>公式API、固定Provider、Router、セルフホストのどれを採用するか</li>
 <li>モデル更新を自動で受け入れるか、snapshotを固定するか</li>
 <li>PoCの合格基準と主力・補助・レビュー用の役割分担</li>
-</ol></div>
+</ol>
+<h2 id="analysis-13-公開後追記との関係要約"><a class="heading-permalink" href="#analysis-13-公開後追記との関係要約" aria-label="この見出しへのリンク">#</a>13. 公開後追記との関係（要約）</h2>
+<p>結論節の2つの追記は、第1層の「決め打ちしない」方針を破棄するものではありません。</p>
+<ul>
+<li>Flash／GLM-5.2／Kimi K3などは、調査時点の役割候補を現行モデルへ具体化した例です</li>
+<li>QwenとMiniMaxは、追記後も一次確認が残っています</li>
+<li>GPT-5.6とClaude Opus 5は、Coding費用・性能の再比較層でのみ登場します</li>
+<li>法人導入では、最初の評価方法と検証計画がいまも優先です</li>
+</ul></div>
     </section>
 
     <section class="panel" aria-labelledby="analysis-plain-heading">
@@ -1552,7 +1616,15 @@ DeepSeek / Qwen / GLM / MiniMax / Kimi
 <li>機密情報を扱う場合は法務・セキュリティ確認が増える</li>
 <li>最初から「これが1位」と言う記事より結論が地味に見える</li>
 </ul>
-<p>しかし、業務システムの導入判断では、派手な順位より、再現できる試験と説明できる契約条件の方が重要です。</p></div>
+<p>しかし、業務システムの導入判断では、派手な順位より、再現できる試験と説明できる契約条件の方が重要です。</p>
+<h2 id="analysis-plain-あとから足した確認"><a class="heading-permalink" href="#analysis-plain-あとから足した確認" aria-label="この見出しへのリンク">#</a>あとから足した確認</h2>
+<p>公開後の2026-08-01に、次の確認を足しました。最初の調査回答を消して書き換えたものではありません。</p>
+<ul>
+<li>個人開発向けに、DeepSeek／GLM／Kimiの値段と接続を一次情報で確認した</li>
+<li>Coding Agent向けに、公表ベンチとAPI単価で再比較し、ProよりFlash-0731、中国製主力はGLM-5.2、横断ではLuna／Terraも候補とした</li>
+<li>Qwen・MiniMax・カード承認・実API試験は、まだ終わっていない</li>
+<li>最初の「決め打ちしない」方針は、法人導入では今も有効である</li>
+</ul></div>
     </section>
 
     <section class="conclusion panel" aria-labelledby="conclusion-heading">
@@ -1564,6 +1636,45 @@ DeepSeek / Qwen / GLM / MiniMax / Kimi
 <blockquote>
 <p><strong>モデルランキングをそのまま採用せず、役割別の候補群を作り、正確なモデルID・Provider・データ条件を固定した実API試験で採否を決める。</strong></p>
 </blockquote>
+<h2 id="conclusion-資料の読み分け"><a class="heading-permalink" href="#conclusion-資料の読み分け" aria-label="この見出しへのリンク">#</a>資料の読み分け</h2>
+<p>この記事には、根拠の異なる結論が3層あります。後ろの追記は前の調査回答を書き換えた正本ではなく、公開後の追加確認です。</p>
+<table>
+<thead>
+<tr>
+<th>層</th>
+<th>根拠</th>
+<th>範囲</th>
+<th>確信度の目安</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3調査の統合結論</td>
+<td>ChatGPT／Gemini回答の比較</td>
+<td>中国製候補の評価方法と系列候補</td>
+<td>方法は高、具体モデルID・料金は低</td>
+</tr>
+<tr>
+<td>個人開発向け追記（2026-08-01）</td>
+<td>DeepSeek／GLM／Kimiの一次情報</td>
+<td>中国製現行モデルの価格・接続・個人開発向け使い分け</td>
+<td>中</td>
+</tr>
+<tr>
+<td>コーディング再比較（2026-08-01）</td>
+<td>公表ベンチマークとAPI従量単価</td>
+<td>Coding Agent用途。GPT-5.6／Claude Opus 5も含む</td>
+<td>公表値は中～高、実API成功率は未検証</td>
+</tr>
+</tbody>
+</table>
+<p>読み方の原則:</p>
+<ol>
+<li>法人導入・機密コード・契約可否は、最初の統合結論と検証計画を優先する</li>
+<li>中国製APIを個人開発で安く試し始めるなら、個人開発向け追記の価格・接続整理を使う</li>
+<li>Issue実装や長時間Coding Agentの段階ルーティングは、コーディング再比較を優先する</li>
+<li>個人開発向け追記の「難しい実装はV4 Proへ上げる」は、Coding Agent用途では再比較で見直し済みである</li>
+</ol>
 <h2 id="conclusion-採用する暫定候補"><a class="heading-permalink" href="#conclusion-採用する暫定候補" aria-label="この見出しへのリンク">#</a>採用する暫定候補</h2>
 <p>現時点では、次の役割分担で検証へ進むのが妥当です。</p>
 <ol>
@@ -1575,11 +1686,59 @@ DeepSeek / Qwen / GLM / MiniMax / Kimi
 <li><strong>追加比較:</strong> MiniMaxの現行長文・マルチモーダル系列</li>
 </ol>
 <p>資料内の具体的なモデル名は候補探索に使いますが、採用前に公式の現行モデル一覧で再確認します。</p>
+<h3 id="conclusion-2026-08-01追記での具体化"><a class="heading-permalink" href="#conclusion-2026-08-01追記での具体化" aria-label="この見出しへのリンク">#</a>2026-08-01追記での具体化</h3>
+<table>
+<thead>
+<tr>
+<th>元の役割</th>
+<th>追記での具体化</th>
+<th>残る未確認</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主力・価格性能（DeepSeek）</td>
+<td>Flash-0731を低価格標準に具体化。Coding Agent標準としてのProは再比較で保留</td>
+<td>日本カード、実API成功率</td>
+</tr>
+<tr>
+<td>日本語・法人運用（Qwen）</td>
+<td>追記未実施</td>
+<td>現行国際向けモデルID、リージョン、契約</td>
+</tr>
+<tr>
+<td>長時間エージェント（GLM）</td>
+<td>GLM-5.2／Coding Planへ具体化</td>
+<td>Coding Plan新クレジット実効量、529等の運用品質</td>
+</tr>
+<tr>
+<td>低価格バッチ（DeepSeek低価格）</td>
+<td>V4 Flash-0731</td>
+<td>ピーク料金適用開始日</td>
+</tr>
+<tr>
+<td>高難度比較（Kimi）</td>
+<td>K3はスポット、K2.7 Codeは代替レビュー枠</td>
+<td>日本カード、ハーネス差を除いた同条件比較</td>
+</tr>
+<tr>
+<td>追加比較（MiniMax）</td>
+<td>追記未実施</td>
+<td>現行モデルIDと用途適性</td>
+</tr>
+<tr>
+<td>（再比較で追加）横断Coding比較</td>
+<td>GPT-5.6 Luna／Terra／Sol、Claude Opus 5</td>
+<td>月額プラン枠を除いた実運用コスト、実リポジトリ試験</td>
+</tr>
+</tbody>
+</table>
 <h2 id="conclusion-推奨する導入手順"><a class="heading-permalink" href="#conclusion-推奨する導入手順" aria-label="この見出しへのリンク">#</a>推奨する導入手順</h2>
 <h3 id="conclusion-1-公式情報を固定する"><a class="heading-permalink" href="#conclusion-1-公式情報を固定する" aria-label="この見出しへのリンク">#</a>1. 公式情報を固定する</h3>
 <p>候補ごとに、モデルID、料金、最大出力、リージョン、契約条件、保存・学習・キャッシュ、DPA、ZDR、SLA、廃止予定を確認します。</p>
 <h3 id="conclusion-2-第三者apiで横比較する"><a class="heading-permalink" href="#conclusion-2-第三者apiで横比較する" aria-label="この見出しへのリンク">#</a>2. 第三者APIで横比較する</h3>
 <p>PoCでは、同じインターフェースと同じテスト課題で比較します。第三者APIは比較の摩擦を減らしますが、安全性や本番適性を自動的に保証するものではありません。</p>
+<p>OpenRouterなどは系列横断の初期比較に便利です。一方、候補が少数に絞れ、公式APIが使える場合は、個人開発向け追記・再比較のように公式経路を優先してよいです。本番は常に採用経路で再試験します。</p>
 <h3 id="conclusion-3-採用経路で再試験する"><a class="heading-permalink" href="#conclusion-3-採用経路で再試験する" aria-label="この見出しへのリンク">#</a>3. 採用経路で再試験する</h3>
 <p>上位候補は、公式APIまたは本番で固定するProviderを使って再試験します。速度、上限、Tool Calling、障害率、データ経路が変わる可能性があります。</p>
 <h3 id="conclusion-4-セキュリティ法務ゲートを通す"><a class="heading-permalink" href="#conclusion-4-セキュリティ法務ゲートを通す" aria-label="この見出しへのリンク">#</a>4. セキュリティ・法務ゲートを通す</h3>
@@ -1607,8 +1766,10 @@ DeepSeek / Qwen / GLM / MiniMax / Kimi
 <ul>
 <li><strong>評価方法と導入手順:</strong> 高</li>
 <li><strong>候補系列の選定:</strong> 中</li>
-<li><strong>資料内の具体的な価格・上限・契約条件:</strong> 低から中</li>
-<li><strong>単一モデルの最終順位:</strong> 低</li>
+<li><strong>追記で触れた中国製現行モデルの公開価格・モデルID:</strong> 中～高（時点依存）</li>
+<li><strong>Coding Agentの最終順位:</strong> 低～中（公表ベンチ依存、実API未検証）</li>
+<li><strong>資料内の具体的な価格・上限・契約条件（調査時点の主張含む）:</strong> 低から中</li>
+<li><strong>単一モデルの最終順位（法人・機密含む）:</strong> 低</li>
 </ul>
 <h2 id="conclusion-適用条件"><a class="heading-permalink" href="#conclusion-適用条件" aria-label="この見出しへのリンク">#</a>適用条件</h2>
 <p>この結論は、日本からAPIを契約し、コーディング支援、AIエージェント、業務システムへ組み込む用途を想定しています。中国国内だけで完結するサービス、画像・動画専用モデル、特定産業の専用契約は別評価が必要です。</p>
@@ -1624,17 +1785,25 @@ DeepSeek / Qwen / GLM / MiniMax / Kimi
 <li>モデル廃止で再現性が失われる</li>
 </ul>
 <h2 id="conclusion-次に取るべき行動"><a class="heading-permalink" href="#conclusion-次に取るべき行動" aria-label="この見出しへのリンク">#</a>次に取るべき行動</h2>
+<p>一部は2026-08-01追記で進みましたが、採用確定に必要な検証は残っています。</p>
+<p>追記で一部進んだこと:</p>
+<ul>
+<li>名前を挙げた中国製モデルの公開価格・モデルIDの一次確認</li>
+<li>Coding Agent向けの暫定ルーティング案（公表ベンチとAPI単価ベース）</li>
+</ul>
+<p>いまも必要なこと:</p>
 <ol>
-<li>各系列から現行モデルを1件ずつ選び、正式モデルIDとProviderを確定する</li>
-<li>価格、最大出力、Tool Calling、JSON Schema、契約・データ条件を一次情報で確認する</li>
-<li>同一の10課題を最低3回ずつ実行する</li>
-<li>build/test、成功率、費用、APIエラー、人間修正量を記録する</li>
-<li>上位候補を採用予定Providerで再試験する</li>
+<li>同一の10課題を実APIで最低3回ずつ実行する</li>
+<li>日本カード／KYCを実際の契約画面で確認する</li>
+<li>Qwen／MiniMaxの現行モデルIDを一次情報で固定する</li>
 <li>機密区分とセキュリティ・法務ゲートを決める</li>
+<li>上位候補を採用予定Providerで再試験する</li>
+<li>build/test、成功率、費用、APIエラー、人間修正量を記録する</li>
 <li>主力、補助、レビュー、フォールバックの役割を決定する</li>
 </ol>
 <h2 id="conclusion-個人開発者向け追記2026-08-01"><a class="heading-permalink" href="#conclusion-個人開発者向け追記2026-08-01" aria-label="この見出しへのリンク">#</a>個人開発者向け追記（2026-08-01）</h2>
 <p>この追記は、公開後に個人開発用途へ絞って現行モデルの一次情報を再確認した派生結論です。元の3調査だけで正式モデルIDや料金を確定したものではありません。価格・上限・契約条件は時点依存のため、採用前に公式ページで再確認してください。</p>
+<p>この節の「難しい実装はDeepSeek V4 Proへ上げる」構成は、直後の「コーディング性能・API費用の再比較」で <strong>Coding Agent用途に限り見直し</strong> されています。価格・接続の一次情報としては有効ですが、Issue実装や長時間Agentの標準昇格先は再比較節を優先してください。</p>
 <p>調査基準日：2026年8月1日</p>
 <p>対象：</p>
 <ul>
@@ -2129,13 +2298,14 @@ GLM Coding PlanまたはZ.ai従量API
     Kimi K3
 </code></pre>
 <h3 id="conclusion-最終順位"><a class="heading-permalink" href="#conclusion-最終順位" aria-label="この見出しへのリンク">#</a>最終順位</h3>
-<p>個人開発の総合順位:</p>
+<p>個人開発の総合順位（中国製モデルの価格・接続を中心にした整理）:</p>
 <ol>
 <li><strong>DeepSeek V4 Pro／Flash</strong></li>
 <li><strong>GLM-5.2</strong></li>
 <li><strong>Kimi K2.7 Code</strong></li>
 <li><strong>Kimi K3</strong></li>
 </ol>
+<p>この順位は、中国製APIに絞った個人開発でのコスト・接続容易性の整理です。ベンダー横断のCoding Agentルーティングは、次節「コーディング性能・API費用の再比較」を優先します。</p>
 <p>最初に試す順番:</p>
 <ol>
 <li>DeepSeekへ少額チャージ</li>
@@ -2145,7 +2315,7 @@ GLM Coding PlanまたはZ.ai従量API
 <li>GLM-5.2を従量課金で試す</li>
 <li>GLMが継続的に有効ならCoding Plan Liteを1か月契約</li>
 </ol>
-<p>最終判断: <strong>個人開発のコスト、実装品質、接続容易性を総合すると、DeepSeek V4 Flash／Proの組み合わせが明確な第一候補です。</strong></p>
+<p>最終判断: <strong>中国製APIに限った個人開発のコスト、実装品質、接続容易性では、DeepSeek V4 Flash／Proの組み合わせが第一候補です。</strong> Coding Agent用途での標準昇格先や横断比較は、次節の再比較を優先してください。</p>
 <p>GLM-5.2は大量利用時の定額候補、Kimi K2.7 Codeはコード特化の代替モデル、Kimi K3は高難度課題のスポット利用と位置付けるのが適切です。</p>
 <p>この4系列は更新が速いため、価格、モデルID、廃止予定を月1回確認する監視設定も有効です。</p>
 <blockquote>
@@ -2792,7 +2962,7 @@ GLM Coding PlanまたはZ.ai従量API
 <h2 id="conclusion-plain-進め方"><a class="heading-permalink" href="#conclusion-plain-進め方" aria-label="この見出しへのリンク">#</a>進め方</h2>
 <ol>
 <li>公式ページで、現在使える正確なモデル名と値段を確認する</li>
-<li>OpenRouterなどで同じ課題を試し、候補を絞る</li>
+<li>OpenRouterなどで同じ課題を試し、候補を絞る。候補が少数で公式APIが使えるなら、最初から公式経路でもよい</li>
 <li>本番で使う公式APIまたは固定Providerでもう一度試す</li>
 <li>顧客情報や非公開コードを送ってよい契約か確認する</li>
 <li>主力、安い補助、難しいレビュー、予備の4役に分ける</li>
@@ -2826,8 +2996,44 @@ GLM Coding PlanまたはZ.ai従量API
 <h2 id="conclusion-plain-最終判断"><a class="heading-permalink" href="#conclusion-plain-最終判断" aria-label="この見出しへのリンク">#</a>最終判断</h2>
 <p><strong>PoCでは複数モデルを同じ条件で比較し、本番ではモデルID、Provider、データ条件を固定する。</strong></p>
 <p>これが、今回の資料から導ける最も安全で実務的な結論です。</p>
+<h2 id="conclusion-plain-資料の読み分け"><a class="heading-permalink" href="#conclusion-plain-資料の読み分け" aria-label="この見出しへのリンク">#</a>資料の読み分け</h2>
+<p>この記事には、根拠の違う結論が3層あります。後ろの追記は、最初の調査回答を書き換えた正本ではありません。</p>
+<table>
+<thead>
+<tr>
+<th>層</th>
+<th>何を根拠にしているか</th>
+<th>何に使うか</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3調査の統合</td>
+<td>ChatGPT／Geminiの比較</td>
+<td>評価の進め方と中国製の系列候補</td>
+</tr>
+<tr>
+<td>個人開発向け追記</td>
+<td>DeepSeek／GLM／Kimiの公式情報</td>
+<td>中国製を安く試し始める時の値段と接続</td>
+</tr>
+<tr>
+<td>コーディング再比較</td>
+<td>公表ベンチとAPI単価</td>
+<td>Coding Agentの段階利用。GPTやClaudeも含む</td>
+</tr>
+</tbody>
+</table>
+<p>読み分けの目安:</p>
+<ol>
+<li>法人・機密・契約は、最初の結論と検証計画を優先する</li>
+<li>中国製APIを個人で安く試すなら、個人開発向け追記の価格・接続整理を使う</li>
+<li>Issue実装や長時間Coding Agentの段階ルーティングは、再比較を優先する</li>
+<li>個人開発向け追記の「難しい実装はProへ上げる」は、Coding Agent用途では再比較で見直し済みである</li>
+</ol>
 <h2 id="conclusion-plain-個人開発者向け追記2026-08-01"><a class="heading-permalink" href="#conclusion-plain-個人開発者向け追記2026-08-01" aria-label="この見出しへのリンク">#</a>個人開発者向け追記（2026-08-01）</h2>
 <p>公開後に、個人開発の用途だけに絞って現行モデルの一次情報を再確認した派生結論です。元の3調査だけで正式モデルIDや料金を確定したものではありません。価格や上限は変わるため、採用前に公式ページで再確認してください。</p>
+<p>この節の「難しい実装はDeepSeek V4 Proへ上げる」構成は、直後の再比較で <strong>Coding Agent用途に限り見直し</strong> されています。値段と接続の一次情報としては使えますが、Issue実装や長時間Agentの標準昇格先は再比較を優先してください。</p>
 <h3 id="conclusion-plain-5つの使い分け"><a class="heading-permalink" href="#conclusion-plain-5つの使い分け" aria-label="この見出しへのリンク">#</a>5つの使い分け</h3>
 <ol>
 <li><strong>日常開発の標準：DeepSeek V4 Flash</strong></li>
@@ -2847,13 +3053,14 @@ GLM Coding PlanまたはZ.ai従量API
 <h4 id="conclusion-plain-構成c高難度対応"><a class="heading-permalink" href="#conclusion-plain-構成c高難度対応" aria-label="この見出しへのリンク">#</a>構成C（高難度対応）</h4>
 <p>Flash → Pro → GLM-5.2 → Kimi K3 の順で段階的に上げます。</p>
 <h3 id="conclusion-plain-最終順位個人開発"><a class="heading-permalink" href="#conclusion-plain-最終順位個人開発" aria-label="この見出しへのリンク">#</a>最終順位（個人開発）</h3>
+<p>中国製APIのコスト・接続を中心にした整理です。</p>
 <ol>
 <li>DeepSeek V4 Pro／Flash</li>
 <li>GLM-5.2</li>
 <li>Kimi K2.7 Code</li>
 <li>Kimi K3</li>
 </ol>
-<p><strong>個人開発のコスト、実装品質、接続のしやすさを総合すると、DeepSeek V4 Flash／Proの組み合わせが第一候補です。</strong> GLM-5.2は大量利用時の定額候補、Kimi K2.7 Codeはコード特化の代替、Kimi K3は高難度のスポット利用と位置付けるのが適切です。</p>
+<p><strong>中国製に限った個人開発では、DeepSeek V4 Flash／Proの組み合わせが第一候補です。</strong> ベンダー横断のCoding Agentルーティングは、次の再比較を優先してください。GLM-5.2は大量利用時の定額候補、Kimi K2.7 Codeはコード特化の代替、Kimi K3は高難度のスポット利用と位置付けるのが適切です。</p>
 <p>法人導入、機密コード送信、日本カード承認、実API性能は、元記事の検証計画とセキュリティ・法務ゲートで確定してください。</p>
 <h2 id="conclusion-plain-コーディング性能api費用の再比較2026-08-01"><a class="heading-permalink" href="#conclusion-plain-コーディング性能api費用の再比較2026-08-01" aria-label="この見出しへのリンク">#</a>コーディング性能・API費用の再比較（2026-08-01）</h2>
 <p>この節は、直前の個人開発向け追記のうち、Coding Agentとしての主力候補をベンチマークとAPI単価で再評価した第二の追記です。直前ではDeepSeek V4 Flash／Proを中心に推奨していましたが、コーディングベンチマークまで見ると、<strong>Coding Agent用途では現時点でFlash-0731をProより優先</strong>するのが妥当です。費用はAPI従量課金のみで比較し、Cursor、Claude Code、Codex、ChatGPTなどの月額枠は除外しています。</p>
@@ -2882,7 +3089,8 @@ GLM Coding PlanまたはZ.ai従量API
 <li><strong>中国製モデルに限定するならGLM-5.2</strong></li>
 <li><strong>費用最優先ならDeepSeek V4 Flash</strong></li>
 <li><strong>実装成功率と費用の両方を見るならGPT-5.6 Luna</strong></li>
-</ul></div>
+</ul>
+<p>読み分けの再確認: 法人・機密は最初の結論、中国製の安試しは個人開発追記、Coding Agentの段階利用は再比較を優先します。</p></div>
       <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
     </section>
 

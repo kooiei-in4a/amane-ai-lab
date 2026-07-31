@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画 — 資料版 — amane AI Lab Knowledge Base</title>
-  <meta name="description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として個人開発向けにDeepSeek V4 Flash／Proなどを整理し、さらにコーディングベンチマークとAPI費用の再比較で、Coding Agent用途ではProを既定主力とせずFlash-0731やLuna／Terra／GLMを優先する見直しを追加した。">
+  <meta name="description" content="第1層は3つのAI調査による評価方法と中国製系列候補（DeepSeek／Qwen／GLM／Kimi／MiniMax）の整理で、単一勝者は決めない。第2層の2026-08-01個人開発向け追記は、DeepSeek／GLM／Kimiの一次情報で価格・接続を具体化する。第3層のコーディング再比較は公表ベンチとAPI費用でCoding Agent向け段階ルーティングを見直し、Flash-0731やGLM-5.2に加えGPT-5.6 Luna／Terra／SolとClaude Opus 5も含む。法人導入は第1層の検証計画を優先する。">
   <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/summary/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画 — 資料版">
-  <meta property="og:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として個人開発向けにDeepSeek V4 Flash／Proなどを整理し、さらにコーディングベンチマークとAPI費用の再比較で、Coding Agent用途ではProを既定主力とせずFlash-0731やLuna／Terra／GLMを優先する見直しを追加した。">
+  <meta property="og:description" content="第1層は3つのAI調査による評価方法と中国製系列候補（DeepSeek／Qwen／GLM／Kimi／MiniMax）の整理で、単一勝者は決めない。第2層の2026-08-01個人開発向け追記は、DeepSeek／GLM／Kimiの一次情報で価格・接続を具体化する。第3層のコーディング再比較は公表ベンチとAPI費用でCoding Agent向け段階ルーティングを見直し、Flash-0731やGLM-5.2に加えGPT-5.6 Luna／Terra／SolとClaude Opus 5も含む。法人導入は第1層の検証計画を優先する。">
   <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/summary/">
   <meta property="og:site_name" content="amane-ai-lab">
   <meta name="twitter:card" content="summary">
@@ -54,7 +54,7 @@
     </header>
 
     <div class="summary-doc-layout">
-      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol><li><a href="#section-1">いま1社・1モデルに決めない</a></li><li><a href="#section-2">推奨案</a></li><li><a href="#section-3">進め方</a></li><li><a href="#section-4">メリット</a></li><li><a href="#section-5">デメリット</a></li><li><a href="#section-6">経営・営業の判断ポイント</a></li><li><a href="#section-7">最終判断</a></li><li><a href="#section-8">個人開発者向け追記（2026-08-01）</a></li><li><a href="#section-9">コーディング性能・API費用の再比較（2026-08-01）</a></li></ol></nav>
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol><li><a href="#section-1">いま1社・1モデルに決めない</a></li><li><a href="#section-2">推奨案</a></li><li><a href="#section-3">進め方</a></li><li><a href="#section-4">メリット</a></li><li><a href="#section-5">デメリット</a></li><li><a href="#section-6">経営・営業の判断ポイント</a></li><li><a href="#section-7">最終判断</a></li><li><a href="#section-8">資料の読み分け</a></li><li><a href="#section-9">個人開発者向け追記（2026-08-01）</a></li><li><a href="#section-10">コーディング性能・API費用の再比較（2026-08-01）</a></li></ol></nav>
       <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
         <h1>結論を一言でいうと</h1>
 <h2 id="section-1">いま1社・1モデルに決めない</h2>
@@ -74,7 +74,7 @@
 <h2 id="section-3">進め方</h2>
 <ol>
 <li>公式ページで、現在使える正確なモデル名と値段を確認する</li>
-<li>OpenRouterなどで同じ課題を試し、候補を絞る</li>
+<li>OpenRouterなどで同じ課題を試し、候補を絞る。候補が少数で公式APIが使えるなら、最初から公式経路でもよい</li>
 <li>本番で使う公式APIまたは固定Providerでもう一度試す</li>
 <li>顧客情報や非公開コードを送ってよい契約か確認する</li>
 <li>主力、安い補助、難しいレビュー、予備の4役に分ける</li>
@@ -108,8 +108,44 @@
 <h2 id="section-7">最終判断</h2>
 <p><strong>PoCでは複数モデルを同じ条件で比較し、本番ではモデルID、Provider、データ条件を固定する。</strong></p>
 <p>これが、今回の資料から導ける最も安全で実務的な結論です。</p>
-<h2 id="section-8">個人開発者向け追記（2026-08-01）</h2>
+<h2 id="section-8">資料の読み分け</h2>
+<p>この記事には、根拠の違う結論が3層あります。後ろの追記は、最初の調査回答を書き換えた正本ではありません。</p>
+<table>
+<thead>
+<tr>
+<th>層</th>
+<th>何を根拠にしているか</th>
+<th>何に使うか</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3調査の統合</td>
+<td>ChatGPT／Geminiの比較</td>
+<td>評価の進め方と中国製の系列候補</td>
+</tr>
+<tr>
+<td>個人開発向け追記</td>
+<td>DeepSeek／GLM／Kimiの公式情報</td>
+<td>中国製を安く試し始める時の値段と接続</td>
+</tr>
+<tr>
+<td>コーディング再比較</td>
+<td>公表ベンチとAPI単価</td>
+<td>Coding Agentの段階利用。GPTやClaudeも含む</td>
+</tr>
+</tbody>
+</table>
+<p>読み分けの目安:</p>
+<ol>
+<li>法人・機密・契約は、最初の結論と検証計画を優先する</li>
+<li>中国製APIを個人で安く試すなら、個人開発向け追記の価格・接続整理を使う</li>
+<li>Issue実装や長時間Coding Agentの段階ルーティングは、再比較を優先する</li>
+<li>個人開発向け追記の「難しい実装はProへ上げる」は、Coding Agent用途では再比較で見直し済みである</li>
+</ol>
+<h2 id="section-9">個人開発者向け追記（2026-08-01）</h2>
 <p>公開後に、個人開発の用途だけに絞って現行モデルの一次情報を再確認した派生結論です。元の3調査だけで正式モデルIDや料金を確定したものではありません。価格や上限は変わるため、採用前に公式ページで再確認してください。</p>
+<p>この節の「難しい実装はDeepSeek V4 Proへ上げる」構成は、直後の再比較で <strong>Coding Agent用途に限り見直し</strong> されています。値段と接続の一次情報としては使えますが、Issue実装や長時間Agentの標準昇格先は再比較を優先してください。</p>
 <h3>5つの使い分け</h3>
 <ol>
 <li><strong>日常開発の標準：DeepSeek V4 Flash</strong></li>
@@ -129,15 +165,16 @@
 <h4>構成C（高難度対応）</h4>
 <p>Flash → Pro → GLM-5.2 → Kimi K3 の順で段階的に上げます。</p>
 <h3>最終順位（個人開発）</h3>
+<p>中国製APIのコスト・接続を中心にした整理です。</p>
 <ol>
 <li>DeepSeek V4 Pro／Flash</li>
 <li>GLM-5.2</li>
 <li>Kimi K2.7 Code</li>
 <li>Kimi K3</li>
 </ol>
-<p><strong>個人開発のコスト、実装品質、接続のしやすさを総合すると、DeepSeek V4 Flash／Proの組み合わせが第一候補です。</strong> GLM-5.2は大量利用時の定額候補、Kimi K2.7 Codeはコード特化の代替、Kimi K3は高難度のスポット利用と位置付けるのが適切です。</p>
+<p><strong>中国製に限った個人開発では、DeepSeek V4 Flash／Proの組み合わせが第一候補です。</strong> ベンダー横断のCoding Agentルーティングは、次の再比較を優先してください。GLM-5.2は大量利用時の定額候補、Kimi K2.7 Codeはコード特化の代替、Kimi K3は高難度のスポット利用と位置付けるのが適切です。</p>
 <p>法人導入、機密コード送信、日本カード承認、実API性能は、元記事の検証計画とセキュリティ・法務ゲートで確定してください。</p>
-<h2 id="section-9">コーディング性能・API費用の再比較（2026-08-01）</h2>
+<h2 id="section-10">コーディング性能・API費用の再比較（2026-08-01）</h2>
 <p>この節は、直前の個人開発向け追記のうち、Coding Agentとしての主力候補をベンチマークとAPI単価で再評価した第二の追記です。直前ではDeepSeek V4 Flash／Proを中心に推奨していましたが、コーディングベンチマークまで見ると、<strong>Coding Agent用途では現時点でFlash-0731をProより優先</strong>するのが妥当です。費用はAPI従量課金のみで比較し、Cursor、Claude Code、Codex、ChatGPTなどの月額枠は除外しています。</p>
 <h3>再比較の結論（5点）</h3>
 <ol>
@@ -165,6 +202,7 @@
 <li><strong>費用最優先ならDeepSeek V4 Flash</strong></li>
 <li><strong>実装成功率と費用の両方を見るならGPT-5.6 Luna</strong></li>
 </ul>
+<p>読み分けの再確認: 法人・機密は最初の結論、中国製の安試しは個人開発追記、Coding Agentの段階利用は再比較を優先します。</p>
       </article>
     </div>
 

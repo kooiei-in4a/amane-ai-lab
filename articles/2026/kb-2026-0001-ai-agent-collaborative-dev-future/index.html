@@ -4262,26 +4262,278 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tbody>
 </table>
 <h4 id="agent-claude-評価表9軸5段階"><a class="heading-permalink" href="#agent-claude-評価表9軸5段階" aria-label="この見出しへのリンク">#</a>評価表（9軸／5段階）</h4>
-<p>| # | 職種 | 将来性 | 市場規模 | 参入 | 小規模相性 | 高単価 | 継続収益 | 再代替リスク | 日本相性 | 準備価値 | 一言理由 |<br>
-|---|---|---|---|---|---|---|---|---|---|---|<br>
-| 1 | Verification Architect | 5 | 4 | 4 | 5 | 4 | 3 | 3 | 5 | <strong>5</strong> | 需要は確実。ただしAI検証ツールに一部吸収される |<br>
-| 2 | Source-of-Truth Steward | 4 | 3 | 3 | 2 | 3 | 4 | 3 | 4 | 3 | 組織内職能。独立には向かない |<br>
-| 3 | Invariant Engineer | 5 | 3 | 3 | 5 | 5 | 4 | 2 | 5 | <strong>5</strong> | ドメイン依存＝AI再代替が最も難しい |<br>
-| 4 | Evidence Package Designer | 5 | 3 | 4 | 5 | 4 | 4 | 2 | <strong>5</strong> | <strong>5</strong> | 日本の稟議文化と説明責任要求に最適合 |<br>
-| 5 | Approval Experience Designer | 4 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 重要だが単独職として立つのは遅い |<br>
-| 6 | AI-Readability Engineer | 5 | <strong>5</strong> | 4 | 4 | 4 | 3 | 3 | <strong>5</strong> | <strong>5</strong> | 日本のレガシー規模＝最大の即時市場 |<br>
-| 7 | Agent Capacity Portfolio Mgr | 4 | 3 | 2 | 2 | 4 | 3 | 4 | 3 | 2 | 大企業の内部職。AIに吸収されやすい |<br>
-| 8 | Agent Incident Forensics | 4 | 3 | 3 | <strong>5</strong> | <strong>5</strong> | 2 | 2 | 4 | 3 | 単価は最高。ただし案件は事故待ち＝不安定 |<br>
-| 9 | Model Portfolio Lead | 3 | 2 | 3 | 3 | 3 | 3 | 4 | 3 | 2 | 数年で自動化される可能性が高い |<br>
-| 10 | Agent Authorization Architect | 4 | 4 | 2 | 2 | 4 | 3 | 3 | 4 | 3 | IAM大手に吸収される。参入は困難 |<br>
-| 11 | Kill-Switch Commander | 3 | 2 | 2 | 2 | 4 | 2 | 3 | 4 | 2 | 重要だが職として独立するか不明 |<br>
-| 12 | Domain Ambiguity Broker | 4 | 4 | <strong>5</strong> | <strong>5</strong> | 3 | 3 | 2 | <strong>5</strong> | 4 | 参入容易。ただし単価が上がりにくい |<br>
-| 13 | Software Estate Liquidator | 4 | 4 | 4 | <strong>5</strong> | 3 | 3 | 2 | 4 | 3 | 時期が遅い（2029〜）。今は仕込みのみ |<br>
-| 14 | Independent AI Verifier | 5 | 4 | 3 | <strong>5</strong> | <strong>5</strong> | 4 | 2 | 4 | 4 | 制度が来れば爆発。来なければ立たない |<br>
-| 15 | Inter-Agent Contract Designer | 3 | 3 | 2 | 3 | 4 | 3 | 3 | 3 | 2 | 標準化団体が主導する領域 |<br>
-| 16 | Accountability Underwriter | 4 | 4 | 2 | 4 | <strong>5</strong> | 4 | 1 | 3 | 2 | 制度依存が強すぎる。賭けにならない |<br>
-| 17 | Vertical Knowledge Curator | 5 | 4 | 4 | <strong>5</strong> | 4 | <strong>5</strong> | 2 | <strong>5</strong> | <strong>5</strong> | <strong>継続収益性が最高。マイクロ企業の本命</strong> |<br>
-| 18 | Inference Economics Engineer | 4 | 3 | 4 | 4 | 3 | 3 | 4 | 3 | 3 | 有用だがツールに吸収されやすい |</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>職種</th>
+<th>将来性</th>
+<th>市場規模</th>
+<th>参入</th>
+<th>小規模相性</th>
+<th>高単価</th>
+<th>継続収益</th>
+<th>再代替リスク</th>
+<th>日本相性</th>
+<th>準備価値</th>
+<th>一言理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Verification Architect</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>5</td>
+<td><strong>5</strong></td>
+<td>需要は確実。ただしAI検証ツールに一部吸収される</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Source-of-Truth Steward</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>組織内職能。独立には向かない</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Invariant Engineer</td>
+<td>5</td>
+<td>3</td>
+<td>3</td>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td>2</td>
+<td>5</td>
+<td><strong>5</strong></td>
+<td>ドメイン依存＝AI再代替が最も難しい</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Evidence Package Designer</td>
+<td>5</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+<td><strong>5</strong></td>
+<td><strong>5</strong></td>
+<td>日本の稟議文化と説明責任要求に最適合</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Approval Experience Designer</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>重要だが単独職として立つのは遅い</td>
+</tr>
+<tr>
+<td>6</td>
+<td>AI-Readability Engineer</td>
+<td>5</td>
+<td><strong>5</strong></td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td><strong>5</strong></td>
+<td><strong>5</strong></td>
+<td>日本のレガシー規模＝最大の即時市場</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Agent Capacity Portfolio Mgr</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>4</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>大企業の内部職。AIに吸収されやすい</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Agent Incident Forensics</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td><strong>5</strong></td>
+<td><strong>5</strong></td>
+<td>2</td>
+<td>2</td>
+<td>4</td>
+<td>3</td>
+<td>単価は最高。ただし案件は事故待ち＝不安定</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Model Portfolio Lead</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>数年で自動化される可能性が高い</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Agent Authorization Architect</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>IAM大手に吸収される。参入は困難</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Kill-Switch Commander</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>4</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>2</td>
+<td>重要だが職として独立するか不明</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Domain Ambiguity Broker</td>
+<td>4</td>
+<td>4</td>
+<td><strong>5</strong></td>
+<td><strong>5</strong></td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td><strong>5</strong></td>
+<td>4</td>
+<td>参入容易。ただし単価が上がりにくい</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Software Estate Liquidator</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td><strong>5</strong></td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>4</td>
+<td>3</td>
+<td>時期が遅い（2029〜）。今は仕込みのみ</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Independent AI Verifier</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td><strong>5</strong></td>
+<td><strong>5</strong></td>
+<td>4</td>
+<td>2</td>
+<td>4</td>
+<td>4</td>
+<td>制度が来れば爆発。来なければ立たない</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Inter-Agent Contract Designer</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>標準化団体が主導する領域</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Accountability Underwriter</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+<td>4</td>
+<td><strong>5</strong></td>
+<td>4</td>
+<td>1</td>
+<td>3</td>
+<td>2</td>
+<td>制度依存が強すぎる。賭けにならない</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Vertical Knowledge Curator</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td><strong>5</strong></td>
+<td>4</td>
+<td><strong>5</strong></td>
+<td>2</td>
+<td><strong>5</strong></td>
+<td><strong>5</strong></td>
+<td><strong>継続収益性が最高。マイクロ企業の本命</strong></td>
+</tr>
+<tr>
+<td>18</td>
+<td>Inference Economics Engineer</td>
+<td>4</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>有用だがツールに吸収されやすい</td>
+</tr>
+</tbody>
+</table>
 <p><strong>想定読者向けの優先順位：</strong> 準備価値5がついた6職種のうち、<strong>#6（AI可読化）が即時収益、#17（業種知識キュレーター）が継続収益、#4（証跡設計）＋#1（検証設計）＋#3（不変条件）が差別化の核</strong>。この5つの組み合わせが最も整合的なポジションである。</p>
 <hr>
 <h2 id="agent-claude-7-itエンジニアの価値向上戦略"><a class="heading-permalink" href="#agent-claude-7-itエンジニアの価値向上戦略" aria-label="この見出しへのリンク">#</a>7. ITエンジニアの価値向上戦略</h2>

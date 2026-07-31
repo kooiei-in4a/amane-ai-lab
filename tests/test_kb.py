@@ -188,6 +188,15 @@ class SensitiveScanTest(unittest.TestCase):
         self.assertTrue(is_text_file(Path(".env")))
         self.assertTrue(is_text_file(Path(".env.production")))
 
+    def test_scan_text_detects_api_key_assignment(self):
+        from scripts.check_sensitive_data import scan_text
+
+        key_name = "api_" + "key"
+        secret_value = "actual-" + "secret-value"
+        findings = scan_text(f'{key_name}="{secret_value}"\n', "tmp.txt")
+        kinds = [k for _, k, _ in findings]
+        self.assertIn("api_key_assignment", kinds)
+
 
 if __name__ == "__main__":
     unittest.main()

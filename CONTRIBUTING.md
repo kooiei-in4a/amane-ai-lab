@@ -8,11 +8,14 @@
 
 ```bash
 python3 -m pip install -r requirements.txt
+python3 scripts/install_git_hooks.py
 python3 scripts/build_site.py
 python3 scripts/validate_content.py
 python3 scripts/check_sensitive_data.py
 python3 -m unittest discover -s tests
 ```
+
+`install_git_hooks.py` はローカルで `core.hooksPath=.githooks` を設定し、commit 前に機密情報スキャンを強制する。
 
 4. Draft Pull Request を作成する
 5. merge はメンテナが行う

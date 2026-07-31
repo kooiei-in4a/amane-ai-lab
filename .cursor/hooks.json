@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": "python .cursor/hooks/gate-git-secrets.py",
+        "matcher": "(?:^|[\\n;&|]\\s*)git(?:\\.exe)?\\s+(commit|push)\\b",
+        "failClosed": true,
+        "timeout": 60
+      }
+    ]
+  }
+}

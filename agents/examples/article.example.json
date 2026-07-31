@@ -3,7 +3,7 @@
   "id": "KB-2026-0001",
   "slug": "agent-market-share",
   "title": "AIエージェントのシェアを複数ソースで比較する",
-  "description": "複数の公開情報を利用してAIエージェント市場を比較した記録。",
+  "description": "複数ソース比較の結果、単一の市場シェア数値を確定できる根拠は不足している。採用判断には定義差と計測時点の明示が必要である。",
   "status": "draft",
   "publishedAt": null,
   "updatedAt": "2026-07-30",

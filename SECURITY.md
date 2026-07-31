@@ -13,3 +13,5 @@
 ## エージェント向け
 
 `AGENTS.md` と `agents/policies/publication-safety.md` を確認し、疑いがある場合は commit 前に停止すること。
+
+ローカルでは `python scripts/install_git_hooks.py` により Git pre-commit が有効になる。Cursor でも `git commit` / `git push` 前に同じスキャナが走る。CI のフルスキャンが最後の公開ゲートである。

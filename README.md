@@ -22,11 +22,14 @@ AIエージェントによる検証結果を公開する、GitHub Pages向け静
 
 ```bash
 python3 -m pip install -r requirements.txt
+python3 scripts/install_git_hooks.py
 python3 scripts/build_site.py
 python3 scripts/validate_content.py
 python3 scripts/check_sensitive_data.py
 python3 -m http.server 8000
 ```
+
+`install_git_hooks.py` で commit 前の機密情報スキャン（`.githooks/pre-commit`）を有効化する。
 
 ブラウザで `http://localhost:8000/` を開きます。
 

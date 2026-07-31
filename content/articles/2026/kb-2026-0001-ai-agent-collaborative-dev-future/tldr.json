@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "source": "synthesis",
+      "label": "合成",
+      "text": "希少になるのはコードや証拠ログではなく、独立した証拠設計と残余リスクの引受である",
+      "href": "#conclusion-中心命題"
+    },
+    {
+      "source": "claude",
+      "label": "Claude",
+      "text": "本質的制約はモデル性能ではなく「検証の経済学」である",
+      "href": "#agent-claude-11-最も重要な結論制約はモデル性能ではなく検証の経済学である"
+    },
+    {
+      "source": "synthesis",
+      "label": "合成",
+      "text": "日本は宣言・PoCでは先行し得るが、全社展開や成果計測とは層を分けて評価する",
+      "href": "#analysis-5-日本評価の5層"
+    },
+    {
+      "source": "claude",
+      "label": "Claude",
+      "text": "人材価値は「上流へ逃げる」のではなく、検証・引受側へ移る",
+      "href": "#agent-claude-61-まず上流工程が重要になるを否定する"
+    },
+    {
+      "source": "chatgpt",
+      "label": "ChatGPT",
+      "text": "生成は速くなっても、レビュー・承認・証拠で組織成果が詰まりやすい",
+      "href": "#agent-chatgpt-最も重要な結論"
+    }
+  ]
+}

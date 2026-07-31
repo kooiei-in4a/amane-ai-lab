@@ -42,6 +42,9 @@
       <ul class="tag-list">{{TAGS_HTML}}</ul>
     </header>
 
+    {{TLDR_HTML}}
+    {{TOC_HTML}}
+
     <section class="panel" aria-labelledby="background-heading">
       <h2 id="background-heading">検討に至った背景</h2>
       <div class="prose">{{BACKGROUND_HTML}}</div>
@@ -112,5 +115,10 @@
   </main>
 
   <script src="{{ASSET_PREFIX}}/assets/js/site.js" defer></script>
+  <nav class="page-jump" aria-label="ページ内ジャンプ">
+    <a href="#tldr" class="page-jump-link" data-jump="tldr">要点</a>
+    <a href="#article-toc" class="page-jump-link">目次</a>
+    <a href="#main" class="page-jump-link page-jump-top" hidden>先頭へ</a>
+  </nav>
 </body>
 </html>

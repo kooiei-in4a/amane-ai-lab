@@ -130,6 +130,7 @@ feed.xml
 |---|---|---|
 | 記事メタデータ | `content/articles/**/article.json` | 正本 |
 | 検討背景 | `content/articles/**/background.md` | 正本 |
+| 要点（TL;DR） | `content/articles/**/tldr.json` | 正本（任意） |
 | 合成結果の要約 | `content/articles/**/conclusion.md` | 正本 |
 | 2回答の合成 | `content/articles/**/analysis.md` | 正本 |
 | 入力プロンプト | `content/articles/**/prompt.txt` | 正本 |
@@ -177,6 +178,7 @@ feed.xml
 │        └─ kb-YYYY-NNNN-slug/
 │           ├─ article.json
 │           ├─ background.md
+│           ├─ tldr.json
 │           ├─ prompt.txt
 │           ├─ analysis.md
 │           ├─ conclusion.md
@@ -396,18 +398,29 @@ edited
 1. 記事ID、ステータス、公開日、最終確認日
 2. 記事タイトル
 3. 中心結論の短いサマリー（`article.json` の `description`。タイトル直下に表示）
-4. 検討に至った背景
-5. 調査プロンプト（既定は折りたたみ）
-6. 各AIエージェントの回答
-7. 2回答の合成
-8. 合成結果の要約（資料版HTMLへのリンクを含む）
-9. Edit on GitHub
-10. コメント欄
-11. ライセンスと免責事項
+4. 要点（TL;DR）（任意。`tldr.json` がある場合。出典ラベルと本文アンカー付き）
+5. 目次（ページ主要セクションと各AI回答の章見出し）
+6. 検討に至った背景
+7. 調査プロンプト（既定は折りたたみ）
+8. 各AIエージェントの回答
+9. 2回答の合成
+10. 合成結果の要約（資料版HTMLへのリンクを含む）
+11. Edit on GitHub
+12. コメント欄
+13. ライセンスと免責事項
+
+### 8.0 ナビゲーション
+
+- Markdown由来の見出しには一意な `id` を付与する
+- AI回答の折りたたみ内見出しへ遷移する場合、対象の `details` を自動で開く
+- 見出しにはパーマリンク（`#`）を付与し、クリックでURLをコピーできる
+- 画面右下に「要点」「目次」「先頭へ」へのジャンプを置く
 
 ### 8.1 合成結果の要約
 
 タイトル直下に `description` を短いサマリーとして表示し、記事を読み進めなくても中心結論を把握できるようにする。文言は2〜4行程度を目安とし、meta description / OGP と共用する。
+
+任意の `tldr.json` がある場合は、出典ラベル付きの箇条書き要点を表示し、各項目から対応セクションへアンカー遷移できるようにする。
 
 詳細な要約（`conclusion.md` / `conclusion-plain.md`）は記事内で最も視覚的に目立つ領域とする。
 
@@ -656,6 +669,7 @@ Pull Requestおよびmainへのpush時に次を実行する。
 
 - タイトルが表示される
 - 中心結論がタイトル直下で把握できる
+- 要点（TL;DR）と目次から本文へアンカー遷移できる
 - 詳細な要約が最も目立つ
 - 考察が表示される
 - プロンプト全文が表示される

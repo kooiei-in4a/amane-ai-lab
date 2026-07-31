@@ -147,6 +147,20 @@ def main() -> int:
         article_dir / "conclusion-plain.md",
         "# 合成結果の要約（わかりやすい説明）\n\n（平易な要約を書く）\n",
     )
+    write_json(
+        article_dir / "tldr.json",
+        {
+            "schemaVersion": 1,
+            "items": [
+                {
+                    "source": "synthesis",
+                    "label": "合成",
+                    "text": "（要点を書く）",
+                    "href": "#conclusion-heading",
+                }
+            ],
+        },
+    )
 
     print(f"created: {article_dir}")
     print(f"id: {article_id}")

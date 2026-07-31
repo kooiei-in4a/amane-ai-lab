@@ -252,8 +252,110 @@
     });
   }
 
+  function openAncestors(el) {
+    var node = el;
+    while (node && node !== document.body) {
+      if (node.tagName && node.tagName.toLowerCase() === "details") {
+        node.open = true;
+      }
+      node = node.parentElement;
+    }
+  }
+
+  function focusHashTarget(hash) {
+    if (!hash || hash === "#") {
+      return null;
+    }
+    var id = decodeURIComponent(hash.replace(/^#/, ""));
+    if (!id) {
+      return null;
+    }
+    var target = document.getElementById(id);
+    if (!target) {
+      return null;
+    }
+    openAncestors(target);
+    window.requestAnimationFrame(function () {
+      target.scrollIntoView({ block: "start", behavior: "smooth" });
+    });
+    return target;
+  }
+
+  function initHashNavigation() {
+    if (!document.querySelector(".article-page")) {
+      return;
+    }
+    function go() {
+      focusHashTarget(window.location.hash);
+    }
+    go();
+    window.addEventListener("hashchange", go);
+    document.addEventListener("click", function (event) {
+      var link = event.target.closest('a[href^="#"]');
+      if (!link) {
+        return;
+      }
+      var href = link.getAttribute("href") || "";
+      if (href.length < 2) {
+        return;
+      }
+      focusHashTarget(href);
+    });
+  }
+
+  function initHeadingPermalinks() {
+    var root = document.querySelector(".article-page");
+    if (!root) {
+      return;
+    }
+    root.addEventListener("click", function (event) {
+      var link = event.target.closest("a.heading-permalink");
+      if (!link) {
+        return;
+      }
+      event.preventDefault();
+      var href = link.getAttribute("href") || "";
+      var absolute = window.location.href.split("#")[0] + href;
+      copyText(absolute)
+        .then(function () {
+          link.dataset.copied = "1";
+          link.setAttribute("aria-label", "リンクをコピーしました");
+          window.setTimeout(function () {
+            link.dataset.copied = "0";
+            link.setAttribute("aria-label", "この見出しへのリンク");
+          }, 1200);
+        })
+        .catch(function () {
+          window.location.hash = href.slice(1);
+        });
+    });
+  }
+
+  function initPageJump() {
+    var jump = document.querySelector(".page-jump");
+    if (!jump) {
+      return;
+    }
+    var topLink = jump.querySelector(".page-jump-top");
+    var tldrLink = jump.querySelector('[data-jump="tldr"]');
+    if (tldrLink && !document.getElementById("tldr")) {
+      tldrLink.hidden = true;
+    }
+    function syncTop() {
+      if (!topLink) {
+        return;
+      }
+      topLink.hidden = window.scrollY < 480;
+    }
+    syncTop();
+    window.addEventListener("scroll", syncTop, { passive: true });
+  }
+
   initCopy();
   initAccordionControls();
   initGiscus();
   initHomeList();
+  initHashNavigation();
+  initHeadingPermalinks();
+  initPageJump();
 })();

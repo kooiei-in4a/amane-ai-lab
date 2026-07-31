@@ -165,6 +165,32 @@ def main() -> int:
                 reporter.error(f"{meta['id']}: summary document link missing")
             else:
                 reporter.success(f"{meta['id']}: summary document link")
+            if 'id="article-toc"' not in html:
+                reporter.error(f"{meta['id']}: article TOC missing")
+            else:
+                reporter.success(f"{meta['id']}: article TOC")
+            tldr_path = article_dir / "tldr.json"
+            if tldr_path.exists():
+                if 'id="tldr"' not in html:
+                    reporter.error(f"{meta['id']}: tldr.json exists but TL;DR block missing in HTML")
+                else:
+                    try:
+                        tldr = load_json(tldr_path)
+                        hrefs = [item.get("href", "") for item in tldr.get("items", [])]
+                        missing = []
+                        for href in hrefs:
+                            if not href.startswith("#"):
+                                missing.append(href)
+                                continue
+                            target = href[1:]
+                            if f'id="{target}"' not in html:
+                                missing.append(href)
+                        if missing:
+                            reporter.error(f"{meta['id']}: TL;DR href targets missing: {missing}")
+                        else:
+                            reporter.success(f"{meta['id']}: TL;DR anchors")
+                    except Exception as exc:  # noqa: BLE001
+                        reporter.error(f"{meta['id']}: tldr.json invalid: {exc}")
             # duplicate id attributes (naive)
             ids_in_html = re.findall(r'\bid="([^"]+)"', html)
             dup = {i for i in ids_in_html if ids_in_html.count(i) > 1}

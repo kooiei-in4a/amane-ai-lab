@@ -23,6 +23,18 @@ class KbHelpersTest(unittest.TestCase):
         html = markdown_to_html("# Hello")
         self.assertIn("<h1>", html)
 
+    def test_heading_ids_are_unique_and_prefixed(self):
+        from scripts.kb import add_heading_ids, slugify_heading
+
+        self.assertEqual(slugify_heading("Hello World"), "hello-world")
+        html = "<h2>Alpha</h2><h3>Beta</h3><h2>Alpha</h2>"
+        out, entries = add_heading_ids(html, prefix="x-", toc_max_level=2)
+        self.assertIn('id="x-alpha"', out)
+        self.assertIn('id="x-beta"', out)
+        self.assertIn('id="x-alpha-2"', out)
+        self.assertIn('class="heading-permalink"', out)
+        self.assertEqual([e["id"] for e in entries], ["x-alpha", "x-alpha-2"])
+
     def test_markdown_strips_script_element(self):
         html = markdown_to_html('<script>alert("xss")</script>')
         self.assertNotIn("<script", html.lower())

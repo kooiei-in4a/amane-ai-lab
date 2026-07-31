@@ -4,14 +4,6 @@
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/" rel="alternate"/>
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/feed.xml" rel="self"/>
   <id>https://kooiei-in4a.github.io/amane-ai-lab/</id>
-  <updated>2026-07-30T00:00:00Z</updated>
+  <updated>1970-01-01T00:00:00Z</updated>
   <subtitle>AIエージェントによる検証結果を公開するナレッジベース</subtitle>
-  <entry>
-    <title>AIエージェント協働型開発がもたらす人材・企業・産業構造の変化</title>
-    <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-ai-agent-sdlc-future/" rel="alternate"/>
-    <id>https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-ai-agent-sdlc-future/</id>
-    <updated>2026-07-30T00:00:00Z</updated>
-    <published>2026-07-30T00:00:00Z</published>
-    <summary type="text">ChatGPT・Claude・Geminiの3回答と統合分析。ボトルネックは生成能力ではなく検証の経済学へ移った。</summary>
-  </entry>
 </feed>

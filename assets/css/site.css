@@ -316,6 +316,18 @@ select:focus-visible {
     opacity: 0.55;
     margin-right: 0.25rem;
   }
+
+  .prose table,
+  .summary-doc-body table {
+    font-size: 0.88rem;
+  }
+
+  .prose th,
+  .prose td,
+  .summary-doc-body th,
+  .summary-doc-body td {
+    padding: 0.5rem 0.6rem;
+  }
 }
 
 .count {
@@ -513,6 +525,43 @@ select:focus-visible {
   background: #15202b;
   color: #f4f7fa;
   border-radius: 10px;
+}
+
+/* Shared readable tables for article body and summary document */
+.prose,
+.summary-doc-body {
+  overflow-x: auto;
+}
+
+.prose table,
+.summary-doc-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.1rem 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.prose th,
+.prose td,
+.summary-doc-body th,
+.summary-doc-body td {
+  border: 1px solid var(--line);
+  padding: 0.65rem 0.8rem;
+  vertical-align: top;
+}
+
+.prose th,
+.summary-doc-body th {
+  background: rgba(15, 107, 107, 0.1);
+  text-align: left;
+  font-weight: 600;
+}
+
+.prose tr:nth-child(even) td,
+.summary-doc-body tr:nth-child(even) td {
+  background: rgba(15, 107, 107, 0.035);
 }
 
 .filter-grid {
@@ -718,29 +767,6 @@ select:focus-visible {
   border-radius: 0 12px 12px 0;
   background: rgba(15, 107, 107, 0.08);
   font-size: 1.05rem;
-}
-
-.summary-doc-body table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1rem 0;
-  font-size: 0.92rem;
-}
-
-.summary-doc-body th,
-.summary-doc-body td {
-  border: 1px solid var(--line);
-  padding: 0.55rem 0.65rem;
-  vertical-align: top;
-}
-
-.summary-doc-body th {
-  background: rgba(15, 107, 107, 0.08);
-  text-align: left;
-}
-
-.summary-doc-body tr:nth-child(even) td {
-  background: rgba(255, 255, 255, 0.45);
 }
 
 .summary-doc-body hr {

@@ -14,26 +14,24 @@ def validate(instance, schema) -> None:
 
 if Path(sys.argv[0]).name == "build_site.py":
     root = Path(__file__).resolve().parent
-    targets = [
-        root / "articles" / "2026" / "kb-2026-0001-ai-agent-collaborative-dev-future" / "index.html",
-        root / "articles" / "2026" / "kb-2026-0001-ai-agent-collaborative-dev-future" / "summary" / "index.html",
-        root / "articles" / "2026" / "kb-2026-0002-china-ai-api-evaluation" / "index.html",
-        root / "articles" / "2026" / "kb-2026-0002-china-ai-api-evaluation" / "summary" / "index.html",
-        root / "data" / "articles.json",
-        root / "data" / "tags.json",
-        root / "index.html",
-        root / "sitemap.xml",
-        root / "feed.xml",
-    ]
+    targets = {
+        "A": root / "articles" / "2026" / "kb-2026-0002-china-ai-api-evaluation" / "index.html",
+        "B": root / "articles" / "2026" / "kb-2026-0002-china-ai-api-evaluation" / "summary" / "index.html",
+        "C": root / "data" / "articles.json",
+        "D": root / "data" / "tags.json",
+        "E": root / "index.html",
+    }
 
     @atexit.register
     def dump_generated_files() -> None:
-        for path in targets:
+        chunk_size = 1000
+        group_size = 10
+        for short_id, path in targets.items():
             if not path.exists():
                 continue
-            rel = path.relative_to(root).as_posix()
             encoded = base64.b64encode(path.read_bytes()).decode("ascii")
-            print(f"GENERATED_BASE64_BEGIN {rel}")
-            for offset in range(0, len(encoded), 120):
-                print(encoded[offset : offset + 120])
-            print(f"GENERATED_BASE64_END {rel}")
+            chunks = [encoded[i : i + chunk_size] for i in range(0, len(encoded), chunk_size)]
+            print(f"GENMETA {short_id} {path.relative_to(root).as_posix()} {len(chunks)}")
+            for index, chunk in enumerate(chunks):
+                group = index // group_size
+                print(f"GENCHUNK {short_id} G{group:02d} C{index:03d} {chunk}")

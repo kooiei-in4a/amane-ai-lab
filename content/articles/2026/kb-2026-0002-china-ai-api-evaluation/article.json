@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "KB-2026-0002",
+  "slug": "china-ai-api-evaluation",
+  "title": "中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画",
+  "description": "3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。",
+  "status": "draft",
+  "publishedAt": null,
+  "updatedAt": "2026-07-31",
+  "lastVerifiedAt": "2026-07-31",
+  "tags": [
+    "中国製AIモデル",
+    "API",
+    "コーディング",
+    "AIエージェント",
+    "モデル評価",
+    "セキュリティ"
+  ],
+  "agents": [
+    {
+      "name": "ChatGPT",
+      "model": "ChatGPT（モデル名は回答本文に未記載）",
+      "responseFile": "responses/chatgpt.md",
+      "executedAt": "2026-07-31",
+      "webSearch": true,
+      "attachmentsUsed": false,
+      "integrity": "edited",
+      "notes": "公開用に、中心判断、候補、Provider方針、Cursor連携、検証計画、セキュリティ論点を維持して編集。時点依存の細かな数値表、重複説明、長い参考URL一覧を省略した。"
+    },
+    {
+      "name": "Gemini Pro",
+      "model": "Gemini Pro（モデル名は回答本文に未記載）",
+      "responseFile": "responses/gemini-pro.md",
+      "executedAt": "2026-07-31",
+      "webSearch": true,
+      "attachmentsUsed": false,
+      "integrity": "edited",
+      "notes": "公開用に、中心判断、主要候補、用途別推奨、検証計画を維持して編集。時点依存の細かな数値表と重複するモデル別説明を省略した。AI名は統合資料の参照記号と提供資料名で確認。"
+    },
+    {
+      "name": "Gemini 思考",
+      "model": "Gemini（思考モード。モデル名は回答本文に未記載）",
+      "responseFile": "responses/gemini-thinking.md",
+      "executedAt": "2026-07-31",
+      "webSearch": true,
+      "attachmentsUsed": false,
+      "integrity": "edited",
+      "notes": "公開用に、中心判断、主要候補、用途別推奨、検証計画を維持して編集。時点依存の細かな数値表と重複するモデル別説明を省略した。AI名は統合資料の参照記号と提供資料名で確認。"
+    }
+  ],
+  "giscusTerm": "KB-2026-0002",
+  "supersededBy": null
+}

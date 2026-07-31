@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "source": "ChatGPT",
+      "label": "ChatGPT",
+      "text": "ChatGPT調査は、Qwen、DeepSeek、GLMなどを役割別の有力候補として提示した。",
+      "href": "#agents-heading"
+    },
+    {
+      "source": "Gemini",
+      "label": "Gemini",
+      "text": "2つのGemini調査もDeepSeek、Qwen、GLM、Kimiを主要候補に含めたが、対象モデルと順位は一致しなかった。",
+      "href": "#agents-heading"
+    },
+    {
+      "source": "review",
+      "label": "レビュー",
+      "text": "日本カード、価格、最大出力、契約経路、データ条件には採用判断を左右する矛盾が残った。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "統合",
+      "text": "複数回答の一致は候補選定には使えるが、一次情報と実API検証の代わりにはならない。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "推奨",
+      "text": "PoCは統一APIで横比較し、本番候補は公式または固定Providerで再試験する。",
+      "href": "#conclusion-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "結論",
+      "text": "単一ランキングではなく、主力・低価格補助・長時間Agent・高難度比較の役割別に採用する。",
+      "href": "#conclusion-heading"
+    }
+  ]
+}

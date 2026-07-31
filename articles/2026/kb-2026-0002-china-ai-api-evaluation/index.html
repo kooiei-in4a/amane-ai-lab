@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画">
+  <meta property="og:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画">
+  <meta name="twitter:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。">
+  <link rel="stylesheet" href="../../../assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane-ai-lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap article-page">
+    <header class="article-header">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0002</span>
+        <span class="pill status-published">published</span>
+        <span>公開: 2026-07-31</span>
+        <span>最終確認: 2026-07-31</span>
+        <span>更新: 2026-07-31</span>
+      </p>
+      <h1>中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画</h1>
+      <p class="article-summary">3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。</p>
+      <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
+      <ul class="tag-list"><li>中国製AIモデル</li><li>API</li><li>コーディング</li><li>AIエージェント</li><li>モデル評価</li><li>セキュリティ</li></ul>
+    </header>
+
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-chatgpt">ChatGPT</span> <a class="tldr-link" href="#agents-heading">ChatGPT調査は、Qwen、DeepSeek、GLMなどを役割別の有力候補として提示した。</a></li><li><span class="tldr-source tldr-source-gemini">Gemini</span> <a class="tldr-link" href="#agents-heading">2つのGemini調査もDeepSeek、Qwen、GLM、Kimiを主要候補に含めたが、対象モデルと順位は一致しなかった。</a></li><li><span class="tldr-source tldr-source-review">レビュー</span> <a class="tldr-link" href="#analysis-heading">日本カード、価格、最大出力、契約経路、データ条件には採用判断を左右する矛盾が残った。</a></li><li><span class="tldr-source tldr-source-synthesis">統合</span> <a class="tldr-link" href="#analysis-heading">複数回答の一致は候補選定には使えるが、一次情報と実API検証の代わりにはならない。</a></li><li><span class="tldr-source tldr-source-synthesis">推奨</span> <a class="tldr-link" href="#conclusion-heading">PoCは統一APIで横比較し、本番候補は公式または固定Providerで再試験する。</a></li><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#conclusion-heading">単一ランキングではなく、主力・低価格補助・長時間Agent・高難度比較の役割別に採用する。</a></li></ol></section>
+    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-chatgpt">ChatGPT</a><ul><li class="toc-item toc-level-2"><a href="#agent-chatgpt-エグゼクティブサマリー">エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-主要候補の役割分担">主要候補の役割分担</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-api提供経路">API提供経路</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-cursorと周辺ツール">Cursorと周辺ツール</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-評価方法">評価方法</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-api検証計画">API検証計画</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-データセキュリティ">データ・セキュリティ</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-最終提案">最終提案</a></li></ul></li><li><a href="#agent-gemini-pro">Gemini Pro</a><ul><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-エグゼクティブサマリー">エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-モデル別の位置づけ">モデル別の位置づけ</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-推奨順位の考え方">推奨順位の考え方</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-cursorと開発ツール">Cursorと開発ツール</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-api検証">API検証</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-最終提案">最終提案</a></li></ul></li><li><a href="#agent-gemini">Gemini 思考</a><ul><li class="toc-item toc-level-2"><a href="#agent-gemini-調査対象と除外">調査対象と除外</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-エグゼクティブサマリー">エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-モデルの役割">モデルの役割</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-総合評価">総合評価</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-導入分類">導入分類</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-検証計画">検証計画</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-データと契約">データと契約</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-最終提案">最終提案</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
+
+    <section class="panel" aria-labelledby="background-heading">
+      <h2 id="background-heading">検討に至った背景</h2>
+      <div class="prose"><h1 id="background-検討に至った背景"><a class="heading-permalink" href="#background-検討に至った背景" aria-label="この見出しへのリンク">#</a>検討に至った背景</h1>
+<h2 id="background-なぜこの調査を行ったのか"><a class="heading-permalink" href="#background-なぜこの調査を行ったのか" aria-label="この見出しへのリンク">#</a>なぜこの調査を行ったのか</h2>
+<p>中国企業・中国系研究組織が開発するAIモデルは、低価格、長いコンテキスト、コーディング性能、オープンウェイトなどを理由に、開発用途の候補として扱われることが増えています。一方、日本から実務で使う場合は、性能ランキングだけでは判断できません。</p>
+<p>実際の導入では、次の条件が同時に成立する必要があります。</p>
+<ul>
+<li>日本の個人または法人が契約・決済できる</li>
+<li>APIを既存プログラムや開発ツールへ接続できる</li>
+<li>Tool Callingや構造化出力が安定して動く</li>
+<li>価格と応答性能が業務量に見合う</li>
+<li>入力したソースコードや業務情報の保存・学習・移転条件を説明できる</li>
+<li>モデル更新や提供終了に備えて再現性を確保できる</li>
+</ul>
+<p>このため、単なるベンチマーク順位ではなく、「日本から現実的に導入できるか」を中心に複数のAIへ同じ調査を依頼しました。</p>
+<h2 id="background-今回の中心的な問い"><a class="heading-permalink" href="#background-今回の中心的な問い" aria-label="この見出しへのリンク">#</a>今回の中心的な問い</h2>
+<p>中心的な問いは、次の2つです。</p>
+<ol>
+<li>提供された3つのAI調査から、どの中国製AIモデルを導入候補として残せるか</li>
+<li>回答間の矛盾や未確認情報がある状態で、どこまで結論を出してよいか</li>
+</ol>
+<h2 id="background-入力資料の構成"><a class="heading-permalink" href="#background-入力資料の構成" aria-label="この見出しへのリンク">#</a>入力資料の構成</h2>
+<p>今回の入力は、主たる調査プロンプト、ChatGPTの回答1件、Geminiの回答2件、3回答の純粋マージ、統合要約、矛盾点レビューで構成されています。</p>
+<table>
+<thead>
+<tr>
+<th>役割</th>
+<th>採用した資料</th>
+<th>記事での扱い</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>調査条件</td>
+<td>主たる調査プロンプト</td>
+<td><code>prompt.txt</code> の正本</td>
+</tr>
+<tr>
+<td>AI回答</td>
+<td>ChatGPT回答</td>
+<td>独立した編集版回答</td>
+</tr>
+<tr>
+<td>AI回答</td>
+<td>Gemini Pro回答</td>
+<td>独立した編集版回答</td>
+</tr>
+<tr>
+<td>AI回答</td>
+<td>Gemini思考回答</td>
+<td>独立した編集版回答</td>
+</tr>
+<tr>
+<td>詳細統合</td>
+<td>3結果の純粋マージ</td>
+<td>分析の基礎資料</td>
+</tr>
+<tr>
+<td>レビュー</td>
+<td>明らかな矛盾点</td>
+<td>不確実性と停止条件の基礎資料</td>
+</tr>
+<tr>
+<td>圧縮版</td>
+<td>3結果の統合要約</td>
+<td>結論構成の補助資料</td>
+</tr>
+</tbody>
+</table>
+<p>統合要約は純粋マージの派生資料であり、独立したAI回答としては数えていません。矛盾点一覧も新しい調査回答ではなく、3回答を比較したレビューとして扱います。</p>
+<h2 id="background-対象範囲"><a class="heading-permalink" href="#background-対象範囲" aria-label="この見出しへのリンク">#</a>対象範囲</h2>
+<p>対象は、API経由で利用でき、次の用途に関係する中国製AIモデルです。</p>
+<ul>
+<li>コード生成、修正、レビュー、テスト生成</li>
+<li>Cline、Roo Code、Continueなどの開発エージェント</li>
+<li>独自のAIエージェントや業務システムへの組み込み</li>
+<li>低価格な大量処理</li>
+<li>長い仕様書やリポジトリの解析</li>
+<li>日本からの契約、決済、運用</li>
+</ul>
+<h2 id="background-対象外"><a class="heading-permalink" href="#background-対象外" aria-label="この見出しへのリンク">#</a>対象外</h2>
+<p>次は今回の記事では確定しません。</p>
+<ul>
+<li>各モデルの絶対的な性能順位</li>
+<li>日本発行カードが実際に承認されるか</li>
+<li>個別アカウントの本人確認結果</li>
+<li>契約書、DPA、ZDR、保存期間の法的評価</li>
+<li>実APIを使った速度、障害率、Tool Calling成功率</li>
+<li>セルフホストに必要な正確な設備費</li>
+<li>2026年7月31日以後の価格やモデル更新</li>
+</ul>
+<h2 id="background-読み方"><a class="heading-permalink" href="#background-読み方" aria-label="この見出しへのリンク">#</a>読み方</h2>
+<p>AI回答内のモデル名、料金、仕様、ランキングは、回答時点の調査結果または主張です。この記事では、複数回答が一致しただけで事実認定せず、一次情報と実APIで再確認すべき項目を明確に分けます。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">調査プロンプト</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn" id="copy-prompt" data-copy-target="prompt-text">プロンプトをコピー</button>
+        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      </div>
+      <details class="prompt-details">
+        <summary>プロンプト全文を表示する</summary>
+        <pre id="prompt-text" class="prompt-block"><code># 中国製AIモデルのAPI利用・開発用途調査
+
+## 1. 調査目的
+
+中国企業・中国系研究組織が開発したAIモデルのうち、API経由でプログラムから利用でき、ソフトウェア開発、コーディング支援、AIエージェント、業務システムへの組み込みに適したモデルを調査してください。
+
+単なるモデル性能ランキングではなく、以下を判断できる実務的な調査結果を作成してください。
+
+* 日本から現実的に契約・決済・利用できるか
+* APIを既存プログラムへ組み込みやすいか
+* Cursor、Cline、Continueなどの開発ツールや、OpenAI API互換クライアントから利用できるか
+* コーディングやエージェント用途に適しているか
+* 価格、性能、安定性、導入難易度のバランスがよいか
+* 現在人気がある、または話題になっているモデルはどれか
+* 一時的な話題ではなく、今後も利用候補として残りそうか
+
+調査時点の最新情報をWebで確認し、古いモデル情報や過去の価格を最新情報として扱わないでください。
+
+---
+
+## 2. 調査対象
+
+少なくとも、以下の開発元・モデル系列を調査対象候補に含めてください。
+
+* DeepSeek
+* Alibaba Cloud / Qwen
+* Moonshot AI / Kimi
+* Zhipu AI / GLM
+* MiniMax
+* ByteDance / Doubao / Seed
+* Baidu / ERNIE
+* Tencent / Hunyuan
+* Huawei / Pangu
+* 01.AI / Yi
+* StepFun
+* Baichuan AI
+
+上記以外にも、調査時点で人気、話題性、性能、価格競争力のある中国製モデルがあれば追加してください。
+
+ただし、次のモデルは主対象から除外して構いません。
+
+* API提供が確認できないモデル
+* 中国国内の特殊な契約が必須で、日本からの利用が現実的でないモデル
+* 旧世代で、後継モデルに実質的に置き換えられているモデル
+* 画像・動画・音声生成専用で、プログラム開発用途に適さないモデル
+* 情報が極端に少なく、利用可否を検証できないモデル
+
+除外した主要モデルがある場合は、除外理由を簡潔に示してください。
+
+---
+
+## 3. 「中国製」の定義
+
+本調査では、以下のいずれかに該当するモデルを中国製として扱ってください。
+
+* 中国に本社を置く企業が開発している
+* 中国系企業グループが主要な開発主体である
+* 中国の研究組織が中心となって開発している
+
+APIの提供元が米国や第三国の事業者であっても、モデル自体が中国製であれば対象に含めてください。
+
+---
+
+## 4. API提供経路の区別
+
+同じモデルでも、API提供経路によって価格、契約条件、データ管理、可用性が異なるため、以下を明確に区別してください。
+
+1. 開発元の公式API
+2. 中国国内向け公式クラウドAPI
+3. 海外向け公式API
+4. OpenRouterなどの第三者API
+5. Alibaba Cloud、SiliconFlow、Together AI、Fireworks AIなどの外部ホスティング
+6. セルフホスト可能なオープンウェイトモデル
+
+公式APIと第三者APIは、原則として別行または別欄で比較してください。
+
+「モデルの開発元」と「APIの提供元」を混同しないでください。
+
+---
+
+## 5. 各モデルの調査項目
+
+### 5.1 基本情報
+
+* 開発元
+* 開発元の国・地域
+* モデル名
+* 正確なモデルIDまたはAPI上のモデル名
+* モデル系列・世代
+* 公開日
+* API提供開始日
+* 最終更新日
+* モデル種別
+
+  * 汎用
+  * 推論特化
+  * コード特化
+  * マルチモーダル
+  * MoE
+  * その他
+* オープンウェイトかクローズドモデルか
+* 主な特徴
+
+公開日、API提供開始日、最終更新日は混同せず、確認できないものは「未確認」としてください。
+
+### 5.2 API・技術仕様
+
+* API提供元
+* 公式APIか第三者APIか
+* APIエンドポイントの提供地域
+* OpenAI API互換性
+* Anthropic API互換性
+* REST APIまたはSDKの提供状況
+* Python SDK
+* JavaScript / TypeScript SDK
+* .NETからの利用しやすさ
+* コンテキスト長
+* 最大出力トークン数
+* ストリーミング対応
+* Tool Calling / Function Calling対応
+* Parallel Tool Calling対応
+* Structured Output対応
+* JSON Mode対応
+* JSON Schema対応
+* Prompt Caching対応
+* Batch API対応
+* Files、検索、コード実行などの組み込みツール対応
+* Visionなどマルチモーダル入力対応
+* Fine-tuning対応
+* Embeddings提供の有無
+* レート制限
+
+  * RPM
+  * TPM
+  * 同時実行数
+* SLAまたは可用性情報
+
+数値や仕様は、可能な限り公式ドキュメントで確認してください。
+
+### 5.3 価格
+
+価格は、原則として100万トークン当たりの米ドルへ統一してください。元の通貨も併記してください。
+
+* 入力トークン価格
+* 出力トークン価格
+* キャッシュ書き込み価格
+* キャッシュ読み取り価格
+* Batch API価格
+* 推論トークンの課金方法
+* 長文コンテキスト利用時の追加料金
+* Tool Callingに関する追加料金
+* Web検索など外部ツールの追加料金
+* 無料枠
+* 初回クレジット
+* 無料枠の有効期限
+* 最低利用料金
+* 最低チャージ金額
+* ボリュームディスカウント
+* 法人契約時の価格体系
+* 価格確認日
+
+入力と出力の価格を合算せず、必ず分けて記載してください。
+
+価格がコンテキスト長、キャッシュ利用、処理速度、優先度などで変わる場合は、その条件も説明してください。
+
+### 5.4 課金形態・契約
+
+* 従量課金
+* プリペイド方式
+* 月額固定プラン
+* サブスクリプションにAPI枠が含まれるか
+* 無料プラン
+* 法人向け契約
+* 請求書払い
+* 請求通貨
+* 対応する支払方法
+* 日本発行クレジットカードの利用可否
+* Alipay、WeChat Payなど中国系決済の必須有無
+* 中国の電話番号の必須有無
+* 中国法人または中国住所の必須有無
+* 本人確認・企業確認の要否
+* 事前チャージ残高の有効期限
+* 無料クレジットの有効期限
+* 税、VAT、海外決済手数料
+* 解約条件
+* 利用上限の設定可否
+* 予算アラートの有無
+
+日本の個人開発者または日本法人が、実際に契約・決済できるかを重視してください。
+
+### 5.5 開発・コーディング用途
+
+以下の観点で評価してください。
+
+* コード生成能力
+* 既存コードの修正能力
+* 複数ファイルにまたがる変更能力
+* リポジトリ全体の理解
+* バグ調査
+* コードレビュー
+* テスト生成
+* リファクタリング
+* 長い指示への追従
+* Tool Callingの安定性
+* AIエージェントとしての自律実行能力
+* 長時間タスクでの安定性
+* 指示からの逸脱の少なさ
+* JSONなど機械可読出力の安定性
+* 日本語での指示理解
+* 日本語コメント・ドキュメント生成
+* 英語中心の開発環境での性能
+* 推論速度
+* 初回応答速度
+* 出力速度
+* APIの安定性
+
+以下の用途ごとに適性を評価してください。
+
+* CursorなどIDEでの対話利用
+* Cline、Roo Code、Continueなどのエージェント利用
+* 独自のコーディングエージェント
+* GitHub Issueからの自動実装
+* コードレビュー
+* CI失敗の分析
+* 業務システムへのAPI組み込み
+* 大量バッチ処理
+* 低価格な補助モデル
+* 高精度な主力モデル
+
+### 5.6 Cursorでの利用可能性
+
+「Cursorで使える」という表現は曖昧なため、以下を分けて確認してください。
+
+* Cursorが公式にモデル選択肢として提供しているか
+* CursorのCustom API Key機能で利用できるか
+* OpenAI互換エンドポイントをCursorへ直接設定できるか
+* CursorからOpenRouter経由で利用できるか
+* Cursorでは直接使えないが、ClineやContinueなら使えるか
+* LiteLLMなどのプロキシを介せば利用できるか
+* Cursor内蔵モデルのバックエンドとして採用されている事実があるか
+* 採用に関する情報が公式発表か、報道か、推測か
+
+Cursorの内部モデル採用について、根拠のない推測を事実として記載しないでください。
+
+### 5.7 データ・セキュリティ・法務
+
+* API入力データの保存期間
+* 出力データの保存期間
+* 学習利用の有無
+* 学習利用からのオプトアウト可否
+* ログ保存の有無
+* Zero Data Retention相当の選択肢
+* データ保存地域
+* 中国国内へのデータ移転の有無
+* 海外向けAPIと中国国内向けAPIの違い
+* DPAの提供有無
+* 法人向けセキュリティ条件
+* SOC 2、ISO 27001などの認証
+* 商用利用条件
+* 禁止用途
+* 出力物の知的財産上の扱い
+* オープンウェイトの場合のライセンス
+* 利用規約上の注意点
+* 日本企業が機密コードを送信する場合のリスク
+
+不明な項目は推測せず、「公開情報では確認できない」としてください。
+
+---
+
+## 6. 人気度・話題性の調査
+
+人気度と話題性は別の指標として評価してください。
+
+### 6.1 人気度
+
+人気度は、実際の利用規模や継続的な支持を表します。
+
+可能な範囲で以下を確認してください。
+
+* API利用量
+* OpenRouterなどでの利用順位
+* Hugging Faceのダウンロード数
+* Hugging FaceのLike数
+* GitHubのStar数
+* GitHubのFork数
+* 関連リポジトリの活動状況
+* モデル対応サービスの数
+* Cline、Continue、Open WebUI、LiteLLMなどでの対応状況
+* 企業での採用事例
+* クラウド事業者での提供状況
+* 開発者コミュニティの規模
+* 継続的なアップデート頻度
+
+### 6.2 話題性
+
+話題性は、調査時点の直近3か月から6か月を中心に評価してください。
+
+* 新モデル発表による注目
+* ニュース報道
+* X、Reddit、Hacker Newsなどでの言及
+* 中国国内SNSや技術コミュニティでの反響
+* ベンチマーク結果への反響
+* 価格破壊としての注目
+* オープンウェイト公開による注目
+* Cursorなど著名サービスとの関係
+* 大規模な資金調達や提携
+* 障害、規制、セキュリティ問題など否定的な話題
+
+### 6.3 評価方法
+
+人気度と話題性を、それぞれ次の5段階で評価してください。
+
+* 5：非常に高い
+* 4：高い
+* 3：中程度
+* 2：限定的
+* 1：低い
+
+必ず評価根拠を併記してください。
+
+単なるニュース件数だけで評価せず、実利用の裏付けを確認してください。
+
+「公開直後で話題性は高いが、実利用はまだ少ない」など、人気度と話題性が異なる場合は明示してください。
+
+### 6.4 トレンドの持続性
+
+次の3段階で評価してください。
+
+* 高：今後も主要な利用候補として残る可能性が高い
+* 中：一定の利用は続くが、競合次第で存在感が低下する可能性がある
+* 低：一時的な話題、または後継モデルに置き換えられる可能性が高い
+
+根拠も簡潔に記載してください。
+
+---
+
+## 7. 情報源の優先順位
+
+以下の順に情報を重視してください。
+
+1. 開発元の公式モデルページ
+2. 開発元の公式APIドキュメント
+3. 公式料金ページ
+4. 公式利用規約、プライバシーポリシー、DPA
+5. 公式GitHub、Hugging Face
+6. API提供事業者の公式ドキュメント
+7. Cursor、OpenRouter、LiteLLMなど利用先の公式情報
+8. 信頼性の高い技術メディア
+9. 実利用者による検証
+10. SNS上の言及
+
+SNSや掲示板は、人気・話題性や実利用上の問題を把握する補助情報として使用し、価格、仕様、契約条件の正本にはしないでください。
+
+重要な事実には出典URLと確認日を付けてください。
+
+---
+
+## 8. ベンチマークの扱い
+
+ベンチマーク結果を使用する場合は、以下を区別してください。
+
+* 開発元による自己評価
+* 第三者評価
+* 静的な問題回答ベンチマーク
+* 実際のソフトウェア修正ベンチマーク
+* エージェント型ベンチマーク
+* コーディング能力
+* 一般推論能力
+
+SWE-bench、LiveCodeBench、HumanEvalなど、評価対象が異なる指標を単純比較しないでください。
+
+ベンチマークのスコアだけで推奨順位を決めず、APIの使いやすさ、料金、安定性、契約可能性も考慮してください。
+
+---
+
+## 9. 出力形式
+
+### 9.1 エグゼクティブサマリー
+
+最初に、調査結果を10項目以内で要約してください。
+
+以下を明確にしてください。
+
+* 現時点で最も有力な中国製APIモデル
+* コーディング用途で有力なモデル
+* AIエージェント用途で有力なモデル
+* 低価格用途で有力なモデル
+* 日本から契約しやすいモデル
+* 人気が高いモデル
+* 現在最も話題性が高いモデル
+* 導入時に注意すべきリスク
+
+### 9.2 モデル比較表
+
+以下の列を含む一覧表を作成してください。
+
+| 順位 | 開発元 | モデル名 | 公開日 | モデル種別 | API提供元 | 日本からの利用 | 課金形態 | 入力価格 | 出力価格 | コンテキスト長 | Tool Calling | OpenAI互換 | Cursor利用 | コーディング適性 | 人気度 | 話題性 | 持続性 | 主な特徴 | 主な注意点 |
+| -: | --- | ---- | --- | ----- | ------ | ------- | ---- | ---: | ---: | ------: | ------------ | -------- | -------- | -------- | --: | --: | --- | ---- | ----- |
+
+価格は100万トークン当たりの米ドルを基本としてください。
+
+情報が未確認の場合は空欄にせず、次のいずれかを記載してください。
+
+* 未確認
+* 非公開
+* 非対応
+* 条件付き
+* 地域制限あり
+
+### 9.3 課金・契約比較表
+
+| 開発元 | モデル名 | API提供元 | 従量課金 | プリペイド | 月額契約 | 無料枠 | 最低チャージ | 請求通貨 | 支払方法 | 日本カード | 中国電話番号 | 中国法人要件 | 備考 |
+| --- | ---- | ------ | ---- | ----- | ---- | --- | -----: | ---- | ---- | ----- | ------ | ------ | -- |
+
+### 9.4 人気・話題性比較表
+
+| 開発元 | モデル名 | 人気度 | 人気度の根拠 | 話題性 | 話題性の根拠 | トレンド持続性 | 評価期間 |
+| --- | ---- | --: | ------ | --: | ------ | ------- | ---- |
+
+### 9.5 モデル別詳細
+
+各モデルについて、以下の形式で説明してください。
+
+#### モデル名
+
+* 開発元：
+* 公開日：
+* モデル種別：
+* API提供元：
+* 日本からの利用可否：
+* 課金形態：
+* 入力価格：
+* 出力価格：
+* コンテキスト長：
+* 最大出力長：
+* OpenAI API互換性：
+* Tool Calling：
+* Structured Output：
+* Cursorでの利用方法：
+* コーディング性能：
+* エージェント適性：
+* 日本語性能：
+* 人気度：
+* 話題性：
+* 人気・話題性の根拠：
+* データ利用方針：
+* 主な特徴：
+* 主な弱点：
+* 推奨用途：
+* 導入上の注意点：
+* 情報源：
+* 情報確認日：
+
+---
+
+## 10. 推奨モデルの選定
+
+最終的に、以下のカテゴリーごとに推奨モデルを選定してください。
+
+* 総合推奨
+* コーディング性能重視
+* AIエージェント重視
+* 低価格重視
+* 長いコンテキスト重視
+* 日本語重視
+* 日本からの契約しやすさ重視
+* OpenAI API互換性重視
+* オープンウェイト重視
+* 人気・コミュニティ重視
+* 話題性・将来性重視
+* 機密性を比較的重視する場合
+
+各カテゴリーについて、原則として上位3モデルを提示してください。
+
+各推奨には、次を記載してください。
+
+* 推奨順位
+* 推奨理由
+* 適した利用場面
+* 採用しない方がよい条件
+* 主要な代替候補
+
+---
+
+## 11. 総合評価方法
+
+各モデルを100点満点で評価してください。
+
+* コーディング性能：20点
+* エージェント・Tool Calling適性：15点
+* APIの使いやすさ・互換性：15点
+* 価格競争力：15点
+* 日本からの契約・決済容易性：10点
+* APIの安定性・運用性：10点
+* 人気度：5点
+* 話題性：5点
+* トレンド持続性：5点
+
+点数だけでなく、採点根拠を示してください。
+
+確認できない項目を推測で高得点にしないでください。情報不足は減点または「評価保留」としてください。
+
+---
+
+## 12. 導入候補の最終分類
+
+各モデルを次のいずれかに分類してください。
+
+* A：すぐにAPI検証する価値が高い
+* B：条件付きで検証候補
+* C：情報更新を待って再評価
+* D：現時点では採用非推奨
+
+分類理由を簡潔に記載してください。
+
+---
+
+## 13. 検証プラン
+
+A評価となったモデルについて、実際のAPI比較検証プランを作成してください。
+
+共通のテスト課題として、少なくとも以下を含めてください。
+
+1. 単一関数のコード生成
+2. 既存コードのバグ修正
+3. 複数ファイルの変更計画
+4. コードレビュー
+5. 単体テスト生成
+6. 仕様書からの実装
+7. Tool Calling
+8. JSON Schemaに従った出力
+9. 日本語指示によるコード変更
+10. 長いコンテキストを与えたリポジトリ理解
+
+各テストについて、以下を記録できる評価票も作成してください。
+
+* 成功・失敗
+* 正確性
+* 指示遵守
+* コード品質
+* 実行可能性
+* Tool Callingの正確性
+* 応答時間
+* 入力トークン数
+* 出力トークン数
+* 推定費用
+* 再試行回数
+* 人間による修正量
+
+---
+
+## 14. 調査上の注意事項
+
+* 最新情報をWebで確認すること
+* 価格には確認日を付けること
+* 公式APIと第三者APIを混同しないこと
+* モデルの公開日とAPI提供開始日を混同しないこと
+* 中国国内向けと海外向けサービスを混同しないこと
+* チャット向け月額プランとAPI料金を混同しないこと
+* オープンウェイトと無料APIを混同しないこと
+* Cursorで直接使えるか、他ツール経由で使えるかを区別すること
+* 人気と話題性を混同しないこと
+* 開発元の自己申告ベンチマークだけで評価しないこと
+* 未確認情報を推測で補完しないこと
+* 複数の信頼できる情報源で重要事項を検証すること
+* 情報源同士が矛盾する場合は、矛盾を明示すること
+* 「中国製だから危険」「有名だから安全」といった一面的評価を避けること
+
+---
+
+## 15. 最終結論
+
+最後に、以下の問いへ明確に回答してください。
+
+1. 日本からAPI利用を始めやすい中国製モデルはどれか
+2. CursorまたはCursor周辺の開発ツールで利用しやすいモデルはどれか
+3. コーディング性能と価格のバランスが最もよいモデルはどれか
+4. AIエージェント用途で最も有望なモデルはどれか
+5. 人気が実利用につながっているモデルはどれか
+6. 話題性は高いが、実利用には注意が必要なモデルはどれか
+7. 今後6か月から1年で有力になりそうなモデルはどれか
+8. 最初にAPI検証すべき上位5モデルはどれか
+9. 公式APIと第三者APIのどちらを選ぶべきか
+10. 日本企業が業務コードや機密情報を送信する際の主要リスクは何か
+
+結論は、曖昧な「用途による」だけで終わらせず、前提条件を示したうえで具体的な推奨順位を提示してください。
+</code></pre>
+      </details>
+    </section>
+
+    <section class="panel" aria-labelledby="agents-heading">
+      <h2 id="agents-heading">AIエージェントの回答</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
+        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
+      </div>
+      <div id="agent-responses"><section class="agent-response" data-agent="ChatGPT">
+  <details id="agent-chatgpt">
+    <summary>
+      <span class="agent-name">ChatGPT</span>
+      <span class="agent-meta">ChatGPT（モデル名は回答本文に未記載） / 2026-07-31 / integrity=edited</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>あり</dd></div>
+      <div><dt>添付</dt><dd>なし</dd></div>
+      <div><dt>完全性</dt><dd>edited</dd></div>
+    </dl>
+    <p class="agent-notes">公開用に、中心判断、候補、Provider方針、Cursor連携、検証計画、セキュリティ論点を維持して編集。時点依存の細かな数値表、重複説明、長い参考URL一覧を省略した。</p>
+    <div class="agent-body prose"><h1 id="agent-chatgpt-chatgpt回答公開用編集版"><a class="heading-permalink" href="#agent-chatgpt-chatgpt回答公開用編集版" aria-label="この見出しへのリンク">#</a>ChatGPT回答（公開用編集版）</h1>
+<blockquote>
+<p><strong>完全性:</strong> edited<br>
+原回答は、モデル別の価格・契約・性能・Provider・Cursor連携・セキュリティを詳細に調査した長文レポートです。公開用には、中心的な判断、主要候補、導入手順、注意点を残し、時点依存の細かな数値表、重複説明、長い参考URL一覧を整理しました。具体的な数値は一次情報で再確認が必要です。</p>
+</blockquote>
+<h2 id="agent-chatgpt-エグゼクティブサマリー"><a class="heading-permalink" href="#agent-chatgpt-エグゼクティブサマリー" aria-label="この見出しへのリンク">#</a>エグゼクティブサマリー</h2>
+<p>ChatGPT回答は、単純な性能順位ではなく、日本からの契約、リージョン、API互換性、運用性、データ管理を含めて評価しました。</p>
+<p>主な判断は次の通りです。</p>
+<ol>
+<li><strong>総合候補:</strong> Qwenの国際・日本向け提供経路を、法人運用とリージョンの観点から高く評価。</li>
+<li><strong>価格性能:</strong> DeepSeekの高性能系列と低価格系列を有力視。</li>
+<li><strong>長時間エージェント:</strong> GLM系列をTool Calling、構造化出力、長いタスクの候補として評価。</li>
+<li><strong>長文・マルチモーダル:</strong> MiniMax系列を追加候補として評価。</li>
+<li><strong>コード特化:</strong> Kimiのコード向け系列を比較候補に含める。</li>
+<li><strong>話題性:</strong> Kimiの新しいフロンティア系列を高難度比較枠とする。</li>
+<li><strong>Cursor:</strong> 直接接続できる可能性と公式サポートを分け、Cline、Roo Code、Continue、OpenCode、LiteLLMの利用を推奨。</li>
+<li><strong>機密コード:</strong> モデル開発国だけでなく、Router、実推論ホスト、保存地域、ログ、学習利用、DPA、ZDRを確認すべき。</li>
+</ol>
+<h2 id="agent-chatgpt-主要候補の役割分担"><a class="heading-permalink" href="#agent-chatgpt-主要候補の役割分担" aria-label="この見出しへのリンク">#</a>主要候補の役割分担</h2>
+<table>
+<thead>
+<tr>
+<th>役割</th>
+<th>回答での候補</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日本企業の主力</td>
+<td>Qwenの国際・日本リージョン向けモデル</td>
+</tr>
+<tr>
+<td>価格性能の主力</td>
+<td>DeepSeekの高性能モデル</td>
+</tr>
+<tr>
+<td>低価格補助</td>
+<td>DeepSeekの高速・低価格モデル</td>
+</tr>
+<tr>
+<td>長時間Agent</td>
+<td>GLMのエージェント向けモデル</td>
+</tr>
+<tr>
+<td>長文・マルチモーダル</td>
+<td>MiniMaxの現行モデル</td>
+</tr>
+<tr>
+<td>コード特化</td>
+<td>Kimiのコード向けモデル</td>
+</tr>
+<tr>
+<td>高難度比較</td>
+<td>Kimiのフロンティアモデル</td>
+</tr>
+</tbody>
+</table>
+<h2 id="agent-chatgpt-api提供経路"><a class="heading-permalink" href="#agent-chatgpt-api提供経路" aria-label="この見出しへのリンク">#</a>API提供経路</h2>
+<p>回答は、初期比較と本番運用を分けています。</p>
+<h3 id="agent-chatgpt-poc"><a class="heading-permalink" href="#agent-chatgpt-poc" aria-label="この見出しへのリンク">#</a>PoC</h3>
+<p>OpenRouterなどの第三者APIは、複数モデルを同じ形式で比較しやすく、日本から少額で始めやすいと評価しています。</p>
+<h3 id="agent-chatgpt-本番"><a class="heading-permalink" href="#agent-chatgpt-本番" aria-label="この見出しへのリンク">#</a>本番</h3>
+<p>採用モデルが決まった後は、次を再評価すべきとしています。</p>
+<ul>
+<li>公式APIまたは固定Provider</li>
+<li>データ処理地域</li>
+<li>保存期間と学習利用</li>
+<li>DPA、ZDR、SLA</li>
+<li>レート制限</li>
+<li>snapshotと廃止通知</li>
+<li>フォールバック時の送信先</li>
+</ul>
+<h2 id="agent-chatgpt-cursorと周辺ツール"><a class="heading-permalink" href="#agent-chatgpt-cursorと周辺ツール" aria-label="この見出しへのリンク">#</a>Cursorと周辺ツール</h2>
+<p>回答は、「OpenAI互換APIとして技術的に接続できる」ことと「Cursorが公式に保証する」ことを区別しています。</p>
+<p>安定した比較経路として、次の構成を推奨しています。</p>
+<pre><code class="language-text">Cline / Roo Code / Continue / OpenCode
+        ↓
+LiteLLM または OpenRouter
+        ↓
+DeepSeek / Qwen / GLM / MiniMax / Kimi
+</code></pre>
+<p>独自Agentでは、Provider Adapterを用意し、PoCのRouterから公式APIや固定Providerへ切り替えられる構成を提案しています。</p>
+<h2 id="agent-chatgpt-評価方法"><a class="heading-permalink" href="#agent-chatgpt-評価方法" aria-label="この見出しへのリンク">#</a>評価方法</h2>
+<p>100点評価では、コーディング性能だけでなく、次を配点対象としました。</p>
+<ul>
+<li>エージェント・Tool Calling</li>
+<li>API互換性</li>
+<li>価格</li>
+<li>日本からの契約容易性</li>
+<li>安定性・運用性</li>
+<li>人気度</li>
+<li>話題性</li>
+<li>持続性</li>
+</ul>
+<p>回答は、公開情報による点数を暫定値とし、実APIテスト前の確定順位にはしていません。</p>
+<h2 id="agent-chatgpt-api検証計画"><a class="heading-permalink" href="#agent-chatgpt-api検証計画" aria-label="この見出しへのリンク">#</a>API検証計画</h2>
+<p>共通テストとして、次を提案しています。</p>
+<ol>
+<li>単一関数生成</li>
+<li>再現テスト付きバグ修正</li>
+<li>複数ファイル変更計画</li>
+<li>重大度付きコードレビュー</li>
+<li>単体テスト生成</li>
+<li>仕様書からの実装</li>
+<li>複数ステップのTool Calling</li>
+<li>JSON Schema出力</li>
+<li>日本語指示によるコード変更</li>
+<li>長文リポジトリ理解</li>
+</ol>
+<p>記録項目は、成功率、build/test、指示遵守、Tool引数、JSON適合、TTFT、完了時間、トークン数、費用、429/5xx、人間修正量です。</p>
+<h2 id="agent-chatgpt-データセキュリティ"><a class="heading-permalink" href="#agent-chatgpt-データセキュリティ" aria-label="この見出しへのリンク">#</a>データ・セキュリティ</h2>
+<p>特に次を注意点としています。</p>
+<ul>
+<li>モデル開発元とAPI提供元は別の場合がある</li>
+<li>「学習に使わない」と「ログを保存しない」は別</li>
+<li>Prompt Cacheは保存期間を別に確認する</li>
+<li>Routerの自動ルーティングは送信先を変える可能性がある</li>
+<li><code>latest</code>ではなくモデルIDまたはsnapshotを固定する</li>
+<li>生成コードにはbuild/test、ライセンススキャン、人間レビューが必要</li>
+</ul>
+<h2 id="agent-chatgpt-最終提案"><a class="heading-permalink" href="#agent-chatgpt-最終提案" aria-label="この見出しへのリンク">#</a>最終提案</h2>
+<p>ChatGPT回答の最終提案は、1モデルへ決め打ちせず、次の役割へ分けて実API比較することです。</p>
+<ul>
+<li>主力</li>
+<li>低価格補助</li>
+<li>長時間Agent</li>
+<li>コード特化</li>
+<li>高難度レビュー</li>
+<li>フォールバック</li>
+</ul>
+<p>PoCは統一APIで行い、採用後は公式APIまたは固定Providerで再試験する方針を推奨しています。</p></div>
+  </details>
+</section>
+<section class="agent-response" data-agent="Gemini Pro">
+  <details id="agent-gemini-pro">
+    <summary>
+      <span class="agent-name">Gemini Pro</span>
+      <span class="agent-meta">Gemini Pro（モデル名は回答本文に未記載） / 2026-07-31 / integrity=edited</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>あり</dd></div>
+      <div><dt>添付</dt><dd>なし</dd></div>
+      <div><dt>完全性</dt><dd>edited</dd></div>
+    </dl>
+    <p class="agent-notes">公開用に、中心判断、主要候補、用途別推奨、検証計画を維持して編集。時点依存の細かな数値表と重複するモデル別説明を省略した。AI名は統合資料の参照記号と提供資料名で確認。</p>
+    <div class="agent-body prose"><h1 id="agent-gemini-pro-gemini-pro回答公開用編集版"><a class="heading-permalink" href="#agent-gemini-pro-gemini-pro回答公開用編集版" aria-label="この見出しへのリンク">#</a>Gemini Pro回答（公開用編集版）</h1>
+<blockquote>
+<p><strong>完全性:</strong> edited<br>
+原回答は、主要モデルの比較表、課金条件、人気・話題性、モデル別詳細、用途別推奨を含む調査レポートです。公開用には主要な判断と注意点を残し、重複する表と時点依存の細かな数値を整理しました。モデル名・価格・契約条件は一次情報で再確認が必要です。</p>
+</blockquote>
+<h2 id="agent-gemini-pro-エグゼクティブサマリー"><a class="heading-permalink" href="#agent-gemini-pro-エグゼクティブサマリー" aria-label="この見出しへのリンク">#</a>エグゼクティブサマリー</h2>
+<p>Gemini Pro回答は、DeepSeek、Qwen、GLM、Kimiを主要候補として評価しました。</p>
+<p>主な判断は次の通りです。</p>
+<ol>
+<li><strong>総合候補:</strong> DeepSeekの高性能系列とQwenの上位系列。</li>
+<li><strong>コーディング:</strong> DeepSeekとGLMを有力視。</li>
+<li><strong>AIエージェント:</strong> QwenとGLMをTool Calling、長文脈の候補として評価。</li>
+<li><strong>低価格:</strong> DeepSeekの高速・低価格系列。</li>
+<li><strong>日本からの利用:</strong> 公式APIより、OpenRouterやSiliconFlowなどの第三者APIを使うと摩擦が少ない。</li>
+<li><strong>人気:</strong> DeepSeek系列。</li>
+<li><strong>話題性:</strong> Kimiの新しい巨大モデル。</li>
+<li><strong>リスク:</strong> 中国国内向けAPIの契約要件、データ移転、API安定性。</li>
+</ol>
+<h2 id="agent-gemini-pro-モデル別の位置づけ"><a class="heading-permalink" href="#agent-gemini-pro-モデル別の位置づけ" aria-label="この見出しへのリンク">#</a>モデル別の位置づけ</h2>
+<h3 id="agent-gemini-pro-deepseek"><a class="heading-permalink" href="#agent-gemini-pro-deepseek" aria-label="この見出しへのリンク">#</a>DeepSeek</h3>
+<ul>
+<li>価格性能比が高い主力候補</li>
+<li>複雑な修正や複数ファイル変更に向くと評価</li>
+<li>低価格系列はバッチや補助タスク向け</li>
+<li>公式APIの混雑、Cursor固有機能との相性、データ条件を注意点とする</li>
+</ul>
+<h3 id="agent-gemini-pro-qwen"><a class="heading-permalink" href="#agent-gemini-pro-qwen" aria-label="この見出しへのリンク">#</a>Qwen</h3>
+<ul>
+<li>日本語と多言語性能を高く評価</li>
+<li>OpenAI互換APIとエージェント用途の候補</li>
+<li>長い入力では段階料金が変わる可能性を指摘</li>
+<li>OpenRouter経由が簡単とする</li>
+</ul>
+<h3 id="agent-gemini-pro-glm"><a class="heading-permalink" href="#agent-gemini-pro-glm" aria-label="この見出しへのリンク">#</a>GLM</h3>
+<ul>
+<li>コーディング特化、長いコンテキスト、長時間エージェントの候補</li>
+<li>Tool Callingと大規模リポジトリ解析を評価</li>
+<li>日本からは第三者API経由が使いやすいとする</li>
+<li>公式価格と契約条件の確認が必要</li>
+</ul>
+<h3 id="agent-gemini-pro-kimi"><a class="heading-permalink" href="#agent-gemini-pro-kimi" aria-label="この見出しへのリンク">#</a>Kimi</h3>
+<ul>
+<li>巨大なモデル規模と長文脈で話題性が高い</li>
+<li>高難度タスクや巨大リポジトリ向け</li>
+<li>他候補より出力単価が高く、大量処理には不向き</li>
+</ul>
+<h2 id="agent-gemini-pro-推奨順位の考え方"><a class="heading-permalink" href="#agent-gemini-pro-推奨順位の考え方" aria-label="この見出しへのリンク">#</a>推奨順位の考え方</h2>
+<p>回答は、用途別に順位を分けています。</p>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>上位候補</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>総合</td>
+<td>DeepSeek、Qwen、GLM</td>
+</tr>
+<tr>
+<td>コーディング</td>
+<td>GLM、Qwen、DeepSeek</td>
+</tr>
+<tr>
+<td>AIエージェント</td>
+<td>DeepSeek、Qwen</td>
+</tr>
+<tr>
+<td>低価格</td>
+<td>DeepSeekの低価格系列</td>
+</tr>
+<tr>
+<td>日本からの直接契約</td>
+<td>DeepSeekを高く評価</td>
+</tr>
+<tr>
+<td>機密性</td>
+<td>オープンウェイトのセルフホストを候補化</td>
+</tr>
+</tbody>
+</table>
+<p>ただし、機密性については、セルフホストの設備・運用負担を別途考慮する必要があります。</p>
+<h2 id="agent-gemini-pro-cursorと開発ツール"><a class="heading-permalink" href="#agent-gemini-pro-cursorと開発ツール" aria-label="この見出しへのリンク">#</a>Cursorと開発ツール</h2>
+<p>Gemini Pro回答は、OpenAI互換エンドポイントを使い、CursorのCustom ModelやBase URL設定、またはClineなどの拡張から利用できると評価しています。</p>
+<p>一方で、reasoning固有フィールドの表示やComposer機能には制約があり得るとしています。</p>
+<h2 id="agent-gemini-pro-api検証"><a class="heading-permalink" href="#agent-gemini-pro-api検証" aria-label="この見出しへのリンク">#</a>API検証</h2>
+<p>上位候補に対して、次の課題を同じ条件で実施することを提案しています。</p>
+<ul>
+<li>関数生成</li>
+<li>バグ修正</li>
+<li>複数ファイル変更</li>
+<li>コードレビュー</li>
+<li>テスト生成</li>
+<li>日本語仕様書からの実装</li>
+<li>Tool Calling</li>
+<li>JSON Schema</li>
+<li>日本語指示</li>
+<li>大規模リポジトリ理解</li>
+</ul>
+<p>評価項目は、タスク達成、指示遵守、コード品質、応答時間、費用、キャッシュ効果、修正回数です。</p>
+<h2 id="agent-gemini-pro-最終提案"><a class="heading-permalink" href="#agent-gemini-pro-最終提案" aria-label="この見出しへのリンク">#</a>最終提案</h2>
+<p>Gemini Pro回答は、DeepSeek、Qwen、GLMを最初のAPI検証候補とし、Kimiを高難度・高価格の比較枠に置いています。</p>
+<p>また、複数モデルを統一APIで比較できる第三者APIを初期導入に推奨しています。ただし、公式APIの契約容易性やデータ管理については、他回答と食い違う項目が残っています。</p></div>
+  </details>
+</section>
+<section class="agent-response" data-agent="Gemini 思考">
+  <details id="agent-gemini">
+    <summary>
+      <span class="agent-name">Gemini 思考</span>
+      <span class="agent-meta">Gemini（思考モード。モデル名は回答本文に未記載） / 2026-07-31 / integrity=edited</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>あり</dd></div>
+      <div><dt>添付</dt><dd>なし</dd></div>
+      <div><dt>完全性</dt><dd>edited</dd></div>
+    </dl>
+    <p class="agent-notes">公開用に、中心判断、主要候補、用途別推奨、検証計画を維持して編集。時点依存の細かな数値表と重複するモデル別説明を省略した。AI名は統合資料の参照記号と提供資料名で確認。</p>
+    <div class="agent-body prose"><h1 id="agent-gemini-gemini思考回答公開用編集版"><a class="heading-permalink" href="#agent-gemini-gemini思考回答公開用編集版" aria-label="この見出しへのリンク">#</a>Gemini思考回答（公開用編集版）</h1>
+<blockquote>
+<p><strong>完全性:</strong> edited<br>
+原回答は、DeepSeek、Qwen、Kimi、GLM、MiniMax、Doubao、Hunyuan、Yiなどを対象に、比較表、契約条件、採点、API検証計画を提示した調査レポートです。公開用には中心的な主張を維持し、長大なモデル別詳細と重複表を整理しました。具体的な数値と契約条件は一次情報で再確認が必要です。</p>
+</blockquote>
+<h2 id="agent-gemini-調査対象と除外"><a class="heading-permalink" href="#agent-gemini-調査対象と除外" aria-label="この見出しへのリンク">#</a>調査対象と除外</h2>
+<p>Gemini思考回答は、次を主要対象に含めました。</p>
+<ul>
+<li>DeepSeek</li>
+<li>Alibaba Cloud / Qwen</li>
+<li>Moonshot AI / Kimi</li>
+<li>Zhipu AI / GLM</li>
+<li>MiniMax</li>
+<li>ByteDance / Doubao</li>
+<li>Tencent / Hunyuan</li>
+<li>01.AI / Yi</li>
+</ul>
+<p>Huawei / Pangu、Baichuan、StepFunについては、日本からの契約・汎用開発者API・ツール連携の難しさを理由に、詳細対象から外しました。</p>
+<h2 id="agent-gemini-エグゼクティブサマリー"><a class="heading-permalink" href="#agent-gemini-エグゼクティブサマリー" aria-label="この見出しへのリンク">#</a>エグゼクティブサマリー</h2>
+<p>主な判断は次の通りです。</p>
+<ol>
+<li><strong>有力な系列:</strong> DeepSeekとQwen。</li>
+<li><strong>コーディング:</strong> Qwenのコード特化モデルとDeepSeekの高性能モデル。</li>
+<li><strong>AIエージェント:</strong> DeepSeek、Kimi、GLM。</li>
+<li><strong>低価格:</strong> DeepSeekの低価格系列と中国国内の低価格モデル。</li>
+<li><strong>日本からの契約:</strong> OpenRouterやAlibaba Cloud International。</li>
+<li><strong>人気:</strong> DeepSeekとQwen。</li>
+<li><strong>話題性:</strong> DeepSeekの新世代とKimi。</li>
+<li><strong>API経路:</strong> 中国国内向け公式APIより、国際第三者Providerを第一候補とする。</li>
+<li><strong>主要リスク:</strong> データ移転、学習・ログ、可用性、急な仕様変更。</li>
+<li><strong>開発ツール:</strong> OpenAI互換APIを使い、Cursor周辺やClineから利用可能と評価。</li>
+</ol>
+<h2 id="agent-gemini-モデルの役割"><a class="heading-permalink" href="#agent-gemini-モデルの役割" aria-label="この見出しへのリンク">#</a>モデルの役割</h2>
+<h3 id="agent-gemini-deepseek"><a class="heading-permalink" href="#agent-gemini-deepseek" aria-label="この見出しへのリンク">#</a>DeepSeek</h3>
+<ul>
+<li>複雑なリファクタリングと複数ファイル変更</li>
+<li>ReasoningとTool Calling</li>
+<li>低価格なシステム組み込み</li>
+<li>公式APIの混雑とレート制限を注意点とする</li>
+</ul>
+<h3 id="agent-gemini-qwenのコード特化モデル"><a class="heading-permalink" href="#agent-gemini-qwenのコード特化モデル" aria-label="この見出しへのリンク">#</a>Qwenのコード特化モデル</h3>
+<ul>
+<li>単体関数、アルゴリズム、テスト生成</li>
+<li>オープンウェイトとセルフホスト</li>
+<li>日本語を含む多言語</li>
+<li>長大なコンテキストでの指示追従を注意点とする</li>
+</ul>
+<h3 id="agent-gemini-kimi"><a class="heading-permalink" href="#agent-gemini-kimi" aria-label="この見出しへのリンク">#</a>Kimi</h3>
+<ul>
+<li>長い資料や大規模コードベース</li>
+<li>長時間の自律タスク</li>
+<li>公式直販より第三者API経由を推奨</li>
+<li>価格が高いことを注意点とする</li>
+</ul>
+<h3 id="agent-gemini-glm"><a class="heading-permalink" href="#agent-gemini-glm" aria-label="この見出しへのリンク">#</a>GLM</h3>
+<ul>
+<li>Tool Callingを多用する業務エージェント</li>
+<li>Web検索や外部APIを伴う複合タスク</li>
+<li>Z.ai海外版または第三者APIを候補とする</li>
+<li>公式価格と契約経路の確認が必要</li>
+</ul>
+<h3 id="agent-gemini-その他"><a class="heading-permalink" href="#agent-gemini-その他" aria-label="この見出しへのリンク">#</a>その他</h3>
+<p>MiniMaxは長文解析、Doubaoは中国国内の低価格利用、Hunyuanは業務組み込み、Yiは高速軽量用途の候補として扱いました。ただし、日本からの契約容易性や世代の新しさによって優先度を下げています。</p>
+<h2 id="agent-gemini-総合評価"><a class="heading-permalink" href="#agent-gemini-総合評価" aria-label="この見出しへのリンク">#</a>総合評価</h2>
+<p>回答は、次の9軸で100点評価を行いました。</p>
+<ul>
+<li>コード性能</li>
+<li>エージェント性能</li>
+<li>API互換性</li>
+<li>価格</li>
+<li>契約容易性</li>
+<li>安定性</li>
+<li>人気</li>
+<li>話題性</li>
+<li>持続性</li>
+</ul>
+<p>上位にはQwenのコード特化モデル、DeepSeek、GLMを置きました。ただし、各回答でQwenの対象モデルが異なるため、この得点は他回答と直接平均できません。</p>
+<h2 id="agent-gemini-導入分類"><a class="heading-permalink" href="#agent-gemini-導入分類" aria-label="この見出しへのリンク">#</a>導入分類</h2>
+<h3 id="agent-gemini-a-すぐ検証する価値が高い"><a class="heading-permalink" href="#agent-gemini-a-すぐ検証する価値が高い" aria-label="この見出しへのリンク">#</a>A: すぐ検証する価値が高い</h3>
+<ul>
+<li>DeepSeekの高性能・低価格系列</li>
+<li>Qwenのコード特化系列</li>
+<li>GLM</li>
+</ul>
+<h3 id="agent-gemini-b-条件付き"><a class="heading-permalink" href="#agent-gemini-b-条件付き" aria-label="この見出しへのリンク">#</a>B: 条件付き</h3>
+<ul>
+<li>Kimi</li>
+<li>Yi</li>
+<li>MiniMax</li>
+</ul>
+<h3 id="agent-gemini-cまたはd"><a class="heading-permalink" href="#agent-gemini-cまたはd" aria-label="この見出しへのリンク">#</a>CまたはD</h3>
+<ul>
+<li>日本からのKYCや電話番号要件が重い中国国内向けサービス</li>
+<li>世代が古いモデル</li>
+<li>一般コーディング用途から外れる専用モデル</li>
+</ul>
+<h2 id="agent-gemini-検証計画"><a class="heading-permalink" href="#agent-gemini-検証計画" aria-label="この見出しへのリンク">#</a>検証計画</h2>
+<p>次の10課題を共通テストとしています。</p>
+<ol>
+<li>単一関数生成</li>
+<li>バグ修正</li>
+<li>複数ファイル変更計画</li>
+<li>セキュリティを含むコードレビュー</li>
+<li>単体テスト生成</li>
+<li>OpenAPIなど仕様からの実装</li>
+<li>Parallel Tool Calling</li>
+<li>JSON Schema</li>
+<li>日本語業務ロジック</li>
+<li>長いリポジトリ理解</li>
+</ol>
+<p>結果には、成功、指示遵守、コード品質、実行可能性、応答速度、トークン数、費用、修正量を記録します。</p>
+<h2 id="agent-gemini-データと契約"><a class="heading-permalink" href="#agent-gemini-データと契約" aria-label="この見出しへのリンク">#</a>データと契約</h2>
+<p>回答は、次の対策を提案しています。</p>
+<ul>
+<li>機密情報を匿名化・マスキングする</li>
+<li>ZDR条件が明確なProviderを選ぶ</li>
+<li>オープンウェイトを自社環境または管理可能なクラウドで動かす</li>
+<li>公式APIと第三者APIを別に評価する</li>
+<li>中国国内向けと海外向けサービスを分ける</li>
+</ul>
+<h2 id="agent-gemini-最終提案"><a class="heading-permalink" href="#agent-gemini-最終提案" aria-label="この見出しへのリンク">#</a>最終提案</h2>
+<p>最初のAPI検証では、DeepSeek、Qwenのコード特化モデル、GLMを中心にし、Kimiを高難度比較へ加える構成を提案しています。</p>
+<p>日本からの利用では、OpenRouterやAlibaba Cloud Internationalなどの国際経路を優先し、機密コードについてはProviderのデータ条件またはセルフホストを再評価する方針です。</p></div>
+  </details>
+</section></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">AI回答の合成</h2>
+      <div class="prose"><h1 id="analysis-3つのai調査の比較と統合"><a class="heading-permalink" href="#analysis-3つのai調査の比較と統合" aria-label="この見出しへのリンク">#</a>3つのAI調査の比較と統合</h1>
+<h2 id="analysis-1-資料の正本関係"><a class="heading-permalink" href="#analysis-1-資料の正本関係" aria-label="この見出しへのリンク">#</a>1. 資料の正本関係</h2>
+<p>記事化にあたり、資料の更新関係を次のように整理しました。</p>
+<ul>
+<li>主たる調査プロンプトを、実際に入力した指示の正本とします。</li>
+<li>ChatGPT、Gemini Pro、Gemini思考の3ファイルを、AI回答の正本とします。</li>
+<li>「純粋マージ」は、3回答を論点別に並べた詳細な統合資料です。</li>
+<li>「明らかな矛盾点」は、統合時に解消できなかった問題を抽出した独立レビューです。</li>
+<li>「統合要約」は、純粋マージと矛盾点を短くした派生資料です。</li>
+</ul>
+<p>純粋マージと統合要約は、元の回答を置き換える正本ではありません。数値や結論が異なる場合は、元回答と矛盾点レビューへ戻って判断します。</p>
+<h2 id="analysis-2-3回答の共通認識"><a class="heading-permalink" href="#analysis-2-3回答の共通認識" aria-label="この見出しへのリンク">#</a>2. 3回答の共通認識</h2>
+<p>3回答は、細部では大きく食い違いますが、実務上の候補群と導入上の論点については一定の共通点があります。</p>
+<h3 id="analysis-21-候補は数系列へ収束する"><a class="heading-permalink" href="#analysis-21-候補は数系列へ収束する" aria-label="この見出しへのリンク">#</a>2.1 候補は数系列へ収束する</h3>
+<p>3回答を横断すると、主に次の系列が有力候補として残ります。</p>
+<table>
+<thead>
+<tr>
+<th>役割</th>
+<th>回答群で繰り返し挙がった候補</th>
+<th>統合上の扱い</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主力・価格性能</td>
+<td>DeepSeek系列</td>
+<td>実API検証の中核候補</td>
+</tr>
+<tr>
+<td>日本語・法人運用</td>
+<td>Qwen系列</td>
+<td>現行の正式モデルIDを再確認して候補化</td>
+</tr>
+<tr>
+<td>長時間エージェント</td>
+<td>GLM系列</td>
+<td>Tool Callingと長期タスクの検証候補</td>
+</tr>
+<tr>
+<td>低価格処理</td>
+<td>DeepSeekの高速・低価格系列</td>
+<td>バッチと補助モデルの候補</td>
+</tr>
+<tr>
+<td>高難度・巨大文脈</td>
+<td>Kimi系列</td>
+<td>高価格を許容する比較枠</td>
+</tr>
+<tr>
+<td>補欠・マルチモーダル</td>
+<td>MiniMax系列</td>
+<td>1回答中心のため追加検証枠</td>
+</tr>
+</tbody>
+</table>
+<p>ここで重要なのは、系列名の一致と、同一モデルの一致は別だという点です。特にQwenとMiniMaxは、回答ごとに異なる世代や用途のモデルを代表として選んでいます。</p>
+<h3 id="analysis-22-初期比較と本番採用を分ける"><a class="heading-permalink" href="#analysis-22-初期比較と本番採用を分ける" aria-label="この見出しへのリンク">#</a>2.2 初期比較と本番採用を分ける</h3>
+<p>3回答は程度の差はあるものの、OpenRouterなどの第三者APIが初期比較に便利だと評価しています。複数モデルを同じ形式で呼び出し、日本のカードで少額から検証しやすいためです。</p>
+<p>一方、本番では次を固定し直す必要があります。</p>
+<ul>
+<li>正確なモデルIDまたはsnapshot</li>
+<li>実際の推論Provider</li>
+<li>データ処理地域</li>
+<li>保存期間、学習利用、Prompt Cache</li>
+<li>DPA、ZDR、SLA</li>
+<li>レート制限と廃止通知</li>
+<li>フォールバック時の送信先</li>
+</ul>
+<p>したがって、「PoCで便利な接続経路」と「本番で採用する契約経路」は同じでなくて構いません。</p>
+<h3 id="analysis-23-cursorで動くことと公式保証は別"><a class="heading-permalink" href="#analysis-23-cursorで動くことと公式保証は別" aria-label="この見出しへのリンク">#</a>2.3 Cursorで動くことと公式保証は別</h3>
+<p>回答群はOpenAI互換エンドポイントによる接続可能性を評価していますが、CursorのCustom API Key、Base URL Override、Composer、Agent機能のどこまで動くかについては一致していません。</p>
+<p>実務では次を分けて確認する必要があります。</p>
+<ol>
+<li>単純なChat Completionが呼べるか</li>
+<li>ストリーミングが動くか</li>
+<li>Tool Callingが正しく往復するか</li>
+<li>reasoning固有フィールドを扱えるか</li>
+<li>Cursorが公式に保証しているか</li>
+<li>Cline、Roo Code、Continueなら安定するか</li>
+</ol>
+<p>「接続できた」だけで、IDEの全機能に対応すると判断してはいけません。</p>
+<h3 id="analysis-24-セキュリティはモデル開発元だけでは決まらない"><a class="heading-permalink" href="#analysis-24-セキュリティはモデル開発元だけでは決まらない" aria-label="この見出しへのリンク">#</a>2.4 セキュリティはモデル開発元だけでは決まらない</h3>
+<p>同じモデルでも、公式API、第三者Router、第三国ホスト、国内ホスト、セルフホストでデータ経路は変わります。</p>
+<p>そのため、「中国製だから危険」「第三者APIだから安全」「オープンウェイトだから安全」という単純な分類は不十分です。評価対象は、モデルだけでなく、契約主体、Router、実推論ホスト、リージョン、ログ、キャッシュ、サブプロセッサーです。</p>
+<h2 id="analysis-3-回答間の主要な相違点"><a class="heading-permalink" href="#analysis-3-回答間の主要な相違点" aria-label="この見出しへのリンク">#</a>3. 回答間の主要な相違点</h2>
+<h3 id="analysis-31-qwenの比較対象が同じではない"><a class="heading-permalink" href="#analysis-31-qwenの比較対象が同じではない" aria-label="この見出しへのリンク">#</a>3.1 Qwenの比較対象が同じではない</h3>
+<p>3回答はQwen系列を高く評価していますが、比較対象としているモデルが異なります。汎用主力、最大性能モデル、コード特化モデルを同じランキングへ入れているため、点数を平均したり「Qwenは何位」と一括りにしたりできません。</p>
+<p>採用前には、次の枠ごとに現行モデルを1つずつ固定する必要があります。</p>
+<ul>
+<li>汎用・エージェント主力</li>
+<li>コード特化</li>
+<li>低価格補助</li>
+<li>日本または国際リージョンで利用できるモデル</li>
+<li>セルフホスト可能なモデル</li>
+</ul>
+<h3 id="analysis-32-deepseekの契約条件と出力上限"><a class="heading-permalink" href="#analysis-32-deepseekの契約条件と出力上限" aria-label="この見出しへのリンク">#</a>3.2 DeepSeekの契約条件と出力上限</h3>
+<p>DeepSeekについては、価格性能比が高いという評価は共通しています。しかし、次が一致していません。</p>
+<ul>
+<li>日本発行カードが利用できるか</li>
+<li>最低チャージと無料枠</li>
+<li>最大出力が数十万トークンか、数千から数万トークンか</li>
+<li>JSON Schemaが完全対応か部分対応か</li>
+<li>学習不使用、ログ保存、ZDRの関係</li>
+</ul>
+<p>最大出力の差は、単なる誤差ではありません。長いパッチやレポートを1回で生成できるか、エージェントが何回に分けて作業するかに直結します。モデルの理論上限、公式API上限、Provider上限を分けて確認する必要があります。</p>
+<h3 id="analysis-33-glmの価格最大出力契約経路"><a class="heading-permalink" href="#analysis-33-glmの価格最大出力契約経路" aria-label="この見出しへのリンク">#</a>3.3 GLMの価格、最大出力、契約経路</h3>
+<p>GLMについては、長時間エージェントとTool Callingへの評価は共通しています。一方、価格と最大出力には大きな差があります。また、Z.ai海外版と中国国内向けBigModelの契約条件が混ざっている可能性があります。</p>
+<p>「GLM-5.2」という名前だけでは不十分で、次を一組として記録しなければ比較できません。</p>
+<ul>
+<li>API提供元</li>
+<li>モデルID</li>
+<li>プラン名</li>
+<li>割引期間</li>
+<li>リージョン</li>
+<li>最大出力</li>
+<li>決済通貨</li>
+<li>KYC条件</li>
+</ul>
+<h3 id="analysis-34-kimiの契約条件と文脈上限"><a class="heading-permalink" href="#analysis-34-kimiの契約条件と文脈上限" aria-label="この見出しへのリンク">#</a>3.4 Kimiの契約条件と文脈上限</h3>
+<p>Kimiについては、高難度・巨大文脈向けで話題性が高いという評価は概ね共通しています。しかし、公式APIを日本から直接契約できるか、中国電話番号やAlipayが必要か、最大コンテキストと最大出力がどこまでかは一致しません。</p>
+<p>この状態では、Kimiを主力として予算化するのではなく、第三者APIによる限定テストから始めるのが安全です。</p>
+<h3 id="analysis-35-minimaxは世代が揃っていない"><a class="heading-permalink" href="#analysis-35-minimaxは世代が揃っていない" aria-label="この見出しへのリンク">#</a>3.5 MiniMaxは世代が揃っていない</h3>
+<p>一つの回答は新しいM3系列を高く評価し、別回答は旧世代のText-01を扱っています。同一条件の比較ではないため、MiniMaxは共通上位ではなく、補欠候補として現行モデルを改めて確認するのが妥当です。</p>
+<h2 id="analysis-4-なぜ相違が生じたのか"><a class="heading-permalink" href="#analysis-4-なぜ相違が生じたのか" aria-label="この見出しへのリンク">#</a>4. なぜ相違が生じたのか</h2>
+<p>相違の原因は、単純な「どのAIが正しいか」だけでは説明できません。</p>
+<h3 id="analysis-41-モデル世代が異なる"><a class="heading-permalink" href="#analysis-41-モデル世代が異なる" aria-label="この見出しへのリンク">#</a>4.1 モデル世代が異なる</h3>
+<p>同じ開発元でも、汎用、Coder、Flash、Max、Plusなど役割が違います。系列名だけで統合すると、価格も性能も文脈長も混ざります。</p>
+<h3 id="analysis-42-providerが異なる"><a class="heading-permalink" href="#analysis-42-providerが異なる" aria-label="この見出しへのリンク">#</a>4.2 Providerが異なる</h3>
+<p>公式APIとOpenRouterでは、価格、最大出力、速度、レート制限、データ所在地が異なる場合があります。同じモデル名でも、推論ホストが違えば運用品質は同じではありません。</p>
+<h3 id="analysis-43-公開日api開始日ウェイト公開日が混ざる"><a class="heading-permalink" href="#analysis-43-公開日api開始日ウェイト公開日が混ざる" aria-label="この見出しへのリンク">#</a>4.3 公開日、API開始日、ウェイト公開日が混ざる</h3>
+<p>発表日とAPI提供開始日が別の日であったり、タイムゾーン差があったりします。日付が1日違う場合は、どのイベントの日付かを分ける必要があります。</p>
+<h3 id="analysis-44-公称性能と第三者実績が混ざる"><a class="heading-permalink" href="#analysis-44-公称性能と第三者実績が混ざる" aria-label="この見出しへのリンク">#</a>4.4 公称性能と第三者実績が混ざる</h3>
+<p>開発元のベンチマーク、第三者ベンチマーク、コミュニティの評判、API利用量は別の証拠です。公称値だけで実務性能を確定できません。</p>
+<h3 id="analysis-45-アカウント作成後にしか確認できない条件がある"><a class="heading-permalink" href="#analysis-45-アカウント作成後にしか確認できない条件がある" aria-label="この見出しへのリンク">#</a>4.5 アカウント作成後にしか確認できない条件がある</h3>
+<p>カード承認、本人確認、最低チャージ、請求書払い、残高期限などは、公開ページだけでは確定できない場合があります。Web調査だけで断定すると誤りやすい領域です。</p>
+<h2 id="analysis-5-根拠が比較的強い主張"><a class="heading-permalink" href="#analysis-5-根拠が比較的強い主張" aria-label="この見出しへのリンク">#</a>5. 根拠が比較的強い主張</h2>
+<p>今回の資料から比較的強く言えるのは、次のような「評価方法」に関する結論です。</p>
+<ul>
+<li>性能だけでなく、日本からの契約、API互換性、安定性、データ条件を合わせて評価すべき</li>
+<li>モデル開発元とAPI提供元を分けて記録すべき</li>
+<li>人気と話題性を分けるべき</li>
+<li>初期比較と本番契約を分けるべき</li>
+<li>同一課題で実APIを比較し、build/test結果まで確認すべき</li>
+<li>モデルID、Provider、実行日、費用、エラーを記録すべき</li>
+<li>機密コードではZDR、DPA、保存期間、データ所在地を確認すべき</li>
+</ul>
+<p>これらは、3回答と統合資料で繰り返し支持され、特定のモデル名が変わっても有効です。</p>
+<h2 id="analysis-6-根拠が弱いまたは未検証の主張"><a class="heading-permalink" href="#analysis-6-根拠が弱いまたは未検証の主張" aria-label="この見出しへのリンク">#</a>6. 根拠が弱い、または未検証の主張</h2>
+<p>次は、記事公開時点では確定情報として扱いません。</p>
+<ul>
+<li>2026年の各モデルの正確な性能順位</li>
+<li>特定モデルがGPTやClaudeの特定世代を上回るという断定</li>
+<li>日本カードが必ず通るという断定</li>
+<li>最大出力やコンテキストの大きな数値</li>
+<li>APIデータが一律に学習・保存されないという断定</li>
+<li>Cursorの全機能で直接利用できるという断定</li>
+<li>GitHub Star、ダウンロード数、APIシェアから実務品質まで推定すること</li>
+<li>今後6か月から1年の勝者予測</li>
+</ul>
+<p>これらは、一次情報の再確認または実API試験が必要です。</p>
+<h2 id="analysis-7-事実推測将来予測の区別"><a class="heading-permalink" href="#analysis-7-事実推測将来予測の区別" aria-label="この見出しへのリンク">#</a>7. 事実、推測、将来予測の区別</h2>
+<table>
+<thead>
+<tr>
+<th>区分</th>
+<th>この記事での扱い</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>入力資料に書かれた内容</td>
+<td>「各回答がそう主張した」として保存</td>
+</tr>
+<tr>
+<td>3回答の一致</td>
+<td>共通認識として記録するが、事実確定とはしない</td>
+</tr>
+<tr>
+<td>矛盾点レビュー</td>
+<td>未解決事項として明示</td>
+</tr>
+<tr>
+<td>統合判断</td>
+<td>synthesisとして明示</td>
+</tr>
+<tr>
+<td>今後の有力候補</td>
+<td>予測であり、確信度を下げて扱う</td>
+</tr>
+<tr>
+<td>契約・法務</td>
+<td>人間と正式文書による確認事項</td>
+</tr>
+</tbody>
+</table>
+<h2 id="analysis-8-見落とされやすい論点"><a class="heading-permalink" href="#analysis-8-見落とされやすい論点" aria-label="この見出しへのリンク">#</a>8. 見落とされやすい論点</h2>
+<h3 id="analysis-81-フォールバックで送信先が変わる"><a class="heading-permalink" href="#analysis-81-フォールバックで送信先が変わる" aria-label="この見出しへのリンク">#</a>8.1 フォールバックで送信先が変わる</h3>
+<p>Routerの自動フォールバックは可用性を上げますが、機密コードの送信先が別Providerへ変わる可能性があります。Provider固定の有無を確認すべきです。</p>
+<h3 id="analysis-82-prompt-cacheはログ保存と別"><a class="heading-permalink" href="#analysis-82-prompt-cacheはログ保存と別" aria-label="この見出しへのリンク">#</a>8.2 Prompt Cacheはログ保存と別</h3>
+<p>キャッシュは価格を下げますが、入力の一部が保持される可能性があります。「学習に使わない」「ログを保存しない」「キャッシュしない」は別々に確認します。</p>
+<h3 id="analysis-83-latestは再現性を壊す"><a class="heading-permalink" href="#analysis-83-latestは再現性を壊す" aria-label="この見出しへのリンク">#</a>8.3 <code>latest</code>は再現性を壊す</h3>
+<p>モデルが自動更新されると、同じプロンプトでも結果が変わります。業務導入ではsnapshotを固定し、廃止通知と回帰試験を運用へ組み込みます。</p>
+<h3 id="analysis-84-出力コードの知財と品質"><a class="heading-permalink" href="#analysis-84-出力コードの知財と品質" aria-label="この見出しへのリンク">#</a>8.4 出力コードの知財と品質</h3>
+<p>オープンウェイトでも、生成コードのライセンス適合性や正しさは保証されません。build、test、静的解析、ライセンススキャン、人間レビューが必要です。</p>
+<h3 id="analysis-85-長いコンテキストは性能保証ではない"><a class="heading-permalink" href="#analysis-85-長いコンテキストは性能保証ではない" aria-label="この見出しへのリンク">#</a>8.5 長いコンテキストは性能保証ではない</h3>
+<p>入力可能なトークン数が大きくても、遠い位置の情報を正しく参照できるとは限りません。リポジトリ理解は、実際の依存関係問題で評価すべきです。</p>
+<h2 id="analysis-9-実務へ適用する条件"><a class="heading-permalink" href="#analysis-9-実務へ適用する条件" aria-label="この見出しへのリンク">#</a>9. 実務へ適用する条件</h2>
+<h3 id="analysis-phase-0-一次情報の固定"><a class="heading-permalink" href="#analysis-phase-0-一次情報の固定" aria-label="この見出しへのリンク">#</a>Phase 0: 一次情報の固定</h3>
+<p>候補ごとに次を公式ページまたは契約画面で確認します。</p>
+<ul>
+<li>正確なモデルID</li>
+<li>料金と確認日</li>
+<li>コンテキストと最大出力</li>
+<li>Tool Calling、JSON Schema、Streaming</li>
+<li>利用可能リージョン</li>
+<li>日本カード、KYC、請求通貨</li>
+<li>保存、学習、キャッシュ、DPA、ZDR、SLA</li>
+<li>廃止予定とsnapshot</li>
+</ul>
+<h3 id="analysis-phase-1-統一providerで横比較"><a class="heading-permalink" href="#analysis-phase-1-統一providerで横比較" aria-label="この見出しへのリンク">#</a>Phase 1: 統一Providerで横比較</h3>
+<p>OpenRouterなどを使う場合は、同じProvider条件で候補を比較します。比較しやすさを優先する段階であり、本番経路の確定ではありません。</p>
+<h3 id="analysis-phase-2-公式または固定providerで再試験"><a class="heading-permalink" href="#analysis-phase-2-公式または固定providerで再試験" aria-label="この見出しへのリンク">#</a>Phase 2: 公式または固定Providerで再試験</h3>
+<p>上位候補は、実際に採用するProviderで同じ課題を再実行します。Router経由と公式APIで結果、速度、上限、費用が同じとは限りません。</p>
+<h3 id="analysis-phase-3-セキュリティ法務ゲート"><a class="heading-permalink" href="#analysis-phase-3-セキュリティ法務ゲート" aria-label="この見出しへのリンク">#</a>Phase 3: セキュリティ・法務ゲート</h3>
+<p>機密度に応じて、送信禁止データ、マスキング、Provider固定、ログ、DPA、障害通知、退役時の移行手順を決めます。</p>
+<h3 id="analysis-phase-4-本番運用"><a class="heading-permalink" href="#analysis-phase-4-本番運用" aria-label="この見出しへのリンク">#</a>Phase 4: 本番運用</h3>
+<p>モデルIDを固定し、回帰試験、予算アラート、429/5xx監視、フォールバック、廃止通知を運用します。</p>
+<h2 id="analysis-10-共通apiテスト"><a class="heading-permalink" href="#analysis-10-共通apiテスト" aria-label="この見出しへのリンク">#</a>10. 共通APIテスト</h2>
+<p>資料の共通部分を採用すると、最低限次の10課題を同一条件で試します。</p>
+<ol>
+<li>単一関数生成</li>
+<li>再現テスト付きバグ修正</li>
+<li>複数ファイル変更計画</li>
+<li>重大度付きコードレビュー</li>
+<li>単体テスト生成</li>
+<li>日本語仕様書からの実装</li>
+<li>複数ステップのTool Calling</li>
+<li>厳格なJSON Schema出力</li>
+<li>日本語指示による既存コード変更</li>
+<li>長いリポジトリ文脈の理解</li>
+</ol>
+<p>各課題で、成功、build/test、指示遵守、Tool引数、JSON適合、応答時間、トークン数、費用、APIエラー、再試行、人間修正量を記録します。</p>
+<h2 id="analysis-11-残る不確実性とリスク"><a class="heading-permalink" href="#analysis-11-残る不確実性とリスク" aria-label="この見出しへのリンク">#</a>11. 残る不確実性とリスク</h2>
+<ul>
+<li>候補モデル自体が短期間で更新・廃止される</li>
+<li>価格や割引が変更される</li>
+<li>公開仕様と実API上限が異なる</li>
+<li>日本からのカード・本人確認がアカウントごとに異なる</li>
+<li>Routerが利用する推論ホストが変わる</li>
+<li>長時間エージェントの失敗が高額な再試行につながる</li>
+<li>契約上、顧客コードを送れない</li>
+<li>実測前のランキングが採用バイアスになる</li>
+</ul>
+<h2 id="analysis-12-人間が最終判断すべき事項"><a class="heading-permalink" href="#analysis-12-人間が最終判断すべき事項" aria-label="この見出しへのリンク">#</a>12. 人間が最終判断すべき事項</h2>
+<ol>
+<li>送信してよいデータの機密区分</li>
+<li>中国または第三国への越境移転を許容するか</li>
+<li>必要なDPA、ZDR、SLA、監査証跡</li>
+<li>月額予算と障害時の許容時間</li>
+<li>公式API、固定Provider、Router、セルフホストのどれを採用するか</li>
+<li>モデル更新を自動で受け入れるか、snapshotを固定するか</li>
+<li>PoCの合格基準と主力・補助・レビュー用の役割分担</li>
+</ol></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-plain-heading">
+      <h2 id="analysis-plain-heading">AI回答の合成（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="analysis-plain-3つのai調査を難しい言葉を減らして整理する"><a class="heading-permalink" href="#analysis-plain-3つのai調査を難しい言葉を減らして整理する" aria-label="この見出しへのリンク">#</a>3つのAI調査を、難しい言葉を減らして整理する</h1>
+<h2 id="analysis-plain-最初に分かったこと"><a class="heading-permalink" href="#analysis-plain-最初に分かったこと" aria-label="この見出しへのリンク">#</a>最初に分かったこと</h2>
+<p>3つのAIは、細かな数字ではかなり違う回答をしました。しかし、候補としてよく出てくる会社やモデルの系列は似ています。</p>
+<ul>
+<li>安さと性能の候補としてDeepSeek</li>
+<li>日本語や企業利用の候補としてQwen</li>
+<li>長時間動くAIエージェントの候補としてGLM</li>
+<li>安い大量処理の候補としてDeepSeekの高速系</li>
+<li>とても難しい仕事や大量の資料を読む候補としてKimi</li>
+<li>追加候補としてMiniMax</li>
+</ul>
+<p>ただし、ここで「DeepSeekが必ず1位」「Qwenが必ず安全」と決めるのは早すぎます。</p>
+<h2 id="analysis-plain-なぜそのまま順位を信じられないのか"><a class="heading-permalink" href="#analysis-plain-なぜそのまま順位を信じられないのか" aria-label="この見出しへのリンク">#</a>なぜ、そのまま順位を信じられないのか</h2>
+<h3 id="analysis-plain-同じ会社でも比べている商品が違う"><a class="heading-permalink" href="#analysis-plain-同じ会社でも比べている商品が違う" aria-label="この見出しへのリンク">#</a>同じ会社でも、比べている商品が違う</h3>
+<p>たとえば自動車で考えると、同じメーカーの軽自動車、SUV、スポーツカーを別々の人が評価し、その点数だけを平均して「このメーカーが1位」と言っているような状態です。</p>
+<p>Qwenについて、3回答は汎用モデル、最大性能モデル、コード専用モデルを別々に選んでいました。値段も用途も違うので、同じ表で単純比較できません。</p>
+<h3 id="analysis-plain-同じモデル名でも販売店が違う"><a class="heading-permalink" href="#analysis-plain-同じモデル名でも販売店が違う" aria-label="この見出しへのリンク">#</a>同じモデル名でも、販売店が違う</h3>
+<p>AIモデルは、開発会社の公式APIだけでなく、OpenRouterなど別会社の窓口からも使えます。</p>
+<p>同じ商品でも、販売店によって次が変わるイメージです。</p>
+<ul>
+<li>値段</li>
+<li>速度</li>
+<li>混雑しやすさ</li>
+<li>一度に扱える量</li>
+<li>データをどこへ送るか</li>
+<li>問題が起きた時の保証</li>
+</ul>
+<p>そのため、「モデル名」だけでなく「どのProviderから使ったか」を必ず記録します。</p>
+<h3 id="analysis-plain-カードが使えるかは公開ページだけでは分からない"><a class="heading-permalink" href="#analysis-plain-カードが使えるかは公開ページだけでは分からない" aria-label="この見出しへのリンク">#</a>カードが使えるかは、公開ページだけでは分からない</h3>
+<p>日本のクレジットカードが使えるか、本人確認が必要か、最低いくら入金するかは、実際にアカウントを作らないと分からない場合があります。</p>
+<p>AIのWeb調査で「使える」と書いてあっても、実際の契約画面で確認するまでは「条件付き」と考える方が安全です。</p>
+<h3 id="analysis-plain-入力できる長さと出力できる長さは違う"><a class="heading-permalink" href="#analysis-plain-入力できる長さと出力できる長さは違う" aria-label="この見出しへのリンク">#</a>入力できる長さと、出力できる長さは違う</h3>
+<p>「100万トークン対応」と書かれていても、それは読める量かもしれません。1回で書き出せる量は、もっと少ない場合があります。</p>
+<p>長いコード変更を任せるなら、次を分けて確認します。</p>
+<ul>
+<li>どれだけ読めるか</li>
+<li>どれだけ書けるか</li>
+<li>公式APIの上限</li>
+<li>OpenRouterなど別Providerの上限</li>
+</ul>
+<h2 id="analysis-plain-3つの回答で特に食い違ったこと"><a class="heading-permalink" href="#analysis-plain-3つの回答で特に食い違ったこと" aria-label="この見出しへのリンク">#</a>3つの回答で特に食い違ったこと</h2>
+<p>主な食い違いは次の通りです。</p>
+<ul>
+<li>DeepSeekで日本カードが使えるか</li>
+<li>DeepSeekが1回で出力できる最大量</li>
+<li>DeepSeekのJSON形式がどこまで厳密か</li>
+<li>GLMの値段と最大出力</li>
+<li>Z.ai海外版と中国向けサービスの契約条件</li>
+<li>Kimiで中国の電話番号やAlipayが必要か</li>
+<li>Kimiが実際に扱える最大の文脈</li>
+<li>Cursorで「動く」のか「公式に保証される」のか</li>
+</ul>
+<p>これらは導入費用や安全性に直接関係します。都合のよい数字を選んで結論を出すべきではありません。</p>
+<h2 id="analysis-plain-ではどう進めるのがよいか"><a class="heading-permalink" href="#analysis-plain-ではどう進めるのがよいか" aria-label="この見出しへのリンク">#</a>では、どう進めるのがよいか</h2>
+<h3 id="analysis-plain-1-まず正式な商品名を確認する"><a class="heading-permalink" href="#analysis-plain-1-まず正式な商品名を確認する" aria-label="この見出しへのリンク">#</a>1. まず正式な商品名を確認する</h3>
+<p>各社の公式ページで、現在使える正確なモデルIDを確認します。「Qwenの最新」や「DeepSeekのPro」のような曖昧な名前ではなく、APIへ渡す名前を記録します。</p>
+<h3 id="analysis-plain-2-少額で同じ試験をする"><a class="heading-permalink" href="#analysis-plain-2-少額で同じ試験をする" aria-label="この見出しへのリンク">#</a>2. 少額で同じ試験をする</h3>
+<p>最初はOpenRouterなど、複数モデルを同じ方法で呼べるサービスを使うと比較しやすくなります。</p>
+<p>ただし、これは試食会の会場をそろえるためです。本番契約をOpenRouterに決めたという意味ではありません。</p>
+<h3 id="analysis-plain-3-実際に使う契約先でもう一度試す"><a class="heading-permalink" href="#analysis-plain-3-実際に使う契約先でもう一度試す" aria-label="この見出しへのリンク">#</a>3. 実際に使う契約先でもう一度試す</h3>
+<p>候補を絞ったら、公式APIや固定したProviderで同じ試験をします。入口が変わると、速度や制限が変わる可能性があるからです。</p>
+<h3 id="analysis-plain-4-機密情報の扱いを決める"><a class="heading-permalink" href="#analysis-plain-4-機密情報の扱いを決める" aria-label="この見出しへのリンク">#</a>4. 機密情報の扱いを決める</h3>
+<p>次を確認できないサービスへ、顧客情報や非公開コードを送らないようにします。</p>
+<ul>
+<li>どこで処理するか</li>
+<li>何日保存するか</li>
+<li>学習に使うか</li>
+<li>キャッシュするか</li>
+<li>契約書やDPAがあるか</li>
+<li>問題が起きた時に連絡が来るか</li>
+</ul>
+<h3 id="analysis-plain-5-合格点を先に決める"><a class="heading-permalink" href="#analysis-plain-5-合格点を先に決める" aria-label="この見出しへのリンク">#</a>5. 合格点を先に決める</h3>
+<p>「なんとなく良かった」ではなく、たとえば次を決めます。</p>
+<ul>
+<li>10課題のうち何件成功すればよいか</li>
+<li>作ったコードがbuild/testを通る割合</li>
+<li>Tool Callingの正確さ</li>
+<li>JSONが指定形式を守る割合</li>
+<li>1課題あたりの費用</li>
+<li>人間が直す時間</li>
+<li>429やタイムアウトの回数</li>
+</ul>
+<h2 id="analysis-plain-私たちが採るべき暫定方針"><a class="heading-permalink" href="#analysis-plain-私たちが採るべき暫定方針" aria-label="この見出しへのリンク">#</a>私たちが採るべき暫定方針</h2>
+<p>現時点では、1つのモデルへ決め打ちするより、役割別に候補を残す方が合理的です。</p>
+<table>
+<thead>
+<tr>
+<th>役割</th>
+<th>暫定候補</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主力の価格性能</td>
+<td>DeepSeek系列</td>
+</tr>
+<tr>
+<td>日本語・企業運用</td>
+<td>Qwenの現行国際向けモデル</td>
+</tr>
+<tr>
+<td>長時間エージェント</td>
+<td>GLM系列</td>
+</tr>
+<tr>
+<td>安い大量処理</td>
+<td>DeepSeekの低価格系列</td>
+</tr>
+<tr>
+<td>難しい最終比較</td>
+<td>Kimi系列</td>
+</tr>
+<tr>
+<td>追加比較</td>
+<td>MiniMaxの現行モデル</td>
+</tr>
+</tbody>
+</table>
+<p>これは採用決定ではありません。試験へ進める候補一覧です。</p>
+<h2 id="analysis-plain-利点"><a class="heading-permalink" href="#analysis-plain-利点" aria-label="この見出しへのリンク">#</a>利点</h2>
+<ul>
+<li>1つのAI回答の間違いに引きずられにくい</li>
+<li>価格だけでなく、契約や安全性も見られる</li>
+<li>主力、補助、レビュー用に役割を分けられる</li>
+<li>モデルが終了しても切り替えやすい</li>
+<li>実際の費用と人間の修正時間を比べられる</li>
+</ul>
+<h2 id="analysis-plain-欠点"><a class="heading-permalink" href="#analysis-plain-欠点" aria-label="この見出しへのリンク">#</a>欠点</h2>
+<ul>
+<li>比較試験に手間がかかる</li>
+<li>複数Providerの契約管理が必要になる</li>
+<li>モデルの更新が速く、結果が古くなりやすい</li>
+<li>機密情報を扱う場合は法務・セキュリティ確認が増える</li>
+<li>最初から「これが1位」と言う記事より結論が地味に見える</li>
+</ul>
+<p>しかし、業務システムの導入判断では、派手な順位より、再現できる試験と説明できる契約条件の方が重要です。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">合成結果の要約</h2>
+      <div class="prose"><h1 id="conclusion-統合結論"><a class="heading-permalink" href="#conclusion-統合結論" aria-label="この見出しへのリンク">#</a>統合結論</h1>
+<h2 id="conclusion-中心的な問いへの回答"><a class="heading-permalink" href="#conclusion-中心的な問いへの回答" aria-label="この見出しへのリンク">#</a>中心的な問いへの回答</h2>
+<p>提供された3つのAI調査だけから、単一の「最優秀中国製AIモデル」を確定することはできません。</p>
+<p>DeepSeek、Qwen、GLM、Kimiなどの系列は共通して有力候補に挙がりましたが、正確なモデルID、価格、最大出力、日本からの契約条件、データ保持条件に重大な不一致が残っています。そのため、この記事で採用する結論は次の通りです。</p>
+<blockquote>
+<p><strong>モデルランキングをそのまま採用せず、役割別の候補群を作り、正確なモデルID・Provider・データ条件を固定した実API試験で採否を決める。</strong></p>
+</blockquote>
+<h2 id="conclusion-採用する暫定候補"><a class="heading-permalink" href="#conclusion-採用する暫定候補" aria-label="この見出しへのリンク">#</a>採用する暫定候補</h2>
+<p>現時点では、次の役割分担で検証へ進むのが妥当です。</p>
+<ol>
+<li><strong>主力・価格性能:</strong> DeepSeekの現行高性能系列</li>
+<li><strong>日本語・法人運用:</strong> Qwenの現行国際向け汎用系列</li>
+<li><strong>長時間エージェント:</strong> GLMの現行エージェント向け系列</li>
+<li><strong>低価格バッチ:</strong> DeepSeekの現行低価格・高速系列</li>
+<li><strong>高難度比較:</strong> Kimiの現行フロンティア系列</li>
+<li><strong>追加比較:</strong> MiniMaxの現行長文・マルチモーダル系列</li>
+</ol>
+<p>資料内の具体的なモデル名は候補探索に使いますが、採用前に公式の現行モデル一覧で再確認します。</p>
+<h2 id="conclusion-推奨する導入手順"><a class="heading-permalink" href="#conclusion-推奨する導入手順" aria-label="この見出しへのリンク">#</a>推奨する導入手順</h2>
+<h3 id="conclusion-1-公式情報を固定する"><a class="heading-permalink" href="#conclusion-1-公式情報を固定する" aria-label="この見出しへのリンク">#</a>1. 公式情報を固定する</h3>
+<p>候補ごとに、モデルID、料金、最大出力、リージョン、契約条件、保存・学習・キャッシュ、DPA、ZDR、SLA、廃止予定を確認します。</p>
+<h3 id="conclusion-2-第三者apiで横比較する"><a class="heading-permalink" href="#conclusion-2-第三者apiで横比較する" aria-label="この見出しへのリンク">#</a>2. 第三者APIで横比較する</h3>
+<p>PoCでは、同じインターフェースと同じテスト課題で比較します。第三者APIは比較の摩擦を減らしますが、安全性や本番適性を自動的に保証するものではありません。</p>
+<h3 id="conclusion-3-採用経路で再試験する"><a class="heading-permalink" href="#conclusion-3-採用経路で再試験する" aria-label="この見出しへのリンク">#</a>3. 採用経路で再試験する</h3>
+<p>上位候補は、公式APIまたは本番で固定するProviderを使って再試験します。速度、上限、Tool Calling、障害率、データ経路が変わる可能性があります。</p>
+<h3 id="conclusion-4-セキュリティ法務ゲートを通す"><a class="heading-permalink" href="#conclusion-4-セキュリティ法務ゲートを通す" aria-label="この見出しへのリンク">#</a>4. セキュリティ・法務ゲートを通す</h3>
+<p>機密コードや顧客情報を扱う場合は、送信禁止情報、マスキング、Provider固定、保存期間、契約文書、越境移転、障害通知を人間が承認します。</p>
+<h3 id="conclusion-5-役割別に採用する"><a class="heading-permalink" href="#conclusion-5-役割別に採用する" aria-label="この見出しへのリンク">#</a>5. 役割別に採用する</h3>
+<p>1モデルですべてを処理するのではなく、主力、低価格補助、高難度レビュー、フォールバックに分けます。</p>
+<h2 id="conclusion-この結論を採用する理由"><a class="heading-permalink" href="#conclusion-この結論を採用する理由" aria-label="この見出しへのリンク">#</a>この結論を採用する理由</h2>
+<ul>
+<li>3回答の共通部分を利用できる</li>
+<li>矛盾を都合よく解消せず、未確認事項として残せる</li>
+<li>モデル名が更新されても評価方法を再利用できる</li>
+<li>性能だけでなく、契約、運用、セキュリティを判断へ含められる</li>
+<li>実際のbuild/test、Tool Calling、費用、人間修正量で比較できる</li>
+</ul>
+<h2 id="conclusion-採用しなかった考え方"><a class="heading-permalink" href="#conclusion-採用しなかった考え方" aria-label="この見出しへのリンク">#</a>採用しなかった考え方</h2>
+<h3 id="conclusion-1-総合点1位をそのまま採用する"><a class="heading-permalink" href="#conclusion-1-総合点1位をそのまま採用する" aria-label="この見出しへのリンク">#</a>1. 総合点1位をそのまま採用する</h3>
+<p>採点対象のモデル世代やProviderが揃っておらず、点数の前提が異なるため採用しません。</p>
+<h3 id="conclusion-2-3回答の多数決で事実を決める"><a class="heading-permalink" href="#conclusion-2-3回答の多数決で事実を決める" aria-label="この見出しへのリンク">#</a>2. 3回答の多数決で事実を決める</h3>
+<p>複数AIが同じ誤情報を参照する可能性があります。一致は調査優先度を上げますが、一次情報の代わりにはなりません。</p>
+<h3 id="conclusion-3-第三者apiを常に最安全とみなす"><a class="heading-permalink" href="#conclusion-3-第三者apiを常に最安全とみなす" aria-label="この見出しへのリンク">#</a>3. 第三者APIを常に最安全とみなす</h3>
+<p>比較には便利ですが、Routerと実推論ホストの両方を評価する必要があります。自動ルーティングで送信先が変わることもあります。</p>
+<h3 id="conclusion-4-オープンウェイトなら安全とみなす"><a class="heading-permalink" href="#conclusion-4-オープンウェイトなら安全とみなす" aria-label="この見出しへのリンク">#</a>4. オープンウェイトなら安全とみなす</h3>
+<p>自社管理環境で運用すればデータ境界を管理しやすくなりますが、GPU、運用、脆弱性対応、モデル更新、ライセンス確認の負担があります。</p>
+<h2 id="conclusion-確信度"><a class="heading-permalink" href="#conclusion-確信度" aria-label="この見出しへのリンク">#</a>確信度</h2>
+<ul>
+<li><strong>評価方法と導入手順:</strong> 高</li>
+<li><strong>候補系列の選定:</strong> 中</li>
+<li><strong>資料内の具体的な価格・上限・契約条件:</strong> 低から中</li>
+<li><strong>単一モデルの最終順位:</strong> 低</li>
+</ul>
+<h2 id="conclusion-適用条件"><a class="heading-permalink" href="#conclusion-適用条件" aria-label="この見出しへのリンク">#</a>適用条件</h2>
+<p>この結論は、日本からAPIを契約し、コーディング支援、AIエージェント、業務システムへ組み込む用途を想定しています。中国国内だけで完結するサービス、画像・動画専用モデル、特定産業の専用契約は別評価が必要です。</p>
+<h2 id="conclusion-残余リスク"><a class="heading-permalink" href="#conclusion-残余リスク" aria-label="この見出しへのリンク">#</a>残余リスク</h2>
+<ul>
+<li>調査直後にモデルや価格が更新される</li>
+<li>公開仕様と実APIの挙動が異なる</li>
+<li>カード承認やKYCが利用者ごとに異なる</li>
+<li>Providerの自動切替でデータ送信先が変わる</li>
+<li>長いコンテキストが実際の理解精度へ結びつかない</li>
+<li>生成コードに不具合やライセンス問題が残る</li>
+<li>契約文書が機密コードの送信を許可しない</li>
+<li>モデル廃止で再現性が失われる</li>
+</ul>
+<h2 id="conclusion-次に取るべき行動"><a class="heading-permalink" href="#conclusion-次に取るべき行動" aria-label="この見出しへのリンク">#</a>次に取るべき行動</h2>
+<ol>
+<li>各系列から現行モデルを1件ずつ選び、正式モデルIDとProviderを確定する</li>
+<li>価格、最大出力、Tool Calling、JSON Schema、契約・データ条件を一次情報で確認する</li>
+<li>同一の10課題を最低3回ずつ実行する</li>
+<li>build/test、成功率、費用、APIエラー、人間修正量を記録する</li>
+<li>上位候補を採用予定Providerで再試験する</li>
+<li>機密区分とセキュリティ・法務ゲートを決める</li>
+<li>主力、補助、レビュー、フォールバックの役割を決定する</li>
+</ol></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
+      <h2 id="conclusion-plain-heading">合成結果の要約（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="conclusion-plain-結論を一言でいうと"><a class="heading-permalink" href="#conclusion-plain-結論を一言でいうと" aria-label="この見出しへのリンク">#</a>結論を一言でいうと</h1>
+<h2 id="conclusion-plain-いま1社1モデルに決めない"><a class="heading-permalink" href="#conclusion-plain-いま1社1モデルに決めない" aria-label="この見出しへのリンク">#</a>いま1社・1モデルに決めない</h2>
+<p>3つのAI調査は、DeepSeek、Qwen、GLMなどを有力候補として挙げました。しかし、値段、契約方法、一度に出力できる量、データの扱いについて、回答が大きく食い違っています。</p>
+<p>そのため、今すぐ「このモデルが1位」と決めるのではなく、候補を役割別に残して少額の実験をするのが安全です。</p>
+<h2 id="conclusion-plain-推奨案"><a class="heading-permalink" href="#conclusion-plain-推奨案" aria-label="この見出しへのリンク">#</a>推奨案</h2>
+<h3 id="conclusion-plain-主力候補"><a class="heading-permalink" href="#conclusion-plain-主力候補" aria-label="この見出しへのリンク">#</a>主力候補</h3>
+<p>安さとコーディング性能の候補として、DeepSeekの現行高性能モデルを試します。</p>
+<h3 id="conclusion-plain-日本企業向け候補"><a class="heading-permalink" href="#conclusion-plain-日本企業向け候補" aria-label="この見出しへのリンク">#</a>日本企業向け候補</h3>
+<p>日本語、国際契約、リージョン、法人運用を重視し、Qwenの現行国際向けモデルを試します。資料に書かれた名称をそのまま使わず、公式ページで現在のモデルIDを確認します。</p>
+<h3 id="conclusion-plain-長時間エージェント候補"><a class="heading-permalink" href="#conclusion-plain-長時間エージェント候補" aria-label="この見出しへのリンク">#</a>長時間エージェント候補</h3>
+<p>複数のツールを長く使う仕事では、GLMの現行モデルを比較します。ただし、値段と最大出力の記述が食い違うため、契約前に確認します。</p>
+<h3 id="conclusion-plain-安い大量処理"><a class="heading-permalink" href="#conclusion-plain-安い大量処理" aria-label="この見出しへのリンク">#</a>安い大量処理</h3>
+<p>分類、前処理、簡単なレビューなどは、DeepSeekの低価格・高速モデルを比較します。</p>
+<h3 id="conclusion-plain-難しい仕事の比較枠"><a class="heading-permalink" href="#conclusion-plain-難しい仕事の比較枠" aria-label="この見出しへのリンク">#</a>難しい仕事の比較枠</h3>
+<p>他モデルが失敗する難しい課題や大きなリポジトリでは、Kimiの現行高性能モデルを限定的に試します。高価になりやすいため、通常の大量処理には使いません。</p>
+<h2 id="conclusion-plain-進め方"><a class="heading-permalink" href="#conclusion-plain-進め方" aria-label="この見出しへのリンク">#</a>進め方</h2>
+<ol>
+<li>公式ページで、現在使える正確なモデル名と値段を確認する</li>
+<li>OpenRouterなどで同じ課題を試し、候補を絞る</li>
+<li>本番で使う公式APIまたは固定Providerでもう一度試す</li>
+<li>顧客情報や非公開コードを送ってよい契約か確認する</li>
+<li>主力、安い補助、難しいレビュー、予備の4役に分ける</li>
+</ol>
+<h2 id="conclusion-plain-メリット"><a class="heading-permalink" href="#conclusion-plain-メリット" aria-label="この見出しへのリンク">#</a>メリット</h2>
+<ul>
+<li>誤ったランキングで契約する危険を減らせる</li>
+<li>実際にかかる費用と人間の手直し時間を比べられる</li>
+<li>1つのサービスが止まっても切り替えやすい</li>
+<li>安いモデルと高性能モデルを使い分けられる</li>
+<li>セキュリティや契約条件を説明しやすい</li>
+</ul>
+<h2 id="conclusion-plain-デメリット"><a class="heading-permalink" href="#conclusion-plain-デメリット" aria-label="この見出しへのリンク">#</a>デメリット</h2>
+<ul>
+<li>比較試験の準備と記録に手間がかかる</li>
+<li>複数のAPIキーや請求を管理する必要がある</li>
+<li>モデル更新が速く、定期的な再試験が必要になる</li>
+<li>機密情報を扱う場合は、法務とセキュリティ確認が増える</li>
+<li>最初から1位を決める方法より、決定まで時間がかかる</li>
+</ul>
+<h2 id="conclusion-plain-経営営業の判断ポイント"><a class="heading-permalink" href="#conclusion-plain-経営営業の判断ポイント" aria-label="この見出しへのリンク">#</a>経営・営業の判断ポイント</h2>
+<p>値段の安さだけでなく、次を確認してください。</p>
+<ul>
+<li>顧客との契約上、コードやデータを外部AIへ送ってよいか</li>
+<li>データがどの国で処理・保存されるか</li>
+<li>問題発生時の連絡や保証があるか</li>
+<li>モデルが終了した時に切り替えられるか</li>
+<li>人間の修正時間を含めても安いか</li>
+<li>日本語の仕様や業務ルールを正しく扱えるか</li>
+</ul>
+<h2 id="conclusion-plain-最終判断"><a class="heading-permalink" href="#conclusion-plain-最終判断" aria-label="この見出しへのリンク">#</a>最終判断</h2>
+<p><strong>PoCでは複数モデルを同じ条件で比較し、本番ではモデルID、Provider、データ条件を固定する。</strong></p>
+<p>これが、今回の資料から導ける最も安全で実務的な結論です。</p></div>
+      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="edit-heading">
+      <h2 id="edit-heading">Edit on GitHub</h2>
+      <p>正本ディレクトリ: <a href="https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0002-china-ai-api-evaluation/">https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0002-china-ai-api-evaluation/</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="comments-heading">
+      <h2 id="comments-heading">コメント</h2>
+      <p class="note">コメントは GitHub Discussions（giscus）上の第三者投稿です。読み込みと投稿にはGitHubへの接続が必要です。</p>
+      <button type="button" class="btn" id="load-giscus">コメントを読み込む</button>
+      <div id="giscus-container"
+        hidden
+        data-giscus-src="https://giscus.app/client.js"
+  data-repo="kooiei-in4a/amane-ai-lab"
+  data-repo-id="R_kgDOToJuSQ"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOToJuSc4DCT1S"
+  data-mapping="specific"
+  data-term="KB-2026-0002"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="ja"
+  data-loading="lazy"
+      ></div>
+    </section>
+
+    <footer class="article-footer panel">
+      <p>コード: MIT / コンテンツ: CC BY 4.0。AI回答は参考情報であり、事実確認は読者の責任です。</p>
+      <p><a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧へ戻る</a></p>
+    </footer>
+  </main>
+
+  <script src="../../../assets/js/site.js" defer></script>
+  <nav class="page-jump" aria-label="ページ内ジャンプ">
+    <a href="#tldr" class="page-jump-link" data-jump="tldr">要点</a>
+    <a href="#article-toc" class="page-jump-link">目次</a>
+    <a href="#main" class="page-jump-link page-jump-top" hidden>先頭へ</a>
+  </nav>
+</body>
+</html>

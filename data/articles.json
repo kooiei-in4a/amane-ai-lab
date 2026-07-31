@@ -7,8 +7,8 @@
       "slug": "china-ai-api-evaluation",
       "title": "中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画",
       "description": "3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。",
-      "status": "draft",
-      "publishedAt": null,
+      "status": "published",
+      "publishedAt": "2026-07-31",
       "updatedAt": "2026-07-31",
       "lastVerifiedAt": "2026-07-31",
       "tags": [

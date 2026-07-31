@@ -41,31 +41,51 @@
       <ul class="tag-list">{{TAGS_HTML}}</ul>
     </header>
 
-    <section class="conclusion panel" aria-labelledby="conclusion-heading">
-      <h2 id="conclusion-heading">結論</h2>
-      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
-      <div class="prose">{{CONCLUSION_HTML}}</div>
-    </section>
-
-    <section class="panel" aria-labelledby="analysis-heading">
-      <h2 id="analysis-heading">考察・判断プロセス</h2>
-      <div class="prose">{{ANALYSIS_HTML}}</div>
+    <section class="panel" aria-labelledby="background-heading">
+      <h2 id="background-heading">検討に至った背景</h2>
+      <div class="prose">{{BACKGROUND_HTML}}</div>
     </section>
 
     <section class="panel" aria-labelledby="prompt-heading">
-      <h2 id="prompt-heading">入力プロンプト</h2>
+      <h2 id="prompt-heading">調査プロンプト</h2>
       <div class="prompt-toolbar">
         <button type="button" class="btn" id="copy-prompt" data-copy-target="prompt-text">プロンプトをコピー</button>
-        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
-        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
         <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
       </div>
-      <pre id="prompt-text" class="prompt-block"><code>{{PROMPT_TEXT}}</code></pre>
+      <details class="prompt-details">
+        <summary>プロンプト全文を表示する</summary>
+        <pre id="prompt-text" class="prompt-block"><code>{{PROMPT_TEXT}}</code></pre>
+      </details>
     </section>
 
     <section class="panel" aria-labelledby="agents-heading">
       <h2 id="agents-heading">AIエージェントの回答</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
+        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
+      </div>
       <div id="agent-responses">{{AGENTS_HTML}}</div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">2回答の合成</h2>
+      <div class="prose">{{ANALYSIS_HTML}}</div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-plain-heading">
+      <h2 id="analysis-plain-heading">2回答の合成（わかりやすい説明）</h2>
+      <div class="prose">{{ANALYSIS_PLAIN_HTML}}</div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">合成結果の要約</h2>
+      <div class="prose">{{CONCLUSION_HTML}}</div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
+      <h2 id="conclusion-plain-heading">合成結果の要約（わかりやすい説明）</h2>
+      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
+      <div class="prose">{{CONCLUSION_PLAIN_HTML}}</div>
     </section>
 
     <section class="panel" aria-labelledby="edit-heading">

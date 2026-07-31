@@ -95,8 +95,11 @@ class GiscusConfigurationTest(unittest.TestCase):
             article_dir = Path(tmp)
             (article_dir / "responses").mkdir()
             (article_dir / "article.json").write_text("{}", encoding="utf-8")
+            (article_dir / "background.md").write_text("# 背景\n", encoding="utf-8")
             (article_dir / "conclusion.md").write_text("# 結論\n", encoding="utf-8")
+            (article_dir / "conclusion-plain.md").write_text("# 平易な要約\n", encoding="utf-8")
             (article_dir / "analysis.md").write_text("# 考察\n", encoding="utf-8")
+            (article_dir / "analysis-plain.md").write_text("# 平易な合成\n", encoding="utf-8")
             (article_dir / "prompt.txt").write_text("prompt\n", encoding="utf-8")
             (article_dir / "responses" / "chatgpt.md").write_text("# ok\n", encoding="utf-8")
 

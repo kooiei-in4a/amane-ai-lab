@@ -39,10 +39,13 @@
       <nav class="summary-source-links" aria-label="記事本文の関連セクション">
         <p class="summary-source-links-label">記事本文の関連セクション</p>
         <ul>
-          <li><a href="{{ARTICLE_HREF}}#conclusion-heading">結論</a></li>
-          <li><a href="{{ARTICLE_HREF}}#analysis-heading">考察・判断プロセス</a></li>
-          <li><a href="{{ARTICLE_HREF}}#prompt-heading">入力プロンプト</a></li>
+          <li><a href="{{ARTICLE_HREF}}#background-heading">検討に至った背景</a></li>
+          <li><a href="{{ARTICLE_HREF}}#prompt-heading">調査プロンプト</a></li>
           <li><a href="{{ARTICLE_HREF}}#agents-heading">AIエージェントの回答</a></li>
+          <li><a href="{{ARTICLE_HREF}}#analysis-heading">2回答の合成</a></li>
+          <li><a href="{{ARTICLE_HREF}}#analysis-plain-heading">合成（わかりやすい説明）</a></li>
+          <li><a href="{{ARTICLE_HREF}}#conclusion-heading">要約</a></li>
+          <li><a href="{{ARTICLE_HREF}}#conclusion-plain-heading">要約（わかりやすい説明）</a></li>
         </ul>
       </nav>
       <p class="summary-doc-nav">
@@ -58,12 +61,15 @@
     </div>
 
     <footer class="summary-doc-footer panel">
-      <p class="note">この資料は記事の「結論」セクション（<code>conclusion.md</code>）から自動生成しています。</p>
+      <p class="note">この資料は記事の「合成結果の要約（わかりやすい説明）」（<code>conclusion-plain.md</code>）から自動生成しています。</p>
       <p>
-        <a href="{{ARTICLE_HREF}}#conclusion-heading">結論</a> ·
-        <a href="{{ARTICLE_HREF}}#analysis-heading">考察</a> ·
+        <a href="{{ARTICLE_HREF}}#background-heading">背景</a> ·
         <a href="{{ARTICLE_HREF}}#prompt-heading">プロンプト</a> ·
         <a href="{{ARTICLE_HREF}}#agents-heading">AI回答</a> ·
+        <a href="{{ARTICLE_HREF}}#analysis-heading">合成</a> ·
+        <a href="{{ARTICLE_HREF}}#analysis-plain-heading">合成（平易）</a> ·
+        <a href="{{ARTICLE_HREF}}#conclusion-heading">要約</a> ·
+        <a href="{{ARTICLE_HREF}}#conclusion-plain-heading">要約（平易）</a> ·
         <a href="{{HOME_HREF}}">記事一覧</a>
       </p>
     </footer>

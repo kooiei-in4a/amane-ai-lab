@@ -103,7 +103,14 @@ def main() -> int:
             reporter.error(f"duplicate url: {meta['_url']}")
         urls.add(meta["_url"])
 
-        for required in ("conclusion.md", "analysis.md", "prompt.txt"):
+        for required in (
+            "background.md",
+            "conclusion.md",
+            "conclusion-plain.md",
+            "analysis.md",
+            "analysis-plain.md",
+            "prompt.txt",
+        ):
             if not (article_dir / required).exists():
                 reporter.error(f"{meta['id']}: missing {required}")
             else:

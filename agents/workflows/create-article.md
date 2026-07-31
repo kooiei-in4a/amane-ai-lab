@@ -3,7 +3,7 @@
 1. `AGENTS.md` を読む
 2. `python3 scripts/new_article.py --title "..." --slug "..."` でひな型作成
 3. 調査メモ・AI回答原文・下書きなど、公開しない作業資料は `.work/<article-id>/` に置く（git 管理外。詳細は `.work/README.md`）
-4. 公開する内容だけを `content/articles/` の正本へ反映する
+4. 公開する内容だけを `content/articles/` の正本へ反映する（`background.md` → `prompt.txt` → `responses/` → `analysis.md` / `analysis-plain.md` → `conclusion.md` / `conclusion-plain.md`）
 5. `python3 scripts/build_site.py`
 6. `python3 scripts/validate_content.py`
 7. `python3 scripts/check_sensitive_data.py`

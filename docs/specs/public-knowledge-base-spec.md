@@ -129,8 +129,9 @@ feed.xml
 | 種別 | パス | 位置づけ |
 |---|---|---|
 | 記事メタデータ | `content/articles/**/article.json` | 正本 |
-| 結論 | `content/articles/**/conclusion.md` | 正本 |
-| 人間の考察 | `content/articles/**/analysis.md` | 正本 |
+| 検討背景 | `content/articles/**/background.md` | 正本 |
+| 合成結果の要約 | `content/articles/**/conclusion.md` | 正本 |
+| 2回答の合成 | `content/articles/**/analysis.md` | 正本 |
 | 入力プロンプト | `content/articles/**/prompt.txt` | 正本 |
 | AI回答 | `content/articles/**/responses/*.md` | 正本 |
 | 公開HTML | `articles/**/index.html` | 生成物 |
@@ -175,9 +176,10 @@ feed.xml
 │     └─ YYYY/
 │        └─ kb-YYYY-NNNN-slug/
 │           ├─ article.json
-│           ├─ conclusion.md
-│           ├─ analysis.md
+│           ├─ background.md
 │           ├─ prompt.txt
+│           ├─ analysis.md
+│           ├─ conclusion.md
 │           └─ responses/
 │              ├─ chatgpt.md
 │              ├─ claude.md
@@ -387,24 +389,20 @@ edited
 
 1. 記事ID、ステータス、公開日、最終確認日
 2. 記事タイトル
-3. 結論のサマリー
-4. 重要ポイント
-5. 自分の考察・判断プロセス
-6. 検証条件
-7. 入力プロンプト全文
-8. プロンプトコピー操作
-9. 各AIエージェントの回答
-10. 制約・未確認事項
-11. 訂正・更新履歴
-12. Edit on GitHub
-13. コメント欄
-14. ライセンスと免責事項
+3. 検討に至った背景
+4. 調査プロンプト（既定は折りたたみ）
+5. 各AIエージェントの回答
+6. 2回答の合成
+7. 合成結果の要約（資料版HTMLへのリンクを含む）
+8. Edit on GitHub
+9. コメント欄
+10. ライセンスと免責事項
 
-### 8.1 結論
+### 8.1 合成結果の要約
 
-結論は記事内で最も視覚的に目立つ領域とする。
+要約は記事内で最も視覚的に目立つ領域とする。
 
-結論だけを読んでも、次を把握できる必要がある。
+要約だけを読んでも、次を把握できる必要がある。
 
 - 何を調べたか
 - 何が分かったか

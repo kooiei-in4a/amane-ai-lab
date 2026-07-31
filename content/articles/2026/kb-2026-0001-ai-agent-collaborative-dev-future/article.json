@@ -3,9 +3,9 @@
   "id": "KB-2026-0001",
   "slug": "ai-agent-collaborative-dev-future",
   "title": "AIエージェント協働型開発の未来",
-  "description": "希少になるのはコードではなく証拠。ChatGPT・Claude・Geminiの回答と統合分析から、検証・引受・人材戦略の論点を整理する。",
-  "status": "published",
-  "publishedAt": "2026-07-31",
+  "description": "2回答の合成。希少になるのは証拠そのものではなく、独立した証拠設計と残余リスクの引受である。",
+  "status": "draft",
+  "publishedAt": null,
   "updatedAt": "2026-07-31",
   "lastVerifiedAt": "2026-07-31",
   "tags": [
@@ -18,7 +18,7 @@
   "agents": [
     {
       "name": "ChatGPT",
-      "model": "GPT-5",
+      "model": "ChatGPT（調査回答・モデル名は回答本文に未記載）",
       "responseFile": "responses/chatgpt.md",
       "executedAt": "2026-07-30",
       "webSearch": true,
@@ -28,23 +28,13 @@
     },
     {
       "name": "Claude",
-      "model": "Claude Opus 4",
+      "model": "Claude（調査レポート・モデル名は回答本文に未記載）",
       "responseFile": "responses/claude.md",
       "executedAt": "2026-07-30",
       "webSearch": true,
       "attachmentsUsed": false,
-      "integrity": "raw",
-      "notes": null
-    },
-    {
-      "name": "Gemini",
-      "model": "Gemini",
-      "responseFile": "responses/gemini.md",
-      "executedAt": "2026-07-30",
-      "webSearch": true,
-      "attachmentsUsed": false,
-      "integrity": "raw",
-      "notes": null
+      "integrity": "edited",
+      "notes": "公開にあたり、特定プロダクト名・組織名・個人属性を一般表現へ置換した。原文は .work に保管。"
     }
   ],
   "giscusTerm": "KB-2026-0001",

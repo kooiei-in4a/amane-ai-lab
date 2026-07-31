@@ -4,14 +4,6 @@
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/" rel="alternate"/>
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/feed.xml" rel="self"/>
   <id>https://kooiei-in4a.github.io/amane-ai-lab/</id>
-  <updated>2026-07-31T00:00:00Z</updated>
+  <updated>1970-01-01T00:00:00Z</updated>
   <subtitle>AIエージェントによる検証結果を公開するナレッジベース</subtitle>
-  <entry>
-    <title>AIエージェント協働型開発の未来</title>
-    <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/" rel="alternate"/>
-    <id>https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/</id>
-    <updated>2026-07-31T00:00:00Z</updated>
-    <published>2026-07-31T00:00:00Z</published>
-    <summary type="text">希少になるのはコードではなく証拠。ChatGPT・Claude・Geminiの回答と統合分析から、検証・引受・人材戦略の論点を整理する。</summary>
-  </entry>
 </feed>

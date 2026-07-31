@@ -112,3 +112,37 @@ Flash → Pro → GLM-5.2 → Kimi K3 の順で段階的に上げます。
 **個人開発のコスト、実装品質、接続のしやすさを総合すると、DeepSeek V4 Flash／Proの組み合わせが第一候補です。** GLM-5.2は大量利用時の定額候補、Kimi K2.7 Codeはコード特化の代替、Kimi K3は高難度のスポット利用と位置付けるのが適切です。
 
 法人導入、機密コード送信、日本カード承認、実API性能は、元記事の検証計画とセキュリティ・法務ゲートで確定してください。
+
+## コーディング性能・API費用の再比較（2026-08-01）
+
+この節は、直前の個人開発向け追記のうち、Coding Agentとしての主力候補をベンチマークとAPI単価で再評価した第二の追記です。直前ではDeepSeek V4 Flash／Proを中心に推奨していましたが、コーディングベンチマークまで見ると、**Coding Agent用途では現時点でFlash-0731をProより優先**するのが妥当です。費用はAPI従量課金のみで比較し、Cursor、Claude Code、Codex、ChatGPTなどの月額枠は除外しています。
+
+### 再比較の結論（5点）
+
+1. **低価格な日常開発：GPT-5.6 LunaまたはDeepSeek V4 Flash**
+2. **性能と価格の総合バランス：GPT-5.6 Terra**
+3. **中国製モデルの主力候補：GLM-5.2**
+4. **難しいターミナル・長時間Agent：GPT-5.6 SolまたはKimi K3**
+5. **実リポジトリの難しいバグ修正：Claude Opus 5**
+
+### Flash-0731とPro
+
+DeepSeekは、7月31日版FlashのAgent性能がV4 Pro Previewを大幅に上回ると説明しており、現行Proは未更新です。Coding Agentの標準として、ProをFlashより先に選ぶ根拠は弱くなっています。
+
+### 費用の目安
+
+中～大規模のIssue対応1件（入力100万／出力10万トークン、キャッシュなし）では、Flash約$0.17、Luna約$0.32、GLM-5.2約$1.84、Terra約$3.20、Opus 5約$7.50、Sol約$8.00です。Flashが最安、Lunaは価格性能が強く、Terraは総合バランス、Opus／Solは高価なスポット利用向きです。
+
+### 4段階ルーティング
+
+1. 探索・小規模修正・一次レビュー：DeepSeek V4 FlashまたはGPT-5.6 Luna
+2. 通常のIssue実装：GLM-5.2またはGPT-5.6 Terra
+3. 難しい長時間Agent：Kimi K3またはGPT-5.6 Sol
+4. 失敗コストの高い最終レビュー：Claude Opus 5
+
+### 一言での推奨
+
+- **単一モデルに統一するならGPT-5.6 Terra**
+- **中国製モデルに限定するならGLM-5.2**
+- **費用最優先ならDeepSeek V4 Flash**
+- **実装成功率と費用の両方を見るならGPT-5.6 Luna**

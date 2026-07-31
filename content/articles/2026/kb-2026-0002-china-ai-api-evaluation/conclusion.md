@@ -540,3 +540,356 @@ GLM-5.2は大量利用時の定額候補、Kimi K2.7 Codeはコード特化の�
 この4系列は更新が速いため、価格、モデルID、廃止予定を月1回確認する監視設定も有効です。
 
 > 注意: この追記は個人開発向けの実務仮説です。法人導入、機密コード送信、日本カード承認、実API性能は、元記事の検証計画とセキュリティ・法務ゲートを通して確定してください。
+
+## コーディング性能・API費用の再比較（2026-08-01）
+
+調査・価格確認日：2026年8月1日
+
+ここでは「Opus 5」を**Claude Opus 5**として扱います。費用はすべてAPIの従量課金で統一し、Cursor、Claude Code、Codex、ChatGPTなどの月額プランに含まれる利用枠は除外します。
+
+この節は、直前の個人開発向け追記のうち、**Coding Agentとしての主力候補**をベンチマークとAPI単価で再評価したものです。直前追記ではDeepSeek V4 Proを難しい実装の主力候補としましたが、コーディングベンチマークまで確認すると、**現時点ではV4 Proより最新のV4 Flash-0731を優先して試すべき**です。DeepSeek自身が、7月31日版FlashのAgent性能はV4 Pro Previewを大幅に上回ると説明しています。現行Proはまだ更新されていません。出典: [DeepSeek API Updates](https://api-docs.deepseek.com/updates/)
+
+### 再比較の結論
+
+個人開発での現実的な選択は、次のようになります。
+
+1. **低価格な日常開発：GPT-5.6 LunaまたはDeepSeek V4 Flash**
+2. **性能と価格の総合バランス：GPT-5.6 Terra**
+3. **中国製モデルの主力候補：GLM-5.2**
+4. **難しいターミナル・長時間Agent：GPT-5.6 SolまたはKimi K3**
+5. **実リポジトリの難しいバグ修正：Claude Opus 5**
+
+### ベンチマークの見方
+
+今回重視したのは次の指標です。
+
+| ベンチマーク | 主に評価するもの | 個人開発での意味 |
+| --- | --- | --- |
+| SWE-bench Pro | 実在GitHub Issueの修正 | 既存プロジェクトのバグ修正能力 |
+| DeepSWE v1.1 | 長時間・リポジトリ横断の修正 | 複数ファイル変更やIssue実装 |
+| Terminal-Bench 2.1 | ターミナル、Git、ビルド、ツール操作 | Cline、Codex、Claude Code型Agent |
+| FrontierSWE | 長時間のオープンな開発課題 | 高自律Agentとしての持続力 |
+| ProgramBench | 仕様からプログラムを新規構築 | 新機能・小規模アプリの実装 |
+
+HumanEvalやLiveCodeBenchは単体コード生成を見るには有効ですが、**Issueからの実装、複数ファイル変更、ビルド・テスト・修正**には、上記のAgent型ベンチマークの方が参考になります。
+
+ただしスコアはモデルだけでなく、Codex、Claude Code、Kimi Code、DeepSeek Harnessなどの**実行ハーネス、推論強度、最大実行時間、再試行回数**にも左右されます。特にKimi K3とDeepSeek V4 Flashは自社ハーネス・最大推論設定での公表値なので、同じ数字でも完全な横比較ではありません。出典: [DeepSeek API Updates](https://api-docs.deepseek.com/updates/)
+
+### 主要コーディングベンチマーク
+
+| モデル | SWE-bench Pro | DeepSWE v1.1 | Terminal-Bench 2.1 | その他 | 証拠の確度 |
+| --- | ---: | ---: | ---: | ---: | --- |
+| **Claude Opus 5** | **79.2%** | 68.8% | 未確認 | Frontier-Bench 43.3% | 高 |
+| **GPT-5.6 Sol** | 64.6% | **72.7%** | **88.8%** | Coding Agent Index 80.0 | 高 |
+| **GPT-5.6 Terra** | 63.4% | 69.6% | 87.4% | Coding Agent Index 77.4 | 高 |
+| **GPT-5.6 Luna** | 62.7% | 67.2% | 84.7% | Coding Agent Index 74.6 | 高 |
+| **Kimi K3** | 未公表 | 67.5%※ | 88.3%※ | FrontierSWE 81.2、ProgramBench 77.8 | 中 |
+| **GLM-5.2** | 62.1% | 条件差が大きい | 81.0～82.7% | FrontierSWE 74.4 | 中～高 |
+| **DeepSeek V4 Flash-0731** | 未公表 | 54.4% | 82.7% | NL2Repo 54.2、Toolathlon 70.3 | 中～高 |
+| **DeepSeek V4 Pro** | 現行同条件値なし | 現行同条件値なし | 現行同条件値なし | 旧Preview評価のみ | 低～中 |
+| **Kimi K2.7 Code** | 未公表 | 未公表 | 未公表 | 正確な主要指標が不足 | 低～中 |
+
+※Kimi K3はKimi Codeハーネス、最大推論設定によるMoonshot公表値です。公式DeepSWEリーダーボードのmini-SWE-agent構成では67.3です。
+
+GPT-5.6系列は同じOpenAI公開表内で評価されているため、Sol、Terra、Lunaの比較は比較的信頼できます。TerraはSolより大幅に安い一方、主要コーディング指標の差は小さく、Lunaも低価格モデルとしては非常に高い水準です。出典: [OpenAI GPT-5.6](https://openai.com/index/gpt-5-6/)
+
+Opus 5はSWE-bench Pro 79.2%で突出しています。一方、DeepSWEではSolの72.7%に対して68.8%です。これは、**明確な実リポジトリIssueの修正ではOpus、長時間のAgent作業やターミナル操作ではSol**という傾向を示します。出典: [Claude Opus 5 System Card](https://www-cdn.anthropic.com/b514064af1408018e64b1ad24e7d5e75850b4ffd/Claude%20Opus%205%20System%20Card.pdf)
+
+Kimi K3はTerminal-Bench 2.1で88.3%とSolにかなり近く、FrontierSWEも81.2と強力です。ただしMoonshot自身も総合性能では最上位のクローズドモデルにまだ届かないと説明しており、現状は「中国製モデルの高性能候補」と評価するのが適切です。出典: [Kimi K3](https://www.kimi.com/blog/kimi-k3)
+
+GLM-5.2はFrontierSWE 74.4で、長時間Agentとして有力です。Terminal-Benchの公表値にはハーネス差があり、81.0～82.7程度ですが、従量価格を考えると高い価格性能比です。出典: [GLM-5.2](https://z.ai/blog/glm-5.2)
+
+### API単価比較
+
+100万トークン当たり、通常速度・短文コンテキスト帯の価格です。
+
+| モデル | 入力 | キャッシュ入力 | 出力 | Context |
+| --- | ---: | ---: | ---: | ---: |
+| **DeepSeek V4 Flash** | **$0.14** | **$0.0028** | **$0.28** | 1M |
+| **GPT-5.6 Luna** | $0.20 | $0.02 | $1.20 | 約1.05M |
+| **DeepSeek V4 Pro** | $0.435 | $0.003625 | $0.87 | 1M |
+| **Kimi K2.7 Code** | $0.95 | $0.19 | $4.00 | 256K |
+| **GLM-5.2** | $1.40 | $0.26 | $4.40 | 1M |
+| **GPT-5.6 Terra** | $2.00 | $0.20 | $12.00 | 約1.05M |
+| **Kimi K3** | $3.00 | $0.30 | $15.00 | 1M |
+| **Claude Opus 5** | $5.00 | $0.50 | $25.00 | 1M |
+| **GPT-5.6 Sol** | $5.00 | $0.50 | $30.00 | 約1.05M |
+
+DeepSeekのキャッシュ入力は極端に安く、同一リポジトリや同一仕様を繰り返し送るCoding Agentと相性がよい価格設定です。出典: [DeepSeek Pricing](https://api-docs.deepseek.com/quick_start/pricing/)
+
+GPT-5.6 TerraとLunaは2026年7月30日に値下げされました。現在の標準価格はTerraが$2／$12、Lunaが$0.20／$1.20です。長大な単一リクエストでは別の長文価格帯が適用されるため、後述の費用は複数リクエストの合計として計算しています。出典: [OpenAI Pricing](https://developers.openai.com/api/docs/pricing)
+
+KimiとGLMの料金は公式APIの従量課金です。GLM Coding Planなどの定額枠はこの表に含めていません。出典: [Z.AI Pricing](https://docs.z.ai/guides/overview/pricing)
+
+Claude Opus 5は入力$5、出力$25で、キャッシュ読取は$0.50です。初回キャッシュ書込みは5分保持で$6.25、1時間保持で$10になります。出典: [Claude Pricing](https://docs.anthropic.com/en/docs/about-claude/pricing)
+
+### 個人開発に近い費用感
+
+次のトークン量を、複数回のAPI呼び出しの合計として想定します。
+
+```text
+入力合計：100万トークン
+出力合計：10万トークン
+```
+
+これは、リポジトリ探索、複数回の修正、テスト結果の再入力、セルフレビューまで行う**中～大規模のIssue対応1件**を想定した値です。
+
+#### キャッシュなし
+
+| 費用順 | モデル | 1セッション | 月20回 | DeepSeek Flash比 |
+| --: | --- | ---: | ---: | ---: |
+| 1 | **DeepSeek V4 Flash** | **$0.168** | **$3.36** | 1.0倍 |
+| 2 | **GPT-5.6 Luna** | **$0.32** | **$6.40** | 1.9倍 |
+| 3 | DeepSeek V4 Pro | $0.522 | $10.44 | 3.1倍 |
+| 4 | Kimi K2.7 Code | $1.35 | $27.00 | 8.0倍 |
+| 5 | GLM-5.2 | $1.84 | $36.80 | 11.0倍 |
+| 6 | GPT-5.6 Terra | $3.20 | $64.00 | 19.0倍 |
+| 7 | Kimi K3 | $4.50 | $90.00 | 26.8倍 |
+| 8 | Claude Opus 5 | $7.50 | $150.00 | 44.6倍 |
+| 9 | GPT-5.6 Sol | $8.00 | $160.00 | 47.6倍 |
+
+5倍規模の重いセッション（入力500万・出力50万）では、この表の1セッション費用をそのまま5倍にします。
+
+例：
+
+- DeepSeek Flash：$0.84
+- Luna：$1.60
+- GLM-5.2：$9.20
+- Terra：$16.00
+- Kimi K3：$22.50
+- Opus 5：$37.50
+- Sol：$40.00
+
+外部検索、コンテナ、コード実行、OpenRouter手数料、税金は含めていません。出典: [DeepSeek Pricing](https://api-docs.deepseek.com/quick_start/pricing/)
+
+#### 80%の入力でキャッシュが効く場合
+
+入力100万のうち80万トークンがキャッシュヒットし、出力10万トークンと仮定します。
+
+| 費用順 | モデル | キャッシュなし | 80%キャッシュ | 削減率 |
+| --: | --- | ---: | ---: | ---: |
+| 1 | **DeepSeek V4 Flash** | $0.168 | **$0.058** | 65% |
+| 2 | **GPT-5.6 Luna** | $0.320 | **$0.176** | 45% |
+| 3 | **DeepSeek V4 Pro** | $0.522 | **$0.177** | 66% |
+| 4 | Kimi K2.7 Code | $1.350 | $0.742 | 45% |
+| 5 | GLM-5.2 | $1.840 | $0.928 | 50% |
+| 6 | GPT-5.6 Terra | $3.200 | $1.760 | 45% |
+| 7 | Kimi K3 | $4.500 | $2.340 | 48% |
+| 8 | Claude Opus 5 | $7.500 | $3.900 | 48% |
+| 9 | GPT-5.6 Sol | $8.000 | $4.400 | 45% |
+
+これはキャッシュが既に作成された後の再利用費用です。OpenAIとAnthropicは初回キャッシュ書込みに追加料金がかかるため、最初の呼び出しは表より高くなります。
+
+注目点は、**キャッシュが効くとDeepSeek V4 ProとGPT-5.6 Lunaがほぼ同額**になることです。ただしLunaの方が主要コーディングベンチマークの公開根拠は強く、DeepSeek Proは現行Agent評価が不足しています。
+
+### 性能と費用を統合した評価
+
+#### Claude Opus 5
+
+**評価：最高精度のスポット利用**
+
+SWE-bench Pro 79.2%は今回の比較対象で最高です。明確なIssue、既存テスト、受入条件があるリポジトリ修正では最も有力です。ただし、1セッション$7.50なので日常的な探索や単純修正には過剰です。
+
+適した使い方：
+
+- 難しいバグ修正
+- 実装者とは別モデルによる最終レビュー
+- Migrationや並行処理など失敗コストの高い変更
+- 他モデルが2回以上失敗した課題
+
+#### GPT-5.6 Sol
+
+**評価：最高クラスの総合Coding Agent**
+
+DeepSWE 72.7、Terminal-Bench 88.8、Coding Agent Index 80で、ターミナル、ツール利用、長時間Agentの総合力が高いモデルです。ただし費用はOpus 5よりわずかに高いため、個人開発での常用には向きません。
+
+適した使い方：
+
+- 長時間の自律実装
+- ビルド、テスト、修正を繰り返すAgent
+- フロントエンドの視覚確認
+- 複雑なTool Calling
+- 最重要タスク
+
+#### GPT-5.6 Terra
+
+**評価：個人開発の総合バランス1位**
+
+Solとの差は次の程度です。
+
+| 指標 | Sol | Terra | 差 |
+| --- | ---: | ---: | ---: |
+| SWE-bench Pro | 64.6 | 63.4 | -1.2 |
+| DeepSWE | 72.7 | 69.6 | -3.1 |
+| Terminal-Bench | 88.8 | 87.4 | -1.4 |
+| 1セッション費用 | $8.00 | $3.20 | **60%安い** |
+
+Solの40%の費用で、主要Coding指標の差は小さく収まっています。OpenAI／Codex系のTool CallingやResponses APIまで含めると、個人開発の主力として有力です。出典: [OpenAI GPT-5.6](https://openai.com/index/gpt-5-6/)
+
+#### GPT-5.6 Luna
+
+**評価：低価格モデルの最有力**
+
+LunaはDeepSeek Flashの約1.9倍ですが、主要評価では次の水準です。
+
+- SWE-bench Pro：62.7
+- DeepSWE：67.2
+- Terminal-Bench：84.7
+- Coding Agent Index：74.6
+
+DeepSeek FlashのDeepSWE 54.4に対して67.2なので、**1回の成功率や人間の修正時間まで含めれば、Lunaの方が安くなる可能性があります**。
+
+単純なトークン単価ではFlash、タスク完遂率を含む実費ではLunaが有力です。
+
+#### Kimi K3
+
+**評価：中国製モデルの性能最上位候補**
+
+Terminal-Bench 88.3はSolの88.8にかなり近く、FrontierSWE 81.2も強力です。1セッション$4.50なので、Solより44%安く、Opus 5より40%安くなります。
+
+ただし以下を考慮する必要があります。
+
+- ベンチマークの多くがKimi Codeハーネス
+- 最大推論設定
+- 公開直後
+- 出力$15と高い
+- 常時Thinking
+- デフォルト推論強度が高い
+
+日常利用ではなく、GLM、Terra、DeepSeekが失敗した課題で使う位置付けが適切です。
+
+#### GLM-5.2
+
+**評価：中国製モデルの価格性能バランス1位**
+
+1セッション$1.84で、FrontierSWE 74.4、Terminal-Bench 81～82.7程度です。
+
+Terraより安く、DeepSeekより長時間Agentの公開評価が強いため、次の用途に向きます。
+
+- GitHub Issueからの実装
+- 長い仕様への追従
+- 複数ファイル変更
+- Cline、Claude Code、OpenCode
+- 定額Coding Planによる大量利用
+
+中国製モデルだけで選ぶなら、**主力はGLM-5.2、低価格処理はDeepSeek Flash、高難度はKimi K3**という構成が合理的です。
+
+#### DeepSeek V4 Flash
+
+**評価：最安の実用Coding Agent**
+
+1セッション$0.168は圧倒的です。Terminal-Bench 82.7も低価格モデルとして高く、2026年7月31日の再学習でAgent性能が大きく改善しました。
+
+向いている処理：
+
+- リポジトリ探索
+- テスト生成
+- コードレビューの一次分析
+- 小規模Issue
+- ドキュメント更新
+- CIログ分析
+- サブエージェント
+- 大量の並列処理
+
+難しい複数ファイル変更で失敗したら、GLMまたはTerraへ昇格させる使い方が適切です。
+
+#### DeepSeek V4 Pro
+
+**評価：コーディング主力としては現在評価保留**
+
+名称からFlashより上位に見えますが、7月31日に更新されたのはFlashだけで、Proは未更新です。DeepSeekは最新FlashのAgent評価がV4 Pro Previewを大きく上回ると説明しています。出典: [DeepSeek API Updates](https://api-docs.deepseek.com/updates/)
+
+現時点では次の用途に限定するのが妥当です。
+
+- 数学的・アルゴリズム的な推論
+- Flashとは別の回答を得る
+- 設計案の比較
+- Flashが推論面で失敗したケース
+
+Coding Agentの標準モデルとして、Flashより先に選ぶ根拠は弱くなっています。
+
+#### Kimi K2.7 Code
+
+**評価：性能より、公開評価不足が問題**
+
+コード特化、256K、画像・動画、Thinking、Tool Callingという仕様は魅力的ですが、SWE-bench Pro、DeepSWE、Terminal-Benchなどの同条件スコアが十分公開されていません。
+
+1セッション$1.35とGLMより安いものの、現時点では次の位置付けです。
+
+- Kimi K3より安いKimi系モデル
+- 画像・動画を含むコード修正
+- Kimi Code CLIの標準モデル
+- 独立レビュー用の別系列モデル
+
+ベンチマーク透明性を重視するなら、GLM-5.2またはGPT-5.6 Luna／Terraを先に評価すべきです。
+
+### 個人開発向け最終順位
+
+#### 性能だけを重視
+
+1. **Claude Opus 5**：実リポジトリIssue修正
+2. **GPT-5.6 Sol**：総合Coding Agent
+3. **Kimi K3**：長時間・ターミナルAgent
+4. **GPT-5.6 Terra**
+5. **GLM-5.2**
+6. **GPT-5.6 Luna**
+7. **DeepSeek V4 Flash**
+8. DeepSeek V4 Pro：現行評価不足
+9. Kimi K2.7 Code：公開評価不足
+
+#### 価格性能比を重視
+
+1. **GPT-5.6 Luna**
+2. **DeepSeek V4 Flash**
+3. **GLM-5.2**
+4. **GPT-5.6 Terra**
+5. DeepSeek V4 Pro
+6. Kimi K3
+7. Kimi K2.7 Code
+8. Claude Opus 5
+9. GPT-5.6 Sol
+
+Lunaを1位としたのは、Flashより少し高いだけで、公開されている主要Coding Agentベンチマークがかなり高いためです。純粋なトークン単価だけならFlashが1位です。
+
+### 推奨する段階的ルーティング
+
+Issue単位でAI実装、独立レビュー、CI確認を行う場合は、次の4段階が適します。
+
+```text
+第1段階：探索・小規模修正・一次レビュー
+  DeepSeek V4 Flash
+  または GPT-5.6 Luna
+
+第2段階：通常のIssue実装
+  GLM-5.2
+  または GPT-5.6 Terra
+
+第3段階：難しい長時間Agent
+  Kimi K3
+  または GPT-5.6 Sol
+
+第4段階：失敗コストの高い最終レビュー
+  Claude Opus 5
+```
+
+#### 最も推奨する構成
+
+| 役割 | 推奨モデル |
+| --- | --- |
+| リポジトリ探索 | DeepSeek V4 Flash |
+| 日常的な実装 | GPT-5.6 Luna |
+| 本格的なIssue実装 | GLM-5.2またはGPT-5.6 Terra |
+| 独立レビュー | Claude Opus 5 |
+| 最難関タスク | GPT-5.6 SolまたはKimi K3 |
+
+**単一モデルに統一するならGPT-5.6 Terra。**
+
+**中国製モデルに限定するならGLM-5.2。**
+
+**費用最優先ならDeepSeek V4 Flash。**
+
+**実装成功率と費用の両方を見るならGPT-5.6 Luna。**
+
+価格・ベンチマーク・モデル更新を月1回確認する監視設定も有効です。
+
+> 注意: API従量課金のみの比較です。月額プラン枠、OpenRouter手数料、実APIでの成功率・人間修正時間は含まれません。法人導入や機密コード送信は、元記事の検証計画とセキュリティ・法務ゲートを通してください。

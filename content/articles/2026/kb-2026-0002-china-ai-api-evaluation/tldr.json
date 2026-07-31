@@ -48,6 +48,18 @@
       "label": "追記",
       "text": "2026-08-01時点の個人開発向け第一候補は、DeepSeek V4 Flash／Proの組み合わせである。",
       "href": "#conclusion-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "再比較",
+      "text": "コーディングAgent向け再比較ではFlash-0731を優先し、Luna／Terra／GLMを常用候補、Opusは難しいバグ修正向けとする。",
+      "href": "#conclusion-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "費用",
+      "text": "API従量課金ではLuna／Flashが有利で、次にGLM／Terra。Opus／Solはスポット利用向きである。",
+      "href": "#conclusion-heading"
     }
   ]
 }

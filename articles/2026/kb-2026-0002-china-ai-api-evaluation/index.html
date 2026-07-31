@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画 — amane AI Lab Knowledge Base</title>
-  <meta name="description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として、個人開発向けにDeepSeek V4 Flash／Proなどを現行モデル候補として整理した。">
+  <meta name="description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として個人開発向けにDeepSeek V4 Flash／Proなどを整理し、さらにコーディングベンチマークとAPI費用の再比較で、Coding Agent用途ではProを既定主力とせずFlash-0731やLuna／Terra／GLMを優先する見直しを追加した。">
   <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画">
-  <meta property="og:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として、個人開発向けにDeepSeek V4 Flash／Proなどを現行モデル候補として整理した。">
+  <meta property="og:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として個人開発向けにDeepSeek V4 Flash／Proなどを整理し、さらにコーディングベンチマークとAPI費用の再比較で、Coding Agent用途ではProを既定主力とせずFlash-0731やLuna／Terra／GLMを優先する見直しを追加した。">
   <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/">
   <meta property="og:site_name" content="amane-ai-lab">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画">
-  <meta name="twitter:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として、個人開発向けにDeepSeek V4 Flash／Proなどを現行モデル候補として整理した。">
+  <meta name="twitter:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として個人開発向けにDeepSeek V4 Flash／Proなどを整理し、さらにコーディングベンチマークとAPI費用の再比較で、Coding Agent用途ではProを既定主力とせずFlash-0731やLuna／Terra／GLMを優先する見直しを追加した。">
   <link rel="stylesheet" href="../../../assets/css/site.css">
 </head>
 <body>
@@ -38,12 +38,12 @@
         <span>更新: 2026-08-01</span>
       </p>
       <h1>中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画</h1>
-      <p class="article-summary">3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として、個人開発向けにDeepSeek V4 Flash／Proなどを現行モデル候補として整理した。</p>
+      <p class="article-summary">3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として個人開発向けにDeepSeek V4 Flash／Proなどを整理し、さらにコーディングベンチマークとAPI費用の再比較で、Coding Agent用途ではProを既定主力とせずFlash-0731やLuna／Terra／GLMを優先する見直しを追加した。</p>
       <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
       <ul class="tag-list"><li>中国製AIモデル</li><li>API</li><li>コーディング</li><li>AIエージェント</li><li>モデル評価</li><li>セキュリティ</li></ul>
     </header>
 
-    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-chatgpt">ChatGPT</span> <a class="tldr-link" href="#agents-heading">ChatGPT調査は、Qwen、DeepSeek、GLMなどを役割別の有力候補として提示した。</a></li><li><span class="tldr-source tldr-source-gemini">Gemini</span> <a class="tldr-link" href="#agents-heading">2つのGemini調査もDeepSeek、Qwen、GLM、Kimiを主要候補に含めたが、対象モデルと順位は一致しなかった。</a></li><li><span class="tldr-source tldr-source-review">レビュー</span> <a class="tldr-link" href="#analysis-heading">日本カード、価格、最大出力、契約経路、データ条件には採用判断を左右する矛盾が残った。</a></li><li><span class="tldr-source tldr-source-synthesis">統合</span> <a class="tldr-link" href="#analysis-heading">複数回答の一致は候補選定には使えるが、一次情報と実API検証の代わりにはならない。</a></li><li><span class="tldr-source tldr-source-synthesis">推奨</span> <a class="tldr-link" href="#conclusion-heading">PoCは統一APIで横比較し、本番候補は公式または固定Providerで再試験する。</a></li><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#conclusion-heading">単一ランキングではなく、主力・低価格補助・長時間Agent・高難度比較の役割別に採用する。</a></li><li><span class="tldr-source tldr-source-synthesis">個人開発</span> <a class="tldr-link" href="#conclusion-heading">個人開発ではFlashを標準、Proを上位として切り替え、同じDeepSeek APIで費用を抑えやすい。</a></li><li><span class="tldr-source tldr-source-synthesis">追記</span> <a class="tldr-link" href="#conclusion-heading">2026-08-01時点の個人開発向け第一候補は、DeepSeek V4 Flash／Proの組み合わせである。</a></li></ol></section>
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-chatgpt">ChatGPT</span> <a class="tldr-link" href="#agents-heading">ChatGPT調査は、Qwen、DeepSeek、GLMなどを役割別の有力候補として提示した。</a></li><li><span class="tldr-source tldr-source-gemini">Gemini</span> <a class="tldr-link" href="#agents-heading">2つのGemini調査もDeepSeek、Qwen、GLM、Kimiを主要候補に含めたが、対象モデルと順位は一致しなかった。</a></li><li><span class="tldr-source tldr-source-review">レビュー</span> <a class="tldr-link" href="#analysis-heading">日本カード、価格、最大出力、契約経路、データ条件には採用判断を左右する矛盾が残った。</a></li><li><span class="tldr-source tldr-source-synthesis">統合</span> <a class="tldr-link" href="#analysis-heading">複数回答の一致は候補選定には使えるが、一次情報と実API検証の代わりにはならない。</a></li><li><span class="tldr-source tldr-source-synthesis">推奨</span> <a class="tldr-link" href="#conclusion-heading">PoCは統一APIで横比較し、本番候補は公式または固定Providerで再試験する。</a></li><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#conclusion-heading">単一ランキングではなく、主力・低価格補助・長時間Agent・高難度比較の役割別に採用する。</a></li><li><span class="tldr-source tldr-source-synthesis">個人開発</span> <a class="tldr-link" href="#conclusion-heading">個人開発ではFlashを標準、Proを上位として切り替え、同じDeepSeek APIで費用を抑えやすい。</a></li><li><span class="tldr-source tldr-source-synthesis">追記</span> <a class="tldr-link" href="#conclusion-heading">2026-08-01時点の個人開発向け第一候補は、DeepSeek V4 Flash／Proの組み合わせである。</a></li><li><span class="tldr-source tldr-source-synthesis">再比較</span> <a class="tldr-link" href="#conclusion-heading">コーディングAgent向け再比較ではFlash-0731を優先し、Luna／Terra／GLMを常用候補、Opusは難しいバグ修正向けとする。</a></li><li><span class="tldr-source tldr-source-synthesis">費用</span> <a class="tldr-link" href="#conclusion-heading">API従量課金ではLuna／Flashが有利で、次にGLM／Terra。Opus／Solはスポット利用向きである。</a></li></ol></section>
     <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-chatgpt">ChatGPT</a><ul><li class="toc-item toc-level-2"><a href="#agent-chatgpt-エグゼクティブサマリー">エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-主要候補の役割分担">主要候補の役割分担</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-api提供経路">API提供経路</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-cursorと周辺ツール">Cursorと周辺ツール</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-評価方法">評価方法</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-api検証計画">API検証計画</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-データセキュリティ">データ・セキュリティ</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-最終提案">最終提案</a></li></ul></li><li><a href="#agent-gemini-pro">Gemini Pro</a><ul><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-エグゼクティブサマリー">エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-モデル別の位置づけ">モデル別の位置づけ</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-推奨順位の考え方">推奨順位の考え方</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-cursorと開発ツール">Cursorと開発ツール</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-api検証">API検証</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-最終提案">最終提案</a></li></ul></li><li><a href="#agent-gemini">Gemini 思考</a><ul><li class="toc-item toc-level-2"><a href="#agent-gemini-調査対象と除外">調査対象と除外</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-エグゼクティブサマリー">エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-モデルの役割">モデルの役割</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-総合評価">総合評価</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-導入分類">導入分類</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-検証計画">検証計画</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-データと契約">データと契約</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-最終提案">最終提案</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
 
     <section class="panel" aria-labelledby="background-heading">
@@ -2150,6 +2150,625 @@ GLM Coding PlanまたはZ.ai従量API
 <p>この4系列は更新が速いため、価格、モデルID、廃止予定を月1回確認する監視設定も有効です。</p>
 <blockquote>
 <p>注意: この追記は個人開発向けの実務仮説です。法人導入、機密コード送信、日本カード承認、実API性能は、元記事の検証計画とセキュリティ・法務ゲートを通して確定してください。</p>
+</blockquote>
+<h2 id="conclusion-コーディング性能api費用の再比較2026-08-01"><a class="heading-permalink" href="#conclusion-コーディング性能api費用の再比較2026-08-01" aria-label="この見出しへのリンク">#</a>コーディング性能・API費用の再比較（2026-08-01）</h2>
+<p>調査・価格確認日：2026年8月1日</p>
+<p>ここでは「Opus 5」を<strong>Claude Opus 5</strong>として扱います。費用はすべてAPIの従量課金で統一し、Cursor、Claude Code、Codex、ChatGPTなどの月額プランに含まれる利用枠は除外します。</p>
+<p>この節は、直前の個人開発向け追記のうち、<strong>Coding Agentとしての主力候補</strong>をベンチマークとAPI単価で再評価したものです。直前追記ではDeepSeek V4 Proを難しい実装の主力候補としましたが、コーディングベンチマークまで確認すると、<strong>現時点ではV4 Proより最新のV4 Flash-0731を優先して試すべき</strong>です。DeepSeek自身が、7月31日版FlashのAgent性能はV4 Pro Previewを大幅に上回ると説明しています。現行Proはまだ更新されていません。出典: <a href="https://api-docs.deepseek.com/updates/">DeepSeek API Updates</a></p>
+<h3 id="conclusion-再比較の結論"><a class="heading-permalink" href="#conclusion-再比較の結論" aria-label="この見出しへのリンク">#</a>再比較の結論</h3>
+<p>個人開発での現実的な選択は、次のようになります。</p>
+<ol>
+<li><strong>低価格な日常開発：GPT-5.6 LunaまたはDeepSeek V4 Flash</strong></li>
+<li><strong>性能と価格の総合バランス：GPT-5.6 Terra</strong></li>
+<li><strong>中国製モデルの主力候補：GLM-5.2</strong></li>
+<li><strong>難しいターミナル・長時間Agent：GPT-5.6 SolまたはKimi K3</strong></li>
+<li><strong>実リポジトリの難しいバグ修正：Claude Opus 5</strong></li>
+</ol>
+<h3 id="conclusion-ベンチマークの見方"><a class="heading-permalink" href="#conclusion-ベンチマークの見方" aria-label="この見出しへのリンク">#</a>ベンチマークの見方</h3>
+<p>今回重視したのは次の指標です。</p>
+<table>
+<thead>
+<tr>
+<th>ベンチマーク</th>
+<th>主に評価するもの</th>
+<th>個人開発での意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SWE-bench Pro</td>
+<td>実在GitHub Issueの修正</td>
+<td>既存プロジェクトのバグ修正能力</td>
+</tr>
+<tr>
+<td>DeepSWE v1.1</td>
+<td>長時間・リポジトリ横断の修正</td>
+<td>複数ファイル変更やIssue実装</td>
+</tr>
+<tr>
+<td>Terminal-Bench 2.1</td>
+<td>ターミナル、Git、ビルド、ツール操作</td>
+<td>Cline、Codex、Claude Code型Agent</td>
+</tr>
+<tr>
+<td>FrontierSWE</td>
+<td>長時間のオープンな開発課題</td>
+<td>高自律Agentとしての持続力</td>
+</tr>
+<tr>
+<td>ProgramBench</td>
+<td>仕様からプログラムを新規構築</td>
+<td>新機能・小規模アプリの実装</td>
+</tr>
+</tbody>
+</table>
+<p>HumanEvalやLiveCodeBenchは単体コード生成を見るには有効ですが、<strong>Issueからの実装、複数ファイル変更、ビルド・テスト・修正</strong>には、上記のAgent型ベンチマークの方が参考になります。</p>
+<p>ただしスコアはモデルだけでなく、Codex、Claude Code、Kimi Code、DeepSeek Harnessなどの<strong>実行ハーネス、推論強度、最大実行時間、再試行回数</strong>にも左右されます。特にKimi K3とDeepSeek V4 Flashは自社ハーネス・最大推論設定での公表値なので、同じ数字でも完全な横比較ではありません。出典: <a href="https://api-docs.deepseek.com/updates/">DeepSeek API Updates</a></p>
+<h3 id="conclusion-主要コーディングベンチマーク"><a class="heading-permalink" href="#conclusion-主要コーディングベンチマーク" aria-label="この見出しへのリンク">#</a>主要コーディングベンチマーク</h3>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>SWE-bench Pro</th>
+<th>DeepSWE v1.1</th>
+<th>Terminal-Bench 2.1</th>
+<th>その他</th>
+<th>証拠の確度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Claude Opus 5</strong></td>
+<td><strong>79.2%</strong></td>
+<td>68.8%</td>
+<td>未確認</td>
+<td>Frontier-Bench 43.3%</td>
+<td>高</td>
+</tr>
+<tr>
+<td><strong>GPT-5.6 Sol</strong></td>
+<td>64.6%</td>
+<td><strong>72.7%</strong></td>
+<td><strong>88.8%</strong></td>
+<td>Coding Agent Index 80.0</td>
+<td>高</td>
+</tr>
+<tr>
+<td><strong>GPT-5.6 Terra</strong></td>
+<td>63.4%</td>
+<td>69.6%</td>
+<td>87.4%</td>
+<td>Coding Agent Index 77.4</td>
+<td>高</td>
+</tr>
+<tr>
+<td><strong>GPT-5.6 Luna</strong></td>
+<td>62.7%</td>
+<td>67.2%</td>
+<td>84.7%</td>
+<td>Coding Agent Index 74.6</td>
+<td>高</td>
+</tr>
+<tr>
+<td><strong>Kimi K3</strong></td>
+<td>未公表</td>
+<td>67.5%※</td>
+<td>88.3%※</td>
+<td>FrontierSWE 81.2、ProgramBench 77.8</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>GLM-5.2</strong></td>
+<td>62.1%</td>
+<td>条件差が大きい</td>
+<td>81.0～82.7%</td>
+<td>FrontierSWE 74.4</td>
+<td>中～高</td>
+</tr>
+<tr>
+<td><strong>DeepSeek V4 Flash-0731</strong></td>
+<td>未公表</td>
+<td>54.4%</td>
+<td>82.7%</td>
+<td>NL2Repo 54.2、Toolathlon 70.3</td>
+<td>中～高</td>
+</tr>
+<tr>
+<td><strong>DeepSeek V4 Pro</strong></td>
+<td>現行同条件値なし</td>
+<td>現行同条件値なし</td>
+<td>現行同条件値なし</td>
+<td>旧Preview評価のみ</td>
+<td>低～中</td>
+</tr>
+<tr>
+<td><strong>Kimi K2.7 Code</strong></td>
+<td>未公表</td>
+<td>未公表</td>
+<td>未公表</td>
+<td>正確な主要指標が不足</td>
+<td>低～中</td>
+</tr>
+</tbody>
+</table>
+<p>※Kimi K3はKimi Codeハーネス、最大推論設定によるMoonshot公表値です。公式DeepSWEリーダーボードのmini-SWE-agent構成では67.3です。</p>
+<p>GPT-5.6系列は同じOpenAI公開表内で評価されているため、Sol、Terra、Lunaの比較は比較的信頼できます。TerraはSolより大幅に安い一方、主要コーディング指標の差は小さく、Lunaも低価格モデルとしては非常に高い水準です。出典: <a href="https://openai.com/index/gpt-5-6/">OpenAI GPT-5.6</a></p>
+<p>Opus 5はSWE-bench Pro 79.2%で突出しています。一方、DeepSWEではSolの72.7%に対して68.8%です。これは、<strong>明確な実リポジトリIssueの修正ではOpus、長時間のAgent作業やターミナル操作ではSol</strong>という傾向を示します。出典: <a href="https://www-cdn.anthropic.com/b514064af1408018e64b1ad24e7d5e75850b4ffd/Claude%20Opus%205%20System%20Card.pdf">Claude Opus 5 System Card</a></p>
+<p>Kimi K3はTerminal-Bench 2.1で88.3%とSolにかなり近く、FrontierSWEも81.2と強力です。ただしMoonshot自身も総合性能では最上位のクローズドモデルにまだ届かないと説明しており、現状は「中国製モデルの高性能候補」と評価するのが適切です。出典: <a href="https://www.kimi.com/blog/kimi-k3">Kimi K3</a></p>
+<p>GLM-5.2はFrontierSWE 74.4で、長時間Agentとして有力です。Terminal-Benchの公表値にはハーネス差があり、81.0～82.7程度ですが、従量価格を考えると高い価格性能比です。出典: <a href="https://z.ai/blog/glm-5.2">GLM-5.2</a></p>
+<h3 id="conclusion-api単価比較"><a class="heading-permalink" href="#conclusion-api単価比較" aria-label="この見出しへのリンク">#</a>API単価比較</h3>
+<p>100万トークン当たり、通常速度・短文コンテキスト帯の価格です。</p>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>入力</th>
+<th>キャッシュ入力</th>
+<th>出力</th>
+<th>Context</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DeepSeek V4 Flash</strong></td>
+<td><strong>$0.14</strong></td>
+<td><strong>$0.0028</strong></td>
+<td><strong>$0.28</strong></td>
+<td>1M</td>
+</tr>
+<tr>
+<td><strong>GPT-5.6 Luna</strong></td>
+<td>$0.20</td>
+<td>$0.02</td>
+<td>$1.20</td>
+<td>約1.05M</td>
+</tr>
+<tr>
+<td><strong>DeepSeek V4 Pro</strong></td>
+<td>$0.435</td>
+<td>$0.003625</td>
+<td>$0.87</td>
+<td>1M</td>
+</tr>
+<tr>
+<td><strong>Kimi K2.7 Code</strong></td>
+<td>$0.95</td>
+<td>$0.19</td>
+<td>$4.00</td>
+<td>256K</td>
+</tr>
+<tr>
+<td><strong>GLM-5.2</strong></td>
+<td>$1.40</td>
+<td>$0.26</td>
+<td>$4.40</td>
+<td>1M</td>
+</tr>
+<tr>
+<td><strong>GPT-5.6 Terra</strong></td>
+<td>$2.00</td>
+<td>$0.20</td>
+<td>$12.00</td>
+<td>約1.05M</td>
+</tr>
+<tr>
+<td><strong>Kimi K3</strong></td>
+<td>$3.00</td>
+<td>$0.30</td>
+<td>$15.00</td>
+<td>1M</td>
+</tr>
+<tr>
+<td><strong>Claude Opus 5</strong></td>
+<td>$5.00</td>
+<td>$0.50</td>
+<td>$25.00</td>
+<td>1M</td>
+</tr>
+<tr>
+<td><strong>GPT-5.6 Sol</strong></td>
+<td>$5.00</td>
+<td>$0.50</td>
+<td>$30.00</td>
+<td>約1.05M</td>
+</tr>
+</tbody>
+</table>
+<p>DeepSeekのキャッシュ入力は極端に安く、同一リポジトリや同一仕様を繰り返し送るCoding Agentと相性がよい価格設定です。出典: <a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek Pricing</a></p>
+<p>GPT-5.6 TerraとLunaは2026年7月30日に値下げされました。現在の標準価格はTerraが$2／$12、Lunaが$0.20／$1.20です。長大な単一リクエストでは別の長文価格帯が適用されるため、後述の費用は複数リクエストの合計として計算しています。出典: <a href="https://developers.openai.com/api/docs/pricing">OpenAI Pricing</a></p>
+<p>KimiとGLMの料金は公式APIの従量課金です。GLM Coding Planなどの定額枠はこの表に含めていません。出典: <a href="https://docs.z.ai/guides/overview/pricing">Z.AI Pricing</a></p>
+<p>Claude Opus 5は入力$5、出力$25で、キャッシュ読取は$0.50です。初回キャッシュ書込みは5分保持で$6.25、1時間保持で$10になります。出典: <a href="https://docs.anthropic.com/en/docs/about-claude/pricing">Claude Pricing</a></p>
+<h3 id="conclusion-個人開発に近い費用感"><a class="heading-permalink" href="#conclusion-個人開発に近い費用感" aria-label="この見出しへのリンク">#</a>個人開発に近い費用感</h3>
+<p>次のトークン量を、複数回のAPI呼び出しの合計として想定します。</p>
+<pre><code class="language-text">入力合計：100万トークン
+出力合計：10万トークン
+</code></pre>
+<p>これは、リポジトリ探索、複数回の修正、テスト結果の再入力、セルフレビューまで行う<strong>中～大規模のIssue対応1件</strong>を想定した値です。</p>
+<h4 id="conclusion-キャッシュなし"><a class="heading-permalink" href="#conclusion-キャッシュなし" aria-label="この見出しへのリンク">#</a>キャッシュなし</h4>
+<table>
+<thead>
+<tr>
+<th>費用順</th>
+<th>モデル</th>
+<th>1セッション</th>
+<th>月20回</th>
+<th>DeepSeek Flash比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>DeepSeek V4 Flash</strong></td>
+<td><strong>$0.168</strong></td>
+<td><strong>$3.36</strong></td>
+<td>1.0倍</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>GPT-5.6 Luna</strong></td>
+<td><strong>$0.32</strong></td>
+<td><strong>$6.40</strong></td>
+<td>1.9倍</td>
+</tr>
+<tr>
+<td>3</td>
+<td>DeepSeek V4 Pro</td>
+<td>$0.522</td>
+<td>$10.44</td>
+<td>3.1倍</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Kimi K2.7 Code</td>
+<td>$1.35</td>
+<td>$27.00</td>
+<td>8.0倍</td>
+</tr>
+<tr>
+<td>5</td>
+<td>GLM-5.2</td>
+<td>$1.84</td>
+<td>$36.80</td>
+<td>11.0倍</td>
+</tr>
+<tr>
+<td>6</td>
+<td>GPT-5.6 Terra</td>
+<td>$3.20</td>
+<td>$64.00</td>
+<td>19.0倍</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Kimi K3</td>
+<td>$4.50</td>
+<td>$90.00</td>
+<td>26.8倍</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Claude Opus 5</td>
+<td>$7.50</td>
+<td>$150.00</td>
+<td>44.6倍</td>
+</tr>
+<tr>
+<td>9</td>
+<td>GPT-5.6 Sol</td>
+<td>$8.00</td>
+<td>$160.00</td>
+<td>47.6倍</td>
+</tr>
+</tbody>
+</table>
+<p>5倍規模の重いセッション（入力500万・出力50万）では、この表の1セッション費用をそのまま5倍にします。</p>
+<p>例：</p>
+<ul>
+<li>DeepSeek Flash：$0.84</li>
+<li>Luna：$1.60</li>
+<li>GLM-5.2：$9.20</li>
+<li>Terra：$16.00</li>
+<li>Kimi K3：$22.50</li>
+<li>Opus 5：$37.50</li>
+<li>Sol：$40.00</li>
+</ul>
+<p>外部検索、コンテナ、コード実行、OpenRouter手数料、税金は含めていません。出典: <a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek Pricing</a></p>
+<h4 id="conclusion-80の入力でキャッシュが効く場合"><a class="heading-permalink" href="#conclusion-80の入力でキャッシュが効く場合" aria-label="この見出しへのリンク">#</a>80%の入力でキャッシュが効く場合</h4>
+<p>入力100万のうち80万トークンがキャッシュヒットし、出力10万トークンと仮定します。</p>
+<table>
+<thead>
+<tr>
+<th>費用順</th>
+<th>モデル</th>
+<th>キャッシュなし</th>
+<th>80%キャッシュ</th>
+<th>削減率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>DeepSeek V4 Flash</strong></td>
+<td>$0.168</td>
+<td><strong>$0.058</strong></td>
+<td>65%</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>GPT-5.6 Luna</strong></td>
+<td>$0.320</td>
+<td><strong>$0.176</strong></td>
+<td>45%</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>DeepSeek V4 Pro</strong></td>
+<td>$0.522</td>
+<td><strong>$0.177</strong></td>
+<td>66%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Kimi K2.7 Code</td>
+<td>$1.350</td>
+<td>$0.742</td>
+<td>45%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>GLM-5.2</td>
+<td>$1.840</td>
+<td>$0.928</td>
+<td>50%</td>
+</tr>
+<tr>
+<td>6</td>
+<td>GPT-5.6 Terra</td>
+<td>$3.200</td>
+<td>$1.760</td>
+<td>45%</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Kimi K3</td>
+<td>$4.500</td>
+<td>$2.340</td>
+<td>48%</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Claude Opus 5</td>
+<td>$7.500</td>
+<td>$3.900</td>
+<td>48%</td>
+</tr>
+<tr>
+<td>9</td>
+<td>GPT-5.6 Sol</td>
+<td>$8.000</td>
+<td>$4.400</td>
+<td>45%</td>
+</tr>
+</tbody>
+</table>
+<p>これはキャッシュが既に作成された後の再利用費用です。OpenAIとAnthropicは初回キャッシュ書込みに追加料金がかかるため、最初の呼び出しは表より高くなります。</p>
+<p>注目点は、<strong>キャッシュが効くとDeepSeek V4 ProとGPT-5.6 Lunaがほぼ同額</strong>になることです。ただしLunaの方が主要コーディングベンチマークの公開根拠は強く、DeepSeek Proは現行Agent評価が不足しています。</p>
+<h3 id="conclusion-性能と費用を統合した評価"><a class="heading-permalink" href="#conclusion-性能と費用を統合した評価" aria-label="この見出しへのリンク">#</a>性能と費用を統合した評価</h3>
+<h4 id="conclusion-claude-opus-5"><a class="heading-permalink" href="#conclusion-claude-opus-5" aria-label="この見出しへのリンク">#</a>Claude Opus 5</h4>
+<p><strong>評価：最高精度のスポット利用</strong></p>
+<p>SWE-bench Pro 79.2%は今回の比較対象で最高です。明確なIssue、既存テスト、受入条件があるリポジトリ修正では最も有力です。ただし、1セッション$7.50なので日常的な探索や単純修正には過剰です。</p>
+<p>適した使い方：</p>
+<ul>
+<li>難しいバグ修正</li>
+<li>実装者とは別モデルによる最終レビュー</li>
+<li>Migrationや並行処理など失敗コストの高い変更</li>
+<li>他モデルが2回以上失敗した課題</li>
+</ul>
+<h4 id="conclusion-gpt-56-sol"><a class="heading-permalink" href="#conclusion-gpt-56-sol" aria-label="この見出しへのリンク">#</a>GPT-5.6 Sol</h4>
+<p><strong>評価：最高クラスの総合Coding Agent</strong></p>
+<p>DeepSWE 72.7、Terminal-Bench 88.8、Coding Agent Index 80で、ターミナル、ツール利用、長時間Agentの総合力が高いモデルです。ただし費用はOpus 5よりわずかに高いため、個人開発での常用には向きません。</p>
+<p>適した使い方：</p>
+<ul>
+<li>長時間の自律実装</li>
+<li>ビルド、テスト、修正を繰り返すAgent</li>
+<li>フロントエンドの視覚確認</li>
+<li>複雑なTool Calling</li>
+<li>最重要タスク</li>
+</ul>
+<h4 id="conclusion-gpt-56-terra"><a class="heading-permalink" href="#conclusion-gpt-56-terra" aria-label="この見出しへのリンク">#</a>GPT-5.6 Terra</h4>
+<p><strong>評価：個人開発の総合バランス1位</strong></p>
+<p>Solとの差は次の程度です。</p>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>Sol</th>
+<th>Terra</th>
+<th>差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SWE-bench Pro</td>
+<td>64.6</td>
+<td>63.4</td>
+<td>-1.2</td>
+</tr>
+<tr>
+<td>DeepSWE</td>
+<td>72.7</td>
+<td>69.6</td>
+<td>-3.1</td>
+</tr>
+<tr>
+<td>Terminal-Bench</td>
+<td>88.8</td>
+<td>87.4</td>
+<td>-1.4</td>
+</tr>
+<tr>
+<td>1セッション費用</td>
+<td>$8.00</td>
+<td>$3.20</td>
+<td><strong>60%安い</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Solの40%の費用で、主要Coding指標の差は小さく収まっています。OpenAI／Codex系のTool CallingやResponses APIまで含めると、個人開発の主力として有力です。出典: <a href="https://openai.com/index/gpt-5-6/">OpenAI GPT-5.6</a></p>
+<h4 id="conclusion-gpt-56-luna"><a class="heading-permalink" href="#conclusion-gpt-56-luna" aria-label="この見出しへのリンク">#</a>GPT-5.6 Luna</h4>
+<p><strong>評価：低価格モデルの最有力</strong></p>
+<p>LunaはDeepSeek Flashの約1.9倍ですが、主要評価では次の水準です。</p>
+<ul>
+<li>SWE-bench Pro：62.7</li>
+<li>DeepSWE：67.2</li>
+<li>Terminal-Bench：84.7</li>
+<li>Coding Agent Index：74.6</li>
+</ul>
+<p>DeepSeek FlashのDeepSWE 54.4に対して67.2なので、<strong>1回の成功率や人間の修正時間まで含めれば、Lunaの方が安くなる可能性があります</strong>。</p>
+<p>単純なトークン単価ではFlash、タスク完遂率を含む実費ではLunaが有力です。</p>
+<h4 id="conclusion-kimi-k3-2"><a class="heading-permalink" href="#conclusion-kimi-k3-2" aria-label="この見出しへのリンク">#</a>Kimi K3</h4>
+<p><strong>評価：中国製モデルの性能最上位候補</strong></p>
+<p>Terminal-Bench 88.3はSolの88.8にかなり近く、FrontierSWE 81.2も強力です。1セッション$4.50なので、Solより44%安く、Opus 5より40%安くなります。</p>
+<p>ただし以下を考慮する必要があります。</p>
+<ul>
+<li>ベンチマークの多くがKimi Codeハーネス</li>
+<li>最大推論設定</li>
+<li>公開直後</li>
+<li>出力$15と高い</li>
+<li>常時Thinking</li>
+<li>デフォルト推論強度が高い</li>
+</ul>
+<p>日常利用ではなく、GLM、Terra、DeepSeekが失敗した課題で使う位置付けが適切です。</p>
+<h4 id="conclusion-glm-52-2"><a class="heading-permalink" href="#conclusion-glm-52-2" aria-label="この見出しへのリンク">#</a>GLM-5.2</h4>
+<p><strong>評価：中国製モデルの価格性能バランス1位</strong></p>
+<p>1セッション$1.84で、FrontierSWE 74.4、Terminal-Bench 81～82.7程度です。</p>
+<p>Terraより安く、DeepSeekより長時間Agentの公開評価が強いため、次の用途に向きます。</p>
+<ul>
+<li>GitHub Issueからの実装</li>
+<li>長い仕様への追従</li>
+<li>複数ファイル変更</li>
+<li>Cline、Claude Code、OpenCode</li>
+<li>定額Coding Planによる大量利用</li>
+</ul>
+<p>中国製モデルだけで選ぶなら、<strong>主力はGLM-5.2、低価格処理はDeepSeek Flash、高難度はKimi K3</strong>という構成が合理的です。</p>
+<h4 id="conclusion-deepseek-v4-flash-2"><a class="heading-permalink" href="#conclusion-deepseek-v4-flash-2" aria-label="この見出しへのリンク">#</a>DeepSeek V4 Flash</h4>
+<p><strong>評価：最安の実用Coding Agent</strong></p>
+<p>1セッション$0.168は圧倒的です。Terminal-Bench 82.7も低価格モデルとして高く、2026年7月31日の再学習でAgent性能が大きく改善しました。</p>
+<p>向いている処理：</p>
+<ul>
+<li>リポジトリ探索</li>
+<li>テスト生成</li>
+<li>コードレビューの一次分析</li>
+<li>小規模Issue</li>
+<li>ドキュメント更新</li>
+<li>CIログ分析</li>
+<li>サブエージェント</li>
+<li>大量の並列処理</li>
+</ul>
+<p>難しい複数ファイル変更で失敗したら、GLMまたはTerraへ昇格させる使い方が適切です。</p>
+<h4 id="conclusion-deepseek-v4-pro-2"><a class="heading-permalink" href="#conclusion-deepseek-v4-pro-2" aria-label="この見出しへのリンク">#</a>DeepSeek V4 Pro</h4>
+<p><strong>評価：コーディング主力としては現在評価保留</strong></p>
+<p>名称からFlashより上位に見えますが、7月31日に更新されたのはFlashだけで、Proは未更新です。DeepSeekは最新FlashのAgent評価がV4 Pro Previewを大きく上回ると説明しています。出典: <a href="https://api-docs.deepseek.com/updates/">DeepSeek API Updates</a></p>
+<p>現時点では次の用途に限定するのが妥当です。</p>
+<ul>
+<li>数学的・アルゴリズム的な推論</li>
+<li>Flashとは別の回答を得る</li>
+<li>設計案の比較</li>
+<li>Flashが推論面で失敗したケース</li>
+</ul>
+<p>Coding Agentの標準モデルとして、Flashより先に選ぶ根拠は弱くなっています。</p>
+<h4 id="conclusion-kimi-k27-code-2"><a class="heading-permalink" href="#conclusion-kimi-k27-code-2" aria-label="この見出しへのリンク">#</a>Kimi K2.7 Code</h4>
+<p><strong>評価：性能より、公開評価不足が問題</strong></p>
+<p>コード特化、256K、画像・動画、Thinking、Tool Callingという仕様は魅力的ですが、SWE-bench Pro、DeepSWE、Terminal-Benchなどの同条件スコアが十分公開されていません。</p>
+<p>1セッション$1.35とGLMより安いものの、現時点では次の位置付けです。</p>
+<ul>
+<li>Kimi K3より安いKimi系モデル</li>
+<li>画像・動画を含むコード修正</li>
+<li>Kimi Code CLIの標準モデル</li>
+<li>独立レビュー用の別系列モデル</li>
+</ul>
+<p>ベンチマーク透明性を重視するなら、GLM-5.2またはGPT-5.6 Luna／Terraを先に評価すべきです。</p>
+<h3 id="conclusion-個人開発向け最終順位"><a class="heading-permalink" href="#conclusion-個人開発向け最終順位" aria-label="この見出しへのリンク">#</a>個人開発向け最終順位</h3>
+<h4 id="conclusion-性能だけを重視"><a class="heading-permalink" href="#conclusion-性能だけを重視" aria-label="この見出しへのリンク">#</a>性能だけを重視</h4>
+<ol>
+<li><strong>Claude Opus 5</strong>：実リポジトリIssue修正</li>
+<li><strong>GPT-5.6 Sol</strong>：総合Coding Agent</li>
+<li><strong>Kimi K3</strong>：長時間・ターミナルAgent</li>
+<li><strong>GPT-5.6 Terra</strong></li>
+<li><strong>GLM-5.2</strong></li>
+<li><strong>GPT-5.6 Luna</strong></li>
+<li><strong>DeepSeek V4 Flash</strong></li>
+<li>DeepSeek V4 Pro：現行評価不足</li>
+<li>Kimi K2.7 Code：公開評価不足</li>
+</ol>
+<h4 id="conclusion-価格性能比を重視"><a class="heading-permalink" href="#conclusion-価格性能比を重視" aria-label="この見出しへのリンク">#</a>価格性能比を重視</h4>
+<ol>
+<li><strong>GPT-5.6 Luna</strong></li>
+<li><strong>DeepSeek V4 Flash</strong></li>
+<li><strong>GLM-5.2</strong></li>
+<li><strong>GPT-5.6 Terra</strong></li>
+<li>DeepSeek V4 Pro</li>
+<li>Kimi K3</li>
+<li>Kimi K2.7 Code</li>
+<li>Claude Opus 5</li>
+<li>GPT-5.6 Sol</li>
+</ol>
+<p>Lunaを1位としたのは、Flashより少し高いだけで、公開されている主要Coding Agentベンチマークがかなり高いためです。純粋なトークン単価だけならFlashが1位です。</p>
+<h3 id="conclusion-推奨する段階的ルーティング"><a class="heading-permalink" href="#conclusion-推奨する段階的ルーティング" aria-label="この見出しへのリンク">#</a>推奨する段階的ルーティング</h3>
+<p>Issue単位でAI実装、独立レビュー、CI確認を行う場合は、次の4段階が適します。</p>
+<pre><code class="language-text">第1段階：探索・小規模修正・一次レビュー
+  DeepSeek V4 Flash
+  または GPT-5.6 Luna
+
+第2段階：通常のIssue実装
+  GLM-5.2
+  または GPT-5.6 Terra
+
+第3段階：難しい長時間Agent
+  Kimi K3
+  または GPT-5.6 Sol
+
+第4段階：失敗コストの高い最終レビュー
+  Claude Opus 5
+</code></pre>
+<h4 id="conclusion-最も推奨する構成"><a class="heading-permalink" href="#conclusion-最も推奨する構成" aria-label="この見出しへのリンク">#</a>最も推奨する構成</h4>
+<table>
+<thead>
+<tr>
+<th>役割</th>
+<th>推奨モデル</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>リポジトリ探索</td>
+<td>DeepSeek V4 Flash</td>
+</tr>
+<tr>
+<td>日常的な実装</td>
+<td>GPT-5.6 Luna</td>
+</tr>
+<tr>
+<td>本格的なIssue実装</td>
+<td>GLM-5.2またはGPT-5.6 Terra</td>
+</tr>
+<tr>
+<td>独立レビュー</td>
+<td>Claude Opus 5</td>
+</tr>
+<tr>
+<td>最難関タスク</td>
+<td>GPT-5.6 SolまたはKimi K3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>単一モデルに統一するならGPT-5.6 Terra。</strong></p>
+<p><strong>中国製モデルに限定するならGLM-5.2。</strong></p>
+<p><strong>費用最優先ならDeepSeek V4 Flash。</strong></p>
+<p><strong>実装成功率と費用の両方を見るならGPT-5.6 Luna。</strong></p>
+<p>価格・ベンチマーク・モデル更新を月1回確認する監視設定も有効です。</p>
+<blockquote>
+<p>注意: API従量課金のみの比較です。月額プラン枠、OpenRouter手数料、実APIでの成功率・人間修正時間は含まれません。法人導入や機密コード送信は、元記事の検証計画とセキュリティ・法務ゲートを通してください。</p>
 </blockquote></div>
     </section>
 
@@ -2235,7 +2854,35 @@ GLM Coding PlanまたはZ.ai従量API
 <li>Kimi K3</li>
 </ol>
 <p><strong>個人開発のコスト、実装品質、接続のしやすさを総合すると、DeepSeek V4 Flash／Proの組み合わせが第一候補です。</strong> GLM-5.2は大量利用時の定額候補、Kimi K2.7 Codeはコード特化の代替、Kimi K3は高難度のスポット利用と位置付けるのが適切です。</p>
-<p>法人導入、機密コード送信、日本カード承認、実API性能は、元記事の検証計画とセキュリティ・法務ゲートで確定してください。</p></div>
+<p>法人導入、機密コード送信、日本カード承認、実API性能は、元記事の検証計画とセキュリティ・法務ゲートで確定してください。</p>
+<h2 id="conclusion-plain-コーディング性能api費用の再比較2026-08-01"><a class="heading-permalink" href="#conclusion-plain-コーディング性能api費用の再比較2026-08-01" aria-label="この見出しへのリンク">#</a>コーディング性能・API費用の再比較（2026-08-01）</h2>
+<p>この節は、直前の個人開発向け追記のうち、Coding Agentとしての主力候補をベンチマークとAPI単価で再評価した第二の追記です。直前ではDeepSeek V4 Flash／Proを中心に推奨していましたが、コーディングベンチマークまで見ると、<strong>Coding Agent用途では現時点でFlash-0731をProより優先</strong>するのが妥当です。費用はAPI従量課金のみで比較し、Cursor、Claude Code、Codex、ChatGPTなどの月額枠は除外しています。</p>
+<h3 id="conclusion-plain-再比較の結論5点"><a class="heading-permalink" href="#conclusion-plain-再比較の結論5点" aria-label="この見出しへのリンク">#</a>再比較の結論（5点）</h3>
+<ol>
+<li><strong>低価格な日常開発：GPT-5.6 LunaまたはDeepSeek V4 Flash</strong></li>
+<li><strong>性能と価格の総合バランス：GPT-5.6 Terra</strong></li>
+<li><strong>中国製モデルの主力候補：GLM-5.2</strong></li>
+<li><strong>難しいターミナル・長時間Agent：GPT-5.6 SolまたはKimi K3</strong></li>
+<li><strong>実リポジトリの難しいバグ修正：Claude Opus 5</strong></li>
+</ol>
+<h3 id="conclusion-plain-flash-0731とpro"><a class="heading-permalink" href="#conclusion-plain-flash-0731とpro" aria-label="この見出しへのリンク">#</a>Flash-0731とPro</h3>
+<p>DeepSeekは、7月31日版FlashのAgent性能がV4 Pro Previewを大幅に上回ると説明しており、現行Proは未更新です。Coding Agentの標準として、ProをFlashより先に選ぶ根拠は弱くなっています。</p>
+<h3 id="conclusion-plain-費用の目安"><a class="heading-permalink" href="#conclusion-plain-費用の目安" aria-label="この見出しへのリンク">#</a>費用の目安</h3>
+<p>中～大規模のIssue対応1件（入力100万／出力10万トークン、キャッシュなし）では、Flash約$0.17、Luna約$0.32、GLM-5.2約$1.84、Terra約$3.20、Opus 5約$7.50、Sol約$8.00です。Flashが最安、Lunaは価格性能が強く、Terraは総合バランス、Opus／Solは高価なスポット利用向きです。</p>
+<h3 id="conclusion-plain-4段階ルーティング"><a class="heading-permalink" href="#conclusion-plain-4段階ルーティング" aria-label="この見出しへのリンク">#</a>4段階ルーティング</h3>
+<ol>
+<li>探索・小規模修正・一次レビュー：DeepSeek V4 FlashまたはGPT-5.6 Luna</li>
+<li>通常のIssue実装：GLM-5.2またはGPT-5.6 Terra</li>
+<li>難しい長時間Agent：Kimi K3またはGPT-5.6 Sol</li>
+<li>失敗コストの高い最終レビュー：Claude Opus 5</li>
+</ol>
+<h3 id="conclusion-plain-一言での推奨"><a class="heading-permalink" href="#conclusion-plain-一言での推奨" aria-label="この見出しへのリンク">#</a>一言での推奨</h3>
+<ul>
+<li><strong>単一モデルに統一するならGPT-5.6 Terra</strong></li>
+<li><strong>中国製モデルに限定するならGLM-5.2</strong></li>
+<li><strong>費用最優先ならDeepSeek V4 Flash</strong></li>
+<li><strong>実装成功率と費用の両方を見るならGPT-5.6 Luna</strong></li>
+</ul></div>
       <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
     </section>
 

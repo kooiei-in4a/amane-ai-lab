@@ -59,12 +59,69 @@ ALLOWED_TAGS = [
     "div",
 ]
 ALLOWED_ATTRS = {
-    "a": ["href", "title", "rel"],
+    "a": ["href", "title", "rel", "class", "aria-label"],
     "code": ["class"],
     "pre": ["class"],
     "span": ["class"],
     "div": ["class"],
+    "h1": ["id"],
+    "h2": ["id"],
+    "h3": ["id"],
+    "h4": ["id"],
+    "h5": ["id"],
+    "h6": ["id"],
 }
+
+HEADING_HTML_RE = re.compile(r"<h([1-6])>(.*?)</h\1>", re.IGNORECASE | re.DOTALL)
+TAG_RE = re.compile(r"<[^>]+>")
+
+
+def slugify_heading(text: str) -> str:
+    """Build a stable, URL-safe fragment id from heading text."""
+
+    cleaned = TAG_RE.sub("", text)
+    cleaned = cleaned.strip().lower()
+    cleaned = cleaned.replace("\u3000", " ")
+    cleaned = re.sub(r"\s+", "-", cleaned)
+    cleaned = re.sub(r"[^\w\-一-龥ぁ-んァ-ヴー]", "", cleaned, flags=re.UNICODE)
+    cleaned = re.sub(r"-{2,}", "-", cleaned).strip("-")
+    return (cleaned or "section")[:96]
+
+
+def agent_slug(name: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+    return slug or "agent"
+
+
+def add_heading_ids(
+    html: str,
+    *,
+    prefix: str = "",
+    toc_max_level: int = 2,
+) -> tuple[str, list[dict[str, Any]]]:
+    """Insert unique heading ids and collect TOC entries up to toc_max_level."""
+
+    used: dict[str, int] = {}
+    entries: list[dict[str, Any]] = []
+
+    def replacer(match: re.Match[str]) -> str:
+        level = int(match.group(1))
+        inner = match.group(2)
+        plain = TAG_RE.sub("", inner).strip()
+        base = slugify_heading(plain)
+        candidate = f"{prefix}{base}" if prefix else base
+        count = used.get(candidate, 0) + 1
+        used[candidate] = count
+        heading_id = candidate if count == 1 else f"{candidate}-{count}"
+        if level <= toc_max_level and plain:
+            entries.append({"id": heading_id, "level": level, "title": plain})
+        permalink = (
+            f'<a class="heading-permalink" href="#{html_escape(heading_id)}" '
+            f'aria-label="この見出しへのリンク">#</a>'
+        )
+        return f'<h{level} id="{html_escape(heading_id)}">{permalink}{inner}</h{level}>'
+
+    return HEADING_HTML_RE.sub(replacer, html), entries
 
 
 def markdown_to_html(text: str) -> str:

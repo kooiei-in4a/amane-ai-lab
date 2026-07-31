@@ -39,17 +39,21 @@
       </p>
       <h1>AIエージェント協働型開発の未来</h1>
       <p class="article-summary">AI開発で希少になるのは、コードや単なる証拠ログではない。重要な不確実性を減らす独立した証拠設計と、残余リスクを引き受ける能力である。</p>
+      <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
       <ul class="tag-list"><li>AIエージェント</li><li>SDLC</li><li>人材戦略</li><li>未来予測</li><li>検証</li></ul>
     </header>
 
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-synthesis">合成</span> <a class="tldr-link" href="#conclusion-中心命題">希少になるのはコードや証拠ログではなく、独立した証拠設計と残余リスクの引受である</a></li><li><span class="tldr-source tldr-source-claude">Claude</span> <a class="tldr-link" href="#agent-claude-11-最も重要な結論制約はモデル性能ではなく検証の経済学である">本質的制約はモデル性能ではなく「検証の経済学」である</a></li><li><span class="tldr-source tldr-source-synthesis">合成</span> <a class="tldr-link" href="#analysis-5-日本評価の5層">日本は宣言・PoCでは先行し得るが、全社展開や成果計測とは層を分けて評価する</a></li><li><span class="tldr-source tldr-source-claude">Claude</span> <a class="tldr-link" href="#agent-claude-61-まず上流工程が重要になるを否定する">人材価値は「上流へ逃げる」のではなく、検証・引受側へ移る</a></li><li><span class="tldr-source tldr-source-chatgpt">ChatGPT</span> <a class="tldr-link" href="#agent-chatgpt-最も重要な結論">生成は速くなっても、レビュー・承認・証拠で組織成果が詰まりやすい</a></li></ol></section>
+    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-chatgpt">ChatGPT</a><ul><li class="toc-item"><a href="#agent-chatgpt-1-エグゼクティブサマリー">1. エグゼクティブサマリー</a></li><li class="toc-item"><a href="#agent-chatgpt-2-未来の開発モデル">2. 未来の開発モデル</a></li><li class="toc-item"><a href="#agent-chatgpt-3-日本企業の調査結果">3. 日本企業の調査結果</a></li><li class="toc-item"><a href="#agent-chatgpt-4-海外の先行事例">4. 海外の先行事例</a></li><li class="toc-item"><a href="#agent-chatgpt-5-現在の性能をどう評価するべきか">5. 現在の性能をどう評価するべきか</a></li><li class="toc-item"><a href="#agent-chatgpt-6-4つの未来シナリオ">6. 4つの未来シナリオ</a></li><li class="toc-item"><a href="#agent-chatgpt-7-itエンジニアの価値はどこへ移るか">7. ITエンジニアの価値はどこへ移るか</a></li><li class="toc-item"><a href="#agent-chatgpt-8-新しく生まれる人材像職種">8. 新しく生まれる人材像・職種</a></li><li class="toc-item"><a href="#agent-chatgpt-9-活躍する企業像">9. 活躍する企業像</a></li><li class="toc-item"><a href="#agent-chatgpt-10-新しいサービスツール機会">10. 新しいサービス・ツール機会</a></li><li class="toc-item"><a href="#agent-chatgpt-11-周辺で生まれる新しいビジネス">11. 周辺で生まれる新しいビジネス</a></li><li class="toc-item"><a href="#agent-chatgpt-12-新しい働き方と組織構造">12. 新しい働き方と組織構造</a></li><li class="toc-item"><a href="#agent-chatgpt-13-特に重要な15の問いへの回答">13. 特に重要な15の問いへの回答</a></li><li class="toc-item"><a href="#agent-chatgpt-14-具体的な行動計画">14. 具体的な行動計画</a></li><li class="toc-item"><a href="#agent-chatgpt-15-今すぐ始めること観測すること避けること">15. 今すぐ始めること・観測すること・避けること</a></li><li class="toc-item"><a href="#agent-chatgpt-16-最終提言">16. 最終提言</a></li></ul></li><li><a href="#agent-claude">Claude</a><ul><li class="toc-item toc-level-2"><a href="#agent-claude-0-本レポートの前提と読み方">0. 本レポートの前提と読み方</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-1-エグゼクティブサマリー">1. エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-2-未来の開発モデル">2. 未来の開発モデル</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-3-日本企業の調査結果">3. 日本企業の調査結果</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-4-海外先行事例と日本との差">4. 海外先行事例と日本との差</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-5-4つの未来シナリオ">5. 4つの未来シナリオ</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-6-活躍する人材像">6. 活躍する人材像</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-7-itエンジニアの価値向上戦略">7. ITエンジニアの価値向上戦略</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-8-活躍する企業像">8. 活躍する企業像</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-9-活躍するサービスツール22案">9. 活躍するサービス・ツール（22案）</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-10-周辺で生まれる新しいビジネス20件">10. 周辺で生まれる新しいビジネス（20件）</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-11-新しい働き方と組織構造">11. 新しい働き方と組織構造</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-12-具体的な行動計画">12. 具体的な行動計画</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-13-深掘り15問への回答反論込み">13. 深掘り15問への回答（反論込み）</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-14-反対意見と失敗シナリオ">14. 反対意見と失敗シナリオ</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-15-最終提言">15. 最終提言</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-16-最終的な問いへの回答">16. 最終的な問いへの回答</a></li><li class="toc-item toc-level-2"><a href="#agent-claude-付録主要な出典">付録：主要な出典</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
+
     <section class="panel" aria-labelledby="background-heading">
       <h2 id="background-heading">検討に至った背景</h2>
-      <div class="prose"><h1>検討に至った背景</h1>
+      <div class="prose"><h1 id="background-検討に至った背景"><a class="heading-permalink" href="#background-検討に至った背景" aria-label="この見出しへのリンク">#</a>検討に至った背景</h1>
 <p>この記事の調査は、最初から「未来予測レポートを書こう」として始まったものではない。<br>
 ある種の <strong>ADR統制型・AI-PR駆動・役割分離型マルチエージェント開発</strong> を運用するなかで、「数年後の開発」と「エンジニアとしての立ち位置」を考える対話から生まれた。</p>
 <p>以下は、その対話の流れを一般化したものである。</p>
 <hr>
-<h2>1. いまの開発手法を何と呼ぶか</h2>
+<h2 id="background-1-いまの開発手法を何と呼ぶか"><a class="heading-permalink" href="#background-1-いまの開発手法を何と呼ぶか" aria-label="この見出しへのリンク">#</a>1. いまの開発手法を何と呼ぶか</h2>
 <p><strong>問い：</strong> 重要な設計判断を ADR で統制し、Issue から Draft PR・独立レビュー・検証・マージまでを AI が役割分担して進めるやり方は、「ADR開発 ＋ AI-PR駆動 ＋ マルチエージェント」と言えるか。</p>
 <p><strong>整理した結果：</strong></p>
 <blockquote>
@@ -87,7 +91,7 @@
 </blockquote>
 <p>最も外してはいけない点は、<strong>完全自律ではなく、人間が仕様決定・権限開放・最終受入を担うこと</strong>である。</p>
 <hr>
-<h2>2. 上手くいく点と重さ</h2>
+<h2 id="background-2-上手くいく点と重さ"><a class="heading-permalink" href="#background-2-上手くいく点と重さ" aria-label="この見出しへのリンク">#</a>2. 上手くいく点と重さ</h2>
 <p><strong>問い：</strong> この手法は上手くいくか。</p>
 <p><strong>評価の骨子：</strong></p>
 <ul>
@@ -113,7 +117,7 @@
 </blockquote>
 <p>改善の方向としては、変更を Low / Medium / High / Critical に分けて工程を選択すること、およびプロセス自体の計測（Lead time、有効指摘数、再指摘率など）が挙げられる。</p>
 <hr>
-<h2>3. 「数年後、確認以外は全部AI」は来るか</h2>
+<h2 id="background-3-数年後確認以外は全部aiは来るか"><a class="heading-permalink" href="#background-3-数年後確認以外は全部aiは来るか" aria-label="この見出しへのリンク">#</a>3. 「数年後、確認以外は全部AI」は来るか</h2>
 <p><strong>問い：</strong> 数年後、人間の確認・レビュー以外は AI エージェントが自動協働してシステムを構築する未来はあるか。忖度なく。</p>
 <p><strong>結論の骨子：</strong></p>
 <ul>
@@ -134,7 +138,7 @@
 <p>人間が「確認だけ」になる条件として、正本の明確さ、機械判定可能な受入、権限分離、証拠検証、失敗時の復旧、が挙げられる。</p>
 <p>いま多くの現場で行われている強い Human-in-the-loop 運用は、未来方式の<strong>手動プロトタイプ</strong>に近い。次の段階はモデルを賢くすることより、<strong>人間が手でやっている工程制御を仕様化して自動化すること</strong>である、という診断でこの段は閉じた。</p>
 <hr>
-<h2>4. 人間から見える未来像の確認</h2>
+<h2 id="background-4-人間から見える未来像の確認"><a class="heading-permalink" href="#background-4-人間から見える未来像の確認" aria-label="この見出しへのリンク">#</a>4. 人間から見える未来像の確認</h2>
 <p><strong>問い：</strong> Product Agent がヒアリング〜要件定義〜プレゼンし、承認後に Architecture / Planning / Implementation… が進み、人間は PM エージェントに進捗を聞き、よいタイミングでレビュー依頼を受ける——この未来像で合っているか。</p>
 <p><strong>答え：</strong> ほぼ合っている。修正点は1つ。</p>
 <blockquote>
@@ -149,7 +153,7 @@
 <li>責任を引き受ける</li>
 </ol>
 <hr>
-<h2>5. だから調査プロンプトが必要になった</h2>
+<h2 id="background-5-だから調査プロンプトが必要になった"><a class="heading-permalink" href="#background-5-だから調査プロンプトが必要になった" aria-label="この見出しへのリンク">#</a>5. だから調査プロンプトが必要になった</h2>
 <p>ここまでの整理で見えてきたのは、「開発手法の延長に、検証と責任が中心の未来がある」という感触だった。</p>
 <p>そこで知りたくなったのは次である。</p>
 <ul>
@@ -970,7 +974,7 @@ AIエージェントが多くの実務を担当する場合、働き方がどう
         <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
       </div>
       <div id="agent-responses"><section class="agent-response" data-agent="ChatGPT">
-  <details>
+  <details id="agent-chatgpt">
     <summary>
       <span class="agent-name">ChatGPT</span>
       <span class="agent-meta">ChatGPT（調査回答・モデル名は回答本文に未記載） / 2026-07-30 / integrity=raw</span>
@@ -980,11 +984,11 @@ AIエージェントが多くの実務を担当する場合、働き方がどう
       <div><dt>添付</dt><dd>なし</dd></div>
       <div><dt>完全性</dt><dd>raw</dd></div>
     </dl>
-    <div class="agent-body prose"><h1>AIエージェント協働型開発がもたらす人材・企業・産業構造の変化</h1>
-<h2>調査・構想報告</h2>
+    <div class="agent-body prose"><h1 id="agent-chatgpt-aiエージェント協働型開発がもたらす人材企業産業構造の変化"><a class="heading-permalink" href="#agent-chatgpt-aiエージェント協働型開発がもたらす人材企業産業構造の変化" aria-label="この見出しへのリンク">#</a>AIエージェント協働型開発がもたらす人材・企業・産業構造の変化</h1>
+<h2 id="agent-chatgpt-調査構想報告"><a class="heading-permalink" href="#agent-chatgpt-調査構想報告" aria-label="この見出しへのリンク">#</a>調査・構想報告</h2>
 <p><strong>調査基準日：2026年7月30日</strong></p>
 <p>本報告では、公開情報で確認できる「現在の到達点」と、そこから導く「将来予測」を分離した。企業発表の生産性数値は、特記しない限り企業自身による測定・公表であり、第三者監査済みの値ではない。</p>
-<h3>到達段階の定義</h3>
+<h3 id="agent-chatgpt-到達段階の定義"><a class="heading-permalink" href="#agent-chatgpt-到達段階の定義" aria-label="この見出しへのリンク">#</a>到達段階の定義</h3>
 <table>
 <thead>
 <tr>
@@ -1021,8 +1025,8 @@ AIエージェントが多くの実務を担当する場合、働き方がどう
 </table>
 <p>Stageは企業全体ではなく、<strong>公開情報で確認できた最も進んだ適用領域</strong>を評価している。</p>
 <hr>
-<h1>1. エグゼクティブサマリー</h1>
-<h2>最も重要な結論</h2>
+<h1 id="agent-chatgpt-1-エグゼクティブサマリー"><a class="heading-permalink" href="#agent-chatgpt-1-エグゼクティブサマリー" aria-label="この見出しへのリンク">#</a>1. エグゼクティブサマリー</h1>
+<h2 id="agent-chatgpt-最も重要な結論"><a class="heading-permalink" href="#agent-chatgpt-最も重要な結論" aria-label="この見出しへのリンク">#</a>最も重要な結論</h2>
 <p>提示された未来像は、単なる空想ではない。</p>
 <p>2026年時点ですでに、以下は現実になっている。</p>
 <ul>
@@ -1035,7 +1039,7 @@ AIエージェントが多くの実務を担当する場合、働き方がどう
 </ul>
 <p>一方、<strong>複雑な企業システム全般で、人間が重要判断だけを担うStage 6が確立したとはいえない</strong>。現状は、整備された対象、反復的な変更、テスト可能な領域、グリーンフィールド、コード移行などで先行している。</p>
 <p>富士通は、医療費改定に伴うパッケージ変更で、要求定義から設計、実装、結合テストまでを複数エージェントで自動化し、2026年1月から実際の改修に利用している。公開情報で確認できる日本企業の中では、今回の未来像に最も近い。ただし、特定の法改正対応・業務パッケージという構造化しやすい領域であり、一般的な新規システム開発まで同じ成果が出ることはまだ証明されていない。(<a href="https://global.fujitsu/es-southamerica/newsroom/southamerica/2026/10-03" title="https://global.fujitsu/es-southamerica/newsroom/southamerica/2026/10-03">富士通</a>)</p>
-<h2>この未来が実現する確率</h2>
+<h2 id="agent-chatgpt-この未来が実現する確率"><a class="heading-permalink" href="#agent-chatgpt-この未来が実現する確率" aria-label="この見出しへのリンク">#</a>この未来が実現する確率</h2>
 <p>本調査の予測は以下である。</p>
 <ul>
 <li><strong>2030年までに、整備された限定領域でStage 5が一般化する確率：70～80%</strong></li>
@@ -1044,7 +1048,7 @@ AIエージェントが多くの実務を担当する場合、働き方がどう
 <li><strong>人間がほぼ不要になる確率は、それよりかなり低い</strong></li>
 </ul>
 <p>最も可能性が高いのは、後述する<strong>「段階的な普及」シナリオ</strong>である。</p>
-<h2>日本企業の現在地</h2>
+<h2 id="agent-chatgpt-日本企業の現在地"><a class="heading-permalink" href="#agent-chatgpt-日本企業の現在地" aria-label="この見出しへのリンク">#</a>日本企業の現在地</h2>
 <p>日本には、明確にこの未来へ進んでいる企業が存在する。</p>
 <ul>
 <li><strong>富士通</strong>：限定領域ながらStage 5の実運用</li>
@@ -1057,7 +1061,7 @@ AIエージェントが多くの実務を担当する場合、働き方がどう
 <li><strong>LayerX</strong>：人間の承認・判断体験という次のボトルネックに取り組む</li>
 </ul>
 <p>ただし、2026年の大企業を対象とした6か国比較では、「AIエージェントを理解し、導入済みまたは導入を進めている」とする日本企業は33%で、米国、英国、中国を下回る。日本全体では、先進企業と一般企業の差が大きい。(<a href="https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/770d4c48-7f40-49a6-a49d-56a763800a42/4e47ee0e/20260714_meeting_ai-advisory_outline_02.pdf" title="https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/770d4c48-7f40-49a6-a49d-56a763800a42/4e47ee0e/20260714_meeting_ai-advisory_outline_02.pdf">デジタル庁</a>)</p>
-<h2>ITエンジニアへの最大の影響</h2>
+<h2 id="agent-chatgpt-itエンジニアへの最大の影響"><a class="heading-permalink" href="#agent-chatgpt-itエンジニアへの最大の影響" aria-label="この見出しへのリンク">#</a>ITエンジニアへの最大の影響</h2>
 <p>価値は単純に「下流から上流へ移る」のではない。</p>
 <p>要求分析、設計、計画、顧客説明などの上流工程もAI化される。人間の価値は、より正確には次へ移る。</p>
 <ol>
@@ -1070,7 +1074,7 @@ AIエージェントが多くの実務を担当する場合、働き方がどう
 <li><strong>最終判断と事業責任を負う</strong></li>
 </ol>
 <p>コード理解は不要にならない。ただし、差別化軸は「何行書いたか」から、<strong>AIが安全に大量の変更を行える開発システムを作れるか</strong>へ移る。</p>
-<h2>最大の事業機会</h2>
+<h2 id="agent-chatgpt-最大の事業機会"><a class="heading-permalink" href="#agent-chatgpt-最大の事業機会" aria-label="この見出しへのリンク">#</a>最大の事業機会</h2>
 <p>特に有望なのは次の領域である。</p>
 <ol>
 <li><strong>既存システムのAI可読化・Agent Readiness改善</strong></li>
@@ -1083,7 +1087,7 @@ AIエージェントが多くの実務を担当する場合、働き方がどう
 <li><strong>増えすぎたAI生成ソフトウェアの統合・廃棄</strong></li>
 </ol>
 <p>MCPはLinux Foundation傘下のAgentic AI Foundationへ移管され、A2Aも150以上の組織が支持する相互運用プロトコルへ発展している。接続規格そのものより、その上で必要になる権限、評価、監査、証拠管理に商機が移る可能性が高い。(<a href="https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation" title="https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation">Anthropic</a>)</p>
-<h2>最優先の提言</h2>
+<h2 id="agent-chatgpt-最優先の提言"><a class="heading-permalink" href="#agent-chatgpt-最優先の提言" aria-label="この見出しへのリンク">#</a>最優先の提言</h2>
 <p>日本で活動する小規模事業者・ITエンジニアが取るべきポジションは、次である。</p>
 <blockquote>
 <p><strong>業界特化型AI Software Factory Architect</strong><br>
@@ -1091,10 +1095,10 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </blockquote>
 <p>さらに、単なる技術支援者ではなく、<strong>特定業界の業務課題と販売経路を持つB2B事業者</strong>として動くべきである。</p>
 <hr>
-<h1>2. 未来の開発モデル</h1>
-<h2>2.1 人間とAIの役割分担</h2>
+<h1 id="agent-chatgpt-2-未来の開発モデル"><a class="heading-permalink" href="#agent-chatgpt-2-未来の開発モデル" aria-label="この見出しへのリンク">#</a>2. 未来の開発モデル</h1>
+<h2 id="agent-chatgpt-21-人間とaiの役割分担"><a class="heading-permalink" href="#agent-chatgpt-21-人間とaiの役割分担" aria-label="この見出しへのリンク">#</a>2.1 人間とAIの役割分担</h2>
 <p>将来の中心は、次のような構造になる可能性が高い。</p>
-<h3>人間</h3>
+<h3 id="agent-chatgpt-人間"><a class="heading-permalink" href="#agent-chatgpt-人間" aria-label="この見出しへのリンク">#</a>人間</h3>
 <ul>
 <li>解くべき問題と事業目標を承認する</li>
 <li>予算、期限、許容リスクを決める</li>
@@ -1103,7 +1107,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>AIの証拠と選択肢を比較する</li>
 <li>本番公開、事故対応、契約上の責任を負う</li>
 </ul>
-<h3>PM／Orchestrator Agent</h3>
+<h3 id="agent-chatgpt-pmorchestrator-agent"><a class="heading-permalink" href="#agent-chatgpt-pmorchestrator-agent" aria-label="この見出しへのリンク">#</a>PM／Orchestrator Agent</h3>
 <ul>
 <li>永続化されたワークフロー状態を管理する</li>
 <li>作業を専門エージェントへ割り当てる</li>
@@ -1112,7 +1116,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>判断材料と選択肢をまとめる</li>
 <li>停止、再実行、ロールバックを制御する</li>
 </ul>
-<h3>専門エージェント</h3>
+<h3 id="agent-chatgpt-専門エージェント"><a class="heading-permalink" href="#agent-chatgpt-専門エージェント" aria-label="この見出しへのリンク">#</a>専門エージェント</h3>
 <ul>
 <li>Discovery／Business Analysis</li>
 <li>Requirements</li>
@@ -1129,7 +1133,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>Operations</li>
 <li>Incident Analysis</li>
 </ul>
-<h3>制御基盤</h3>
+<h3 id="agent-chatgpt-制御基盤"><a class="heading-permalink" href="#agent-chatgpt-制御基盤" aria-label="この見出しへのリンク">#</a>制御基盤</h3>
 <ul>
 <li>正本となる要求・仕様</li>
 <li>ADR、Issue、PR、テストの追跡可能性</li>
@@ -1142,7 +1146,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>異常検知</li>
 <li>停止・復旧・ロールバック</li>
 </ul>
-<h2>2.2 「PM Agentだけ」では成立しない</h2>
+<h2 id="agent-chatgpt-22-pm-agentだけでは成立しない"><a class="heading-permalink" href="#agent-chatgpt-22-pm-agentだけでは成立しない" aria-label="この見出しへのリンク">#</a>2.2 「PM Agentだけ」では成立しない</h2>
 <p>PM Agentが高性能でも、次が欠けていれば自律開発は成立しない。</p>
 <ul>
 <li>古い仕様と新しい仕様を区別できない</li>
@@ -1164,8 +1168,8 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </blockquote>
 <p>DORAも、AIは組織の強みと弱みを増幅するものであり、成果はツール単体より基礎的な組織・開発システムに依存すると結論づけている。(<a href="https://dora.dev/dora-report-2025/" title="https://dora.dev/dora-report-2025/">ドーラ</a>)</p>
 <hr>
-<h1>3. 日本企業の調査結果</h1>
-<h2>3.1 比較表</h2>
+<h1 id="agent-chatgpt-3-日本企業の調査結果"><a class="heading-permalink" href="#agent-chatgpt-3-日本企業の調査結果" aria-label="この見出しへのリンク">#</a>3. 日本企業の調査結果</h1>
+<h2 id="agent-chatgpt-31-比較表"><a class="heading-permalink" href="#agent-chatgpt-31-比較表" aria-label="この見出しへのリンク">#</a>3.1 比較表</h2>
 <table>
 <thead>
 <tr>
@@ -1270,8 +1274,8 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <p>DeNAは、統合SDLCより一段手前だが、コーディングエージェントを実際の大組織へ展開するために必要なVPC、SSO、権限、コスト監視、段階導入を具体化している点で重要である。(<a href="https://dena.com/jp/news/5356/" title="https://dena.com/jp/news/5356/">DeNA</a>)</p>
 <p>Money Forwardの事例は、「完全自律より、人間が工程ごとに確認した方が、最終的な手直しを減らせる」という実務的な示唆を示している。(<a href="https://global.moneyforward-dev.jp/2025/06/24/how-to-utilize-ai-agents-to-accelerate-frontend-code-migration/" title="https://global.moneyforward-dev.jp/2025/06/24/how-to-utilize-ai-agents-to-accelerate-frontend-code-migration/">マネーフォワード開発者ブログ</a>)</p>
 <p>LayerXのAgent Inboxは、AIの作業量が増えた後に生じる「人間の確認待ち」を、独立した製品課題として扱っている。これは将来の重要市場である。(<a href="https://tech.layerx.co.jp/entry/agent-inbox-for-human-judgment" title="https://tech.layerx.co.jp/entry/agent-inbox-for-human-judgment">LayerX エンジニアブログ</a>)</p>
-<h2>3.2 日本企業の総合評価</h2>
-<h3>日本で明確に起きていること</h3>
+<h2 id="agent-chatgpt-32-日本企業の総合評価"><a class="heading-permalink" href="#agent-chatgpt-32-日本企業の総合評価" aria-label="この見出しへのリンク">#</a>3.2 日本企業の総合評価</h2>
+<h3 id="agent-chatgpt-日本で明確に起きていること"><a class="heading-permalink" href="#agent-chatgpt-日本で明確に起きていること" aria-label="この見出しへのリンク">#</a>日本で明確に起きていること</h3>
 <ul>
 <li>コーディングエージェントの大規模導入</li>
 <li>法改正対応やコード移行の自動化</li>
@@ -1281,7 +1285,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>人間の承認体験の製品化</li>
 <li>工数契約から成果・顧客価値への移行構想</li>
 </ul>
-<h3>まだ十分に確認できないこと</h3>
+<h3 id="agent-chatgpt-まだ十分に確認できないこと"><a class="heading-permalink" href="#agent-chatgpt-まだ十分に確認できないこと" aria-label="この見出しへのリンク">#</a>まだ十分に確認できないこと</h3>
 <ul>
 <li>多様な案件を横断したStage 5の安定運用</li>
 <li>品質、障害、ロールバックを含む第三者検証</li>
@@ -1291,7 +1295,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>契約責任・保証を含めた標準的な商流</li>
 <li>人月型SIから成果型SIへの大規模転換</li>
 </ul>
-<h2>3.3 なぜ日本では動きが見えにくいのか</h2>
+<h2 id="agent-chatgpt-33-なぜ日本では動きが見えにくいのか"><a class="heading-permalink" href="#agent-chatgpt-33-なぜ日本では動きが見えにくいのか" aria-label="この見出しへのリンク">#</a>3.3 なぜ日本では動きが見えにくいのか</h2>
 <p>主な理由は次のとおりである。</p>
 <ol>
 <li>
@@ -1320,11 +1324,11 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </li>
 </ol>
 <p>一方、これは日本の不利だけではない。<strong>法改正対応、品質保証、監査、長期保守、規制産業、レガシー移行</strong>では、日本企業が蓄積してきた工程管理や品質管理をエージェント向けに再構築できれば、競争優位になる。</p>
-<h2>3.4 日本のガバナンス状況</h2>
+<h2 id="agent-chatgpt-34-日本のガバナンス状況"><a class="heading-permalink" href="#agent-chatgpt-34-日本のガバナンス状況" aria-label="この見出しへのリンク">#</a>3.4 日本のガバナンス状況</h2>
 <p>AIガバナンス協会の2026年調査では、55社中40社にAIエージェントのユースケースがあった一方、自律性の高いAIに対するガバナンス評価は、開発者・提供者で1.73/4、利用者で1.64/4にとどまった。技術リスク対策、エージェント管理、AI固有のインシデント対応、第三者検証が未成熟である。(<a href="https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/770d4c48-7f40-49a6-a49d-56a763800a42/34a4d0bf/20260714_meeting_ai-advisory_outline_03.pdf" title="https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/770d4c48-7f40-49a6-a49d-56a763800a42/34a4d0bf/20260714_meeting_ai-advisory_outline_03.pdf">デジタル庁</a>)</p>
 <p>日本政府は2026年7月14日に人工知能基本計画第Ⅱ期を閣議決定し、経済産業省・総務省も2026年3月にAI事業者ガイドライン第1.2版を公表している。AI利用に伴う民事責任についても、2026年4月に現行法の解釈適用に関する手引きが公表された。制度整備は進んでいるが、個々のエージェント行為に対する実務上の責任分界は、今後も契約と運用設計が中心になる。(<a href="https://www8.cao.go.jp/cstp/ai/index.html" title="https://www8.cao.go.jp/cstp/ai/index.html">内閣府ホームページ</a>)</p>
 <hr>
-<h1>4. 海外の先行事例</h1>
+<h1 id="agent-chatgpt-4-海外の先行事例"><a class="heading-permalink" href="#agent-chatgpt-4-海外の先行事例" aria-label="この見出しへのリンク">#</a>4. 海外の先行事例</h1>
 <table>
 <thead>
 <tr>
@@ -1389,7 +1393,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <p>Cursorは、単なる補完から「ソフトウェアを作る工場を人間が設計する」段階へ進むと明示している。一方で、テストの不安定さや壊れた環境がエージェント運用全体の障害になることも認めている。(<a href="https://cursor.com/blog/third-era" title="https://cursor.com/blog/third-era">Cursor</a>)</p>
 <p>AWS AI-DLCは、今回の想定モデルとかなり近い。AIが計画を作り、質問し、要求、設計、コード、テスト、運用を進め、人間が重要判断を行う。さらに、要求・設計・計画をリポジトリへ永続化する点も重要である。(<a href="https://aws.amazon.com/blogs/devops/ai-driven-development-life-cycle/" title="https://aws.amazon.com/blogs/devops/ai-driven-development-life-cycle/">Amazon Web Services, Inc.</a>)</p>
 <p>GitHub、Google、Replitの製品を見ると、IssueやチャットからPR・アプリまでの自動化はすでに一般ユーザーが利用できる製品段階にある。(<a href="https://github.blog/developer-skills/github/how-to-create-issues-and-pull-requests-in-record-time-on-github/" title="https://github.blog/developer-skills/github/how-to-create-issues-and-pull-requests-in-record-time-on-github/">The GitHub Blog</a>)</p>
-<h2>日本との差</h2>
+<h2 id="agent-chatgpt-日本との差"><a class="heading-permalink" href="#agent-chatgpt-日本との差" aria-label="この見出しへのリンク">#</a>日本との差</h2>
 <p>海外が先行しているのは、主に次の点である。</p>
 <ul>
 <li>クラウド上の独立サンドボックス</li>
@@ -1413,8 +1417,8 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </ul>
 <p>海外モデルをそのまま輸入するより、日本の強みを<strong>エージェントが利用できる構造化資産へ変換すること</strong>が重要である。</p>
 <hr>
-<h1>5. 現在の性能をどう評価するべきか</h1>
-<h2>5.1 タスク長は急速に伸びている</h2>
+<h1 id="agent-chatgpt-5-現在の性能をどう評価するべきか"><a class="heading-permalink" href="#agent-chatgpt-5-現在の性能をどう評価するべきか" aria-label="この見出しへのリンク">#</a>5. 現在の性能をどう評価するべきか</h1>
+<h2 id="agent-chatgpt-51-タスク長は急速に伸びている"><a class="heading-permalink" href="#agent-chatgpt-51-タスク長は急速に伸びている" aria-label="この見出しへのリンク">#</a>5.1 タスク長は急速に伸びている</h2>
 <p>METRは、AIエージェントが50%の確率で完了できるソフトウェアタスクの長さが、過去約6年間でおおむね7か月ごとに倍増してきたと報告している。傾向が続けば、人間に数日から数週間かかる仕事をAIが実行する可能性がある。(<a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" title="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/">Metr</a>)</p>
 <p>ただし、50%成功は本番運用に必要な信頼性ではない。業務では、以下が必要になる。</p>
 <ul>
@@ -1427,7 +1431,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>ロールバック</li>
 </ul>
 <p>したがって、「タスク長が伸びた」ことを「人間が不要になった」と解釈してはいけない。</p>
-<h2>5.2 生産性効果は一様ではない</h2>
+<h2 id="agent-chatgpt-52-生産性効果は一様ではない"><a class="heading-permalink" href="#agent-chatgpt-52-生産性効果は一様ではない" aria-label="この見出しへのリンク">#</a>5.2 生産性効果は一様ではない</h2>
 <p>METRの2025年前半のランダム化比較試験では、熟練OSS開発者はAI使用時に19%遅くなった。2025年後半の追加データでは速度向上の兆候が出たが、AIなしで働きたくない参加者が研究へ参加しないなどの選択バイアスがあり、効果量の推定は弱い証拠にとどまった。(<a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" title="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/">Metr</a>)</p>
 <p>一方、2026年前半の349人を対象とした自己申告調査では、仕事の価値が中央値で1.4～2倍、速度は3倍になったとの回答が得られた。ただし、自己申告の速度向上は価値向上を過大評価する可能性がある。(<a href="https://metr.org/blog/2026-05-11-ai-usage-survey/" title="https://metr.org/blog/2026-05-11-ai-usage-survey/">Metr</a>)</p>
 <p>結論は次である。</p>
@@ -1435,32 +1439,32 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <p><strong>AIエージェントの効果は、モデル名ではなく、仕事の分割可能性、仕様、テスト、環境、利用者の習熟、レビュー方法によって大きく変わる。</strong></p>
 </blockquote>
 <hr>
-<h1>6. 4つの未来シナリオ</h1>
+<h1 id="agent-chatgpt-6-4つの未来シナリオ"><a class="heading-permalink" href="#agent-chatgpt-6-4つの未来シナリオ" aria-label="この見出しへのリンク">#</a>6. 4つの未来シナリオ</h1>
 <p>確率は統計的予測ではなく、2026年7月時点の公開情報に基づく本調査の判断である。</p>
-<h2>シナリオ1：急速な自動化</h2>
+<h2 id="agent-chatgpt-シナリオ1急速な自動化"><a class="heading-permalink" href="#agent-chatgpt-シナリオ1急速な自動化" aria-label="この見出しへのリンク">#</a>シナリオ1：急速な自動化</h2>
 <p><strong>確率：20%</strong></p>
-<h3>2028年</h3>
+<h3 id="agent-chatgpt-2028年"><a class="heading-permalink" href="#agent-chatgpt-2028年" aria-label="この見出しへのリンク">#</a>2028年</h3>
 <ul>
 <li>Issue-to-PRが一般的な標準機能になる</li>
 <li>複数クラウドエージェントを常時並列実行</li>
 <li>定型的なSaaS、社内システム、移行案件で大幅自動化</li>
 <li>人間の主要業務が問題分割とレビューへ移る</li>
 </ul>
-<h3>2030年</h3>
+<h3 id="agent-chatgpt-2030年"><a class="heading-permalink" href="#agent-chatgpt-2030年" aria-label="この見出しへのリンク">#</a>2030年</h3>
 <ul>
 <li>標準的な業務システムの要求から運用までをエージェントが担当</li>
 <li>人間は予算、リスク、重要設計、公開承認を担当</li>
 <li>少人数SIerが従来の大規模チームと競争</li>
 <li>人月契約が急速に縮小</li>
 </ul>
-<h3>2035年</h3>
+<h3 id="agent-chatgpt-2035年"><a class="heading-permalink" href="#agent-chatgpt-2035年" aria-label="この見出しへのリンク">#</a>2035年</h3>
 <ul>
 <li>AIソフトウェアファクトリーが企業の標準基盤になる</li>
 <li>1人または数人が複数製品を運営</li>
 <li>ソフトウェア供給量が急増</li>
 <li>保守、統合、監査、廃棄が巨大市場になる</li>
 </ul>
-<h3>推進要因</h3>
+<h3 id="agent-chatgpt-推進要因"><a class="heading-permalink" href="#agent-chatgpt-推進要因" aria-label="この見出しへのリンク">#</a>推進要因</h3>
 <ul>
 <li>モデルの長期タスク能力</li>
 <li>安価な推論</li>
@@ -1469,7 +1473,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>大企業によるAgent Control Plane整備</li>
 <li>契約・保険制度の整備</li>
 </ul>
-<h3>主な機会</h3>
+<h3 id="agent-chatgpt-主な機会"><a class="heading-permalink" href="#agent-chatgpt-主な機会" aria-label="この見出しへのリンク">#</a>主な機会</h3>
 <ul>
 <li>エージェント基盤</li>
 <li>品質監査</li>
@@ -1479,36 +1483,36 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>個人によるマイクロSaaS群</li>
 </ul>
 <hr>
-<h2>シナリオ2：段階的な普及</h2>
+<h2 id="agent-chatgpt-シナリオ2段階的な普及"><a class="heading-permalink" href="#agent-chatgpt-シナリオ2段階的な普及" aria-label="この見出しへのリンク">#</a>シナリオ2：段階的な普及</h2>
 <p><strong>確率：50%・基本シナリオ</strong></p>
-<h3>2028年</h3>
+<h3 id="agent-chatgpt-2028年-2"><a class="heading-permalink" href="#agent-chatgpt-2028年-2" aria-label="この見出しへのリンク">#</a>2028年</h3>
 <ul>
 <li>実装、テスト、移行、レビューは大幅自動化</li>
 <li>要求・設計もAIが下案を作る</li>
 <li>本番変更と高リスク判断は人間承認</li>
 <li>企業ごとにAI可読性の差が成果差になる</li>
 </ul>
-<h3>2030年</h3>
+<h3 id="agent-chatgpt-2030年-2"><a class="heading-permalink" href="#agent-chatgpt-2030年-2" aria-label="この見出しへのリンク">#</a>2030年</h3>
 <ul>
 <li>整備された新規システムやパッケージ保守はStage 5へ移行</li>
 <li>大規模レガシーや規制領域は人間主導を維持</li>
 <li>1人が3～10のエージェント作業列を管理</li>
 <li>開発者数は減るが、評価・統合・運用人材が増える</li>
 </ul>
-<h3>2035年</h3>
+<h3 id="agent-chatgpt-2035年-2"><a class="heading-permalink" href="#agent-chatgpt-2035年-2" aria-label="この見出しへのリンク">#</a>2035年</h3>
 <ul>
 <li>多くの標準開発はエージェント主導</li>
 <li>人間は例外、統合、責任、顧客関係を担当</li>
 <li>完全自律ではなく「通常は自律、例外時に人間」が標準化</li>
 </ul>
-<h3>推進要因</h3>
+<h3 id="agent-chatgpt-推進要因-2"><a class="heading-permalink" href="#agent-chatgpt-推進要因-2" aria-label="この見出しへのリンク">#</a>推進要因</h3>
 <ul>
 <li>開発基盤の整備</li>
 <li>テスト可能性の改善</li>
 <li>段階的な社内導入</li>
 <li>監査・ガバナンス市場の成熟</li>
 </ul>
-<h3>阻害要因</h3>
+<h3 id="agent-chatgpt-阻害要因"><a class="heading-permalink" href="#agent-chatgpt-阻害要因" aria-label="この見出しへのリンク">#</a>阻害要因</h3>
 <ul>
 <li>人間レビューのボトルネック</li>
 <li>既存仕様の不整合</li>
@@ -1516,7 +1520,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>顧客の受容性</li>
 <li>総コストの不透明さ</li>
 </ul>
-<h3>主な機会</h3>
+<h3 id="agent-chatgpt-主な機会-2"><a class="heading-permalink" href="#agent-chatgpt-主な機会-2" aria-label="この見出しへのリンク">#</a>主な機会</h3>
 <ul>
 <li>Agent Readiness</li>
 <li>継続評価</li>
@@ -1526,26 +1530,26 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>AI開発組織への移行支援</li>
 </ul>
 <hr>
-<h2>シナリオ3：限定領域だけ自動化</h2>
+<h2 id="agent-chatgpt-シナリオ3限定領域だけ自動化"><a class="heading-permalink" href="#agent-chatgpt-シナリオ3限定領域だけ自動化" aria-label="この見出しへのリンク">#</a>シナリオ3：限定領域だけ自動化</h2>
 <p><strong>確率：25%</strong></p>
-<h3>2028年</h3>
+<h3 id="agent-chatgpt-2028年-3"><a class="heading-permalink" href="#agent-chatgpt-2028年-3" aria-label="この見出しへのリンク">#</a>2028年</h3>
 <ul>
 <li>コード移行、テスト生成、定型CRUD、社内ツールで普及</li>
 <li>複雑な要求・統合は人間中心</li>
 </ul>
-<h3>2030年</h3>
+<h3 id="agent-chatgpt-2030年-3"><a class="heading-permalink" href="#agent-chatgpt-2030年-3" aria-label="この見出しへのリンク">#</a>2030年</h3>
 <ul>
 <li>小規模SaaSや新規システムでは高い自動化</li>
 <li>金融、医療、公共、社会インフラは限定利用</li>
 <li>レガシーではAI可読化費用が自動化利益を上回る案件が多い</li>
 </ul>
-<h3>2035年</h3>
+<h3 id="agent-chatgpt-2035年-3"><a class="heading-permalink" href="#agent-chatgpt-2035年-3" aria-label="この見出しへのリンク">#</a>2035年</h3>
 <ul>
 <li>業界ごとに自動化率が大きく異なる</li>
 <li>Stage 5は一部の高成熟企業に集中</li>
 <li>一般企業では強力な補助ツールとして定着</li>
 </ul>
-<h3>主な機会</h3>
+<h3 id="agent-chatgpt-主な機会-3"><a class="heading-permalink" href="#agent-chatgpt-主な機会-3" aria-label="この見出しへのリンク">#</a>主な機会</h3>
 <ul>
 <li>定型領域の垂直SaaS</li>
 <li>レガシー移行</li>
@@ -1554,26 +1558,26 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>オンプレミス・閉域運用</li>
 </ul>
 <hr>
-<h2>シナリオ4：期待ほど進まない</h2>
+<h2 id="agent-chatgpt-シナリオ4期待ほど進まない"><a class="heading-permalink" href="#agent-chatgpt-シナリオ4期待ほど進まない" aria-label="この見出しへのリンク">#</a>シナリオ4：期待ほど進まない</h2>
 <p><strong>確率：5%</strong></p>
-<h3>2028年</h3>
+<h3 id="agent-chatgpt-2028年-4"><a class="heading-permalink" href="#agent-chatgpt-2028年-4" aria-label="この見出しへのリンク">#</a>2028年</h3>
 <ul>
 <li>AI生成物の検証コストが上昇</li>
 <li>セキュリティ事故や知財問題が顕在化</li>
 <li>エージェント費用が下がらない</li>
 </ul>
-<h3>2030年</h3>
+<h3 id="agent-chatgpt-2030年-4"><a class="heading-permalink" href="#agent-chatgpt-2030年-4" aria-label="この見出しへのリンク">#</a>2030年</h3>
 <ul>
 <li>AIは補完・レビュー用途が中心</li>
 <li>マルチエージェントは複雑すぎて限定利用</li>
 <li>人間の実装力が再評価される</li>
 </ul>
-<h3>2035年</h3>
+<h3 id="agent-chatgpt-2035年-4"><a class="heading-permalink" href="#agent-chatgpt-2035年-4" aria-label="この見出しへのリンク">#</a>2035年</h3>
 <ul>
 <li>高性能な単一エージェント＋人間という構成が主流</li>
 <li>自律型ソフトウェアファクトリーは一部企業に限定</li>
 </ul>
-<h3>主な機会</h3>
+<h3 id="agent-chatgpt-主な機会-4"><a class="heading-permalink" href="#agent-chatgpt-主な機会-4" aria-label="この見出しへのリンク">#</a>主な機会</h3>
 <ul>
 <li>人間保証付き開発</li>
 <li>AI不使用・機密重視開発</li>
@@ -1582,8 +1586,8 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>コスト最適化</li>
 </ul>
 <hr>
-<h1>7. ITエンジニアの価値はどこへ移るか</h1>
-<h2>7.1 AIに代替されにくい能力</h2>
+<h1 id="agent-chatgpt-7-itエンジニアの価値はどこへ移るか"><a class="heading-permalink" href="#agent-chatgpt-7-itエンジニアの価値はどこへ移るか" aria-label="この見出しへのリンク">#</a>7. ITエンジニアの価値はどこへ移るか</h1>
+<h2 id="agent-chatgpt-71-aiに代替されにくい能力"><a class="heading-permalink" href="#agent-chatgpt-71-aiに代替されにくい能力" aria-label="この見出しへのリンク">#</a>7.1 AIに代替されにくい能力</h2>
 <table>
 <thead>
 <tr>
@@ -1639,7 +1643,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h2>7.2 AIによって増幅される能力</h2>
+<h2 id="agent-chatgpt-72-aiによって増幅される能力"><a class="heading-permalink" href="#agent-chatgpt-72-aiによって増幅される能力" aria-label="この見出しへのリンク">#</a>7.2 AIによって増幅される能力</h2>
 <table>
 <thead>
 <tr>
@@ -1709,7 +1713,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h2>7.3 将来陳腐化しやすい能力</h2>
+<h2 id="agent-chatgpt-73-将来陳腐化しやすい能力"><a class="heading-permalink" href="#agent-chatgpt-73-将来陳腐化しやすい能力" aria-label="この見出しへのリンク">#</a>7.3 将来陳腐化しやすい能力</h2>
 <ul>
 <li>定型的なCRUD実装</li>
 <li>フレームワークの構文暗記</li>
@@ -1724,7 +1728,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </ul>
 <p>ただし、これらを理解する基礎能力まで不要になるわけではない。AIの誤りを見抜くには、実装、データ、ネットワーク、OS、セキュリティの基礎が必要である。</p>
 <hr>
-<h1>8. 新しく生まれる人材像・職種</h1>
+<h1 id="agent-chatgpt-8-新しく生まれる人材像職種"><a class="heading-permalink" href="#agent-chatgpt-8-新しく生まれる人材像職種" aria-label="この見出しへのリンク">#</a>8. 新しく生まれる人材像・職種</h1>
 <p>評価は5段階。<br>
 <strong>将</strong>＝将来性、<strong>単</strong>＝高単価化、<strong>再</strong>＝AIによる再代替リスク、<strong>日</strong>＝日本市場との相性。</p>
 <table>
@@ -1877,7 +1881,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>AI労働力の経済性を管理する</li>
 </ul>
 <hr>
-<h1>9. 活躍する企業像</h1>
+<h1 id="agent-chatgpt-9-活躍する企業像"><a class="heading-permalink" href="#agent-chatgpt-9-活躍する企業像" aria-label="この見出しへのリンク">#</a>9. 活躍する企業像</h1>
 <table>
 <thead>
 <tr>
@@ -1972,7 +1976,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h2>大企業が圧倒的に有利な領域</h2>
+<h2 id="agent-chatgpt-大企業が圧倒的に有利な領域"><a class="heading-permalink" href="#agent-chatgpt-大企業が圧倒的に有利な領域" aria-label="この見出しへのリンク">#</a>大企業が圧倒的に有利な領域</h2>
 <ul>
 <li>社会インフラ</li>
 <li>規制産業</li>
@@ -1983,7 +1987,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>認証・監査</li>
 <li>長期契約</li>
 </ul>
-<h2>小規模企業が有利な領域</h2>
+<h2 id="agent-chatgpt-小規模企業が有利な領域"><a class="heading-permalink" href="#agent-chatgpt-小規模企業が有利な領域" aria-label="この見出しへのリンク">#</a>小規模企業が有利な領域</h2>
 <ul>
 <li>狭い業務課題</li>
 <li>既存製品の隙間</li>
@@ -1997,7 +2001,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </ul>
 <p>横断的な巨大エージェント基盤を正面から作るより、<strong>特定の業務・業界で必要な制御、証拠、評価を提供する方が小規模事業者には適している</strong>。</p>
 <hr>
-<h1>10. 新しいサービス・ツール機会</h1>
+<h1 id="agent-chatgpt-10-新しいサービスツール機会"><a class="heading-permalink" href="#agent-chatgpt-10-新しいサービスツール機会" aria-label="この見出しへのリンク">#</a>10. 新しいサービス・ツール機会</h1>
 <p>評価は、<strong>将来性／小規模参入／継続収益性</strong>の順で5段階。</p>
 <table>
 <thead>
@@ -2212,7 +2216,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h2>小規模チームに特に向く5案</h2>
+<h2 id="agent-chatgpt-小規模チームに特に向く5案"><a class="heading-permalink" href="#agent-chatgpt-小規模チームに特に向く5案" aria-label="この見出しへのリンク">#</a>小規模チームに特に向く5案</h2>
 <ol>
 <li>Agent Readiness Scanner</li>
 <li>Requirements Evidence Graph</li>
@@ -2221,7 +2225,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>業界特化の評価・ルールパック</li>
 </ol>
 <p>これらは巨大クラウド基盤を必要とせず、既存のGitHub、CI、クラウド、LLM上に追加できる。</p>
-<h2>大手に吸収されやすい案</h2>
+<h2 id="agent-chatgpt-大手に吸収されやすい案"><a class="heading-permalink" href="#agent-chatgpt-大手に吸収されやすい案" aria-label="この見出しへのリンク">#</a>大手に吸収されやすい案</h2>
 <ul>
 <li>汎用Multi-model Router</li>
 <li>汎用Sandbox</li>
@@ -2231,7 +2235,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </ul>
 <p>これらを単独カテゴリーとして正面から展開すると、クラウド、GitHub、モデルベンダーへ組み込まれる可能性が高い。小規模企業は、<strong>業界固有データ、運用、監査、サービスを組み合わせる必要がある</strong>。</p>
 <hr>
-<h1>11. 周辺で生まれる新しいビジネス</h1>
+<h1 id="agent-chatgpt-11-周辺で生まれる新しいビジネス"><a class="heading-permalink" href="#agent-chatgpt-11-周辺で生まれる新しいビジネス" aria-label="この見出しへのリンク">#</a>11. 周辺で生まれる新しいビジネス</h1>
 <table>
 <thead>
 <tr>
@@ -2445,7 +2449,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h2>現実性の高い事業</h2>
+<h2 id="agent-chatgpt-現実性の高い事業"><a class="heading-permalink" href="#agent-chatgpt-現実性の高い事業" aria-label="この見出しへのリンク">#</a>現実性の高い事業</h2>
 <ul>
 <li>Agent Readiness</li>
 <li>AI可読化</li>
@@ -2457,7 +2461,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>Digital Labor Operations BPO</li>
 <li>業界特化エージェント</li>
 </ul>
-<h2>大胆だが成立し得る事業</h2>
+<h2 id="agent-chatgpt-大胆だが成立し得る事業"><a class="heading-permalink" href="#agent-chatgpt-大胆だが成立し得る事業" aria-label="この見出しへのリンク">#</a>大胆だが成立し得る事業</h2>
 <ul>
 <li>AIエージェント保険</li>
 <li>AI判断格付け会社</li>
@@ -2471,7 +2475,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <p>AI管理システムについてはISO/IEC 42001が存在し、2025年にはその監査・認証機関に対するISO/IEC 42006も発行された。AI監査・認証市場は、すでに制度的な土台を持ち始めている。(<a href="https://www.iso.org/standard/42001" title="https://www.iso.org/standard/42001">ISO</a>)</p>
 <p>OWASPも2026年版のAgentic Applications Top 10を公表しており、エージェント固有のセキュリティは独立領域になりつつある。OpenSSFは、非決定性、実行時のアクセス先発見、委任IDを従来ソフトウェアとは異なる課題として挙げている。(<a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/" title="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/">OWASP Gen AI Security Project</a>)</p>
 <hr>
-<h1>12. 新しい働き方と組織構造</h1>
+<h1 id="agent-chatgpt-12-新しい働き方と組織構造"><a class="heading-permalink" href="#agent-chatgpt-12-新しい働き方と組織構造" aria-label="この見出しへのリンク">#</a>12. 新しい働き方と組織構造</h1>
 <table>
 <thead>
 <tr>
@@ -2538,7 +2542,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h2>一人企業は大企業へ勝てるか</h2>
+<h2 id="agent-chatgpt-一人企業は大企業へ勝てるか"><a class="heading-permalink" href="#agent-chatgpt-一人企業は大企業へ勝てるか" aria-label="この見出しへのリンク">#</a>一人企業は大企業へ勝てるか</h2>
 <p>全面的には勝てない。</p>
 <p>一人企業が有利なのは、狭い顧客課題、速い意思決定、既存製品の隙間、専門知識、低い固定費である。</p>
 <p>一方、大企業は次を保有する。</p>
@@ -2555,29 +2559,29 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </ul>
 <p>したがって、将来は「一人企業対大企業」よりも、<strong>一人・小規模企業が専門モジュールを提供し、大企業の販売網・責任能力と組み合わさる構造</strong>が増える。</p>
 <hr>
-<h1>13. 特に重要な15の問いへの回答</h1>
-<h2>1. エンジニアの価値は本当に上流へ移るのか</h2>
+<h1 id="agent-chatgpt-13-特に重要な15の問いへの回答"><a class="heading-permalink" href="#agent-chatgpt-13-特に重要な15の問いへの回答" aria-label="この見出しへのリンク">#</a>13. 特に重要な15の問いへの回答</h1>
+<h2 id="agent-chatgpt-1-エンジニアの価値は本当に上流へ移るのか"><a class="heading-permalink" href="#agent-chatgpt-1-エンジニアの価値は本当に上流へ移るのか" aria-label="この見出しへのリンク">#</a>1. エンジニアの価値は本当に上流へ移るのか</h2>
 <p>単純には移らない。上流もAI化される。</p>
 <p>価値は工程上の位置ではなく、<strong>問題選定、正本、評価、リスク、責任、顧客関係</strong>へ移る。</p>
-<h2>2. 人間がレビューだけを担当して、本当に理解できるか</h2>
+<h2 id="agent-chatgpt-2-人間がレビューだけを担当して本当に理解できるか"><a class="heading-permalink" href="#agent-chatgpt-2-人間がレビューだけを担当して本当に理解できるか" aria-label="この見出しへのリンク">#</a>2. 人間がレビューだけを担当して、本当に理解できるか</h2>
 <p>そのままでは理解できない。</p>
 <p>人間へ巨大な差分を渡す方式は破綻する。必要なのは、影響範囲、根拠、選択肢、リスク、テスト結果をまとめた「判断パッケージ」である。人間レビュー能力そのものを設計対象にしなければならない。</p>
-<h2>3. ソフトウェアの価値は下がるか</h2>
+<h2 id="agent-chatgpt-3-ソフトウェアの価値は下がるか"><a class="heading-permalink" href="#agent-chatgpt-3-ソフトウェアの価値は下がるか" aria-label="この見出しへのリンク">#</a>3. ソフトウェアの価値は下がるか</h2>
 <p>コードそのものの希少性は下がる。</p>
 <p>代わりに上がるのは、顧客、業務データ、販売網、導入能力、信頼、法的責任、継続運用である。ソフトウェアは価値の中心から、価値を提供する手段へ近づく。</p>
-<h2>4. 保守、統合、監査、廃棄市場は大きくなるか</h2>
+<h2 id="agent-chatgpt-4-保守統合監査廃棄市場は大きくなるか"><a class="heading-permalink" href="#agent-chatgpt-4-保守統合監査廃棄市場は大きくなるか" aria-label="この見出しへのリンク">#</a>4. 保守、統合、監査、廃棄市場は大きくなるか</h2>
 <p>大きくなる可能性が高い。</p>
 <p>作る費用が下がると、使われない製品、重複製品、保守不能な製品も増える。クラウド普及後にFinOpsが必要になったように、AI大量開発後にはSoftware Estate Managementが必要になる。</p>
-<h2>5. AIエージェント管理は新しい管理職になるか</h2>
+<h2 id="agent-chatgpt-5-aiエージェント管理は新しい管理職になるか"><a class="heading-permalink" href="#agent-chatgpt-5-aiエージェント管理は新しい管理職になるか" aria-label="この見出しへのリンク">#</a>5. AIエージェント管理は新しい管理職になるか</h2>
 <p>一時的には新職種になる。</p>
 <p>長期的には通常管理の多くもAI化されるが、予算配分、例外承認、責任、事故対応は人間に残る。単なる進捗管理者は再代替されやすい。</p>
-<h2>6. 個人と従来企業の競争関係はどう変わるか</h2>
+<h2 id="agent-chatgpt-6-個人と従来企業の競争関係はどう変わるか"><a class="heading-permalink" href="#agent-chatgpt-6-個人と従来企業の競争関係はどう変わるか" aria-label="この見出しへのリンク">#</a>6. 個人と従来企業の競争関係はどう変わるか</h2>
 <p>個人の試作・供給能力は大幅に上がる。</p>
 <p>ただし販売、契約、信用、データ、責任能力は自動化されにくい。個人は狭い市場で強く、大企業は規制・責任・流通で強い。</p>
-<h2>7. 小規模企業と大企業はどこで有利か</h2>
+<h2 id="agent-chatgpt-7-小規模企業と大企業はどこで有利か"><a class="heading-permalink" href="#agent-chatgpt-7-小規模企業と大企業はどこで有利か" aria-label="この見出しへのリンク">#</a>7. 小規模企業と大企業はどこで有利か</h2>
 <p>小規模企業は、狭い業務、評価、移行、監査補助、運用BPOで有利。</p>
 <p>大企業は、社会インフラ、規制産業、統合基盤、認証、保険、長期責任で有利。</p>
-<h2>8. 顧客は何に対して料金を支払うか</h2>
+<h2 id="agent-chatgpt-8-顧客は何に対して料金を支払うか"><a class="heading-permalink" href="#agent-chatgpt-8-顧客は何に対して料金を支払うか" aria-label="この見出しへのリンク">#</a>8. 顧客は何に対して料金を支払うか</h2>
 <p>顧客はコード量ではなく、次へ支払う。</p>
 <ul>
 <li>売上増加</li>
@@ -2590,7 +2594,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>データ・知識</li>
 <li>責任と保証</li>
 </ul>
-<h2>9. 技術力をどう証明するか</h2>
+<h2 id="agent-chatgpt-9-技術力をどう証明するか"><a class="heading-permalink" href="#agent-chatgpt-9-技術力をどう証明するか" aria-label="この見出しへのリンク">#</a>9. 技術力をどう証明するか</h2>
 <p>次の実測値が新しい職務経歴になる。</p>
 <ul>
 <li>変更リードタイム</li>
@@ -2605,24 +2609,24 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>要求からテストまでの追跡率</li>
 <li>顧客ROI</li>
 </ul>
-<h2>10. 高単価人材は、正しい問題を与えられる人になるか</h2>
+<h2 id="agent-chatgpt-10-高単価人材は正しい問題を与えられる人になるか"><a class="heading-permalink" href="#agent-chatgpt-10-高単価人材は正しい問題を与えられる人になるか" aria-label="この見出しへのリンク">#</a>10. 高単価人材は、正しい問題を与えられる人になるか</h2>
 <p>概ね正しい。</p>
 <p>ただし「良いプロンプトを書く人」ではない。顧客、データ、制約、受入条件、評価、責任を揃えて、<strong>解く価値のある問題を実行可能な形へ変換できる人</strong>である。</p>
-<h2>11. AI判断の監査市場は会計監査並みになるか</h2>
+<h2 id="agent-chatgpt-11-ai判断の監査市場は会計監査並みになるか"><a class="heading-permalink" href="#agent-chatgpt-11-ai判断の監査市場は会計監査並みになるか" aria-label="この見出しへのリンク">#</a>11. AI判断の監査市場は会計監査並みになるか</h2>
 <p>すべてのAIで会計監査並みになるとは限らない。</p>
 <p>しかし、金融、医療、採用、公共、重要インフラ、企業の自律エージェントでは、相当規模の監査・保証市場が成立する可能性が高い。ISO 42001・42006の存在は、その方向性を支持する。</p>
-<h2>12. AIが構築したシステムの事故責任は誰が負うか</h2>
+<h2 id="agent-chatgpt-12-aiが構築したシステムの事故責任は誰が負うか"><a class="heading-permalink" href="#agent-chatgpt-12-aiが構築したシステムの事故責任は誰が負うか" aria-label="この見出しへのリンク">#</a>12. AIが構築したシステムの事故責任は誰が負うか</h2>
 <p>基本的には、AIを選定・導入・運用し、顧客へ提供した人間・組織から責任は消えない。</p>
 <p>モデル提供者、開発者、システム提供者、利用企業間の責任分担は契約で細分化される。そのため、契約設計、証拠、保険、事故鑑定が新市場になる。</p>
-<h2>13. エージェント基盤はクラウド並みの産業になるか</h2>
+<h2 id="agent-chatgpt-13-エージェント基盤はクラウド並みの産業になるか"><a class="heading-permalink" href="#agent-chatgpt-13-エージェント基盤はクラウド並みの産業になるか" aria-label="この見出しへのリンク">#</a>13. エージェント基盤はクラウド並みの産業になるか</h2>
 <p>基盤全体は大市場になるが、少数のクラウド・モデル・開発プラットフォーム企業へ集中しやすい。</p>
 <p>独立企業の商機は、水平基盤そのものより、業界ルール、統制、評価、監査、運用にある。</p>
-<h2>14. 日本企業の慎重さは不利か、優位か</h2>
+<h2 id="agent-chatgpt-14-日本企業の慎重さは不利か優位か"><a class="heading-permalink" href="#agent-chatgpt-14-日本企業の慎重さは不利か優位か" aria-label="この見出しへのリンク">#</a>14. 日本企業の慎重さは不利か、優位か</h2>
 <p>短期的には導入速度で不利になる。</p>
 <p>一方、品質保証、権限管理、監査、法改正対応、長期保守をエージェント向けに再構築できれば、規制産業や社会インフラで優位になる。単なる慎重さは価値にならず、<strong>慎重さを再利用可能な技術統制へ変換できるか</strong>が分岐点になる。</p>
-<h2>15. 現在のエンジニアは変化を過大評価・過小評価しているか</h2>
+<h2 id="agent-chatgpt-15-現在のエンジニアは変化を過大評価過小評価しているか"><a class="heading-permalink" href="#agent-chatgpt-15-現在のエンジニアは変化を過大評価過小評価しているか" aria-label="この見出しへのリンク">#</a>15. 現在のエンジニアは変化を過大評価・過小評価しているか</h2>
 <p>両方ある。</p>
-<h3>過大評価</h3>
+<h3 id="agent-chatgpt-過大評価"><a class="heading-permalink" href="#agent-chatgpt-過大評価" aria-label="この見出しへのリンク">#</a>過大評価</h3>
 <ul>
 <li>デモから本番信頼性を推測する</li>
 <li>50%成功を自律運用とみなす</li>
@@ -2630,7 +2634,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>レガシー、契約、顧客受容を軽視する</li>
 <li>マルチエージェントなら自動的に性能が上がると考える</li>
 </ul>
-<h3>過小評価</h3>
+<h3 id="agent-chatgpt-過小評価"><a class="heading-permalink" href="#agent-chatgpt-過小評価" aria-label="この見出しへのリンク">#</a>過小評価</h3>
 <ul>
 <li>AIをコード補完の延長と考える</li>
 <li>開発工程や組織構造は変わらないと考える</li>
@@ -2639,9 +2643,9 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>監査、保守、廃棄という二次市場を見落とす</li>
 </ul>
 <hr>
-<h1>14. 具体的な行動計画</h1>
+<h1 id="agent-chatgpt-14-具体的な行動計画"><a class="heading-permalink" href="#agent-chatgpt-14-具体的な行動計画" aria-label="この見出しへのリンク">#</a>14. 具体的な行動計画</h1>
 <p>対象は、すでにADR、Issue、PR、独立レビュー、複数AIエージェントを組み合わせ、小規模B2B SaaSを開発しているITエンジニアである。</p>
-<h2>今後3か月</h2>
+<h2 id="agent-chatgpt-今後3か月"><a class="heading-permalink" href="#agent-chatgpt-今後3か月" aria-label="この見出しへのリンク">#</a>今後3か月</h2>
 <table>
 <thead>
 <tr>
@@ -2684,7 +2688,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h3>最低限取得すべき指標</h3>
+<h3 id="agent-chatgpt-最低限取得すべき指標"><a class="heading-permalink" href="#agent-chatgpt-最低限取得すべき指標" aria-label="この見出しへのリンク">#</a>最低限取得すべき指標</h3>
 <ul>
 <li>タスク投入から受入までの時間</li>
 <li>人間が実際に使った時間</li>
@@ -2697,7 +2701,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>失敗原因分類</li>
 <li>停止・再開・ロールバックの成否</li>
 </ul>
-<h3>3か月で作るべき外部実績</h3>
+<h3 id="agent-chatgpt-3か月で作るべき外部実績"><a class="heading-permalink" href="#agent-chatgpt-3か月で作るべき外部実績" aria-label="この見出しへのリンク">#</a>3か月で作るべき外部実績</h3>
 <p>単なる「AIで開発しました」では弱い。</p>
 <p>次の形式で公開する。</p>
 <blockquote>
@@ -2708,7 +2712,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 どの証拠を基に人間が承認したか。</p>
 </blockquote>
 <hr>
-<h2>今後1年</h2>
+<h2 id="agent-chatgpt-今後1年"><a class="heading-permalink" href="#agent-chatgpt-今後1年" aria-label="この見出しへのリンク">#</a>今後1年</h2>
 <table>
 <thead>
 <tr>
@@ -2751,7 +2755,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h3>推奨商品構成</h3>
+<h3 id="agent-chatgpt-推奨商品構成"><a class="heading-permalink" href="#agent-chatgpt-推奨商品構成" aria-label="この見出しへのリンク">#</a>推奨商品構成</h3>
 <ol>
 <li><strong>Agent Readiness Assessment</strong></li>
 <li><strong>正本・テスト・権限の改善</strong></li>
@@ -2762,7 +2766,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </ol>
 <p>初期導入だけで終わらず、継続評価・監査を月額化する。</p>
 <hr>
-<h2>今後3年</h2>
+<h2 id="agent-chatgpt-今後3年"><a class="heading-permalink" href="#agent-chatgpt-今後3年" aria-label="この見出しへのリンク">#</a>今後3年</h2>
 <ul>
 <li>1業界の要求・評価・失敗データを蓄積する</li>
 <li>業界専用のEvidence Graphを保有する</li>
@@ -2786,7 +2790,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>信用</li>
 </ul>
 <hr>
-<h2>今後5年</h2>
+<h2 id="agent-chatgpt-今後5年"><a class="heading-permalink" href="#agent-chatgpt-今後5年" aria-label="この見出しへのリンク">#</a>今後5年</h2>
 <p>目指すべき状態は、単なるAI開発者ではない。</p>
 <blockquote>
 <p><strong>特定業界において、AIエージェントによる開発・業務実行を、安全に導入・評価・運用・保証できる事業者</strong></p>
@@ -2802,8 +2806,8 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </ul>
 <p>複数SaaSを運営する場合も、無関係な製品を大量に作るべきではない。同じ顧客、同じ業務データ、同じ評価基盤、同じ販売チャネルを共有する製品群に限定する。</p>
 <hr>
-<h1>15. 今すぐ始めること・観測すること・避けること</h1>
-<h2>今すぐ始めること</h2>
+<h1 id="agent-chatgpt-15-今すぐ始めること観測すること避けること"><a class="heading-permalink" href="#agent-chatgpt-15-今すぐ始めること観測すること避けること" aria-label="この見出しへのリンク">#</a>15. 今すぐ始めること・観測すること・避けること</h1>
+<h2 id="agent-chatgpt-今すぐ始めること"><a class="heading-permalink" href="#agent-chatgpt-今すぐ始めること" aria-label="この見出しへのリンク">#</a>今すぐ始めること</h2>
 <ol>
 <li>AI開発の成果を定量計測する</li>
 <li>要求・ADR・Issue・PR・テストを追跡可能にする</li>
@@ -2816,7 +2820,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>成功だけでなく失敗事例を公開する</li>
 <li>技術実績を顧客成果へ接続する</li>
 </ol>
-<h2>まだ大きく賭けず、継続観測すること</h2>
+<h2 id="agent-chatgpt-まだ大きく賭けず継続観測すること"><a class="heading-permalink" href="#agent-chatgpt-まだ大きく賭けず継続観測すること" aria-label="この見出しへのリンク">#</a>まだ大きく賭けず、継続観測すること</h2>
 <ul>
 <li>AIタスク長の50%ではなく80%・99%成功水準</li>
 <li>AI生成コードの長期保守費用</li>
@@ -2829,7 +2833,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>Agent監査・認証市場</li>
 <li>ベンダー集中と価格変動</li>
 </ul>
-<h2>現時点では避けること</h2>
+<h2 id="agent-chatgpt-現時点では避けること"><a class="heading-permalink" href="#agent-chatgpt-現時点では避けること" aria-label="この見出しへのリンク">#</a>現時点では避けること</h2>
 <ul>
 <li>汎用プロンプトエンジニアを主な職業ブランドにする</li>
 <li>特定モデルだけに依存する</li>
@@ -2843,10 +2847,10 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>事故・失敗を記録しない</li>
 </ul>
 <hr>
-<h1>16. 最終提言</h1>
+<h1 id="agent-chatgpt-16-最終提言"><a class="heading-permalink" href="#agent-chatgpt-16-最終提言" aria-label="この見出しへのリンク">#</a>16. 最終提言</h1>
 <p>依頼の最終的な問いは、今後5年間で市場価値と事業機会を最大化するために、どのポジションを取り、何を実践し、何を実績として示すべきか、というものである。</p>
-<h2>取るべきポジション</h2>
-<h3>第一選択</h3>
+<h2 id="agent-chatgpt-取るべきポジション"><a class="heading-permalink" href="#agent-chatgpt-取るべきポジション" aria-label="この見出しへのリンク">#</a>取るべきポジション</h2>
+<h3 id="agent-chatgpt-第一選択"><a class="heading-permalink" href="#agent-chatgpt-第一選択" aria-label="この見出しへのリンク">#</a>第一選択</h3>
 <blockquote>
 <p><strong>業界特化型AI Software Factory Architect兼Human Lead</strong></p>
 </blockquote>
@@ -2860,12 +2864,12 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>本番運用と事故対応に責任を持つ</li>
 <li>技術成果を事業成果へ接続する</li>
 </ul>
-<h3>第二の収益ポジション</h3>
+<h3 id="agent-chatgpt-第二の収益ポジション"><a class="heading-permalink" href="#agent-chatgpt-第二の収益ポジション" aria-label="この見出しへのリンク">#</a>第二の収益ポジション</h3>
 <blockquote>
 <p><strong>Agent Readiness・継続評価・独立検証のManaged Service事業者</strong></p>
 </blockquote>
 <p>AI製品そのものより、AIを安全に働かせ続ける能力を販売する。</p>
-<h2>実践すべきこと</h2>
+<h2 id="agent-chatgpt-実践すべきこと"><a class="heading-permalink" href="#agent-chatgpt-実践すべきこと" aria-label="この見出しへのリンク">#</a>実践すべきこと</h2>
 <ol>
 <li>自分のB2B SaaSをAI Software Factoryの実験場にする</li>
 <li>全作業を計測可能にする</li>
@@ -2878,7 +2882,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>成果型または継続評価型の料金モデルへ移る</li>
 <li>顧客関係と業界知識を最優先資産として扱う</li>
 </ol>
-<h2>外部へ示すべき実績</h2>
+<h2 id="agent-chatgpt-外部へ示すべき実績"><a class="heading-permalink" href="#agent-chatgpt-外部へ示すべき実績" aria-label="この見出しへのリンク">#</a>外部へ示すべき実績</h2>
 <p>最も価値が高いのは、派手なデモやコード量ではない。</p>
 <ul>
 <li>実顧客の業務時間を何%削減したか</li>
@@ -2895,7 +2899,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li>失敗時に安全に停止できた証拠</li>
 <li>人間が何を根拠に承認したか</li>
 </ul>
-<h2>最終判断</h2>
+<h2 id="agent-chatgpt-最終判断"><a class="heading-permalink" href="#agent-chatgpt-最終判断" aria-label="この見出しへのリンク">#</a>最終判断</h2>
 <p>今後5年間で高い市場価値を持つのは、最も速くコードを書く人ではない。</p>
 <p>また、単に多くのエージェントを動かせる人でもない。</p>
 <blockquote>
@@ -2905,7 +2909,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
   </details>
 </section>
 <section class="agent-response" data-agent="Claude">
-  <details>
+  <details id="agent-claude">
     <summary>
       <span class="agent-name">Claude</span>
       <span class="agent-meta">Claude（調査レポート・モデル名は回答本文に未記載） / 2026-07-30 / integrity=edited</span>
@@ -2916,12 +2920,12 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
       <div><dt>完全性</dt><dd>edited</dd></div>
     </dl>
     <p class="agent-notes">公開にあたり、特定プロダクト名・組織名・個人属性を一般表現へ置換した。原文は .work に保管。</p>
-    <div class="agent-body prose"><h1>AIエージェント協働型開発がもたらす人材・企業・産業構造の変化</h1>
+    <div class="agent-body prose"><h1 id="agent-claude-aiエージェント協働型開発がもたらす人材企業産業構造の変化"><a class="heading-permalink" href="#agent-claude-aiエージェント協働型開発がもたらす人材企業産業構造の変化" aria-label="この見出しへのリンク">#</a>AIエージェント協働型開発がもたらす人材・企業・産業構造の変化</h1>
 <p><strong>調査基準日：2026年7月30日</strong><br>
 <strong>調査範囲：日本企業中心＋主要海外動向／一次情報優先</strong></p>
 <hr>
-<h2>0. 本レポートの前提と読み方</h2>
-<h3>0.1 明示しておく調査上の制約</h3>
+<h2 id="agent-claude-0-本レポートの前提と読み方"><a class="heading-permalink" href="#agent-claude-0-本レポートの前提と読み方" aria-label="この見出しへのリンク">#</a>0. 本レポートの前提と読み方</h2>
+<h3 id="agent-claude-01-明示しておく調査上の制約"><a class="heading-permalink" href="#agent-claude-01-明示しておく調査上の制約" aria-label="この見出しへのリンク">#</a>0.1 明示しておく調査上の制約</h3>
 <p>本レポートは公開情報のみに基づく。以下は正直に開示しておく。</p>
 <table>
 <thead>
@@ -2949,10 +2953,10 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h3>0.2 本レポートの立場</h3>
+<h3 id="agent-claude-02-本レポートの立場"><a class="heading-permalink" href="#agent-claude-02-本レポートの立場" aria-label="この見出しへのリンク">#</a>0.2 本レポートの立場</h3>
 <p>想定読者の未来像を肯定するためのレポートではない。結論として、<strong>想定読者の想定シナリオ（PM Agent中心・人間は判断と承認のみ）は「2030年代の一部領域で実現するが、2020年代後半の主戦場ではない」</strong>と判定する。理由は第5章と第14章で述べる。</p>
 <p>そのうえで、<strong>想定読者の未来像が外れても価値が残るポジション</strong>を提案する。それが本レポートの実質的な狙いである。</p>
-<h3>0.3 前提として置いた仮定（依頼文に明示がなかった部分）</h3>
+<h3 id="agent-claude-03-前提として置いた仮定依頼文に明示がなかった部分"><a class="heading-permalink" href="#agent-claude-03-前提として置いた仮定依頼文に明示がなかった部分" aria-label="この見出しへのリンク">#</a>0.3 前提として置いた仮定（依頼文に明示がなかった部分）</h3>
 <p>以下は依頼文から読み取れなかったため仮置きした。異なる場合は指摘してほしい。</p>
 <ol>
 <li><strong>判断の時間軸</strong>：5年以内に取れる行動を最重要とした（10年後の話は参考扱い）</li>
@@ -2961,8 +2965,8 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <li><strong>「市場価値」の定義</strong>：転職市場での年収ではなく、①受託単価、②プロダクト収益、③指名される確率の3つの合成と解釈した</li>
 </ol>
 <hr>
-<h2>1. エグゼクティブサマリー</h2>
-<h3>1.1 最も重要な結論：制約は「モデル性能」ではなく「検証の経済学」である</h3>
+<h2 id="agent-claude-1-エグゼクティブサマリー"><a class="heading-permalink" href="#agent-claude-1-エグゼクティブサマリー" aria-label="この見出しへのリンク">#</a>1. エグゼクティブサマリー</h2>
+<h3 id="agent-claude-11-最も重要な結論制約はモデル性能ではなく検証の経済学である"><a class="heading-permalink" href="#agent-claude-11-最も重要な結論制約はモデル性能ではなく検証の経済学である" aria-label="この見出しへのリンク">#</a>1.1 最も重要な結論：制約は「モデル性能」ではなく「検証の経済学」である</h3>
 <p>依頼文の未来像が実現するかどうかを決めるのは、AIの実装能力ではない。<strong>「ある成果物が正しいと確立するためのコスト」</strong>である。</p>
 <p>2026年半ばの証拠は、この一点に集約される。</p>
 <ul>
@@ -2976,7 +2980,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 <p><strong>自動化は「工程の上流／下流」ではなく「検証可能性」の軸に沿って進む。</strong><br>
 検証が安く自動化できる領域（新規・仕様明確・テストオラクルが強い）では一気に人間が抜ける。検証が高い領域（既存システム統合、規制、不可逆な副作用、人間の合意が必要な判断）では人間が長く残る。</p>
 </blockquote>
-<h3>1.2 この未来が実現する確率</h3>
+<h3 id="agent-claude-12-この未来が実現する確率"><a class="heading-permalink" href="#agent-claude-12-この未来が実現する確率" aria-label="この見出しへのリンク">#</a>1.2 この未来が実現する確率</h3>
 <table>
 <thead>
 <tr>
@@ -3009,7 +3013,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tbody>
 </table>
 <p><strong>シナリオ2と3の混合（70%）が現実的な中心線。</strong> 依頼文の「人間は重要判断と承認のみ」モデルは、シナリオ1でのみ2020年代に成立する。シナリオ2/3では、2030年頃に<strong>新規開発の一部領域</strong>で成立し、既存システム保守・規制産業では2035年でも部分的にしか成立しない。</p>
-<h3>1.3 日本企業の現在地：「遅れている」は誤り</h3>
+<h3 id="agent-claude-13-日本企業の現在地遅れているは誤り"><a class="heading-permalink" href="#agent-claude-13-日本企業の現在地遅れているは誤り" aria-label="この見出しへのリンク">#</a>1.3 日本企業の現在地：「遅れている」は誤り</h3>
 <p>これは調査で最も予想を裏切った点である。<strong>大手SIerの「宣言レベル」では、日本は世界的にむしろ先行している。</strong></p>
 <table>
 <thead>
@@ -3044,7 +3048,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </table>
 <p><strong>ただし、宣言の強さと実現の確度は別物である。</strong> 富士通の「生産性100倍」は法改正に伴うシステム改修で3人月を4時間に短縮した社内検証の一部案件の値であり、①法令文書という構造化された入力、②既存仕様が確定している改修、③自社パッケージという既知のコードベース、という<strong>検証可能性が極めて高い条件</strong>での結果である。これを一般の新規開発に外挿するのは誤りだ。</p>
 <p><strong>逆に日本が明確に遅れている層は「基盤・ツール」である。</strong> エージェント、オーケストレーター、評価基盤、権限基盤のプリミティブはすべて米国製（GitHub Agent HQ、OpenAI Codex、Claude Code、Cursor、Microsoft Agent 365）。日本勢は「利用者・統合者」であって「基盤提供者」ではない。富士通のTakaneが唯一の例外的挑戦だが、汎用エージェント基盤としてグローバル競争に勝つ構図にはなっていない。</p>
-<h3>1.4 ITエンジニアへの最大の影響</h3>
+<h3 id="agent-claude-14-itエンジニアへの最大の影響"><a class="heading-permalink" href="#agent-claude-14-itエンジニアへの最大の影響" aria-label="この見出しへのリンク">#</a>1.4 ITエンジニアへの最大の影響</h3>
 <p><strong>「実装できること」の価値が消えるのではなく、「主張に責任を持てること」の価値が上がる。</strong></p>
 <p>AIが構造的にできないのは判断ではない。<strong>結果を引き受けること</strong>である。AIは被告になれず、解雇されず、評判を失わず、保証金を積めない。だから人間に残る領域は「因果の帰属先になれること」を中心に集まる。</p>
 <p>具体的には、次の3層に分解される。</p>
@@ -3075,7 +3079,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tbody>
 </table>
 <p>依頼文が挙げた「上流工程」は生成層と検証層にまたがっており、<strong>生成側は速やかにAIに移り、検証側は残る</strong>。だから「上流に行けば安全」は誤りである。正確には「検証と引受に行けば安全」だ。</p>
-<h3>1.5 最大の事業機会</h3>
+<h3 id="agent-claude-15-最大の事業機会"><a class="heading-permalink" href="#agent-claude-15-最大の事業機会" aria-label="この見出しへのリンク">#</a>1.5 最大の事業機会</h3>
 <p>小規模事業者にとっての最大機会は、オーケストレーション基盤ではない（GitHub/OpenAI/Microsoftに潰される）。</p>
 <p><strong>「特定業種の暗黙的業務ルールを、機械検証可能な正本に変換し、その正本に対する検証証跡を発行する」層である。</strong></p>
 <p>理由：<br>
@@ -3084,15 +3088,15 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 3. 大手は大企業案件しか取れない。日本の中小企業・専門職市場は空白<br>
 4. 一度作った正本は再利用でき、人月から離れられる</p>
 <p>第9章・第10章で22のサービス案・20の周辺ビジネス案として展開する。</p>
-<h3>1.6 今から行うべき最優先事項（想定読者向け・優先順3つ）</h3>
+<h3 id="agent-claude-16-今から行うべき最優先事項想定読者向け優先順3つ"><a class="heading-permalink" href="#agent-claude-16-今から行うべき最優先事項想定読者向け優先順3つ" aria-label="この見出しへのリンク">#</a>1.6 今から行うべき最優先事項（想定読者向け・優先順3つ）</h3>
 <ol>
 <li><strong>既に持っているSDAD/ADR/多重レビュー資産を「証跡パック」として外部提出可能な形式に標準化し、公開する。</strong> 日本のAI駆動開発言説はほぼ「感想」で、測定された証拠が決定的に不足している。ここに空白がある。</li>
 <li><strong>自社B2B SaaSの開発を「検証済み変更あたりの原価」で計測し始める。</strong> トークン単価ではなく検証済み単位の原価。この指標を持っている個人はほぼいない。これが単価交渉と登壇の武器になる。</li>
 <li><strong>今日と明日（7/30-31）開催のAI駆動開発カンファレンス2026夏にオンライン参加し（無料）、AI駆動開発コンソーシアム（会費無料）と地域コミュニティに接続する。</strong> ネットワーク形成のコストが最も安い瞬間である。</li>
 </ol>
 <hr>
-<h2>2. 未来の開発モデル</h2>
-<h3>2.1 依頼文のモデルを分解し直す</h3>
+<h2 id="agent-claude-2-未来の開発モデル"><a class="heading-permalink" href="#agent-claude-2-未来の開発モデル" aria-label="この見出しへのリンク">#</a>2. 未来の開発モデル</h2>
+<h3 id="agent-claude-21-依頼文のモデルを分解し直す"><a class="heading-permalink" href="#agent-claude-21-依頼文のモデルを分解し直す" aria-label="この見出しへのリンク">#</a>2.1 依頼文のモデルを分解し直す</h3>
 <p>依頼文のモデル（Product Discovery Agent → Architecture Agent群 → Implementation Agent群 → 検証Agent群 → PM Agent）は、<strong>役割で分解している</strong>。これは人間組織のメタファーであり、実は最適な分解ではない可能性が高い。</p>
 <p>代替の分解軸として、<strong>「検証オラクルの強さ」で分解する</strong>方が実態に合う。</p>
 <table>
@@ -3139,7 +3143,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </table>
 <p><strong>この分解が示すこと：</strong> L0/L1は既に自動化されている。L2は「正本が構造化されているか」という<strong>組織の資産状態</strong>に依存する。L3/L4は原理的に外部世界への問い合わせが必要で、AIの性能では解けない。</p>
 <p>だから未来の開発モデルの本質は「エージェントを何体並べるか」ではなく、<strong>「L2をどれだけL0/L1に落とし込めるか」</strong>である。これが富士通が「AI-Ready Engineering」と呼び、サイバーエージェントが「AIが働きやすい環境＝新規参入者が働きやすい環境」と表現した内容と一致する。</p>
-<h3>2.2 PM Agent中心構造の現実的評価</h3>
+<h3 id="agent-claude-22-pm-agent中心構造の現実的評価"><a class="heading-permalink" href="#agent-claude-22-pm-agent中心構造の現実的評価" aria-label="この見出しへのリンク">#</a>2.2 PM Agent中心構造の現実的評価</h3>
 <p>依頼文の中核は「人間は主にPM Agentと対話する」である。ここは正面から批判的に検討する。</p>
 <p><strong>成立する部分：</strong><br>
 - 状態の永続化と集約（Issue/PR/ADR/テスト結果/コスト）は既に技術的に可能<br>
@@ -3153,7 +3157,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 - 生成に使ったモデル族と、検証に使うモデル族を分離する（想定読者が既に実践しているClaude/Codex/Cursorの役割分離は、この観点で正しい設計）<br>
 - 集約された報告に対し、<strong>要約ではなく反証を提出させる</strong>（「問題ありません」ではなく「この主張が誤りである可能性が最も高い箇所はここで、その根拠はこれ」）<br>
 - 承認の単位を「差分」ではなく「不変条件の維持」に置く</p>
-<h3>2.3 実現に必要な技術と制度（不足しているもの）</h3>
+<h3 id="agent-claude-23-実現に必要な技術と制度不足しているもの"><a class="heading-permalink" href="#agent-claude-23-実現に必要な技術と制度不足しているもの" aria-label="この見出しへのリンク">#</a>2.3 実現に必要な技術と制度（不足しているもの）</h3>
 <p>依頼文が列挙した要素に、調査で見えた不足を追記する。</p>
 <table>
 <thead>
@@ -3237,8 +3241,8 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tbody>
 </table>
 <hr>
-<h2>3. 日本企業の調査結果</h2>
-<h3>3.1 総括：4層に分かれている</h3>
+<h2 id="agent-claude-3-日本企業の調査結果"><a class="heading-permalink" href="#agent-claude-3-日本企業の調査結果" aria-label="この見出しへのリンク">#</a>3. 日本企業の調査結果</h2>
+<h3 id="agent-claude-31-総括4層に分かれている"><a class="heading-permalink" href="#agent-claude-31-総括4層に分かれている" aria-label="この見出しへのリンク">#</a>3.1 総括：4層に分かれている</h3>
 <p>日本の状況は「進んでいる／遅れている」の一次元では捉えられない。<strong>4つの層で別々の現象が起きている。</strong></p>
 <table>
 <thead>
@@ -3276,8 +3280,8 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h3>3.2 個別評価表</h3>
-<h4>富士通</h4>
+<h3 id="agent-claude-32-個別評価表"><a class="heading-permalink" href="#agent-claude-32-個別評価表" aria-label="この見出しへのリンク">#</a>3.2 個別評価表</h3>
+<h4 id="agent-claude-富士通"><a class="heading-permalink" href="#agent-claude-富士通" aria-label="この見出しへのリンク">#</a>富士通</h4>
 <table>
 <thead>
 <tr>
@@ -3320,7 +3324,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h4>日立製作所</h4>
+<h4 id="agent-claude-日立製作所"><a class="heading-permalink" href="#agent-claude-日立製作所" aria-label="この見出しへのリンク">#</a>日立製作所</h4>
 <table>
 <thead>
 <tr>
@@ -3359,7 +3363,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h4>NTTデータ</h4>
+<h4 id="agent-claude-nttデータ"><a class="heading-permalink" href="#agent-claude-nttデータ" aria-label="この見出しへのリンク">#</a>NTTデータ</h4>
 <table>
 <thead>
 <tr>
@@ -3394,7 +3398,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h4>サイバーエージェント</h4>
+<h4 id="agent-claude-サイバーエージェント"><a class="heading-permalink" href="#agent-claude-サイバーエージェント" aria-label="この見出しへのリンク">#</a>サイバーエージェント</h4>
 <table>
 <thead>
 <tr>
@@ -3437,7 +3441,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h4>KDDIアジャイル開発センター（KAG）＋ AI駆動開発コンソーシアム</h4>
+<h4 id="agent-claude-kddiアジャイル開発センターkag-ai駆動開発コンソーシアム"><a class="heading-permalink" href="#agent-claude-kddiアジャイル開発センターkag-ai駆動開発コンソーシアム" aria-label="この見出しへのリンク">#</a>KDDIアジャイル開発センター（KAG）＋ AI駆動開発コンソーシアム</h4>
 <table>
 <thead>
 <tr>
@@ -3468,7 +3472,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h4>AI駆動開発コミュニティ（AI駆動開発勉強会／カンファレンス）</h4>
+<h4 id="agent-claude-ai駆動開発コミュニティai駆動開発勉強会カンファレンス"><a class="heading-permalink" href="#agent-claude-ai駆動開発コミュニティai駆動開発勉強会カンファレンス" aria-label="この見出しへのリンク">#</a>AI駆動開発コミュニティ（AI駆動開発勉強会／カンファレンス）</h4>
 <table>
 <thead>
 <tr>
@@ -3491,7 +3495,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h4>SHIFT</h4>
+<h4 id="agent-claude-shift"><a class="heading-permalink" href="#agent-claude-shift" aria-label="この見出しへのリンク">#</a>SHIFT</h4>
 <table>
 <thead>
 <tr>
@@ -3514,7 +3518,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h4>その他（証拠が弱い／間接的なもの）</h4>
+<h4 id="agent-claude-その他証拠が弱い間接的なもの"><a class="heading-permalink" href="#agent-claude-その他証拠が弱い間接的なもの" aria-label="この見出しへのリンク">#</a>その他（証拠が弱い／間接的なもの）</h4>
 <table>
 <thead>
 <tr>
@@ -3551,7 +3555,7 @@ AIにコードを書かせる人ではなく、顧客課題、正本、エージ
 </tr>
 </tbody>
 </table>
-<h3>3.3 「日本企業が見つからない」わけではない。しかし空白は明確にある</h3>
+<h3 id="agent-claude-33-日本企業が見つからないわけではないしかし空白は明確にある"><a class="heading-permalink" href="#agent-claude-33-日本企業が見つからないわけではないしかし空白は明確にある" aria-label="この見出しへのリンク">#</a>3.3 「日本企業が見つからない」わけではない。しかし空白は明確にある</h3>
 <p>依頼文は「日本企業が十分に見つからない場合はその事実も結論として扱う」としていたが、<strong>大手については十分に見つかった</strong>。むしろ問題は別のところにある。</p>
 <p><strong>空白①：基盤・ツール層の不在</strong><br>
 エージェント、オーケストレーター、評価基盤、権限基盤はすべて海外製。日本勢は統合者に留まる。ここは構造的（英語のOSSエコシステム、開発者数、資本量）であり、5年で埋まらない。</p>
@@ -3569,8 +3573,8 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <li><strong>個人の実践がSNS・Zenn・noteに散在し、体系化されていない</strong></li>
 </ol>
 <hr>
-<h2>4. 海外先行事例と日本との差</h2>
-<h3>4.1 何が先行しているのか</h3>
+<h2 id="agent-claude-4-海外先行事例と日本との差"><a class="heading-permalink" href="#agent-claude-4-海外先行事例と日本との差" aria-label="この見出しへのリンク">#</a>4. 海外先行事例と日本との差</h2>
+<h3 id="agent-claude-41-何が先行しているのか"><a class="heading-permalink" href="#agent-claude-41-何が先行しているのか" aria-label="この見出しへのリンク">#</a>4.1 何が先行しているのか</h3>
 <table>
 <thead>
 <tr>
@@ -3631,7 +3635,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>4.2 海外の「限界」データ（そのまま日本に適用してよい部分）</h3>
+<h3 id="agent-claude-42-海外の限界データそのまま日本に適用してよい部分"><a class="heading-permalink" href="#agent-claude-42-海外の限界データそのまま日本に適用してよい部分" aria-label="この見出しへのリンク">#</a>4.2 海外の「限界」データ（そのまま日本に適用してよい部分）</h3>
 <p>これらは技術的・認知的な制約であり、商習慣に依存しない。<strong>日本にもそのまま当てはまる。</strong></p>
 <table>
 <thead>
@@ -3725,7 +3729,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tbody>
 </table>
 <p><strong>この表が示す最重要の事実：</strong> ベンチマーク性能の伸びと、実運用への配備率の間に<strong>桁違いのギャップ</strong>がある。自律エージェントの業務配備が一桁%という数字は、「もう始まっている」派と「まだ何も起きていない」派の両方が同じデータから正しく見える理由を説明する。</p>
-<h3>4.3 海外事例を日本にそのまま適用できない部分</h3>
+<h3 id="agent-claude-43-海外事例を日本にそのまま適用できない部分"><a class="heading-permalink" href="#agent-claude-43-海外事例を日本にそのまま適用できない部分" aria-label="この見出しへのリンク">#</a>4.3 海外事例を日本にそのまま適用できない部分</h3>
 <table>
 <thead>
 <tr>
@@ -3765,9 +3769,9 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tbody>
 </table>
 <hr>
-<h2>5. 4つの未来シナリオ</h2>
+<h2 id="agent-claude-5-4つの未来シナリオ"><a class="heading-permalink" href="#agent-claude-5-4つの未来シナリオ" aria-label="この見出しへのリンク">#</a>5. 4つの未来シナリオ</h2>
 <p>各シナリオを、<strong>「何が起きるか」ではなく「何が制約を外すか」</strong>で定義する。</p>
-<h3>シナリオ1：急速な自動化（確率15%）</h3>
+<h3 id="agent-claude-シナリオ1急速な自動化確率15"><a class="heading-permalink" href="#agent-claude-シナリオ1急速な自動化確率15" aria-label="この見出しへのリンク">#</a>シナリオ1：急速な自動化（確率15%）</h3>
 <p><strong>制約が外れる条件：</strong> 80%信頼性ホライズンが1営業日を超え、かつ検証コストが生成コストと同程度まで下がる。つまり「エージェントの出力を別のエージェントが十分に検証できる」状態が成立する。</p>
 <table>
 <thead>
@@ -3798,7 +3802,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <li><strong>日本企業への影響：</strong> 大手SIerは先行投資が報われる。中間層が消滅。ユーザー企業の内製化が加速</li>
 <li><strong>生まれる事業機会：</strong> ソフトウェア棚卸し・廃棄業、AI成果物保証、賠償保険、中小企業向け超低価格システム提供</li>
 </ul>
-<h3>シナリオ2：段階的な普及（確率40％｜<strong>中心線</strong>）</h3>
+<h3 id="agent-claude-シナリオ2段階的な普及確率40中心線"><a class="heading-permalink" href="#agent-claude-シナリオ2段階的な普及確率40中心線" aria-label="この見出しへのリンク">#</a>シナリオ2：段階的な普及（確率40％｜<strong>中心線</strong>）</h3>
 <p><strong>制約が外れない部分：</strong> 生成は自動化されるが、検証・統合・本番運用の責任は人間に残る。理由は技術ではなく制度と認知。</p>
 <table>
 <thead>
@@ -3829,7 +3833,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <li><strong>日本企業への影響：</strong> 大手は生き残るが利益率が圧迫。中間層の再編。<strong>AI駆動開発の品質保証を外部化する市場が生まれる</strong></li>
 <li><strong>生まれる事業機会：</strong> 証跡・検証・承認支援ツール、AI可読化サービス、業種別ルールパック、内製化支援</li>
 </ul>
-<h3>シナリオ3：限定領域だけ自動化（確率30%）</h3>
+<h3 id="agent-claude-シナリオ3限定領域だけ自動化確率30"><a class="heading-permalink" href="#agent-claude-シナリオ3限定領域だけ自動化確率30" aria-label="この見出しへのリンク">#</a>シナリオ3：限定領域だけ自動化（確率30%）</h3>
 <p><strong>制約が外れない部分：</strong> L2（仕様正本との照合）が既存の巨大資産では成立しない。ゆえに新規と定型だけが自動化される。</p>
 <table>
 <thead>
@@ -3860,7 +3864,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <li><strong>日本企業への影響：</strong> レガシーの多い日本は「作れない領域」の比重が大きい。<strong>皮肉なことに、これは日本の中堅SIerには時間的猶予を与える</strong></li>
 <li><strong>生まれる事業機会：</strong> 境界統合、規制産業向け高信頼開発、AI利用可否の判定・線引きコンサルティング</li>
 </ul>
-<h3>シナリオ4：期待ほど進まない（確率15%）</h3>
+<h3 id="agent-claude-シナリオ4期待ほど進まない確率15"><a class="heading-permalink" href="#agent-claude-シナリオ4期待ほど進まない確率15" aria-label="この見出しへのリンク">#</a>シナリオ4：期待ほど進まない（確率15%）</h3>
 <p><strong>外れない制約：</strong> 検証コストが下がらない。しかもこれには<strong>技術的な理由がある</strong>（第14章で詳述）。信頼性を上げるには冗長性が必要で、冗長性はトークンコストを乗算する。ゆえに「検証済み成果あたりの原価」はトークン単価ほど下がらない。</p>
 <table>
 <thead>
@@ -3890,7 +3894,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <li><strong>日本企業への影響：</strong> 慎重な日本企業が結果的に正解になる。宣言した大手が投資回収に苦しむ</li>
 <li><strong>生まれる事業機会：</strong> AI導入の失敗リカバリー、AIを使わない開発の保証、事故調査</li>
 </ul>
-<h3>5.1 シナリオを分岐させる観測可能な先行指標</h3>
+<h3 id="agent-claude-51-シナリオを分岐させる観測可能な先行指標"><a class="heading-permalink" href="#agent-claude-51-シナリオを分岐させる観測可能な先行指標" aria-label="この見出しへのリンク">#</a>5.1 シナリオを分岐させる観測可能な先行指標</h3>
 <p><strong>未来を1つに賭けないための実務的な要点は、「どの指標を見れば分岐が分かるか」を先に決めておくこと。</strong></p>
 <table>
 <thead>
@@ -3953,8 +3957,8 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tbody>
 </table>
 <hr>
-<h2>6. 活躍する人材像</h2>
-<h3>6.1 まず「上流工程が重要になる」を否定する</h3>
+<h2 id="agent-claude-6-活躍する人材像"><a class="heading-permalink" href="#agent-claude-6-活躍する人材像" aria-label="この見出しへのリンク">#</a>6. 活躍する人材像</h2>
+<h3 id="agent-claude-61-まず上流工程が重要になるを否定する"><a class="heading-permalink" href="#agent-claude-61-まず上流工程が重要になるを否定する" aria-label="この見出しへのリンク">#</a>6.1 まず「上流工程が重要になる」を否定する</h3>
 <p>依頼文が正しく警戒していた通り、この結論は誤りである。理由を明示する。</p>
 <p><strong>上流工程の作業は、下流よりも先にAIに置き換わる部分がある。</strong><br>
 - 業務ヒアリングの網羅性：AIは疲れず、抜けを列挙するのが得意<br>
@@ -3963,8 +3967,8 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 - 費用対効果の説明資料：AIが得意<br>
 - ステークホルダー分析：構造化タスクであり自動化可能</p>
 <p><strong>上流に残るのは「作業」ではなく「権限」である。</strong> 誰が決めるか、誰が責任を負うか、誰が顧客に説明して信頼されるか。これは工程の上下ではなく、<strong>組織における位置</strong>の問題である。</p>
-<h3>6.2 3分類</h3>
-<h4>(A) AIに代替されにくい能力</h4>
+<h3 id="agent-claude-62-3分類"><a class="heading-permalink" href="#agent-claude-62-3分類" aria-label="この見出しへのリンク">#</a>6.2 3分類</h3>
+<h4 id="agent-claude-a-aiに代替されにくい能力"><a class="heading-permalink" href="#agent-claude-a-aiに代替されにくい能力" aria-label="この見出しへのリンク">#</a>(A) AIに代替されにくい能力</h4>
 <table>
 <thead>
 <tr>
@@ -3999,7 +4003,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h4>(B) AIで増幅される能力</h4>
+<h4 id="agent-claude-b-aiで増幅される能力"><a class="heading-permalink" href="#agent-claude-b-aiで増幅される能力" aria-label="この見出しへのリンク">#</a>(B) AIで増幅される能力</h4>
 <table>
 <thead>
 <tr>
@@ -4034,7 +4038,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h4>(C) 現在は重要だが陳腐化する可能性がある能力</h4>
+<h4 id="agent-claude-c-現在は重要だが陳腐化する可能性がある能力"><a class="heading-permalink" href="#agent-claude-c-現在は重要だが陳腐化する可能性がある能力" aria-label="この見出しへのリンク">#</a>(C) 現在は重要だが陳腐化する可能性がある能力</h4>
 <table>
 <thead>
 <tr>
@@ -4077,7 +4081,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tbody>
 </table>
 <p><strong>想定読者に対する率直な指摘：</strong> 想定読者の現在の強み（多重エージェント運用、SDAD方法論、ツール比較検討）は、<strong>(B)と(C)の混在</strong>である。(C)の部分の賞味期限は短い。<strong>(A)と(B)の中核（責任引受、ドメイン、評価設計、証跡）に資産を移す必要がある。</strong>これが本レポートの最も重要な実務的助言である。</p>
-<h3>6.3 新職種・新役割（18種）</h3>
+<h3 id="agent-claude-63-新職種新役割18種"><a class="heading-permalink" href="#agent-claude-63-新職種新役割18種" aria-label="この見出しへのリンク">#</a>6.3 新職種・新役割（18種）</h3>
 <p><strong>設計方針：</strong> 「対象物（object of work）が従来職種と違うもの」だけを挙げる。名前だけ新しくPMやアーキテクトと中身が同じものは排除した。</p>
 <p>評価軸は5段階（5が最高。「再代替」は数字が大きいほどリスク大）。</p>
 <table>
@@ -4257,7 +4261,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h4>評価表（9軸／5段階）</h4>
+<h4 id="agent-claude-評価表9軸5段階"><a class="heading-permalink" href="#agent-claude-評価表9軸5段階" aria-label="この見出しへのリンク">#</a>評価表（9軸／5段階）</h4>
 <p>| # | 職種 | 将来性 | 市場規模 | 参入 | 小規模相性 | 高単価 | 継続収益 | 再代替リスク | 日本相性 | 準備価値 | 一言理由 |<br>
 |---|---|---|---|---|---|---|---|---|---|---|<br>
 | 1 | Verification Architect | 5 | 4 | 4 | 5 | 4 | 3 | 3 | 5 | <strong>5</strong> | 需要は確実。ただしAI検証ツールに一部吸収される |<br>
@@ -4280,8 +4284,8 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 | 18 | Inference Economics Engineer | 4 | 3 | 4 | 4 | 3 | 3 | 4 | 3 | 3 | 有用だがツールに吸収されやすい |</p>
 <p><strong>想定読者向けの優先順位：</strong> 準備価値5がついた6職種のうち、<strong>#6（AI可読化）が即時収益、#17（業種知識キュレーター）が継続収益、#4（証跡設計）＋#1（検証設計）＋#3（不変条件）が差別化の核</strong>。この5つの組み合わせが最も整合的なポジションである。</p>
 <hr>
-<h2>7. ITエンジニアの価値向上戦略</h2>
-<h3>7.1 学習：何を学び、何を学ばないか</h3>
+<h2 id="agent-claude-7-itエンジニアの価値向上戦略"><a class="heading-permalink" href="#agent-claude-7-itエンジニアの価値向上戦略" aria-label="この見出しへのリンク">#</a>7. ITエンジニアの価値向上戦略</h2>
+<h3 id="agent-claude-71-学習何を学び何を学ばないか"><a class="heading-permalink" href="#agent-claude-71-学習何を学び何を学ばないか" aria-label="この見出しへのリンク">#</a>7.1 学習：何を学び、何を学ばないか</h3>
 <table>
 <thead>
 <tr>
@@ -4348,7 +4352,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>7.2 実践：何を作るか</h3>
+<h3 id="agent-claude-72-実践何を作るか"><a class="heading-permalink" href="#agent-claude-72-実践何を作るか" aria-label="この見出しへのリンク">#</a>7.2 実践：何を作るか</h3>
 <table>
 <thead>
 <tr>
@@ -4390,7 +4394,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>7.3 実績作り：技術力をコード量以外でどう証明するか</h3>
+<h3 id="agent-claude-73-実績作り技術力をコード量以外でどう証明するか"><a class="heading-permalink" href="#agent-claude-73-実績作り技術力をコード量以外でどう証明するか" aria-label="この見出しへのリンク">#</a>7.3 実績作り：技術力をコード量以外でどう証明するか</h3>
 <p>これは第13章Q9の実務版である。<strong>新しい証明形式を先に作った者が有利になる。</strong></p>
 <table>
 <thead>
@@ -4443,7 +4447,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>7.4 収益化：どの順で試すか</h3>
+<h3 id="agent-claude-74-収益化どの順で試すか"><a class="heading-permalink" href="#agent-claude-74-収益化どの順で試すか" aria-label="この見出しへのリンク">#</a>7.4 収益化：どの順で試すか</h3>
 <table>
 <thead>
 <tr>
@@ -4493,7 +4497,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tbody>
 </table>
 <hr>
-<h2>8. 活躍する企業像</h2>
+<h2 id="agent-claude-8-活躍する企業像"><a class="heading-permalink" href="#agent-claude-8-活躍する企業像" aria-label="この見出しへのリンク">#</a>8. 活躍する企業像</h2>
 <p>評価軸は5段階。「失敗しやすい点」を最も重視して記述した。</p>
 <table>
 <thead>
@@ -4657,7 +4661,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>8.1 マイクロ企業の天井について（想定読者向けの核心）</h3>
+<h3 id="agent-claude-81-マイクロ企業の天井について想定読者向けの核心"><a class="heading-permalink" href="#agent-claude-81-マイクロ企業の天井について想定読者向けの核心" aria-label="この見出しへのリンク">#</a>8.1 マイクロ企業の天井について（想定読者向けの核心）</h3>
 <p><strong>技術的には1人で大企業並みの開発ができる時代が来る。しかし営業的・法的には来ない。</strong></p>
 <p>理由：<br>
 1. <strong>賠償能力の担保</strong>。大企業・規制産業は「事故時に賠償できる相手」しか選べない。これは能力評価ではなく調達規程の問題<br>
@@ -4693,7 +4697,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </table>
 <p><strong>推奨：BとCを今すぐ実施し、Aを1年以内に1件作る。</strong>BとCだけでは市場規模の天井が低く、Aだけでは価格決定力を失う。3つの併用が唯一の解である。</p>
 <hr>
-<h2>9. 活躍するサービス・ツール（22案）</h2>
+<h2 id="agent-claude-9-活躍するサービスツール22案"><a class="heading-permalink" href="#agent-claude-9-活躍するサービスツール22案" aria-label="この見出しへのリンク">#</a>9. 活躍するサービス・ツール（22案）</h2>
 <p><strong>分類の方針：</strong> 「大手に吸収されるもの」と「独立カテゴリーになるもの」を厳しく区別した。<strong>小規模チームが入るべきは後者だけである。</strong></p>
 <table>
 <thead>
@@ -5023,7 +5027,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>9.1 小規模事業者が入るべき順位（絞り込み）</h3>
+<h3 id="agent-claude-91-小規模事業者が入るべき順位絞り込み"><a class="heading-permalink" href="#agent-claude-91-小規模事業者が入るべき順位絞り込み" aria-label="この見出しへのリンク">#</a>9.1 小規模事業者が入るべき順位（絞り込み）</h3>
 <table>
 <thead>
 <tr>
@@ -5066,8 +5070,8 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tbody>
 </table>
 <hr>
-<h2>10. 周辺で生まれる新しいビジネス（20件）</h2>
-<h3>10.1 現実性の高い案（12件）</h3>
+<h2 id="agent-claude-10-周辺で生まれる新しいビジネス20件"><a class="heading-permalink" href="#agent-claude-10-周辺で生まれる新しいビジネス20件" aria-label="この見出しへのリンク">#</a>10. 周辺で生まれる新しいビジネス（20件）</h2>
+<h3 id="agent-claude-101-現実性の高い案12件"><a class="heading-permalink" href="#agent-claude-101-現実性の高い案12件" aria-label="この見出しへのリンク">#</a>10.1 現実性の高い案（12件）</h3>
 <table>
 <thead>
 <tr>
@@ -5256,7 +5260,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>10.2 大胆な仮説（8件）</h3>
+<h3 id="agent-claude-102-大胆な仮説8件"><a class="heading-permalink" href="#agent-claude-102-大胆な仮説8件" aria-label="この見出しへのリンク">#</a>10.2 大胆な仮説（8件）</h3>
 <p><strong>これらは実現可能性が現時点で低い。ただし発想の枠を広げる価値があり、一部は先行者利益が極端に大きい。</strong></p>
 <table>
 <thead>
@@ -5345,15 +5349,15 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>10.3 「エージェントの教育会社」「エージェントの資格制度」について</h3>
+<h3 id="agent-claude-103-エージェントの教育会社エージェントの資格制度について"><a class="heading-permalink" href="#agent-claude-103-エージェントの教育会社エージェントの資格制度について" aria-label="この見出しへのリンク">#</a>10.3 「エージェントの教育会社」「エージェントの資格制度」について</h3>
 <p>依頼文が挙げていたこの2つは、<strong>発想としては自然だが、成立しにくい</strong>と判定する。理由を明示する。</p>
 <ul>
 <li><strong>エージェントの教育</strong>：モデルの改善はモデル提供者が行う。利用者側でできるのは「文脈の整備」であり、それは①のAI可読化と⑤のデータ整備に吸収される。独立事業にならない。</li>
 <li><strong>エージェントの資格・認定</strong>：認定はエージェントに与えても意味が薄い（バージョンが変われば無効になる）。<strong>認定されるべきはエージェントではなく「エージェントを使う開発プロセス」である。</strong>ISO 42001やSOC2のようなプロセス認証の方向に収束する。この方向なら成立する。</li>
 </ul>
 <hr>
-<h2>11. 新しい働き方と組織構造</h2>
-<h3>11.1 依頼文が挙げた可能性の検証</h3>
+<h2 id="agent-claude-11-新しい働き方と組織構造"><a class="heading-permalink" href="#agent-claude-11-新しい働き方と組織構造" aria-label="この見出しへのリンク">#</a>11. 新しい働き方と組織構造</h2>
+<h3 id="agent-claude-111-依頼文が挙げた可能性の検証"><a class="heading-permalink" href="#agent-claude-111-依頼文が挙げた可能性の検証" aria-label="この見出しへのリンク">#</a>11.1 依頼文が挙げた可能性の検証</h3>
 <table>
 <thead>
 <tr>
@@ -5415,7 +5419,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>11.2 個人・小規模・大企業の変化</h3>
+<h3 id="agent-claude-112-個人小規模大企業の変化"><a class="heading-permalink" href="#agent-claude-112-個人小規模大企業の変化" aria-label="この見出しへのリンク">#</a>11.2 個人・小規模・大企業の変化</h3>
 <table>
 <thead>
 <tr>
@@ -5506,7 +5510,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>11.3 最も見落とされている構造変化：ジュニアの供給断絶</h3>
+<h3 id="agent-claude-113-最も見落とされている構造変化ジュニアの供給断絶"><a class="heading-permalink" href="#agent-claude-113-最も見落とされている構造変化ジュニアの供給断絶" aria-label="この見出しへのリンク">#</a>11.3 最も見落とされている構造変化：ジュニアの供給断絶</h3>
 <p>これは依頼文にもほとんどの言説にも欠けている論点である。</p>
 <p><strong>実装で学ぶ経路が消えると、10年後に検証できる人間がいなくなる。</strong></p>
 <p>検証能力（反証設計、不変条件の特定、異常の直感）は、実装と失敗の経験からしか育たない。AIが実装を担うと、この経験を積む場がなくなる。すると：</p>
@@ -5519,10 +5523,10 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 1. <strong>シニア側にいることの価値が長期的に上がる。</strong>想定読者は長年の実務経験があり、この側にいる<br>
 2. <strong>「AI時代のジュニア育成」は10年スパンで確実に需要が立つ市場である。</strong>想定読者はすでに教育・メンタリングの経験を持っており、この資産は陳腐化しない</p>
 <hr>
-<h2>12. 具体的な行動計画</h2>
+<h2 id="agent-claude-12-具体的な行動計画"><a class="heading-permalink" href="#agent-claude-12-具体的な行動計画" aria-label="この見出しへのリンク">#</a>12. 具体的な行動計画</h2>
 <p><strong>対象：</strong> 日本で活動する、AIエージェント協働開発を既に実践し、ADR・Issue・PR・独立レビュー・複数エージェントを組み合わせ、小規模B2B SaaS等を開発・運用しているITエンジニア。個人または小規模チームとしての機会を重視。</p>
 <p><strong>設計原則：</strong> 4シナリオのどれが来ても価値が残る行動だけを選んだ。特定シナリオにしか効かない行動は除外した。</p>
-<h3>12.1 今後3か月（2026年8月〜10月）</h3>
+<h3 id="agent-claude-121-今後3か月2026年8月10月"><a class="heading-permalink" href="#agent-claude-121-今後3か月2026年8月10月" aria-label="この見出しへのリンク">#</a>12.1 今後3か月（2026年8月〜10月）</h3>
 <table>
 <thead>
 <tr>
@@ -5609,7 +5613,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>12.2 今後1年（2027年7月まで）</h3>
+<h3 id="agent-claude-122-今後1年2027年7月まで"><a class="heading-permalink" href="#agent-claude-122-今後1年2027年7月まで" aria-label="この見出しへのリンク">#</a>12.2 今後1年（2027年7月まで）</h3>
 <table>
 <thead>
 <tr>
@@ -5701,7 +5705,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>12.3 今後3年（2029年7月まで）</h3>
+<h3 id="agent-claude-123-今後3年2029年7月まで"><a class="heading-permalink" href="#agent-claude-123-今後3年2029年7月まで" aria-label="この見出しへのリンク">#</a>12.3 今後3年（2029年7月まで）</h3>
 <table>
 <thead>
 <tr>
@@ -5763,7 +5767,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>12.4 今後5年（2031年7月まで）</h3>
+<h3 id="agent-claude-124-今後5年2031年7月まで"><a class="heading-permalink" href="#agent-claude-124-今後5年2031年7月まで" aria-label="この見出しへのリンク">#</a>12.4 今後5年（2031年7月まで）</h3>
 <table>
 <thead>
 <tr>
@@ -5800,7 +5804,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>12.5 継続観測すべき指標（一覧）</h3>
+<h3 id="agent-claude-125-継続観測すべき指標一覧"><a class="heading-permalink" href="#agent-claude-125-継続観測すべき指標一覧" aria-label="この見出しへのリンク">#</a>12.5 継続観測すべき指標（一覧）</h3>
 <table>
 <thead>
 <tr>
@@ -5863,13 +5867,13 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tbody>
 </table>
 <hr>
-<h2>13. 深掘り15問への回答（反論込み）</h2>
-<h3>Q1. コードを書く人が減った場合、価値は本当に上流へ移るのか</h3>
+<h2 id="agent-claude-13-深掘り15問への回答反論込み"><a class="heading-permalink" href="#agent-claude-13-深掘り15問への回答反論込み" aria-label="この見出しへのリンク">#</a>13. 深掘り15問への回答（反論込み）</h2>
+<h3 id="agent-claude-q1-コードを書く人が減った場合価値は本当に上流へ移るのか"><a class="heading-permalink" href="#agent-claude-q1-コードを書く人が減った場合価値は本当に上流へ移るのか" aria-label="この見出しへのリンク">#</a>Q1. コードを書く人が減った場合、価値は本当に上流へ移るのか</h3>
 <p><strong>移らない。「上流」ではなく「不可逆かつ帰属可能な領域」に移る。</strong></p>
 <p>上流の作業は下流より先に自動化される部分がある（ヒアリングの網羅性、選択肢の列挙、業務フロー作成、費用対効果の説明——すべてAIが得意）。移るのは工程ではなく<strong>権限</strong>である。</p>
 <p><strong>反論：</strong> 「顧客との対話は人間にしかできない」という主張がある。しかしこれは弱い。AIによるヒアリングは疲れず、抜けを列挙し、24時間対応できる。顧客が人間を求めるのは対話能力ではなく<strong>責任の所在</strong>である。</p>
 <p><strong>帰結：</strong> 上流に行くだけでは守られない。<strong>「自分の判断が間違っていたら自分が責任を負う」構造に入ることが唯一の防御である。</strong></p>
-<h3>Q2. 人間がレビューだけを担当する場合、その人間は内容を本当に理解できるのか</h3>
+<h3 id="agent-claude-q2-人間がレビューだけを担当する場合その人間は内容を本当に理解できるのか"><a class="heading-permalink" href="#agent-claude-q2-人間がレビューだけを担当する場合その人間は内容を本当に理解できるのか" aria-label="この見出しへのリンク">#</a>Q2. 人間がレビューだけを担当する場合、その人間は内容を本当に理解できるのか</h3>
 <p><strong>理解できない。これは本レポートで最も重要な否定である。</strong></p>
 <p>証拠は明確だ。AI生成コードの機能的正しさを「完全には信頼していない」開発者は96%、コミット前に必ず検証する開発者は48%、レビューなしでマージされるPRは31%増、AI生成PRのピックアップ待ち時間は通常の約5.3倍。人間は理解が追いつかない状態で承認している。</p>
 <p><strong>では何をすべきか。理解を諦めて、監査の認識論に移る。</strong></p>
@@ -5903,20 +5907,20 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </table>
 <p><strong>反論への応答：</strong> 「AIにレビューさせればよい」という主張は、生成者と検証者が同族モデルである点で内部統制の職務分離原則に反する。METRが観測した「ズル」の傾向は報告層にも及ぶ。だから<strong>モデル族の分離</strong>が必要で、想定読者が既に実践しているClaude/Codex/Cursorの役割分離はこの観点で正しい設計である。</p>
 <p><strong>正直な帰結：</strong> 移行期には、人間が理解していないものに署名する事故が確実に起きる。これが第10章の保険・鑑定市場の原資になる。</p>
-<h3>Q3. ソフトウェアの価値は下がり、顧客・データ・販売網・業界知識の価値が上がるのか</h3>
+<h3 id="agent-claude-q3-ソフトウェアの価値は下がり顧客データ販売網業界知識の価値が上がるのか"><a class="heading-permalink" href="#agent-claude-q3-ソフトウェアの価値は下がり顧客データ販売網業界知識の価値が上がるのか" aria-label="この見出しへのリンク">#</a>Q3. ソフトウェアの価値は下がり、顧客・データ・販売網・業界知識の価値が上がるのか</h3>
 <p><strong>方向は正しいが、対象を絞る必要がある。</strong></p>
 <p>上がるのは「データ」一般ではなく、<strong>再構築コストの高いデータ</strong>である。<br>
 - <strong>上がる：</strong> 業務の暗黙知、法令の運用実態、業界慣行、顧客との合意履歴、失敗の記録、正本性のある業務ルール<br>
 - <strong>上がらない：</strong> 収集可能・生成可能・推論可能なデータ。AIが合成できるものは価値を失う</p>
 <p>販売網も同様。<strong>不可逆な意思決定において信頼が必要な領域</strong>でのみ価値が上がる。SaaSの単純な再販は価値を失う。</p>
 <p><strong>反論：</strong> 「ソフトウェアの価値が下がる」は部分的に誤り。<strong>動いている、監査されている、責任者がいるソフトウェアの価値は上がる。</strong>下がるのは「動くコード」の価値である。この区別が重要だ。</p>
-<h3>Q4. ソフトウェアが大量生産されるほど、保守・統合・監査・廃棄・セキュリティの市場は大きくなるか</h3>
+<h3 id="agent-claude-q4-ソフトウェアが大量生産されるほど保守統合監査廃棄セキュリティの市場は大きくなるか"><a class="heading-permalink" href="#agent-claude-q4-ソフトウェアが大量生産されるほど保守統合監査廃棄セキュリティの市場は大きくなるか" aria-label="この見出しへのリンク">#</a>Q4. ソフトウェアが大量生産されるほど、保守・統合・監査・廃棄・セキュリティの市場は大きくなるか</h3>
 <p><strong>なる。しかも本レポートで最も過小評価されている機会である。</strong></p>
 <p>構造的に、生産量の増加は在庫の増加であり、在庫は管理コストを生む。他産業には必ず対応する産業がある：建築には解体業、製造にはリコール、会計には監査。<strong>ソフトウェアには「廃棄業」の前例がない。</strong>それは今までソフトウェアが「目に見えて腐らなかった」からだ。</p>
 <p>これから起きること：所有者不明のシステムが増殖し、依存関係が把握できなくなり、セキュリティ更新が追いつかなくなる。</p>
 <p><strong>反論：</strong> 「AIが保守もするので市場は大きくならない」。これは部分的に正しい。<strong>ルーチンの保守はAIが担う。</strong>しかし「捨てるべきか」「統合すべきか」「これは誰の資産か」という判断は人間に残る。市場が大きくなるのは<strong>判断と責任の部分</strong>である。</p>
 <p><strong>時期の注意：</strong> 大量生成の3年後に立ち上がる。2029年頃。今は仕込みの時期であり、参入は早すぎる。</p>
-<h3>Q5. AIエージェントの管理は新しいマネジメント職になるのか</h3>
+<h3 id="agent-claude-q5-aiエージェントの管理は新しいマネジメント職になるのか"><a class="heading-permalink" href="#agent-claude-q5-aiエージェントの管理は新しいマネジメント職になるのか" aria-label="この見出しへのリンク">#</a>Q5. AIエージェントの管理は新しいマネジメント職になるのか</h3>
 <p><strong>「調整」は自動化される。「配分」と「引受」は残る。</strong></p>
 <ul>
 <li><strong>調整（誰が何をいつやるか）</strong> → PM Agentが担う。人間の管理職の仕事から消える</li>
@@ -5924,13 +5928,13 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <li><strong>引受（結果に責任を負う）</strong> → 残る。構造的に移らない</li>
 </ul>
 <p><strong>帰結：</strong> 生き残る役割は「エージェントの管理者」ではなく<strong>「エージェント能力のポートフォリオ配分者でP&amp;L責任を持つ者」</strong>である。名前は管理職だが中身は違う。人を管理する技能（動機付け、育成、評価）の一部は不要になり、代わりに原価計算と投資判断の技能が要る。</p>
-<h3>Q6. 多数のエージェントを使える個人と従来型企業の競争関係はどう変化するか</h3>
+<h3 id="agent-claude-q6-多数のエージェントを使える個人と従来型企業の競争関係はどう変化するか"><a class="heading-permalink" href="#agent-claude-q6-多数のエージェントを使える個人と従来型企業の競争関係はどう変化するか" aria-label="この見出しへのリンク">#</a>Q6. 多数のエージェントを使える個人と従来型企業の競争関係はどう変化するか</h3>
 <p><strong>個人が勝つのは「速度と専門性」、企業が勝つのは「担保と継続性」。この分割は5年では崩れない。</strong></p>
 <p>個人が獲得するもの：意思決定の速さ、固定費ゼロ、専門性の尖り、ニッチ市場への到達<br>
 個人が獲得できないもの：賠償能力、24/365体制、継続性、稟議の通しやすさ、大規模データ</p>
 <p><strong>最も可能性が高い帰結は「競争」ではなく「入れ子」である。</strong> 企業が責任と顧客関係を持ち、実務を多数の高能力個人に委任する構造。日本のSI多重下請けと形は似るが、中間の管理層が消えて<strong>2層になる</strong>点が違う。</p>
 <p><strong>想定読者への含意：</strong> 「企業と競争する」よりも「企業の責任構造の中で高付加価値の専門機能を提供する」方が期待値が高い。ただしそれだけでは価格決定力を失うため、独自の顧客（中小企業・専門職市場）も並行して持つ必要がある。</p>
-<h3>Q7. 小規模企業が有利になる領域と、大企業が圧倒的に有利になる領域</h3>
+<h3 id="agent-claude-q7-小規模企業が有利になる領域と大企業が圧倒的に有利になる領域"><a class="heading-permalink" href="#agent-claude-q7-小規模企業が有利になる領域と大企業が圧倒的に有利になる領域" aria-label="この見出しへのリンク">#</a>Q7. 小規模企業が有利になる領域と、大企業が圧倒的に有利になる領域</h3>
 <table>
 <thead>
 <tr>
@@ -5996,7 +6000,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tbody>
 </table>
 <p><strong>注目すべき非対称性：</strong> 第三者検証は<strong>小規模の方が構造的に強い唯一の高付加価値領域</strong>である。大手は開発を請けているため独立性を主張できない。会計監査法人がコンサルと監査を分離せざるを得なかったのと同じ構造が、ソフトウェアにも来る可能性がある。</p>
-<h3>Q8. 開発コストが下がったとき、顧客は何に料金を払うのか</h3>
+<h3 id="agent-claude-q8-開発コストが下がったとき顧客は何に料金を払うのか"><a class="heading-permalink" href="#agent-claude-q8-開発コストが下がったとき顧客は何に料金を払うのか" aria-label="この見出しへのリンク">#</a>Q8. 開発コストが下がったとき、顧客は何に料金を払うのか</h3>
 <p>払わなくなるもの：<strong>機能の実装</strong>（コモディティ化）</p>
 <p>払うもの（重要度順）：<br>
 1. <strong>責任の引受</strong>（事故時に賠償できる相手であること）<br>
@@ -6007,7 +6011,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 6. <strong>統合と正本の維持</strong>（既存資産との整合）<br>
 7. <strong>時間</strong>（今すぐ動くこと）</p>
 <p><strong>日本固有の追記：</strong> 3の「説明可能性」の価値が日本では特に高い。稟議文化と品質要求の厳しさから、「AIが作った」ことを社内で正当化する資料への支払意欲が海外より大きい。<strong>これが第9章#22（説明責任レポート自動生成）を日本固有の商機とした根拠である。</strong></p>
-<h3>Q9. 技術力をコード量や実装速度以外でどう証明するか</h3>
+<h3 id="agent-claude-q9-技術力をコード量や実装速度以外でどう証明するか"><a class="heading-permalink" href="#agent-claude-q9-技術力をコード量や実装速度以外でどう証明するか" aria-label="この見出しへのリンク">#</a>Q9. 技術力をコード量や実装速度以外でどう証明するか</h3>
 <p><strong>新しい証明形式を先に確立した者が有利になる。</strong> 説得力の順に：</p>
 <ol>
 <li><strong>予測の的中記録</strong>（事前に公開した見積り・リスク予測と、事後の実績の照合。外れも公開する）——最強。誰もやっていない</li>
@@ -6019,7 +6023,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <li>第三者監査の通過実績（将来最強、現時点では時期尚早）</li>
 </ol>
 <p><strong>価値が下がるもの：</strong> GitHubのコード量、スター数、実装速度、資格試験、ツールの習熟度。</p>
-<h3>Q10. 高単価人材は、最も優れた実装者ではなく、最も多くのAIに正しい問題を与えられる人になるか</h3>
+<h3 id="agent-claude-q10-高単価人材は最も優れた実装者ではなく最も多くのaiに正しい問題を与えられる人になるか"><a class="heading-permalink" href="#agent-claude-q10-高単価人材は最も優れた実装者ではなく最も多くのaiに正しい問題を与えられる人になるか" aria-label="この見出しへのリンク">#</a>Q10. 高単価人材は、最も優れた実装者ではなく、最も多くのAIに正しい問題を与えられる人になるか</h3>
 <p><strong>半分正しい。しかし「多く」が間違っている。</strong></p>
 <p>「多数のエージェントに問題を与える技能」はコモディティ化する。プラットフォームが吸収する（Agent HQ、Codex appが既にその方向）。<strong>2〜4年で陳腐化する能力</strong>である。</p>
 <p>コモディティ化しないのは<strong>「境界を引く能力」</strong>である。すなわち：<br>
@@ -6030,7 +6034,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <blockquote>
 <p><strong>高単価人材は「最も多くのAIを動かせる人」ではなく「最も正確に境界を引ける人」である。</strong></p>
 </blockquote>
-<h3>Q11. AIエージェントの監査市場は会計監査やセキュリティ監査に相当する規模になるか</h3>
+<h3 id="agent-claude-q11-aiエージェントの監査市場は会計監査やセキュリティ監査に相当する規模になるか"><a class="heading-permalink" href="#agent-claude-q11-aiエージェントの監査市場は会計監査やセキュリティ監査に相当する規模になるか" aria-label="この見出しへのリンク">#</a>Q11. AIエージェントの監査市場は会計監査やセキュリティ監査に相当する規模になるか</h3>
 <p><strong>会計監査には届かない。セキュリティ監査（ペネトレーションテスト、ISMS認証）程度の規模に落ち着く可能性が高い。</strong></p>
 <p>理由：会計監査が巨大なのは<strong>法定監査という強制力</strong>があるからだ。上場企業は全社が必ず買う。ソフトウェア監査には、規制産業以外に強制力がない。</p>
 <p><strong>規模が跳ね上がる条件（watch項目）：</strong><br>
@@ -6038,7 +6042,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 2. <strong>保険会社が引受条件として監査を要求する</strong>——法規制より速く効く。歴史的にも保険が先行するパターンが多い<br>
 3. 大規模事故が起き、業界が自主規制を導入する</p>
 <p><strong>確率評価：</strong> 2031年までにセキュリティ監査並みの規模に到達する確率60%、会計監査並みに到達する確率10%未満。</p>
-<h3>Q12. AIが構築したシステムの事故について誰が責任を負うのか</h3>
+<h3 id="agent-claude-q12-aiが構築したシステムの事故について誰が責任を負うのか"><a class="heading-permalink" href="#agent-claude-q12-aiが構築したシステムの事故について誰が責任を負うのか" aria-label="この見出しへのリンク">#</a>Q12. AIが構築したシステムの事故について誰が責任を負うのか</h3>
 <p><strong>現行の日本法では変わらない。受託者・提供者が負う。</strong> AIは法的主体ではなく道具である。請負なら契約不適合責任、準委任なら善管注意義務。この枠組みは変わらない。</p>
 <p><strong>変わるのは「立証の内容」である。</strong></p>
 <p>善管注意義務を果たしたと言うために、従来は「熟練者がレビューした」で足りた。AI時代には<strong>「どのように検証したか」を証拠で示す必要が出る</strong>。何を確認し、何を確認しなかったか、なぜその範囲で足りると判断したか。</p>
@@ -6049,7 +6053,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 - 事故鑑定（因果の切り分け）<br>
 - AI利用を前提とした契約条項の設計</p>
 <p><strong>想定読者への実務的助言：</strong> これは3年後の市場ではなく<strong>今すぐ効く</strong>。「証跡を残す開発プロセス」を持っていることは、顧客の法務・情シスに対して直接の説得材料になる。差別化としてすぐ使える。</p>
-<h3>Q13. エージェント用の開発環境・評価環境・権限基盤はクラウド市場に匹敵する基盤産業になるか</h3>
+<h3 id="agent-claude-q13-エージェント用の開発環境評価環境権限基盤はクラウド市場に匹敵する基盤産業になるか"><a class="heading-permalink" href="#agent-claude-q13-エージェント用の開発環境評価環境権限基盤はクラウド市場に匹敵する基盤産業になるか" aria-label="この見出しへのリンク">#</a>Q13. エージェント用の開発環境・評価環境・権限基盤はクラウド市場に匹敵する基盤産業になるか</h3>
 <p><strong>層ごとに答えが違う。ここを混同すると事業判断を誤る。</strong></p>
 <table>
 <thead>
@@ -6093,7 +6097,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tbody>
 </table>
 <p><strong>総論：</strong> 全体としてはクラウド並みの規模になるが、<strong>その大部分は既存のクラウド事業者とツールベンダーが取る。</strong>新規の独立市場として残るのは評価・証跡・ドメイン知識の層である。</p>
-<h3>Q14. 日本企業の慎重さは普及の遅れか、それとも競争優位か</h3>
+<h3 id="agent-claude-q14-日本企業の慎重さは普及の遅れかそれとも競争優位か"><a class="heading-permalink" href="#agent-claude-q14-日本企業の慎重さは普及の遅れかそれとも競争優位か" aria-label="この見出しへのリンク">#</a>Q14. 日本企業の慎重さは普及の遅れか、それとも競争優位か</h3>
 <p><strong>条件付きで優位になり得るが、確率は低い（約25%）。</strong></p>
 <p>慎重さが優位に変わるのは、<strong>慎重さが輸出可能な成果物に結晶したときだけ</strong>である。日本の製造業の品質が優位になったのは、慎重さがTQC・QCサークル・かんばんという<strong>移転可能な方法論</strong>に codify されたからだ。</p>
 <p>現時点の日本の状況：<br>
@@ -6101,8 +6105,8 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 - <strong>足りないもの：</strong> 輸出可能な認証スキーム、英語での方法論発信、国際標準への提案</p>
 <p><strong>率直な評価：</strong> 現状は「慎重だが codify されていない」＝ただの遅れである。方法論として言語化し、国際的に発信する主体が現れなければ優位にはならない。</p>
 <p><strong>想定読者への含意：</strong> これは個人にとって<strong>逆説的な好機</strong>である。国が codify できていないなら、<strong>個人が方法論を先に言語化して名前を付けられる。</strong>証跡パック形式を公開仕様として出すことは、この空白を突く行為である。</p>
-<h3>Q15. 現在のITエンジニアが過大評価している点と過小評価している点</h3>
-<h4>過大評価している可能性</h4>
+<h3 id="agent-claude-q15-現在のitエンジニアが過大評価している点と過小評価している点"><a class="heading-permalink" href="#agent-claude-q15-現在のitエンジニアが過大評価している点と過小評価している点" aria-label="この見出しへのリンク">#</a>Q15. 現在のITエンジニアが過大評価している点と過小評価している点</h3>
+<h4 id="agent-claude-過大評価している可能性"><a class="heading-permalink" href="#agent-claude-過大評価している可能性" aria-label="この見出しへのリンク">#</a>過大評価している可能性</h4>
 <table>
 <thead>
 <tr>
@@ -6133,7 +6137,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h4>過小評価している可能性</h4>
+<h4 id="agent-claude-過小評価している可能性"><a class="heading-permalink" href="#agent-claude-過小評価している可能性" aria-label="この見出しへのリンク">#</a>過小評価している可能性</h4>
 <table>
 <thead>
 <tr>
@@ -6173,9 +6177,9 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tbody>
 </table>
 <hr>
-<h2>14. 反対意見と失敗シナリオ</h2>
+<h2 id="agent-claude-14-反対意見と失敗シナリオ"><a class="heading-permalink" href="#agent-claude-14-反対意見と失敗シナリオ" aria-label="この見出しへのリンク">#</a>14. 反対意見と失敗シナリオ</h2>
 <p><strong>想定読者の未来像が外れる条件を、否定しやすい順に並べる。</strong></p>
-<h3>14.1 マルチエージェント開発が期待ほど機能しない（確率：中〜高）</h3>
+<h3 id="agent-claude-141-マルチエージェント開発が期待ほど機能しない確率中高"><a class="heading-permalink" href="#agent-claude-141-マルチエージェント開発が期待ほど機能しない確率中高" aria-label="この見出しへのリンク">#</a>14.1 マルチエージェント開発が期待ほど機能しない（確率：中〜高）</h3>
 <p><strong>最も現実的な失敗モード。</strong> 想定読者の未来像はマルチエージェントの協調を前提としているが、協調にはコストがある。</p>
 <ul>
 <li>引き継ぎのたびに文脈が落ちる</li>
@@ -6185,28 +6189,28 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </ul>
 <p>2026年のツール進化は「対等な複数エージェントの交渉」ではなく「1体の強いエージェント＋従属サブエージェント」に寄っている。<strong>想定読者のSDAD（Claude/Codex/Cursorの役割分離）は、独立性の担保という点では正しいが、「役割で分けた複数エージェント」という前提自体が単一強力エージェントに置き換わる可能性を織り込んでおく必要がある。</strong></p>
 <p><strong>想定読者が取るべき対策：</strong> 方法論を「エージェントの構成」ではなく<strong>「満たすべき性質」</strong>で記述する。「Claudeが仕様、Codexが実装、Cursorがレビュー」ではなく「生成と検証は独立した情報源で行う」「不変条件はCIで機械検証する」と書けば、エージェント構成が変わっても方法論は生き残る。<strong>これは今すぐSDADのドキュメントに反映すべき修正である。</strong></p>
-<h3>14.2 人間のレビューがボトルネックになり続ける（確率：高）</h3>
+<h3 id="agent-claude-142-人間のレビューがボトルネックになり続ける確率高"><a class="heading-permalink" href="#agent-claude-142-人間のレビューがボトルネックになり続ける確率高" aria-label="この見出しへのリンク">#</a>14.2 人間のレビューがボトルネックになり続ける（確率：高）</h3>
 <p>既に起きている。Faros AIの計測では組織レベルのDORA指標に改善が出ておらず、レビューなしでマージされるPRが31%増加している。「人間が承認だけを短時間で行う」は、<strong>理解を伴わない承認の合法化</strong>になりかねない。</p>
-<h3>14.3 AI開発のコストが想定ほど安くならない（確率：中）</h3>
+<h3 id="agent-claude-143-ai開発のコストが想定ほど安くならない確率中"><a class="heading-permalink" href="#agent-claude-143-ai開発のコストが想定ほど安くならない確率中" aria-label="この見出しへのリンク">#</a>14.3 AI開発のコストが想定ほど安くならない（確率：中）</h3>
 <p>第13章Q15で述べた通り、<strong>信頼性は冗長性を要求し、冗長性はコストを乗算する。</strong>トークン単価が10分の1になっても、10重の検証をすれば単位原価は変わらない。しかも本番システムほど冗長性が必要になる。</p>
 <p><strong>この点は想定読者が実データで検証できる立場にある。</strong>単位原価の計測を今すぐ始める理由がここにある。</p>
-<h3>14.4 少数のプラットフォーム企業に市場が集中する（確率：高）</h3>
+<h3 id="agent-claude-144-少数のプラットフォーム企業に市場が集中する確率高"><a class="heading-permalink" href="#agent-claude-144-少数のプラットフォーム企業に市場が集中する確率高" aria-label="この見出しへのリンク">#</a>14.4 少数のプラットフォーム企業に市場が集中する（確率：高）</h3>
 <p>GitHub Agent HQ、OpenAI Codex app、Microsoft Agent 365は、いずれも「エージェント開発の統制面」を握ろうとしている。これが成功すると、オーケストレーション、権限、監査ログ、承認ゲートの層は全てプラットフォームの標準機能になる。<strong>独立のツール事業はここでは成立しない。</strong></p>
-<h3>14.5 個人・小規模企業の機会が減る（確率：中）</h3>
+<h3 id="agent-claude-145-個人小規模企業の機会が減る確率中"><a class="heading-permalink" href="#agent-claude-145-個人小規模企業の機会が減る確率中" aria-label="この見出しへのリンク">#</a>14.5 個人・小規模企業の機会が減る（確率：中）</h3>
 <p>参入障壁が下がることは競争の激化を意味する。「AIで作れる」が誰にでも当てはまるなら、差別化は消える。<strong>残る差別化は、AIで複製できないもの——顧客関係、ドメイン知識、責任能力、信用——だけである。</strong>逆に言えば、これらを持たない個人事業者の機会は減る。</p>
-<h3>14.6 品質保証が困難になり、ソフトウェアが管理不能になる（確率：中〜高）</h3>
+<h3 id="agent-claude-146-品質保証が困難になりソフトウェアが管理不能になる確率中高"><a class="heading-permalink" href="#agent-claude-146-品質保証が困難になりソフトウェアが管理不能になる確率中高" aria-label="この見出しへのリンク">#</a>14.6 品質保証が困難になり、ソフトウェアが管理不能になる（確率：中〜高）</h3>
 <p>AI生成コードは権限昇格経路が322%、設計上の欠陥が153%多いという分析があり、ステージング通過後も43%の変更が本番でのデバッグを要したという報告もある。生成量が増えるほど、この率が絶対数に効く。</p>
-<h3>14.7 法規制・顧客不安で普及が遅れる（確率：中）</h3>
+<h3 id="agent-claude-147-法規制顧客不安で普及が遅れる確率中"><a class="heading-permalink" href="#agent-claude-147-法規制顧客不安で普及が遅れる確率中" aria-label="この見出しへのリンク">#</a>14.7 法規制・顧客不安で普及が遅れる（確率：中）</h3>
 <p>規制産業では「AI生成コード禁止」が明文化される可能性がある。金融・医療・公共は特にそうなりやすい。<strong>逆にこれは第9章#18（仕様⇄テスト整合性検査）や第10章#7（第三者検証）の需要を生む。</strong></p>
-<h3>14.8 AIを使わないこと自体が差別化になる領域が生まれる（確率：中）</h3>
+<h3 id="agent-claude-148-aiを使わないこと自体が差別化になる領域が生まれる確率中"><a class="heading-permalink" href="#agent-claude-148-aiを使わないこと自体が差別化になる領域が生まれる確率中" aria-label="この見出しへのリンク">#</a>14.8 AIを使わないこと自体が差別化になる領域が生まれる（確率：中）</h3>
 <p>「人間が全て設計・実装・検証しました」を保証するプレミアムサービス。金融の一部、医療機器、防衛、重要インフラ。<strong>オーガニック食品や手作り工芸品と同じ構造。</strong>規模は小さいが単価は極めて高い。</p>
-<h3>14.9 想定読者の想定が最も外れるとしたら</h3>
+<h3 id="agent-claude-149-想定読者の想定が最も外れるとしたら"><a class="heading-permalink" href="#agent-claude-149-想定読者の想定が最も外れるとしたら" aria-label="この見出しへのリンク">#</a>14.9 想定読者の想定が最も外れるとしたら</h3>
 <p><strong>「人間はPM Agentと対話するだけになる」という部分が最も外れやすい。</strong></p>
 <p>理由：情報を要約する層は、落ちた情報を隠す層でもある。責任を負う人間は、要約ではなく<strong>一次証拠</strong>にアクセスしたがる。監査人が要約報告を受け取らずに元帳を見るのと同じ理由だ。</p>
 <p><strong>修正された未来像：</strong> 人間はPM Agentと対話するのではなく、<strong>「PM Agentが用意した証跡パックを、自分の基準でサンプリング検査する」</strong>形になる可能性が高い。対話ではなく検査。これは想定読者の未来像の重要な修正である。</p>
 <hr>
-<h2>15. 最終提言</h2>
-<h3>15.1 今すぐ始めること</h3>
+<h2 id="agent-claude-15-最終提言"><a class="heading-permalink" href="#agent-claude-15-最終提言" aria-label="この見出しへのリンク">#</a>15. 最終提言</h2>
+<h3 id="agent-claude-151-今すぐ始めること"><a class="heading-permalink" href="#agent-claude-151-今すぐ始めること" aria-label="この見出しへのリンク">#</a>15.1 今すぐ始めること</h3>
 <table>
 <thead>
 <tr>
@@ -6258,7 +6262,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>15.2 まだ賭けずに観測すること</h3>
+<h3 id="agent-claude-152-まだ賭けずに観測すること"><a class="heading-permalink" href="#agent-claude-152-まだ賭けずに観測すること" aria-label="この見出しへのリンク">#</a>15.2 まだ賭けずに観測すること</h3>
 <table>
 <thead>
 <tr>
@@ -6305,7 +6309,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tr>
 </tbody>
 </table>
-<h3>15.3 現時点では避けること</h3>
+<h3 id="agent-claude-153-現時点では避けること"><a class="heading-permalink" href="#agent-claude-153-現時点では避けること" aria-label="この見出しへのリンク">#</a>15.3 現時点では避けること</h3>
 <table>
 <thead>
 <tr>
@@ -6363,11 +6367,11 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 </tbody>
 </table>
 <hr>
-<h2>16. 最終的な問いへの回答</h2>
+<h2 id="agent-claude-16-最終的な問いへの回答"><a class="heading-permalink" href="#agent-claude-16-最終的な問いへの回答" aria-label="この見出しへのリンク">#</a>16. 最終的な問いへの回答</h2>
 <blockquote>
 <p><strong>日本で活動するITエンジニアが、AIエージェント協働型開発の普及を前提として、今後5年間で市場価値と事業機会を最大化するには、どのポジションを取り、何を実践し、何を実績として外部に示すべきか。</strong></p>
 </blockquote>
-<h3>取るべきポジション（一つに絞る）</h3>
+<h3 id="agent-claude-取るべきポジション一つに絞る"><a class="heading-permalink" href="#agent-claude-取るべきポジション一つに絞る" aria-label="この見出しへのリンク">#</a>取るべきポジション（一つに絞る）</h3>
 <blockquote>
 <p><strong>「AI生成物の検証と説明責任を設計し、その責任を自分で引き受ける、特定業種の専門家」</strong></p>
 </blockquote>
@@ -6380,7 +6384,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 3. <strong>小規模事業者に構造的優位がある唯一の高付加価値領域</strong>（大手は開発を請けるため独立性を主張できない）<br>
 4. <strong>日本市場に固有の需要がある</strong>（稟議文化、説明責任、レガシー規模、中小企業の空白）<br>
 5. <strong>実践現場の既存資産（ADR、多重レビュー、SDAD、実務経験、特定業種の知見）がそのまま原材料になる</strong></p>
-<h3>実践すべきこと（優先順位付き）</h3>
+<h3 id="agent-claude-実践すべきこと優先順位付き"><a class="heading-permalink" href="#agent-claude-実践すべきこと優先順位付き" aria-label="この見出しへのリンク">#</a>実践すべきこと（優先順位付き）</h3>
 <ol>
 <li><strong>証跡パック形式の確立と公開</strong>（3か月）——これが看板になる</li>
 <li><strong>単位原価の計測</strong>（今日から）——すべての判断の基礎</li>
@@ -6391,7 +6395,7 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <li><strong>賠償責任保険＋契約条項の整備</strong>（3か月）——責任を商品にする</li>
 <li><strong>中堅SIerの検証パートナー契約1件</strong>（3年）——単価の天井を上げる</li>
 </ol>
-<h3>外部に示すべき実績（説得力の順）</h3>
+<h3 id="agent-claude-外部に示すべき実績説得力の順"><a class="heading-permalink" href="#agent-claude-外部に示すべき実績説得力の順" aria-label="この見出しへのリンク">#</a>外部に示すべき実績（説得力の順）</h3>
 <ol>
 <li><strong>予測の的中記録</strong>——事前公開した見積り・リスク予測と実績の照合。<strong>外れも公開する。</strong>これを継続的にやっている個人は日本にほぼいない。最強の証明</li>
 <li><strong>測定された定量報告</strong>——工数、手戻り率、レビュー時間、単位原価の実データ。日本語圏で決定的に不足しており、1本出すだけで差別化される</li>
@@ -6401,15 +6405,15 @@ AI成果物を独立検証する事業者が日本にほぼいない。SHIFTが�
 <li><strong>登壇</strong>（AI駆動開発カンファレンス／地域コミュニティ）——ただし測定データを伴う場合のみ</li>
 <li><strong>nuget.org公開の不変条件アナライザ</strong>——動くものによる証明</li>
 </ol>
-<h3>最も重要な一文</h3>
+<h3 id="agent-claude-最も重要な一文"><a class="heading-permalink" href="#agent-claude-最も重要な一文" aria-label="この見出しへのリンク">#</a>最も重要な一文</h3>
 <blockquote>
 <p><strong>希少になるのはコードではなく「証拠」である。</strong><br>
 AIは無限に成果物を生む。しかし「これは正しい」と証明する証拠は、意図的に設計しなければ生まれない。<br>
 <strong>その証拠を設計でき、範囲を限定して署名でき、その署名に責任を負える人間が、次の5年で最も高い値をつける。</strong></p>
 </blockquote>
 <hr>
-<h2>付録：主要な出典</h2>
-<h3>日本企業（一次情報）</h3>
+<h2 id="agent-claude-付録主要な出典"><a class="heading-permalink" href="#agent-claude-付録主要な出典" aria-label="この見出しへのリンク">#</a>付録：主要な出典</h2>
+<h3 id="agent-claude-日本企業一次情報"><a class="heading-permalink" href="#agent-claude-日本企業一次情報" aria-label="この見出しへのリンク">#</a>日本企業（一次情報）</h3>
 <ul>
 <li>富士通「AI-Driven Software Development Platform」（2026年2月17日発表）: https://global.fujitsu/ja-jp/technology/key-technologies/ai/ai-dsdp</li>
 <li>日立製作所「Agentic AI Integration Platform」（2026年7月24日発表、IT Leaders報道）: https://it.impress.co.jp/articles/-/29623</li>
@@ -6420,13 +6424,13 @@ AIは無限に成果物を生む。しかし「これは正しい」と証明す
 <li>AI駆動開発カンファレンス2026夏（2026年7月30-31日）: https://www.ai-driven.dev/ ／ オンライン参加（無料）: https://aid.connpass.com/event/392229/</li>
 <li>AI駆動開発 地域コミュニティを含む支部情報: https://www.ai-driven.dev/イベント情報/</li>
 </ul>
-<h3>制度・ガイドライン（日本）</h3>
+<h3 id="agent-claude-制度ガイドライン日本"><a class="heading-permalink" href="#agent-claude-制度ガイドライン日本" aria-label="この見出しへのリンク">#</a>制度・ガイドライン（日本）</h3>
 <ul>
 <li>AI事業者ガイドライン 第1.2版（総務省・経済産業省、2026年3月31日）: https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/pdf/20260331_1.pdf</li>
 <li>先進的AI利活用アドバイザリーボード資料（CAIOガイドブック、AIインシデントレスポンス等、2026年3月）: https://www.digital.go.jp/</li>
 <li>生成AIの調達・利活用に係るガイドライン DS-920（2026年6月12日）</li>
 </ul>
-<h3>能力・限界の測定（海外）</h3>
+<h3 id="agent-claude-能力限界の測定海外"><a class="heading-permalink" href="#agent-claude-能力限界の測定海外" aria-label="この見出しへのリンク">#</a>能力・限界の測定（海外）</h3>
 <ul>
 <li>METR「Frontier Risk Report (February to March 2026)」: https://metr.org/blog/2026-05-19-frontier-risk-report/</li>
 <li>METR「Measuring AI Ability to Complete Long Software Tasks」: https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/</li>
@@ -6435,19 +6439,19 @@ AIは無限に成果物を生む。しかし「これは正しい」と証明す
 <li>LinearB 2026 Software Engineering Benchmarks、Sonar 2026 State of Code、Lightrun 2026、CodeRabbit、CircleCI 2026（いずれも二次報道経由）: https://blog.codacy.com/ai-breaking-code-review-how-engineering-teams-survive-pr-bottleneck ／ https://leaddev.com/ai/ai-generated-code-sparks-production-confidence-crisis</li>
 <li>Stanford AI Index 2026（配備率、OSWorld等、二次経由）</li>
 </ul>
-<h3>海外プラットフォーム</h3>
+<h3 id="agent-claude-海外プラットフォーム"><a class="heading-permalink" href="#agent-claude-海外プラットフォーム" aria-label="この見出しへのリンク">#</a>海外プラットフォーム</h3>
 <ul>
 <li>GitHub Agent HQ（2026年2月）</li>
 <li>OpenAI Codex app（2026年2月）／Gartner Magic Quadrant for Enterprise AI Coding Agents（2026年4月）</li>
 <li>Microsoft Agent 365（2025年11月）／Agent Governance Toolkit（2026年4月）</li>
 <li>マルチエージェント運用の3階層整理: https://addyosmani.com/blog/code-agent-orchestra/</li>
 </ul>
-<h3>市場規模（すべて調査会社推計＝証拠強度「弱」）</h3>
+<h3 id="agent-claude-市場規模すべて調査会社推計証拠強度弱"><a class="heading-permalink" href="#agent-claude-市場規模すべて調査会社推計証拠強度弱" aria-label="この見出しへのリンク">#</a>市場規模（すべて調査会社推計＝証拠強度「弱」）</h3>
 <ul>
 <li>AI Agent Audit &amp; Assurance Services Market（Fact.MR）: https://www.factmr.com/report/ai-agent-audit-and-assurance-services-market</li>
 <li>AI Governance Market（Grand View Research、Global Insight Services）</li>
 </ul>
-<h3>日本の人材・産業構造</h3>
+<h3 id="agent-claude-日本の人材産業構造"><a class="heading-permalink" href="#agent-claude-日本の人材産業構造" aria-label="この見出しへのリンク">#</a>日本の人材・産業構造</h3>
 <ul>
 <li>レバテック「IT人材白書 2026」「AI時代におけるITエンジニアのキャリア意識・実態調査」（2026年7月7日）※二次経由</li>
 <li>富士通「中長期経営ビジョン2035」（2026年5月）における人月モデルに関する言及 ※二次経由</li>
@@ -6462,14 +6466,14 @@ AIは無限に成果物を生む。しかし「これは正しい」と証明す
 
     <section class="panel" aria-labelledby="analysis-heading">
       <h2 id="analysis-heading">2回答の合成</h2>
-      <div class="prose"><h1>2回答の合成（深掘り反映版）</h1>
+      <div class="prose"><h1 id="analysis-2回答の合成深掘り反映版"><a class="heading-permalink" href="#analysis-2回答の合成深掘り反映版" aria-label="この見出しへのリンク">#</a>2回答の合成（深掘り反映版）</h1>
 <p><strong>合成日：2026-07-31（深掘り反映）</strong><br>
 <strong>対象回答：</strong> ChatGPT／Claude（同一調査プロンプトへの独立2回答。Geminiは本記事の統合対象外）<br>
 <strong>調査基準日（元回答）：2026-07-30</strong><br>
 <strong>深掘り：</strong> 差異確認・反証・公開情報の追加調査（<code>.work/kb-2026-0001/followup-deepdive-response.md</code>）</p>
 <p>目的は、単一予測を信じず、複数シナリオを持ち、エンジニアの価値・事業機会・職種／働き方の変化に柔軟に対応できるようにすること。</p>
 <hr>
-<h2>1. 修正した中心命題</h2>
+<h2 id="analysis-1-修正した中心命題"><a class="heading-permalink" href="#analysis-1-修正した中心命題" aria-label="この見出しへのリンク">#</a>1. 修正した中心命題</h2>
 <p>当初の統合命題：</p>
 <blockquote>
 <p>希少になるのはコードではなく「証拠」。分岐軸は検証可能性。</p>
@@ -6481,24 +6485,24 @@ AIは無限に成果物を生む。しかし「これは正しい」と証明す
 </blockquote>
 <p>修正理由：証拠生成・provenance・評価ゲートはプラットフォーム標準機能に吸収されうる。残る希少性は、<strong>独立した証拠設計</strong>と<strong>残余リスクの引受</strong>である。</p>
 <hr>
-<h2>2. 強く一致した点（維持＋精密化）</h2>
-<h3>2.1 ボトルネックは生成ではなく検証へ移りやすい</h3>
+<h2 id="analysis-2-強く一致した点維持精密化"><a class="heading-permalink" href="#analysis-2-強く一致した点維持精密化" aria-label="この見出しへのリンク">#</a>2. 強く一致した点（維持＋精密化）</h2>
+<h3 id="analysis-21-ボトルネックは生成ではなく検証へ移りやすい"><a class="heading-permalink" href="#analysis-21-ボトルネックは生成ではなく検証へ移りやすい" aria-label="この見出しへのリンク">#</a>2.1 ボトルネックは生成ではなく検証へ移りやすい</h3>
 <p>個人の生産性向上はあっても、組織成果への変換はレビュー・承認・証拠で詰まりやすい、という読みは維持する。</p>
 <p>ただし「検証が全案件の最大ボトルネック」とは書かない。<strong>AI生成量が増えた開発における技術自動化の分岐軸</strong>として限定する。</p>
-<h3>2.2 「上流へ行けば安全」は誤りに近い</h3>
+<h3 id="analysis-22-上流へ行けば安全は誤りに近い"><a class="heading-permalink" href="#analysis-22-上流へ行けば安全は誤りに近い" aria-label="この見出しへのリンク">#</a>2.2 「上流へ行けば安全」は誤りに近い</h3>
 <p>上流の情報生成（調査、要求整理、比較案、契約案ドラフト等）はAI化しやすい。<br>
 含まれないのは、信頼形成・利害調整・価格交渉・契約締結・例外受容・法的署名などの<strong>交渉／権限ある意思決定／法的引受</strong>である。</p>
-<h3>2.3 日本には先行企業がある／全体は別問題</h3>
+<h3 id="analysis-23-日本には先行企業がある全体は別問題"><a class="heading-permalink" href="#analysis-23-日本には先行企業がある全体は別問題" aria-label="この見出しへのリンク">#</a>2.3 日本には先行企業がある／全体は別問題</h3>
 <p>富士通・日立・NTTデータ・サイバーエージェント等の先行は事実として扱う。<br>
 一方「日本は先行／遅れ」の一括断定はしない（次節の5層比較）。</p>
-<h3>2.4 商機は汎用オーケストレーションより検証・証跡・業種側</h3>
+<h3 id="analysis-24-商機は汎用オーケストレーションより検証証跡業種側"><a class="heading-permalink" href="#analysis-24-商機は汎用オーケストレーションより検証証跡業種側" aria-label="この見出しへのリンク">#</a>2.4 商機は汎用オーケストレーションより検証・証跡・業種側</h3>
 <p>汎用水平製品としてのオーケストレーション／権限／サンドボックスは大手に寄りやすい。<br>
 <strong>内製の工程自動化は進めてよい。</strong> 「作るな」は製品化・差別化しない共通層の話であり、社内統制・証拠スキーマまで含む禁止ではない。</p>
-<h3>2.5 自由な多体協働より工場型</h3>
+<h3 id="analysis-25-自由な多体協働より工場型"><a class="heading-permalink" href="#analysis-25-自由な多体協働より工場型" aria-label="この見出しへのリンク">#</a>2.5 自由な多体協働より工場型</h3>
 <p>マルチエージェントは条件付きで有効。順序依存・共有状態・曖昧な引継ぎ・同一誤りの相関が強いと悪化しうる。<br>
 <strong>誤りの独立性と成果物契約がある場合だけ強い。</strong> Agent A/B の役割分離も、この条件を満たすとき有効。</p>
 <hr>
-<h2>3. 差異確認の確定判定</h2>
+<h2 id="analysis-3-差異確認の確定判定"><a class="heading-permalink" href="#analysis-3-差異確認の確定判定" aria-label="この見出しへのリンク">#</a>3. 差異確認の確定判定</h2>
 <table>
 <thead>
 <tr>
@@ -6571,7 +6575,7 @@ AIは無限に成果物を生む。しかし「これは正しい」と証明す
 </tbody>
 </table>
 <hr>
-<h2>4. 役割の三層（ポジションの精密化）</h2>
+<h2 id="analysis-4-役割の三層ポジションの精密化"><a class="heading-permalink" href="#analysis-4-役割の三層ポジションの精密化" aria-label="この見出しへのリンク">#</a>4. 役割の三層（ポジションの精密化）</h2>
 <p>統合ポジション案は残してよいが、一人の万能職として書かない。</p>
 <table>
 <thead>
@@ -6608,7 +6612,7 @@ AIは無限に成果物を生む。しかし「これは正しい」と証明す
 <p><strong>小規模検証・証跡・業種特化を提供し、広い賠償・継続性は保険・大手SI・監査法人と接続する。</strong></p>
 </blockquote>
 <hr>
-<h2>5. 日本評価の5層</h2>
+<h2 id="analysis-5-日本評価の5層"><a class="heading-permalink" href="#analysis-5-日本評価の5層" aria-label="この見出しへのリンク">#</a>5. 日本評価の5層</h2>
 <p>「日本」を一括しない。</p>
 <ol>
 <li>宣言</li>
@@ -6621,7 +6625,7 @@ AIは無限に成果物を生む。しかし「これは正しい」と証明す
 日立の「200倍」「240倍」も特定条件の自社測定。2027年度30%は目標。<br>
 NTT DATA も上流・製品開発への展開はあるが、一般開発の全工程自律運用とは分けて書く。</p>
 <hr>
-<h2>6. 証拠強度のラベル（記事で必須）</h2>
+<h2 id="analysis-6-証拠強度のラベル記事で必須"><a class="heading-permalink" href="#analysis-6-証拠強度のラベル記事で必須" aria-label="この見出しへのリンク">#</a>6. 証拠強度のラベル（記事で必須）</h2>
 <p>主張の横に次を付ける。</p>
 <ul>
 <li>RCT</li>
@@ -6632,14 +6636,14 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 </ul>
 <p>使ってよいが、産業全体の因果に単独では使えない。</p>
 <hr>
-<h2>7. 合成結論への最強の反対仮説</h2>
+<h2 id="analysis-7-合成結論への最強の反対仮説"><a class="heading-permalink" href="#analysis-7-合成結論への最強の反対仮説" aria-label="この見出しへのリンク">#</a>7. 合成結論への最強の反対仮説</h2>
 <blockquote>
 <p>検証と証拠生成も実装と同じ速度で自動化・標準機能化され、希少性を失う。競争優位は顧客接点・データ・販売網・資本・プラットフォーム支配へ移る。</p>
 </blockquote>
 <p>観測サイン例：検証費用の急低下、プラットフォーム証明だけで受入、保険がプラットフォーム認証だけで決まる、独立検証サービスの単価崩壊、など。</p>
 <p>それでも結論を維持する条件：業務正しさが形式化しきれない／低頻度高損害／第三者保証要求／法的責任主体が必要／利益相反／残余リスクの引受が必要、のいずれかが残る場合。</p>
 <hr>
-<h2>8. 記事拡充で優先する追記（High）</h2>
+<h2 id="analysis-8-記事拡充で優先する追記high"><a class="heading-permalink" href="#analysis-8-記事拡充で優先する追記high" aria-label="この見出しへのリンク">#</a>8. 記事拡充で優先する追記（High）</h2>
 <p>深掘りバックログから、本文に足すべき High 項目：</p>
 <ol>
 <li>Stage 5/6 が成立する案件条件（領域×検証可能性×可逆性×損害上限）</li>
@@ -6652,7 +6656,7 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 </ol>
 <p>Medium 以下（A/Bが効く条件、内製と製品化の境界、既存標準とのマッピング、ジュニア指標）は必要に応じて付録または後続改訂。</p>
 <hr>
-<h2>9. 書いてはいけないこと（確定）</h2>
+<h2 id="analysis-9-書いてはいけないこと確定"><a class="heading-permalink" href="#analysis-9-書いてはいけないこと確定" aria-label="この見出しへのリンク">#</a>9. 書いてはいけないこと（確定）</h2>
 <ol>
 <li>富士通「100倍」を全体平均・全工程として書かない</li>
 <li>「日本は先行／遅れ」を単独断定しない</li>
@@ -6661,14 +6665,14 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 <li>証拠生成・第一者検証・独立監査・最終承認・損害引受を同一仕事として混同しない</li>
 </ol>
 <hr>
-<h2>10. 現場運用との接続</h2>
+<h2 id="analysis-10-現場運用との接続"><a class="heading-permalink" href="#analysis-10-現場運用との接続" aria-label="この見出しへのリンク">#</a>10. 現場運用との接続</h2>
 <ul>
 <li>現行の ADR統制型 AI-PR駆動は、工場型の手動プロトタイプとして整合しやすい</li>
 <li>次の実務問い：<br>
 <strong>欠陥流出を悪化させずに、人間の最終確認時間を半減できる証跡パックとサンプリング承認を、実プロジェクトで設計できるか</strong></li>
 </ul>
 <hr>
-<h2>11. 関連ドキュメント</h2>
+<h2 id="analysis-11-関連ドキュメント"><a class="heading-permalink" href="#analysis-11-関連ドキュメント" aria-label="この見出しへのリンク">#</a>11. 関連ドキュメント</h2>
 <ul>
 <li>わかりやすい合成：<code>analysis-plain.md</code></li>
 <li>要約：<code>conclusion.md</code></li>
@@ -6681,10 +6685,10 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 
     <section class="panel" aria-labelledby="analysis-plain-heading">
       <h2 id="analysis-plain-heading">2回答の合成（わかりやすい説明）</h2>
-      <div class="prose"><h1>2回答の合成（わかりやすい説明）</h1>
+      <div class="prose"><h1 id="analysis-plain-2回答の合成わかりやすい説明"><a class="heading-permalink" href="#analysis-plain-2回答の合成わかりやすい説明" aria-label="この見出しへのリンク">#</a>2回答の合成（わかりやすい説明）</h1>
 <p>ChatGPT と Claude の長い回答を突き合わせたあと、「結局なにが言えるか」を日常の言葉に近い形で書き直したものです。細かい表や出典の整理は、別の「深掘り反映版」を見てください。</p>
 <hr>
-<h2>いちばん伝えたいこと</h2>
+<h2 id="analysis-plain-いちばん伝えたいこと"><a class="heading-permalink" href="#analysis-plain-いちばん伝えたいこと" aria-label="この見出しへのリンク">#</a>いちばん伝えたいこと</h2>
 <p>AIがコードを書く力は、かなり上がっています。<br>
 でも会社やチームとしてうまくいくかは、<strong>書いたものを信じられるかどうかにかかっています。</strong></p>
 <p>最初は「大事なのは証拠だ」と言っていました。<br>
@@ -6698,13 +6702,13 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 <p>「証拠そのもの」は、将来ツールの標準機能になって安くなるかもしれません。<br>
 残りやすい希少性は、<strong>確かめ方を設計する力</strong>と、<strong>責任を負えること</strong>です。</p>
 <hr>
-<h2>ふたりがほぼ同じ方向を向いていたこと</h2>
-<h3>AIは速く書ける。詰まるのは確認</h3>
+<h2 id="analysis-plain-ふたりがほぼ同じ方向を向いていたこと"><a class="heading-permalink" href="#analysis-plain-ふたりがほぼ同じ方向を向いていたこと" aria-label="この見出しへのリンク">#</a>ふたりがほぼ同じ方向を向いていたこと</h2>
+<h3 id="analysis-plain-aiは速く書ける詰まるのは確認"><a class="heading-permalink" href="#analysis-plain-aiは速く書ける詰まるのは確認" aria-label="この見出しへのリンク">#</a>AIは速く書ける。詰まるのは確認</h3>
 <p>個人が速くなっても、レビューや承認が追いつかないと、チーム全体は速くなりません。<br>
 だから「どこから自動化が進むか」は、上流か下流かより、<strong>確かめやすいかどうか</strong>で決まりやすいです。</p>
 <p>ただし、すべての仕事で検証が最大の壁、とまでは言いません。<br>
 営業・予算・意思決定の遅れが支配することもあります。</p>
-<h3>「上流に逃げれば安全」は危うい</h3>
+<h3 id="analysis-plain-上流に逃げれば安全は危うい"><a class="heading-permalink" href="#analysis-plain-上流に逃げれば安全は危うい" aria-label="この見出しへのリンク">#</a>「上流に逃げれば安全」は危うい</h3>
 <p>要求整理や設計案づくりも、AIがかなり手伝えます。<br>
 安全なのは「上流」という肩書きではなく、次の仕事です。</p>
 <ul>
@@ -6714,20 +6718,20 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 </ul>
 <p>ヒアリング資料や契約の下書きはAIでも作れます。<br>
 でも、値段交渉・合意・署名・「これで出してよい」は人間側に残ります。</p>
-<h3>日本にも進んでいる会社はある</h3>
+<h3 id="analysis-plain-日本にも進んでいる会社はある"><a class="heading-permalink" href="#analysis-plain-日本にも進んでいる会社はある" aria-label="この見出しへのリンク">#</a>日本にも進んでいる会社はある</h3>
 <p>富士通・日立・NTTデータなど、大きく動いている会社はあります。<br>
 ただし「日本全体が進んでいる／遅れている」とひとまとめにはしません。<br>
 <strong>宣伝・実験・一部で本番・全社展開・本当に成果が出たか</strong>は別物です。</p>
-<h3>大きな基盤を自作して売るのは難しい</h3>
+<h3 id="analysis-plain-大きな基盤を自作して売るのは難しい"><a class="heading-permalink" href="#analysis-plain-大きな基盤を自作して売るのは難しい" aria-label="この見出しへのリンク">#</a>大きな基盤を自作して売るのは難しい</h3>
 <p>エージェントを動かす土台そのものは、大きな会社の製品に寄りやすいです。<br>
 一方で、<strong>自分の会社の中で工程を自動化する</strong>のは進めてよい、という整理です。<br>
 借りる部分と、自組織だけが持つ「確かめ方・ルール」を分ける、が現実的です。</p>
-<h3>AIを何体も並べれば強い、ではない</h3>
+<h3 id="analysis-plain-aiを何体も並べれば強いではない"><a class="heading-permalink" href="#analysis-plain-aiを何体も並べれば強いではない" aria-label="この見出しへのリンク">#</a>AIを何体も並べれば強い、ではない</h3>
 <p>役割を分けて独立に確かめるのは有効なことがあります。<br>
 でも、順番が大事な仕事や、引き継ぎが曖昧だと、かえって失敗が増えることもあります。<br>
 「何体か」より、<strong>別の目で見る仕組みがあるか</strong>が大事です。</p>
 <hr>
-<h2>食い違いに見えたところの正体</h2>
+<h2 id="analysis-plain-食い違いに見えたところの正体"><a class="heading-permalink" href="#analysis-plain-食い違いに見えたところの正体" aria-label="この見出しへのリンク">#</a>食い違いに見えたところの正体</h2>
 <p>多くは「反対意見」というより、<strong>言い方が違う</strong>だけでした。</p>
 <ul>
 <li>「2030年に人間は承認だけ」：全部の開発ではなく、危険が低く・確かめやすく・失敗を戻せる仕事ならありうる</li>
@@ -6735,7 +6739,7 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 <li>「オーケストレーションを作るな」：外に売る汎用製品の話。社内の自動化まで禁止ではない</li>
 </ul>
 <hr>
-<h2>これから考えたい役割の分け方</h2>
+<h2 id="analysis-plain-これから考えたい役割の分け方"><a class="heading-permalink" href="#analysis-plain-これから考えたい役割の分け方" aria-label="この見出しへのリンク">#</a>これから考えたい役割の分け方</h2>
 <p>一人が全部やろうとせず、ざっくり3つに分けます。</p>
 <ol>
 <li><strong>作る人</strong> … 仕組み・ルール・エージェント・確認の流れを作る  </li>
@@ -6745,19 +6749,19 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 <p>小さい組織なら、1と一部の確認は自前でやり、<br>
 大きな賠償や長い保証は保険や大きな会社と組む、が現実的です。</p>
 <hr>
-<h2>数字の読み方で気をつけること</h2>
+<h2 id="analysis-plain-数字の読み方で気をつけること"><a class="heading-permalink" href="#analysis-plain-数字の読み方で気をつけること" aria-label="この見出しへのリンク">#</a>数字の読み方で気をつけること</h2>
 <p>「100倍速くなった」のような数字は、条件つきの社内測定であることが多いです。<br>
 一部のうまくいった例を、全部の開発に当てはめないこと。<br>
 記事では「実験なのか、観察なのか、会社の目標なのか」を分けて書きます。</p>
 <hr>
-<h2>いちばん強い反対意見</h2>
+<h2 id="analysis-plain-いちばん強い反対意見"><a class="heading-permalink" href="#analysis-plain-いちばん強い反対意見" aria-label="この見出しへのリンク">#</a>いちばん強い反対意見</h2>
 <p>「確かめ方もそのうち全部自動化されて、安くなる。<br>
 そのとき強いのは、顧客・データ・販売網・お金・大きな土台を持つ側だ」</p>
 <p>これは無視できない反対側です。<br>
 それでも「確かめ方の設計」と「責任の引受」が残る条件はあります。<br>
 たとえば、正しさを全部ルール化できない、失敗すると損害が大きい、第三者が保証を求める、などです。</p>
 <hr>
-<h2>現場への一言</h2>
+<h2 id="analysis-plain-現場への一言"><a class="heading-permalink" href="#analysis-plain-現場への一言" aria-label="この見出しへのリンク">#</a>現場への一言</h2>
 <p>いま多くの強い Human-in-the-loop 運用は、未来の工場型開発の<strong>手作業版</strong>に近いです。<br>
 次に効く問いのひとつはこれです。</p>
 <blockquote>
@@ -6768,11 +6772,11 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 
     <section class="conclusion panel" aria-labelledby="conclusion-heading">
       <h2 id="conclusion-heading">合成結果の要約</h2>
-      <div class="prose"><h1>合成結果の要約</h1>
+      <div class="prose"><h1 id="conclusion-合成結果の要約"><a class="heading-permalink" href="#conclusion-合成結果の要約" aria-label="この見出しへのリンク">#</a>合成結果の要約</h1>
 <p><strong>対象：</strong> ChatGPT／Claude の2回答＋差異深掘り<br>
 <strong>日付：</strong> 2026-07-31</p>
 <hr>
-<h2>中心命題</h2>
+<h2 id="conclusion-中心命題"><a class="heading-permalink" href="#conclusion-中心命題" aria-label="この見出しへのリンク">#</a>中心命題</h2>
 <blockquote>
 <p>希少になるのはコードでも、単なる証拠ログでもない。<br>
 <strong>独立した証拠設計</strong>（重要な不確実性を減らす確かめ方）と、<br>
@@ -6781,7 +6785,7 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 <p>技術自動化の進み方を分ける軸は、主に<strong>検証可能性</strong>である。<br>
 ただし事業が広がる唯一の軸ではない（顧客獲得、データ、意思決定の遅れなども効く）。</p>
 <hr>
-<h2>一致した要点</h2>
+<h2 id="conclusion-一致した要点"><a class="heading-permalink" href="#conclusion-一致した要点" aria-label="この見出しへのリンク">#</a>一致した要点</h2>
 <ol>
 <li>個人の生成速度は上がっても、組織成果はレビュー・承認・証拠で詰まりやすい  </li>
 <li>「上流へ行けば安全」は不正確。情報生成はAI化しやすいが、交渉・権限決定・法的引受は残りやすい  </li>
@@ -6790,7 +6794,7 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 <li>マルチエージェントは条件付き。誤りの独立性と引継ぎ契約があるとき有効  </li>
 </ol>
 <hr>
-<h2>差異の確定整理</h2>
+<h2 id="conclusion-差異の確定整理"><a class="heading-permalink" href="#conclusion-差異の確定整理" aria-label="この見出しへのリンク">#</a>差異の確定整理</h2>
 <table>
 <thead>
 <tr>
@@ -6822,7 +6826,7 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 </tbody>
 </table>
 <hr>
-<h2>推奨する役割モデル</h2>
+<h2 id="conclusion-推奨する役割モデル"><a class="heading-permalink" href="#conclusion-推奨する役割モデル" aria-label="この見出しへのリンク">#</a>推奨する役割モデル</h2>
 <ol>
 <li><strong>構築者</strong> … 正本・エージェント・評価・権限・承認設計、第一者検証  </li>
 <li><strong>独立検証者</strong> … 別主体による反証・保証  </li>
@@ -6830,34 +6834,33 @@ NTT DATA も上流・製品開発への展開はあるが、一般開発の全�
 </ol>
 <p>小規模事業者の現実解：検証・証跡・業種特化を提供し、広い賠償・継続性は保険・大手・監査と接続する。</p>
 <hr>
-<h2>証拠の扱い</h2>
+<h2 id="conclusion-証拠の扱い"><a class="heading-permalink" href="#conclusion-証拠の扱い" aria-label="この見出しへのリンク">#</a>証拠の扱い</h2>
 <p>主張には次のラベルを付ける。<br>
 RCT／ベンチマーク／観察データ／自社事例／構想・目標。  </p>
 <p>富士通「100倍」等は条件つき自社PoCであり、全体平均へ外挿しない。<br>
 AI保険は性能保証では始まっているが、生成SDLC全般への標準監査要求までは未確認。</p>
 <hr>
-<h2>反対仮説（保持）</h2>
+<h2 id="conclusion-反対仮説保持"><a class="heading-permalink" href="#conclusion-反対仮説保持" aria-label="この見出しへのリンク">#</a>反対仮説（保持）</h2>
 <p>検証・証拠生成も標準化し希少性を失い、競争優位が顧客接点・データ・資本・プラットフォームへ移る可能性。<br>
 それでも、形式化しきれない正しさ・高損害の裾野・第三者保証・法的責任主体が残る限り、中心命題は維持できる。</p>
 <hr>
-<h2>次の実務問い</h2>
+<h2 id="conclusion-次の実務問い"><a class="heading-permalink" href="#conclusion-次の実務問い" aria-label="この見出しへのリンク">#</a>次の実務問い</h2>
 <p>実プロジェクトにおいて、欠陥流出を悪化させずに人間の最終確認時間を半減できる証跡パックとサンプリング承認を設計できるか。</p></div>
     </section>
 
     <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
       <h2 id="conclusion-plain-heading">合成結果の要約（わかりやすい説明）</h2>
-      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
-      <div class="prose"><h1>合成結果の要約（わかりやすい説明）</h1>
+      <div class="prose"><h1 id="conclusion-plain-合成結果の要約わかりやすい説明"><a class="heading-permalink" href="#conclusion-plain-合成結果の要約わかりやすい説明" aria-label="この見出しへのリンク">#</a>合成結果の要約（わかりやすい説明）</h1>
 <p>このページは、長い合成を短く・やさしくしたものです。</p>
 <hr>
-<h2>3行でいうと</h2>
+<h2 id="conclusion-plain-3行でいうと"><a class="heading-permalink" href="#conclusion-plain-3行でいうと" aria-label="この見出しへのリンク">#</a>3行でいうと</h2>
 <ol>
 <li>AIはコードを速く書けるようになった。  </li>
 <li>でも「本当に大丈夫か」を確かめて、責任を持つ側がまだ足りない。  </li>
 <li>これから値がつきやすいのは、<strong>確かめ方を設計する力</strong>と、<strong>残った危険を引き受ける力</strong>。</li>
 </ol>
 <hr>
-<h2>なにが変わったか</h2>
+<h2 id="conclusion-plain-なにが変わったか"><a class="heading-permalink" href="#conclusion-plain-なにが変わったか" aria-label="この見出しへのリンク">#</a>なにが変わったか</h2>
 <p>前は「証拠が大事」と言っていました。<br>
 今はもう少し細かく言います。</p>
 <ul>
@@ -6868,7 +6871,7 @@ AI保険は性能保証では始まっているが、生成SDLC全般への標�
 <p>ツールが進化すると、「証拠を出す作業」自体は安くなるかもしれません。<br>
 残る仕事は、確かめ方の設計と、責任の引き受けです。</p>
 <hr>
-<h2>合意できたこと</h2>
+<h2 id="conclusion-plain-合意できたこと"><a class="heading-permalink" href="#conclusion-plain-合意できたこと" aria-label="この見出しへのリンク">#</a>合意できたこと</h2>
 <ul>
 <li>速く書けることと、チーム全体が速くなることは別  </li>
 <li>「上流の仕事なら安心」は当てになりにくい  </li>
@@ -6877,7 +6880,7 @@ AI保険は性能保証では始まっているが、生成SDLC全般への標�
 <li>AIを何体も使えば必ず強い、わけではない  </li>
 </ul>
 <hr>
-<h2>役割は分けた方がよい</h2>
+<h2 id="conclusion-plain-役割は分けた方がよい"><a class="heading-permalink" href="#conclusion-plain-役割は分けた方がよい" aria-label="この見出しへのリンク">#</a>役割は分けた方がよい</h2>
 <table>
 <thead>
 <tr>
@@ -6903,19 +6906,20 @@ AI保険は性能保証では始まっているが、生成SDLC全般への標�
 <p>小さい組織は、全部を一人で抱えず、<br>
 大きな保証や賠償は保険や大きな会社と組む方が現実的です。</p>
 <hr>
-<h2>数字にだまされない</h2>
+<h2 id="conclusion-plain-数字にだまされない"><a class="heading-permalink" href="#conclusion-plain-数字にだまされない" aria-label="この見出しへのリンク">#</a>数字にだまされない</h2>
 <p>「何倍速くなった」は、うまくいった一部の話であることが多いです。<br>
 全部の仕事がそうなった、とは限りません。</p>
 <hr>
-<h2>それでも考え続ける反対意見</h2>
+<h2 id="conclusion-plain-それでも考え続ける反対意見"><a class="heading-permalink" href="#conclusion-plain-それでも考え続ける反対意見" aria-label="この見出しへのリンク">#</a>それでも考え続ける反対意見</h2>
 <p>確かめ方もそのうち自動化されて、あまり特別ではなくなるかもしれない。<br>
 そのときは、顧客やデータ、販売の力を持つ側が強くなる、という見方です。</p>
 <p>それでも、全部をルール化しきれない仕事や、失敗すると大きな損害が出る仕事では、<br>
 確かめ方の設計と責任の引受は残りやすい、と考えています。</p>
 <hr>
-<h2>現場への宿題</h2>
+<h2 id="conclusion-plain-現場への宿題"><a class="heading-permalink" href="#conclusion-plain-現場への宿題" aria-label="この見出しへのリンク">#</a>現場への宿題</h2>
 <p>品質を落とさずに、人が確認する時間を短くできるか。<br>
 そのために、何を残し、どこを重点的に見るか。</p></div>
+      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
     </section>
 
     <section class="panel" aria-labelledby="edit-heading">
@@ -6953,5 +6957,10 @@ AI保険は性能保証では始まっているが、生成SDLC全般への標�
   </main>
 
   <script src="../../../assets/js/site.js" defer></script>
+  <nav class="page-jump" aria-label="ページ内ジャンプ">
+    <a href="#tldr" class="page-jump-link" data-jump="tldr">要点</a>
+    <a href="#article-toc" class="page-jump-link">目次</a>
+    <a href="#main" class="page-jump-link page-jump-top" hidden>先頭へ</a>
+  </nav>
 </body>
 </html>

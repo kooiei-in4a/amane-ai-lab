@@ -18,6 +18,7 @@ venv/
 # Work area (local scratch; do not commit secrets)
 .work/**
 !.work/.gitkeep
+!.work/README.md
 
 # Test / coverage
 .coverage

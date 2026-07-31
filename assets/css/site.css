@@ -419,6 +419,30 @@ select:focus-visible {
   max-width: 42rem;
 }
 
+.summary-source-links {
+  margin: 0 0 1rem;
+}
+
+.summary-source-links-label {
+  margin: 0 0 0.4rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.summary-source-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.summary-source-links a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .summary-doc-nav {
   margin: 0;
 }

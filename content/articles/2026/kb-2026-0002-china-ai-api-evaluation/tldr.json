@@ -40,25 +40,25 @@
     {
       "source": "synthesis",
       "label": "個人開発",
-      "text": "個人開発ではFlashを標準、Proを上位として切り替え、同じDeepSeek APIで費用を抑えやすい。",
+      "text": "中国製の一次整理ではFlashを低価格標準、GLM-5.2を定額大量利用、Kimiを高難度枠として扱った。",
       "href": "#conclusion-heading"
     },
     {
       "source": "synthesis",
-      "label": "追記",
-      "text": "2026-08-01時点の個人開発向け第一候補は、DeepSeek V4 Flash／Proの組み合わせである。",
+      "label": "見直し",
+      "text": "Coding Agent用途ではProを標準昇格先とせず、Flash-0731優先／中国製主力はGLM-5.2とする。",
       "href": "#conclusion-heading"
     },
     {
       "source": "synthesis",
       "label": "再比較",
-      "text": "コーディングAgent向け再比較ではFlash-0731を優先し、Luna／Terra／GLMを常用候補、Opusは難しいバグ修正向けとする。",
+      "text": "横断比較ではLuna／Terraが常用有力、Opusは難しいバグ修正、Sol／K3は高難度スポット。",
       "href": "#conclusion-heading"
     },
     {
       "source": "synthesis",
       "label": "費用",
-      "text": "API従量課金ではLuna／Flashが有利で、次にGLM／Terra。Opus／Solはスポット利用向きである。",
+      "text": "API従量ではFlash／Lunaが安く、GLM／Terraが中間、Opus／Solはスポット向き。",
       "href": "#conclusion-heading"
     }
   ]

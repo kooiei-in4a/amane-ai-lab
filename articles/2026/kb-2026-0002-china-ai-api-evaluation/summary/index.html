@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画 — 資料版 — amane AI Lab Knowledge Base</title>
-  <meta name="description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。">
+  <meta name="description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として個人開発向けにDeepSeek V4 Flash／Proなどを整理し、さらにコーディングベンチマークとAPI費用の再比較で、Coding Agent用途ではProを既定主力とせずFlash-0731やLuna／Terra／GLMを優先する見直しを追加した。">
   <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/summary/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画 — 資料版">
-  <meta property="og:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。">
+  <meta property="og:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として個人開発向けにDeepSeek V4 Flash／Proなどを整理し、さらにコーディングベンチマークとAPI費用の再比較で、Coding Agent用途ではProを既定主力とせずFlash-0731やLuna／Terra／GLMを優先する見直しを追加した。">
   <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/summary/">
   <meta property="og:site_name" content="amane-ai-lab">
   <meta name="twitter:card" content="summary">
@@ -32,7 +32,7 @@
       <p class="meta-row">
         <span class="pill">KB-2026-0002</span>
         <span class="pill">資料版</span>
-        <span>更新: 2026-07-31</span>
+        <span>更新: 2026-08-01</span>
       </p>
       <h1>結論を一言でいうと</h1>
       <p class="summary-doc-subtitle">合成結果を、わかりやすい言葉で短くまとめた資料版。</p>
@@ -54,7 +54,7 @@
     </header>
 
     <div class="summary-doc-layout">
-      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol><li><a href="#section-1">いま1社・1モデルに決めない</a></li><li><a href="#section-2">推奨案</a></li><li><a href="#section-3">進め方</a></li><li><a href="#section-4">メリット</a></li><li><a href="#section-5">デメリット</a></li><li><a href="#section-6">経営・営業の判断ポイント</a></li><li><a href="#section-7">最終判断</a></li></ol></nav>
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol><li><a href="#section-1">いま1社・1モデルに決めない</a></li><li><a href="#section-2">推奨案</a></li><li><a href="#section-3">進め方</a></li><li><a href="#section-4">メリット</a></li><li><a href="#section-5">デメリット</a></li><li><a href="#section-6">経営・営業の判断ポイント</a></li><li><a href="#section-7">最終判断</a></li><li><a href="#section-8">個人開発者向け追記（2026-08-01）</a></li><li><a href="#section-9">コーディング性能・API費用の再比較（2026-08-01）</a></li></ol></nav>
       <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
         <h1>結論を一言でいうと</h1>
 <h2 id="section-1">いま1社・1モデルに決めない</h2>
@@ -108,6 +108,63 @@
 <h2 id="section-7">最終判断</h2>
 <p><strong>PoCでは複数モデルを同じ条件で比較し、本番ではモデルID、Provider、データ条件を固定する。</strong></p>
 <p>これが、今回の資料から導ける最も安全で実務的な結論です。</p>
+<h2 id="section-8">個人開発者向け追記（2026-08-01）</h2>
+<p>公開後に、個人開発の用途だけに絞って現行モデルの一次情報を再確認した派生結論です。元の3調査だけで正式モデルIDや料金を確定したものではありません。価格や上限は変わるため、採用前に公式ページで再確認してください。</p>
+<h3>5つの使い分け</h3>
+<ol>
+<li><strong>日常開発の標準：DeepSeek V4 Flash</strong></li>
+<li><strong>難しい実装・設計：DeepSeek V4 Pro</strong></li>
+<li><strong>毎日エージェントを大量に使う：GLM-5.2 Coding Plan</strong></li>
+<li><strong>コード特化の比較・代替：Kimi K2.7 Code</strong></li>
+<li><strong>非常に難しい課題だけ：Kimi K3</strong></li>
+</ol>
+<p>特に有力なのは、Flashを通常モデル、Proを上位モデルとして切り替える構成です。同じDeepSeekのAPIキーとエンドポイントで使え、個人開発では費用を抑えやすいです。</p>
+<h3>費用感の目安</h3>
+<p>キャッシュなし・追加料金なしの仮定では、小規模タスク（入力10万／出力1万）でFlash約$0.017、Pro約$0.052、GLM-5.2約$0.18、Kimi K2.7 Code約$0.14、Kimi K3約$0.45です。大規模タスクではKimi K3がDeepSeek V4 Proの約8.6倍になりやすく、常用理由は限定的です。</p>
+<h3>推奨構成</h3>
+<h4>構成A（最も推奨）</h4>
+<p>通常はDeepSeek V4 Flash、難しい実装はV4 Pro、独立レビューはKimi K2.7 Code。</p>
+<h4>構成B（定額で大量利用）</h4>
+<p>日常のCoding AgentはGLM-5.2 Coding Plan、重要な最終レビューはDeepSeek V4 Pro。まずはLiteを1か月試し、枠が不足したらProを検討します。</p>
+<h4>構成C（高難度対応）</h4>
+<p>Flash → Pro → GLM-5.2 → Kimi K3 の順で段階的に上げます。</p>
+<h3>最終順位（個人開発）</h3>
+<ol>
+<li>DeepSeek V4 Pro／Flash</li>
+<li>GLM-5.2</li>
+<li>Kimi K2.7 Code</li>
+<li>Kimi K3</li>
+</ol>
+<p><strong>個人開発のコスト、実装品質、接続のしやすさを総合すると、DeepSeek V4 Flash／Proの組み合わせが第一候補です。</strong> GLM-5.2は大量利用時の定額候補、Kimi K2.7 Codeはコード特化の代替、Kimi K3は高難度のスポット利用と位置付けるのが適切です。</p>
+<p>法人導入、機密コード送信、日本カード承認、実API性能は、元記事の検証計画とセキュリティ・法務ゲートで確定してください。</p>
+<h2 id="section-9">コーディング性能・API費用の再比較（2026-08-01）</h2>
+<p>この節は、直前の個人開発向け追記のうち、Coding Agentとしての主力候補をベンチマークとAPI単価で再評価した第二の追記です。直前ではDeepSeek V4 Flash／Proを中心に推奨していましたが、コーディングベンチマークまで見ると、<strong>Coding Agent用途では現時点でFlash-0731をProより優先</strong>するのが妥当です。費用はAPI従量課金のみで比較し、Cursor、Claude Code、Codex、ChatGPTなどの月額枠は除外しています。</p>
+<h3>再比較の結論（5点）</h3>
+<ol>
+<li><strong>低価格な日常開発：GPT-5.6 LunaまたはDeepSeek V4 Flash</strong></li>
+<li><strong>性能と価格の総合バランス：GPT-5.6 Terra</strong></li>
+<li><strong>中国製モデルの主力候補：GLM-5.2</strong></li>
+<li><strong>難しいターミナル・長時間Agent：GPT-5.6 SolまたはKimi K3</strong></li>
+<li><strong>実リポジトリの難しいバグ修正：Claude Opus 5</strong></li>
+</ol>
+<h3>Flash-0731とPro</h3>
+<p>DeepSeekは、7月31日版FlashのAgent性能がV4 Pro Previewを大幅に上回ると説明しており、現行Proは未更新です。Coding Agentの標準として、ProをFlashより先に選ぶ根拠は弱くなっています。</p>
+<h3>費用の目安</h3>
+<p>中～大規模のIssue対応1件（入力100万／出力10万トークン、キャッシュなし）では、Flash約$0.17、Luna約$0.32、GLM-5.2約$1.84、Terra約$3.20、Opus 5約$7.50、Sol約$8.00です。Flashが最安、Lunaは価格性能が強く、Terraは総合バランス、Opus／Solは高価なスポット利用向きです。</p>
+<h3>4段階ルーティング</h3>
+<ol>
+<li>探索・小規模修正・一次レビュー：DeepSeek V4 FlashまたはGPT-5.6 Luna</li>
+<li>通常のIssue実装：GLM-5.2またはGPT-5.6 Terra</li>
+<li>難しい長時間Agent：Kimi K3またはGPT-5.6 Sol</li>
+<li>失敗コストの高い最終レビュー：Claude Opus 5</li>
+</ol>
+<h3>一言での推奨</h3>
+<ul>
+<li><strong>単一モデルに統一するならGPT-5.6 Terra</strong></li>
+<li><strong>中国製モデルに限定するならGLM-5.2</strong></li>
+<li><strong>費用最優先ならDeepSeek V4 Flash</strong></li>
+<li><strong>実装成功率と費用の両方を見るならGPT-5.6 Luna</strong></li>
+</ul>
       </article>
     </div>
 

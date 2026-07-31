@@ -36,6 +36,15 @@
       </p>
       <h1>{{SUMMARY_TITLE}}</h1>
       <p class="summary-doc-subtitle">{{SUMMARY_SUBTITLE}}</p>
+      <nav class="summary-source-links" aria-label="記事本文の関連セクション">
+        <p class="summary-source-links-label">記事本文の関連セクション</p>
+        <ul>
+          <li><a href="{{ARTICLE_HREF}}#conclusion-heading">結論</a></li>
+          <li><a href="{{ARTICLE_HREF}}#analysis-heading">考察・判断プロセス</a></li>
+          <li><a href="{{ARTICLE_HREF}}#prompt-heading">入力プロンプト</a></li>
+          <li><a href="{{ARTICLE_HREF}}#agents-heading">AIエージェントの回答</a></li>
+        </ul>
+      </nav>
       <p class="summary-doc-nav">
         <a class="btn btn-secondary" href="{{ARTICLE_HREF}}">← 記事本文へ戻る</a>
       </p>
@@ -50,7 +59,13 @@
 
     <footer class="summary-doc-footer panel">
       <p class="note">この資料は記事の「結論」セクション（<code>conclusion.md</code>）から自動生成しています。</p>
-      <p><a href="{{ARTICLE_HREF}}">記事本文（プロンプト・AI回答・考察）</a> · <a href="{{HOME_HREF}}">記事一覧</a></p>
+      <p>
+        <a href="{{ARTICLE_HREF}}#conclusion-heading">結論</a> ·
+        <a href="{{ARTICLE_HREF}}#analysis-heading">考察</a> ·
+        <a href="{{ARTICLE_HREF}}#prompt-heading">プロンプト</a> ·
+        <a href="{{ARTICLE_HREF}}#agents-heading">AI回答</a> ·
+        <a href="{{HOME_HREF}}">記事一覧</a>
+      </p>
     </footer>
   </main>
 </body>

@@ -1,5 +1,30 @@
 {
   "schemaVersion": 1,
   "generatedFrom": "content/articles",
-  "articles": []
+  "articles": [
+    {
+      "id": "KB-2026-0001",
+      "slug": "ai-agent-collaborative-dev-future",
+      "title": "AIエージェント協働型開発の未来",
+      "description": "希少になるのはコードではなく証拠。ChatGPT・Claude・Geminiの回答と統合分析から、検証・引受・人材戦略の論点を整理する。",
+      "status": "published",
+      "publishedAt": "2026-07-31",
+      "updatedAt": "2026-07-31",
+      "lastVerifiedAt": "2026-07-31",
+      "tags": [
+        "AIエージェント",
+        "SDLC",
+        "人材戦略",
+        "未来予測",
+        "検証"
+      ],
+      "agents": [
+        "ChatGPT",
+        "Claude",
+        "Gemini"
+      ],
+      "url": "/articles/2026/kb-2026-0001-ai-agent-collaborative-dev-future/",
+      "year": "2026"
+    }
+  ]
 }

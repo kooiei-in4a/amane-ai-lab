@@ -189,6 +189,36 @@ def render_toc_list(entries: list[dict[str, Any]], *, nested: bool = False) -> s
     return "".join(parts)
 
 
+def render_quick_nav_html(*, has_tldr: bool) -> str:
+    """Compact horizontal jump links for the article entrance."""
+
+    links: list[tuple[str, str]] = []
+    if has_tldr:
+        links.append(("#tldr", "要点"))
+    links.extend(
+        [
+            ("#background-heading", "背景"),
+            ("#prompt-heading", "プロンプト"),
+            ("#agents-heading", "AI回答"),
+            ("#analysis-heading", "合成"),
+            ("#conclusion-heading", "要約"),
+            ("#conclusion-plain-heading", "平易な要約"),
+            ("summary/", "資料版"),
+            ("#article-toc", "詳細目次"),
+        ]
+    )
+    parts: list[str] = []
+    for index, (href, label) in enumerate(links):
+        if index:
+            parts.append('<span class="quick-nav-sep" aria-hidden="true">·</span>')
+        parts.append(f'<a href="{html_escape(href)}">{html_escape(label)}</a>')
+    return (
+        '<nav class="article-quick-nav" aria-label="主要セクション">'
+        f'{"".join(parts)}'
+        "</nav>"
+    )
+
+
 def render_article_toc_html(
     *,
     has_tldr: bool,
@@ -341,6 +371,7 @@ def build_article_html(meta: dict, config: dict) -> str:
     tags_html = "".join(f'<li>{html_escape(t)}</li>' for t in meta["tags"])
     published = meta["publishedAt"] or "未公開"
     tldr_html = render_tldr_html(tldr_items)
+    quick_nav_html = render_quick_nav_html(has_tldr=bool(tldr_items))
     toc_html = render_article_toc_html(has_tldr=bool(tldr_items), agent_blocks=agent_blocks)
 
     return render_template(
@@ -359,6 +390,7 @@ def build_article_html(meta: dict, config: dict) -> str:
             "UPDATED_AT": html_escape(meta["updatedAt"]),
             "LAST_VERIFIED_AT": html_escape(meta["lastVerifiedAt"]),
             "TAGS_HTML": tags_html,
+            "QUICK_NAV_HTML": quick_nav_html,
             "TLDR_HTML": tldr_html,
             "TOC_HTML": toc_html,
             "BACKGROUND_HTML": background_html,

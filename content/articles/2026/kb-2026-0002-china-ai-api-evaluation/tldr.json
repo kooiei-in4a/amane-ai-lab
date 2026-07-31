@@ -36,6 +36,18 @@
       "label": "結論",
       "text": "単一ランキングではなく、主力・低価格補助・長時間Agent・高難度比較の役割別に採用する。",
       "href": "#conclusion-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "個人開発",
+      "text": "個人開発ではFlashを標準、Proを上位として切り替え、同じDeepSeek APIで費用を抑えやすい。",
+      "href": "#conclusion-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "追記",
+      "text": "2026-08-01時点の個人開発向け第一候補は、DeepSeek V4 Flash／Proの組み合わせである。",
+      "href": "#conclusion-heading"
     }
   ]
 }

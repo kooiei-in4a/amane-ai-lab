@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画 — amane AI Lab Knowledge Base</title>
-  <meta name="description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。">
+  <meta name="description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として、個人開発向けにDeepSeek V4 Flash／Proなどを現行モデル候補として整理した。">
   <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画">
-  <meta property="og:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。">
+  <meta property="og:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として、個人開発向けにDeepSeek V4 Flash／Proなどを現行モデル候補として整理した。">
   <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0002-china-ai-api-evaluation/">
   <meta property="og:site_name" content="amane-ai-lab">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画">
-  <meta name="twitter:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。">
+  <meta name="twitter:description" content="3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として、個人開発向けにDeepSeek V4 Flash／Proなどを現行モデル候補として整理した。">
   <link rel="stylesheet" href="../../../assets/css/site.css">
 </head>
 <body>
@@ -34,16 +34,16 @@
         <span class="pill">KB-2026-0002</span>
         <span class="pill status-published">published</span>
         <span>公開: 2026-07-31</span>
-        <span>最終確認: 2026-07-31</span>
-        <span>更新: 2026-07-31</span>
+        <span>最終確認: 2026-08-01</span>
+        <span>更新: 2026-08-01</span>
       </p>
       <h1>中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画</h1>
-      <p class="article-summary">3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。</p>
+      <p class="article-summary">3つのAI調査はDeepSeek、Qwen、GLMなどを有力候補として挙げたが、モデルID、価格、契約条件、出力上限には重大な不一致が残った。公開情報だけで順位を確定せず、Providerとデータ条件を固定した実API検証で採用判断するのが妥当である。2026-08-01追記として、個人開発向けにDeepSeek V4 Flash／Proなどを現行モデル候補として整理した。</p>
       <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
       <ul class="tag-list"><li>中国製AIモデル</li><li>API</li><li>コーディング</li><li>AIエージェント</li><li>モデル評価</li><li>セキュリティ</li></ul>
     </header>
 
-    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-chatgpt">ChatGPT</span> <a class="tldr-link" href="#agents-heading">ChatGPT調査は、Qwen、DeepSeek、GLMなどを役割別の有力候補として提示した。</a></li><li><span class="tldr-source tldr-source-gemini">Gemini</span> <a class="tldr-link" href="#agents-heading">2つのGemini調査もDeepSeek、Qwen、GLM、Kimiを主要候補に含めたが、対象モデルと順位は一致しなかった。</a></li><li><span class="tldr-source tldr-source-review">レビュー</span> <a class="tldr-link" href="#analysis-heading">日本カード、価格、最大出力、契約経路、データ条件には採用判断を左右する矛盾が残った。</a></li><li><span class="tldr-source tldr-source-synthesis">統合</span> <a class="tldr-link" href="#analysis-heading">複数回答の一致は候補選定には使えるが、一次情報と実API検証の代わりにはならない。</a></li><li><span class="tldr-source tldr-source-synthesis">推奨</span> <a class="tldr-link" href="#conclusion-heading">PoCは統一APIで横比較し、本番候補は公式または固定Providerで再試験する。</a></li><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#conclusion-heading">単一ランキングではなく、主力・低価格補助・長時間Agent・高難度比較の役割別に採用する。</a></li></ol></section>
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-chatgpt">ChatGPT</span> <a class="tldr-link" href="#agents-heading">ChatGPT調査は、Qwen、DeepSeek、GLMなどを役割別の有力候補として提示した。</a></li><li><span class="tldr-source tldr-source-gemini">Gemini</span> <a class="tldr-link" href="#agents-heading">2つのGemini調査もDeepSeek、Qwen、GLM、Kimiを主要候補に含めたが、対象モデルと順位は一致しなかった。</a></li><li><span class="tldr-source tldr-source-review">レビュー</span> <a class="tldr-link" href="#analysis-heading">日本カード、価格、最大出力、契約経路、データ条件には採用判断を左右する矛盾が残った。</a></li><li><span class="tldr-source tldr-source-synthesis">統合</span> <a class="tldr-link" href="#analysis-heading">複数回答の一致は候補選定には使えるが、一次情報と実API検証の代わりにはならない。</a></li><li><span class="tldr-source tldr-source-synthesis">推奨</span> <a class="tldr-link" href="#conclusion-heading">PoCは統一APIで横比較し、本番候補は公式または固定Providerで再試験する。</a></li><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#conclusion-heading">単一ランキングではなく、主力・低価格補助・長時間Agent・高難度比較の役割別に採用する。</a></li><li><span class="tldr-source tldr-source-synthesis">個人開発</span> <a class="tldr-link" href="#conclusion-heading">個人開発ではFlashを標準、Proを上位として切り替え、同じDeepSeek APIで費用を抑えやすい。</a></li><li><span class="tldr-source tldr-source-synthesis">追記</span> <a class="tldr-link" href="#conclusion-heading">2026-08-01時点の個人開発向け第一候補は、DeepSeek V4 Flash／Proの組み合わせである。</a></li></ol></section>
     <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-chatgpt">ChatGPT</a><ul><li class="toc-item toc-level-2"><a href="#agent-chatgpt-エグゼクティブサマリー">エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-主要候補の役割分担">主要候補の役割分担</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-api提供経路">API提供経路</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-cursorと周辺ツール">Cursorと周辺ツール</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-評価方法">評価方法</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-api検証計画">API検証計画</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-データセキュリティ">データ・セキュリティ</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-最終提案">最終提案</a></li></ul></li><li><a href="#agent-gemini-pro">Gemini Pro</a><ul><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-エグゼクティブサマリー">エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-モデル別の位置づけ">モデル別の位置づけ</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-推奨順位の考え方">推奨順位の考え方</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-cursorと開発ツール">Cursorと開発ツール</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-api検証">API検証</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-pro-最終提案">最終提案</a></li></ul></li><li><a href="#agent-gemini">Gemini 思考</a><ul><li class="toc-item toc-level-2"><a href="#agent-gemini-調査対象と除外">調査対象と除外</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-エグゼクティブサマリー">エグゼクティブサマリー</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-モデルの役割">モデルの役割</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-総合評価">総合評価</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-導入分類">導入分類</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-検証計画">検証計画</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-データと契約">データと契約</a></li><li class="toc-item toc-level-2"><a href="#agent-gemini-最終提案">最終提案</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
 
     <section class="panel" aria-labelledby="background-heading">
@@ -1632,7 +1632,525 @@ DeepSeek / Qwen / GLM / MiniMax / Kimi
 <li>上位候補を採用予定Providerで再試験する</li>
 <li>機密区分とセキュリティ・法務ゲートを決める</li>
 <li>主力、補助、レビュー、フォールバックの役割を決定する</li>
-</ol></div>
+</ol>
+<h2 id="conclusion-個人開発者向け追記2026-08-01"><a class="heading-permalink" href="#conclusion-個人開発者向け追記2026-08-01" aria-label="この見出しへのリンク">#</a>個人開発者向け追記（2026-08-01）</h2>
+<p>この追記は、公開後に個人開発用途へ絞って現行モデルの一次情報を再確認した派生結論です。元の3調査だけで正式モデルIDや料金を確定したものではありません。価格・上限・契約条件は時点依存のため、採用前に公式ページで再確認してください。</p>
+<p>調査基準日：2026年8月1日</p>
+<p>対象：</p>
+<ul>
+<li>DeepSeek V4 Flash</li>
+<li>DeepSeek V4 Pro</li>
+<li>GLM-5.2</li>
+<li>Kimi K2.7 Code</li>
+<li>Kimi K3</li>
+</ul>
+<h3 id="conclusion-使い分けの結論"><a class="heading-permalink" href="#conclusion-使い分けの結論" aria-label="この見出しへのリンク">#</a>使い分けの結論</h3>
+<p>個人開発では、次の使い分けが最も合理的です。</p>
+<ol>
+<li><strong>日常開発の標準：DeepSeek V4 Flash</strong></li>
+<li><strong>難しい実装・設計判断：DeepSeek V4 Pro</strong></li>
+<li><strong>毎日エージェントを大量に使う場合：GLM-5.2 Coding Plan</strong></li>
+<li><strong>コード特化モデルの比較・代替：Kimi K2.7 Code</strong></li>
+<li><strong>非常に難しい課題だけ：Kimi K3</strong></li>
+</ol>
+<p>特に有力なのは、<strong>Flashを通常モデル、Proを上位モデルとして切り替える構成</strong>です。両方とも同じDeepSeek APIキーとエンドポイントで利用でき、Claude Codeなどではモデル役割に応じた振り分けもできます。価格差も小さく、個人開発では最も費用を抑えやすい構成です。出典: <a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek Models &amp; Pricing</a></p>
+<h3 id="conclusion-実用比較"><a class="heading-permalink" href="#conclusion-実用比較" aria-label="この見出しへのリンク">#</a>実用比較</h3>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>個人開発での役割</th>
+<th>入力／出力価格</th>
+<th>Context</th>
+<th>開発ツール接続</th>
+<th>個人開発評価</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DeepSeek V4 Flash</strong></td>
+<td>日常実装、テスト、レビュー、補助Agent</td>
+<td>$0.14／$0.28</td>
+<td>1M</td>
+<td>OpenAI・Anthropic互換</td>
+<td><strong>A+</strong></td>
+</tr>
+<tr>
+<td><strong>DeepSeek V4 Pro</strong></td>
+<td>難しいIssue、設計、複数ファイル変更</td>
+<td>$0.435／$0.87</td>
+<td>1M</td>
+<td>OpenAI・Anthropic互換</td>
+<td><strong>A+</strong></td>
+</tr>
+<tr>
+<td><strong>GLM-5.2</strong></td>
+<td>長時間Agent、定額で大量利用</td>
+<td>$1.40／$4.40</td>
+<td>1M</td>
+<td>Claude Code、Cline、OpenCode</td>
+<td><strong>A～B</strong></td>
+</tr>
+<tr>
+<td><strong>Kimi K2.7 Code</strong></td>
+<td>コード修正、長時間Coding Agent</td>
+<td>$0.95／$4.00</td>
+<td>256K</td>
+<td>OpenAI互換、Claude Code等</td>
+<td><strong>A-</strong></td>
+</tr>
+<tr>
+<td><strong>Kimi K3</strong></td>
+<td>大規模リポジトリ、高難度タスク</td>
+<td>$3.00／$15.00</td>
+<td>1M</td>
+<td>OpenAI互換、Codex等</td>
+<td><strong>B</strong></td>
+</tr>
+</tbody>
+</table>
+<p>価格はキャッシュミス入力と通常出力の100万トークン単価です。DeepSeekはキャッシュ入力が極端に安く、Flashは$0.0028、Proは$0.003625です。Kimi K3はキャッシュ入力$0.30、K2.7 Codeは$0.19です。出典: <a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek Models &amp; Pricing</a></p>
+<h3 id="conclusion-実際の費用感"><a class="heading-permalink" href="#conclusion-実際の費用感" aria-label="この見出しへのリンク">#</a>実際の費用感</h3>
+<p>次の仮定で1タスク当たりの費用を計算します。</p>
+<ul>
+<li>小規模：入力10万、出力1万トークン</li>
+<li>中規模：入力100万、出力10万トークン</li>
+<li>大規模：入力500万、出力50万トークン</li>
+<li>キャッシュなし</li>
+<li>Tool Callingや検索の追加料金を除外</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>小規模</th>
+<th>中規模</th>
+<th>大規模</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeepSeek V4 Flash</td>
+<td><strong>$0.017</strong></td>
+<td><strong>$0.17</strong></td>
+<td><strong>$0.84</strong></td>
+</tr>
+<tr>
+<td>DeepSeek V4 Pro</td>
+<td><strong>$0.052</strong></td>
+<td><strong>$0.52</strong></td>
+<td><strong>$2.61</strong></td>
+</tr>
+<tr>
+<td>GLM-5.2</td>
+<td>$0.18</td>
+<td>$1.84</td>
+<td>$9.20</td>
+</tr>
+<tr>
+<td>Kimi K2.7 Code</td>
+<td>$0.14</td>
+<td>$1.35</td>
+<td>$6.75</td>
+</tr>
+<tr>
+<td>Kimi K3</td>
+<td>$0.45</td>
+<td>$4.50</td>
+<td>$22.50</td>
+</tr>
+</tbody>
+</table>
+<p>エージェントが同じリポジトリ情報を繰り返し送信し、キャッシュが効けば実費は下がります。一方、Thinkingモデルが長い推論や大量の出力を生成すると、表より高くなる可能性があります。</p>
+<p>この差を見る限り、個人開発でKimi K3を常用する理由は限定的です。大規模タスク1件で、DeepSeek V4 Proの約8.6倍になります。</p>
+<h3 id="conclusion-deepseek-v4-flash"><a class="heading-permalink" href="#conclusion-deepseek-v4-flash" aria-label="この見出しへのリンク">#</a>DeepSeek V4 Flash</h3>
+<p><strong>最初に試すべきモデルです。</strong></p>
+<p>公式にはV4 Proに近い推論性能を持ち、単純なAgentタスクではProと同等、Proより高速・低価格とされています。2026年7月31日版のモデルバージョンは<code>DeepSeek-V4-Flash-0731</code>です。出典: <a href="https://api-docs.deepseek.com/news/news260424/">DeepSeek V4 Preview Release</a></p>
+<p>向いている用途:</p>
+<ul>
+<li>小規模～中規模の機能実装</li>
+<li>テスト生成</li>
+<li>コードレビュー</li>
+<li>ビルド・テスト失敗の調査</li>
+<li>ドキュメント更新</li>
+<li>サブエージェント</li>
+<li>リポジトリ探索</li>
+<li>大量のIssue整理</li>
+<li>低価格なセカンドレビュー</li>
+</ul>
+<p>長所:</p>
+<ul>
+<li>入力$0.14、出力$0.28という非常に低い価格</li>
+<li>100万トークン</li>
+<li>最大38.4万トークン出力</li>
+<li>Tool Calling対応</li>
+<li>JSON Output対応</li>
+<li>OpenAI API互換</li>
+<li>Anthropic API互換</li>
+<li>Responses API対応</li>
+<li>同時実行上限2,500</li>
+<li>Thinking／Non-Thinkingを切替可能</li>
+</ul>
+<p>出典: <a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek Models &amp; Pricing</a></p>
+<p>弱点:</p>
+<ul>
+<li>難しい設計判断ではProより精度が落ちる可能性がある</li>
+<li>大規模変更で局所的に正しいが、全体方針を外す可能性がある</li>
+<li>公式APIは今後、ピーク時間帯を通常価格の2倍にする予定</li>
+<li>画像入力には対応していない</li>
+</ul>
+<p>予定されているピーク時間は北京時間9～12時、14～18時です。日本時間では10～13時、15～19時になります。ただし2026年8月1日時点では、適用開始日は正式発表されていません。出典: <a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek Models &amp; Pricing</a></p>
+<p>判定: <strong>通常タスクの80%程度をFlashへ任せ、失敗したものだけProへ上げる運用が適切です。</strong></p>
+<h3 id="conclusion-deepseek-v4-pro"><a class="heading-permalink" href="#conclusion-deepseek-v4-pro" aria-label="この見出しへのリンク">#</a>DeepSeek V4 Pro</h3>
+<p><strong>価格性能比では最も有力な主力モデルです。</strong></p>
+<p>公式にはAgentic Coding、数学、STEM、コード推論を中心とした上位モデルとして位置付けられています。1.6兆パラメータのMoEで、1トークン当たり490億パラメータを使用します。出典: <a href="https://api-docs.deepseek.com/news/news260424/">DeepSeek V4 Preview Release</a></p>
+<p>向いている用途:</p>
+<ul>
+<li>GitHub Issueからの自動実装</li>
+<li>複数ファイルにまたがる変更</li>
+<li>ADRや仕様に基づく実装</li>
+<li>難しいバグ調査</li>
+<li>データベースMigration</li>
+<li>セキュリティレビュー</li>
+<li>独立レビュー</li>
+<li>Flashが失敗したタスク</li>
+<li>実装計画と影響分析</li>
+</ul>
+<p>長所:</p>
+<ul>
+<li>入力$0.435、出力$0.87</li>
+<li>100万トークン</li>
+<li>最大38.4万トークン出力</li>
+<li>Tool Calling、JSON Output対応</li>
+<li>OpenAI・Anthropic互換</li>
+<li>Claude Codeへ直接接続可能</li>
+<li>Flashと同じAPIキー、同じBase URL</li>
+</ul>
+<p>Claude Codeでは、Opus系のモデル指定をV4 Pro、Sonnet／Haiku系をV4 Flashへ割り当てる公式設定例があります。サブエージェントだけFlashへ回す構成も可能です。出典: <a href="https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code/">Integrate with Claude Code</a></p>
+<p>弱点:</p>
+<ul>
+<li>Flashより遅い</li>
+<li>2026年8月1日時点ではResponses API未対応</li>
+<li>Responses API対応は2026年8月上旬予定</li>
+<li>公式APIの日本カード対応は公開情報だけでは断定できない</li>
+<li>法人向けDPA、ZDR、SLAの情報が少ない</li>
+</ul>
+<p>出典: <a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek Models &amp; Pricing</a></p>
+<p>判定: <strong>個人開発の主力モデルとして有力です。</strong> ただし、最初から全タスクでProを使う必要はありません。</p>
+<pre><code class="language-text">探索・単純修正・テスト生成
+        ↓
+V4 Flash
+        ↓ 失敗・不十分
+V4 Pro
+        ↓ それでも不十分
+GLM-5.2 または Kimi K3
+</code></pre>
+<p>この段階昇格方式が、費用と品質のバランスに優れます。</p>
+<h3 id="conclusion-glm-52"><a class="heading-permalink" href="#conclusion-glm-52" aria-label="この見出しへのリンク">#</a>GLM-5.2</h3>
+<p><strong>API従量課金より、Coding Planを使う場合に価値があります。</strong></p>
+<p>従量課金は入力$1.40、出力$4.40で、DeepSeek V4 Proよりかなり高額です。一方、GLM Coding Planは月額$18からで、GLM-5.2をClaude Code、Cline、OpenCodeなどから利用できます。出典: <a href="https://docs.z.ai/guides/overview/pricing">Z.AI Pricing</a></p>
+<p>Coding Planの価格（2026年4月時点の公式標準価格）:</p>
+<table>
+<thead>
+<tr>
+<th>Plan</th>
+<th>月額</th>
+<th>公式が想定する利用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lite</td>
+<td>$18</td>
+<td>1プロジェクト</td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>$72</td>
+<td>1～2プロジェクト</td>
+</tr>
+<tr>
+<td>Max</td>
+<td>$160</td>
+<td>2プロジェクト以上</td>
+</tr>
+</tbody>
+</table>
+<p>出典: <a href="https://docs.z.ai/devpack/transition">Legacy Plan Migration Notice</a></p>
+<p>ただし、2026年7月30日に新しいクレジット方式へ移行しています。新規契約者には新方式が適用されるため、購入画面の最終価格とクレジット量を確認する必要があります。出典: <a href="https://docs.z.ai/devpack/notice/usage-revision">Plan Update Announcement</a></p>
+<p>向いている用途:</p>
+<ul>
+<li>Claude CodeやClineを毎日長時間使う</li>
+<li>複数回のTool Calling</li>
+<li>長時間の自律実装</li>
+<li>大規模なリポジトリ解析</li>
+<li>月額費用を固定したい</li>
+<li>Web検索、Web Reader、Vision MCPも使いたい</li>
+</ul>
+<p>長所:</p>
+<ul>
+<li>100万トークン</li>
+<li>長時間Coding Agent向けに訓練</li>
+<li>コーディング規約、変更禁止事項、テスト要求への追従を重視</li>
+<li>Claude Code、Cline、OpenCodeを公式サポート</li>
+<li>Web Search、Web Reader、Vision MCPを定額枠内で利用可能</li>
+<li>PayPalまたはカードによる支払い経路がある</li>
+</ul>
+<p>出典: <a href="https://docs.z.ai/guides/llm/glm-5.2">GLM-5.2</a></p>
+<p>重要な制約（Coding Planは通常の汎用API定額枠ではない）:</p>
+<ul>
+<li>公式サポート対象のCodingツールに限定</li>
+<li>専用エンドポイントが必要</li>
+<li>独自業務システムから自由に呼び出す用途には使用できない</li>
+<li>枠を使い切っても従量課金残高へ自動移行しない</li>
+<li>5時間枠と週間枠の両方がある</li>
+<li>同時実行数はプランと混雑状況で動的に変わる</li>
+</ul>
+<p>出典: <a href="https://docs.z.ai/devpack/faq">Z.AI FAQ</a></p>
+<p>複数プロジェクトを並行してAI開発している個人開発者は、公式分類上はPro相当になりやすいです。しかし月額$72になると、DeepSeek V4 Proを相当量使っても到達しにくい金額です。</p>
+<p>したがって、次の順で判断するのが適切です。</p>
+<ol>
+<li>まずGLM-5.2を従量課金で数ドル試す</li>
+<li>Claude CodeまたはClineで実案件を3～5件実施</li>
+<li>品質が明確に良ければLiteを1か月契約</li>
+<li>Liteの同時実行や週間枠が不足した場合だけProを検討</li>
+<li>年払いは運用安定性を確認するまで避ける</li>
+</ol>
+<p>最近の利用者投稿には、529エラー、レート制限、予想より速いクレジット消費を訴えるものがあります。あくまで個別事例ですが、最初から長期契約せず月払いで確認すべき理由になります。参考: <a href="https://www.reddit.com/r/ZaiGLM/comments/1u6dmy4/glm_coding_plan_dilemma/">Reddit: GLM Coding plan dilemma</a></p>
+<p>判定:</p>
+<ul>
+<li><strong>毎日長時間使う：A</strong></li>
+<li><strong>月数回だけ使う：B</strong></li>
+<li><strong>独自APIプログラムへの組み込み：Coding Planでは不適</strong></li>
+</ul>
+<h3 id="conclusion-kimi-k27-code"><a class="heading-permalink" href="#conclusion-kimi-k27-code" aria-label="この見出しへのリンク">#</a>Kimi K2.7 Code</h3>
+<p><strong>コード専用モデルとしては有力ですが、DeepSeekより割高です。</strong></p>
+<p>K2.7 Codeはコード生成、コード編集、長時間Agentに特化しています。256Kコンテキストで、Thinkingは常時有効です。出典: <a href="https://platform.kimi.ai/docs/guide/kimi-k2-7-code-quickstart">Kimi K2.7 Code Quickstart</a></p>
+<p>向いている用途:</p>
+<ul>
+<li>複数ファイル変更</li>
+<li>既存コードの修正</li>
+<li>長い仕様への追従</li>
+<li>リファクタリング</li>
+<li>バグ修正</li>
+<li>コーディングAgent</li>
+<li>画像や動画を含むUI調査</li>
+<li>DeepSeekとは異なるモデルによる独立レビュー</li>
+</ul>
+<p>長所:</p>
+<ul>
+<li>コード用途専用</li>
+<li>長いコンテキストでの指示追従を強化</li>
+<li>複数段階Tool Calling対応</li>
+<li>テキスト、画像、動画入力</li>
+<li>OpenAI API互換</li>
+<li>Claude Code、Cline等へ接続可能</li>
+<li>HighSpeed版は約180 tokens/s、短いコンテキストでは最大260 tokens/s</li>
+</ul>
+<p>出典: <a href="https://platform.kimi.ai/docs/guide/kimi-k2-7-code-quickstart">Kimi K2.7 Code Quickstart</a></p>
+<p>弱点:</p>
+<ul>
+<li>入力$0.95、出力$4.00</li>
+<li>DeepSeek Proより入力約2.2倍、出力約4.6倍</li>
+<li>コンテキストは256Kで、DeepSeek／GLM／K3の4分の1</li>
+<li>Thinkingを無効化できない</li>
+<li>単純な変更でも推論トークンを消費しやすい</li>
+<li>HighSpeed版はリソース不足による速度変動があると公式が明記</li>
+</ul>
+<p>出典: <a href="https://platform.moonshot.ai/">Kimi / Moonshot platform</a></p>
+<p>判定: <strong>主力にするより、DeepSeekが苦手な課題を別のモデルで再検討する用途に向きます。</strong> 特に独立レビューでは、DeepSeekで実装し、Kimi K2.7 Codeでレビューするなど、開発元の異なるモデルを組み合わせる価値があります。</p>
+<h3 id="conclusion-kimi-k3"><a class="heading-permalink" href="#conclusion-kimi-k3" aria-label="この見出しへのリンク">#</a>Kimi K3</h3>
+<p><strong>能力検証の価値は高いものの、日常利用には高価です。</strong></p>
+<p>2.8兆パラメータ、1,040億アクティブパラメータ、100万トークン、画像入力に対応したフラッグシップモデルです。長時間Coding、大規模リポジトリ、ターミナル操作、視覚情報を伴う開発を主対象としています。出典: <a href="https://platform.kimi.ai/docs/guide/kimi-k3-quickstart">Kimi K3 Quickstart</a></p>
+<p>向いている用途:</p>
+<ul>
+<li>非常に大きなコードベース</li>
+<li>複数時間にわたるAgentタスク</li>
+<li>フロントエンドのスクリーンショット検証</li>
+<li>高度な設計と実装を一括処理</li>
+<li>他モデルが解決できなかった問題</li>
+<li>最終レビュー</li>
+<li>大規模な知識整理と実装の統合</li>
+</ul>
+<p>長所:</p>
+<ul>
+<li>100万トークン</li>
+<li>ネイティブ画像入力</li>
+<li>Tool Calling</li>
+<li><code>tool_choice</code></li>
+<li>動的Tool Loading</li>
+<li>JSON Mode</li>
+<li>JSON Schema</li>
+<li>reasoning effortをlow／high／maxから選択可能</li>
+<li>OpenAI互換</li>
+<li>Claude Code、OpenCode、Codex等との統合情報あり</li>
+</ul>
+<p>出典: <a href="https://platform.moonshot.ai/docs/pricing/chat-k3">Kimi K3 Pricing</a></p>
+<p>弱点:</p>
+<ul>
+<li>入力$3、出力$15</li>
+<li>常に推論する</li>
+<li>デフォルトのreasoning effortが<code>max</code></li>
+<li>何も設定せず使うと費用が膨らみやすい</li>
+<li>公開直後で、長期間の運用実績がない</li>
+<li>Web検索機能は更新中で、公式も当面の利用を推奨していない</li>
+<li>個人環境でのセルフホストは現実的ではない</li>
+</ul>
+<p>出典: <a href="https://platform.moonshot.ai/docs/pricing/chat-k3">Kimi K3 Pricing</a></p>
+<p>契約・支払い: K3は最低$1をチャージすれば利用可能になります。Kimiの利用規約では、クレジットカードまたはデビットカードによる課金が想定されています。ただし、日本発行カードが必ず承認されるとは公式には明記されていません。出典: <a href="https://platform.kimi.ai/docs/guide/kimi-k3-quickstart">Kimi K3 Quickstart</a></p>
+<p>判定: <strong>常用モデルではなく、スポット利用モデルです。</strong></p>
+<p>利用時は原則として次の設定が適切です。</p>
+<pre><code class="language-text">通常の難しい課題：reasoning_effort = low
+かなり難しい課題：reasoning_effort = high
+失敗した最重要課題：reasoning_effort = max
+</code></pre>
+<p>最初から<code>max</code>を常用するのは費用面で推奨しません。</p>
+<h3 id="conclusion-開発ツール別の適性"><a class="heading-permalink" href="#conclusion-開発ツール別の適性" aria-label="この見出しへのリンク">#</a>開発ツール別の適性</h3>
+<table>
+<thead>
+<tr>
+<th>ツール</th>
+<th>DeepSeek V4</th>
+<th>GLM-5.2</th>
+<th>Kimi K2.7</th>
+<th>Kimi K3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claude Code</td>
+<td><strong>公式手順あり</strong></td>
+<td><strong>公式対応</strong></td>
+<td>公式手順あり</td>
+<td>公式手順あり</td>
+</tr>
+<tr>
+<td>Cline</td>
+<td>利用可能</td>
+<td><strong>公式対応</strong></td>
+<td><strong>公式手順あり</strong></td>
+<td>公式手順あり</td>
+</tr>
+<tr>
+<td>OpenCode</td>
+<td>公式統合あり</td>
+<td><strong>公式対応</strong></td>
+<td>利用可能</td>
+<td>公式統合あり</td>
+</tr>
+<tr>
+<td>Codex CLI</td>
+<td>公式資料あり</td>
+<td>条件付き</td>
+<td>公式統合あり</td>
+<td>公式統合あり</td>
+</tr>
+<tr>
+<td>Continue</td>
+<td>OpenAI互換で利用可能</td>
+<td>OpenAI互換で利用可能</td>
+<td>OpenAI互換で利用可能</td>
+<td>OpenAI互換で利用可能</td>
+</tr>
+<tr>
+<td>Cursor内蔵Agent</td>
+<td>直接利用は不確実</td>
+<td>直接利用は不確実</td>
+<td>直接利用は不確実</td>
+<td>直接利用は不確実</td>
+</tr>
+<tr>
+<td>独自プログラム</td>
+<td><strong>適する</strong></td>
+<td>従量APIなら適する</td>
+<td><strong>適する</strong></td>
+<td>適するが高価</td>
+</tr>
+</tbody>
+</table>
+<p>Cursorに無理に接続するより、これらのモデルについては<strong>Claude Code、Cline、OpenCodeまたは独自のOpenAI互換クライアント</strong>を使う方が確実です。</p>
+<h3 id="conclusion-openrouterを使うべきか"><a class="heading-permalink" href="#conclusion-openrouterを使うべきか" aria-label="この見出しへのリンク">#</a>OpenRouterを使うべきか</h3>
+<p>今回の4系列だけを試すなら、個人開発でも<strong>最初は公式APIを推奨</strong>します。</p>
+<p>公式APIがよい理由:</p>
+<ul>
+<li>最新モデルが最初に利用可能になる</li>
+<li>Prompt Cacheなどのモデル固有機能を使える</li>
+<li>Tool Callingの互換性が高い</li>
+<li>推論Providerを意識しなくてよい</li>
+<li>障害原因を切り分けやすい</li>
+<li>OpenRouterを経由する追加のデータ経路がない</li>
+</ul>
+<p>OpenRouterがよい場合:</p>
+<ul>
+<li>DeepSeek公式で日本カードが通らない</li>
+<li>APIキーを1つにまとめたい</li>
+<li>同じタスクを複数モデルで比較したい</li>
+<li>利用上限を一括管理したい</li>
+<li>Provider障害時に自動切替したい</li>
+</ul>
+<p>個人開発での推奨順:</p>
+<pre><code class="language-text">DeepSeek公式API
+Kimi公式API
+GLM Coding PlanまたはZ.ai従量API
+        ↓
+決済・接続に問題があるモデルだけOpenRouter
+</code></pre>
+<h3 id="conclusion-個人開発向け推奨構成"><a class="heading-permalink" href="#conclusion-個人開発向け推奨構成" aria-label="この見出しへのリンク">#</a>個人開発向け推奨構成</h3>
+<h4 id="conclusion-構成a最も推奨"><a class="heading-permalink" href="#conclusion-構成a最も推奨" aria-label="この見出しへのリンク">#</a>構成A：最も推奨</h4>
+<pre><code class="language-text">通常の探索・実装・テスト
+    DeepSeek V4 Flash
+
+難しい実装・設計・最終修正
+    DeepSeek V4 Pro
+
+別モデルによる独立レビュー
+    Kimi K2.7 Code
+</code></pre>
+<p>かなり積極的に使っても、DeepSeek部分は数ドル～数十ドル程度に収まりやすい構成です。Kimiは必要な課題だけに限定します。</p>
+<h4 id="conclusion-構成b定額で大量利用"><a class="heading-permalink" href="#conclusion-構成b定額で大量利用" aria-label="この見出しへのリンク">#</a>構成B：定額で大量利用</h4>
+<pre><code class="language-text">日常のCoding Agent
+    GLM-5.2 Coding Plan
+
+重要な最終レビュー
+    DeepSeek V4 Pro
+</code></pre>
+<p>GLM Liteを1か月試し、同時実行や週間枠が不足した場合のみProを検討します。2プロジェクト並行だからといって、最初から月額$72を契約する必要はありません。</p>
+<h4 id="conclusion-構成c高難度タスク対応"><a class="heading-permalink" href="#conclusion-構成c高難度タスク対応" aria-label="この見出しへのリンク">#</a>構成C：高難度タスク対応</h4>
+<pre><code class="language-text">通常
+    DeepSeek V4 Flash
+
+難しい
+    DeepSeek V4 Pro
+
+解決できない
+    GLM-5.2
+
+最終手段
+    Kimi K3
+</code></pre>
+<h3 id="conclusion-最終順位"><a class="heading-permalink" href="#conclusion-最終順位" aria-label="この見出しへのリンク">#</a>最終順位</h3>
+<p>個人開発の総合順位:</p>
+<ol>
+<li><strong>DeepSeek V4 Pro／Flash</strong></li>
+<li><strong>GLM-5.2</strong></li>
+<li><strong>Kimi K2.7 Code</strong></li>
+<li><strong>Kimi K3</strong></li>
+</ol>
+<p>最初に試す順番:</p>
+<ol>
+<li>DeepSeekへ少額チャージ</li>
+<li>Flashで日常タスクを5件実施</li>
+<li>同じ難しいタスクをProで実施</li>
+<li>Kimiへ$1チャージし、K2.7 CodeとK3を比較</li>
+<li>GLM-5.2を従量課金で試す</li>
+<li>GLMが継続的に有効ならCoding Plan Liteを1か月契約</li>
+</ol>
+<p>最終判断: <strong>個人開発のコスト、実装品質、接続容易性を総合すると、DeepSeek V4 Flash／Proの組み合わせが明確な第一候補です。</strong></p>
+<p>GLM-5.2は大量利用時の定額候補、Kimi K2.7 Codeはコード特化の代替モデル、Kimi K3は高難度課題のスポット利用と位置付けるのが適切です。</p>
+<p>この4系列は更新が速いため、価格、モデルID、廃止予定を月1回確認する監視設定も有効です。</p>
+<blockquote>
+<p>注意: この追記は個人開発向けの実務仮説です。法人導入、機密コード送信、日本カード承認、実API性能は、元記事の検証計画とセキュリティ・法務ゲートを通して確定してください。</p>
+</blockquote></div>
     </section>
 
     <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
@@ -1688,7 +2206,36 @@ DeepSeek / Qwen / GLM / MiniMax / Kimi
 </ul>
 <h2 id="conclusion-plain-最終判断"><a class="heading-permalink" href="#conclusion-plain-最終判断" aria-label="この見出しへのリンク">#</a>最終判断</h2>
 <p><strong>PoCでは複数モデルを同じ条件で比較し、本番ではモデルID、Provider、データ条件を固定する。</strong></p>
-<p>これが、今回の資料から導ける最も安全で実務的な結論です。</p></div>
+<p>これが、今回の資料から導ける最も安全で実務的な結論です。</p>
+<h2 id="conclusion-plain-個人開発者向け追記2026-08-01"><a class="heading-permalink" href="#conclusion-plain-個人開発者向け追記2026-08-01" aria-label="この見出しへのリンク">#</a>個人開発者向け追記（2026-08-01）</h2>
+<p>公開後に、個人開発の用途だけに絞って現行モデルの一次情報を再確認した派生結論です。元の3調査だけで正式モデルIDや料金を確定したものではありません。価格や上限は変わるため、採用前に公式ページで再確認してください。</p>
+<h3 id="conclusion-plain-5つの使い分け"><a class="heading-permalink" href="#conclusion-plain-5つの使い分け" aria-label="この見出しへのリンク">#</a>5つの使い分け</h3>
+<ol>
+<li><strong>日常開発の標準：DeepSeek V4 Flash</strong></li>
+<li><strong>難しい実装・設計：DeepSeek V4 Pro</strong></li>
+<li><strong>毎日エージェントを大量に使う：GLM-5.2 Coding Plan</strong></li>
+<li><strong>コード特化の比較・代替：Kimi K2.7 Code</strong></li>
+<li><strong>非常に難しい課題だけ：Kimi K3</strong></li>
+</ol>
+<p>特に有力なのは、Flashを通常モデル、Proを上位モデルとして切り替える構成です。同じDeepSeekのAPIキーとエンドポイントで使え、個人開発では費用を抑えやすいです。</p>
+<h3 id="conclusion-plain-費用感の目安"><a class="heading-permalink" href="#conclusion-plain-費用感の目安" aria-label="この見出しへのリンク">#</a>費用感の目安</h3>
+<p>キャッシュなし・追加料金なしの仮定では、小規模タスク（入力10万／出力1万）でFlash約$0.017、Pro約$0.052、GLM-5.2約$0.18、Kimi K2.7 Code約$0.14、Kimi K3約$0.45です。大規模タスクではKimi K3がDeepSeek V4 Proの約8.6倍になりやすく、常用理由は限定的です。</p>
+<h3 id="conclusion-plain-推奨構成"><a class="heading-permalink" href="#conclusion-plain-推奨構成" aria-label="この見出しへのリンク">#</a>推奨構成</h3>
+<h4 id="conclusion-plain-構成a最も推奨"><a class="heading-permalink" href="#conclusion-plain-構成a最も推奨" aria-label="この見出しへのリンク">#</a>構成A（最も推奨）</h4>
+<p>通常はDeepSeek V4 Flash、難しい実装はV4 Pro、独立レビューはKimi K2.7 Code。</p>
+<h4 id="conclusion-plain-構成b定額で大量利用"><a class="heading-permalink" href="#conclusion-plain-構成b定額で大量利用" aria-label="この見出しへのリンク">#</a>構成B（定額で大量利用）</h4>
+<p>日常のCoding AgentはGLM-5.2 Coding Plan、重要な最終レビューはDeepSeek V4 Pro。まずはLiteを1か月試し、枠が不足したらProを検討します。</p>
+<h4 id="conclusion-plain-構成c高難度対応"><a class="heading-permalink" href="#conclusion-plain-構成c高難度対応" aria-label="この見出しへのリンク">#</a>構成C（高難度対応）</h4>
+<p>Flash → Pro → GLM-5.2 → Kimi K3 の順で段階的に上げます。</p>
+<h3 id="conclusion-plain-最終順位個人開発"><a class="heading-permalink" href="#conclusion-plain-最終順位個人開発" aria-label="この見出しへのリンク">#</a>最終順位（個人開発）</h3>
+<ol>
+<li>DeepSeek V4 Pro／Flash</li>
+<li>GLM-5.2</li>
+<li>Kimi K2.7 Code</li>
+<li>Kimi K3</li>
+</ol>
+<p><strong>個人開発のコスト、実装品質、接続のしやすさを総合すると、DeepSeek V4 Flash／Proの組み合わせが第一候補です。</strong> GLM-5.2は大量利用時の定額候補、Kimi K2.7 Codeはコード特化の代替、Kimi K3は高難度のスポット利用と位置付けるのが適切です。</p>
+<p>法人導入、機密コード送信、日本カード承認、実API性能は、元記事の検証計画とセキュリティ・法務ゲートで確定してください。</p></div>
       <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
     </section>
 

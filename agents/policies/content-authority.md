@@ -15,6 +15,12 @@
 ## 禁止
 
 - 生成済みHTMLへの手作業パッチ
-- 記事IDの再利用
+- 記事IDの再利用（`content/retired-article-ids.json` に載った ID を含む）
 - 公開後URLの独断変更
 - AI回答の完全性区分を偽ること
+
+## 例外
+
+記事 ID の初期リセット（retired 台帳のクリアと `KB-YYYY-0001` からの再採番）は、
+`agents/policies/article-lifecycle.md` の条件を満たし、人間が明示承認した場合のみ許可する。
+手順は `agents/workflows/reset-article-ids.md`。

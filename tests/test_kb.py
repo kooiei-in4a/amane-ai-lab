@@ -32,15 +32,25 @@ class KbHelpersTest(unittest.TestCase):
 
 
 class NewArticleIdTest(unittest.TestCase):
-    def test_retired_ids_include_deleted_sample(self):
+    def test_retired_ids_file_is_valid(self):
         retired = load_retired_ids()
-        self.assertIn("KB-2026-0001", retired)
+        self.assertIsInstance(retired, set)
+        for article_id in retired:
+            self.assertTrue(ARTICLE_ID_RE.match(article_id))
 
-    def test_next_id_skips_retired_ids(self):
+    def test_next_id_starts_from_one_when_empty(self):
         nxt = next_article_id("2026")
         self.assertTrue(ARTICLE_ID_RE.match(nxt))
-        self.assertGreaterEqual(int(nxt.split("-")[2]), 2)
         self.assertNotIn(nxt, load_retired_ids())
+        # After initial reset with no live articles, expect KB-2026-0001.
+        # If live/retired IDs exist, next ID must still be unused.
+        from scripts.kb import iter_article_dirs, load_article
+
+        used = {load_article(d)["id"] for d in iter_article_dirs()} | load_retired_ids()
+        if not used:
+            self.assertEqual(nxt, "KB-2026-0001")
+        else:
+            self.assertNotIn(nxt, used)
 
 
 class GeneratedOutputTest(unittest.TestCase):

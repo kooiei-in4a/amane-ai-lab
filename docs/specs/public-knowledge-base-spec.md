@@ -269,6 +269,9 @@ KB-YYYY-NNNN
 - 年が変わった場合は連番を`0001`から開始してよい
 - ID採番はスクリプトで行う
 
+削除済みIDは`content/retired-article-ids.json`に記録する。
+採番スクリプトは live 記事と retired 台帳の両方を参照し、再利用を拒否する。
+
 ### 7.2 URL
 
 URL形式:
@@ -298,6 +301,27 @@ archived
 | `published` | 公開済み |
 | `superseded` | 後継記事あり |
 | `archived` | 記録目的で保管 |
+
+### 7.3.1 退役・削除・初期リセット
+
+公開後に記事を下げたい場合の既定は soft 退役とする。
+
+| 経路 | いつ使うか | 正本 | URL | ID |
+|---|---|---|---|---|
+| `archived` / `superseded` | 記録を残す。URLを維持したい | 残す | 原則維持 | 変更しない |
+| hard delete | 誤公開・サンプル廃棄・公開継続不可 | 削除する | 404 | `retired-article-ids.json` に登録し再利用禁止 |
+| 記事ID初期リセット | 人間が`KB-YYYY-0001`からやり直すと明示し、残正本が0件 | 全削除 | 旧URLは404 | retired 台帳を空にし、採番を`0001`から再開 |
+
+運用ルールの正本:
+
+- `agents/policies/article-lifecycle.md`
+- `agents/workflows/archive-article.md`
+- `agents/workflows/delete-article.md`
+- `agents/workflows/reset-article-ids.md`
+
+hard delete および初期リセットは人間の明示承認を必要とする。
+Git履歴の書き換えは秘密情報混入時のみ別承認とする。
+giscus Discussion は自動削除しない。
 
 ### 7.4 AI回答の完全性
 

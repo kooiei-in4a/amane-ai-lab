@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>レビュー指摘を正しく直せるAIはどれか――14モデルの仕様修正ベンチマーク — 資料版 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定してInvalidとなる提出が多く、Hard failなしの有効提出は2件だけだった。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/summary/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="レビュー指摘を正しく直せるAIはどれか――14モデルの仕様修正ベンチマーク — 資料版">
+  <meta property="og:description" content="レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定してInvalidとなる提出が多く、Hard failなしの有効提出は2件だけだった。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/summary/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="../../../../assets/css/site.css">
+</head>
+<body class="summary-doc-page">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane-ai-lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/">記事本文</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap summary-doc">
+    <header class="summary-doc-header panel">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0004</span>
+        <span class="pill">資料版</span>
+        <span>更新: 2026-08-02</span>
+      </p>
+      <h1>まとめ</h1>
+      <p class="summary-doc-subtitle">合成結果を、わかりやすい言葉で短くまとめた資料版。</p>
+      <nav class="summary-source-links" aria-label="記事本文の関連セクション">
+        <p class="summary-source-links-label">記事本文の関連セクション</p>
+        <ul>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#background-heading">検討に至った背景</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#prompt-heading">調査プロンプト</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#agents-heading">AIエージェントの回答</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#analysis-heading">AI回答の合成</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#analysis-plain-heading">合成（わかりやすい説明）</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#conclusion-heading">要約</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#conclusion-plain-heading">要約（わかりやすい説明）</a></li>
+        </ul>
+      </nav>
+      <p class="summary-doc-nav">
+        <a class="btn btn-secondary" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/">← 記事本文へ戻る</a>
+      </p>
+    </header>
+
+    <div class="summary-doc-layout">
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol></ol></nav>
+      <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
+        <h1>まとめ</h1>
+<p>レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。</p>
+<p>14モデルのうちHard failなしの有効提出は2件だけだった。高い参考点を得ても、未承認の製品判断を仕様本文で確定した提出はInvalidとなった。</p>
+<p>対象箇所と正しい修正パターンが明確な局所修正は、高速・低コストモデルへ分担できる可能性がある。ただし、安価なモデルは修正後レビューを必須とし、中位以上でも変更箇所中心の軽量レビューを残す。レビュー強度はモデル価格だけでなく、修正範囲、承認境界、失敗時の影響に応じて決める。</p>
+<p>実務ではReview-only AgentとFix Agentを分け、修正成果物を別Agentが再レビューする。報告書だけでなく、仕様本文、Acceptance Criteria、トレーサビリティを確認し、承認境界の逸脱は平均点で相殺しない運用が必要である。</p>
+      </article>
+    </div>
+
+    <footer class="summary-doc-footer panel">
+      <p class="note">この資料は記事の「合成結果の要約（わかりやすい説明）」（<code>conclusion-plain.md</code>）から自動生成しています。</p>
+      <p>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#background-heading">背景</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#prompt-heading">プロンプト</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#agents-heading">AI回答</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#analysis-heading">合成</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#analysis-plain-heading">合成（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#conclusion-heading">要約</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/#conclusion-plain-heading">要約（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

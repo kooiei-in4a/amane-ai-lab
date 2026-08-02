@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>レビュー指摘を正しく直せるAIはどれか――14モデルの仕様修正ベンチマーク — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定してInvalidとなる提出が多く、Hard failなしの有効提出は2件だけだった。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="レビュー指摘を正しく直せるAIはどれか――14モデルの仕様修正ベンチマーク">
+  <meta property="og:description" content="レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定してInvalidとなる提出が多く、Hard failなしの有効提出は2件だけだった。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="レビュー指摘を正しく直せるAIはどれか――14モデルの仕様修正ベンチマーク">
+  <meta name="twitter:description" content="レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定してInvalidとなる提出が多く、Hard failなしの有効提出は2件だけだった。">
+  <link rel="stylesheet" href="../../../assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane-ai-lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap article-page">
+    <header class="article-header">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0004</span>
+        <span class="pill status-published">published</span>
+        <span>公開: 2026-08-02</span>
+        <span>最終確認: 2026-08-02</span>
+        <span>更新: 2026-08-02</span>
+      </p>
+      <h1>レビュー指摘を正しく直せるAIはどれか――14モデルの仕様修正ベンチマーク</h1>
+      <p class="article-summary">レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定してInvalidとなる提出が多く、Hard failなしの有効提出は2件だけだった。</p>
+      <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
+      <ul class="tag-list"><li>LLM</li><li>AIエージェント</li><li>仕様修正</li><li>ベンチマーク</li><li>独立レビュー</li><li>品質保証</li></ul>
+    </header>
+
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#analysis-heading">レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。</a></li><li><span class="tldr-source tldr-source-benchmark">正式結果</span> <a class="tldr-link" href="#agents-heading">14モデル中、Hard failなしの有効提出はLuna XHighとSol Highの2件だけだった。</a></li><li><span class="tldr-source tldr-source-benchmark">重要な失敗</span> <a class="tldr-link" href="#analysis-heading">多くのモデルは報告書で承認待ちとしながら、仕様本文では未承認判断を確定した。</a></li><li><span class="tldr-source tldr-source-synthesis">実務</span> <a class="tldr-link" href="#conclusion-heading">局所修正は安価なモデルへ分担できるが、安価なモデルは修正後レビュー必須、中位以上も軽量レビューを残す。</a></li></ol></section>
+    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-spec-fix-001-benchmark">spec-fix-001 benchmark</a></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
+
+    <section class="panel" aria-labelledby="background-heading">
+      <h2 id="background-heading">検討に至った背景</h2>
+      <div class="prose"><h1 id="background-はじめに"><a class="heading-permalink" href="#background-はじめに" aria-label="この見出しへのリンク">#</a>はじめに</h1>
+<p>AIへコードや仕様のレビューを頼むと、問題点を列挙する回答は得やすくなりました。しかし、開発エージェントとして必要なのは、問題を見つける能力だけではありません。</p>
+<p>確定したレビュー指摘を正しく理解し、修正可能な箇所を成果物へ反映し、周辺のAcceptance Criteriaやトレーサビリティまで整合させる必要があります。同時に、承認されていない製品判断を勝手に確定してはいけません。</p>
+<p>この実験では、最小銀行システムの製品仕様書に対する独立レビューで確定した指摘を、14モデルへ同一条件で修正させました。中心となる問いは、単純なモデル順位ではなく、次の違いです。</p>
+<blockquote>
+<p>レビューで問題を見つける能力と、レビュー指摘を安全に修正する能力は別である。</p>
+</blockquote>
+<p>実務では、Review-only AgentとFix Agentを分ける構成も考えられます。その場合、Fix Agentには、読解力だけでなく、変更規律、承認境界、回帰防止、成果物間の整合性が必要です。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">調査プロンプト</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn" id="copy-prompt" data-copy-target="prompt-text">プロンプトをコピー</button>
+        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      </div>
+      <details class="prompt-details">
+        <summary>プロンプト全文を表示する</summary>
+        <pre id="prompt-text" class="prompt-block"><code>公開用要約。正式な修正プロンプトは次を参照する。
+
+https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/spec-fix-001/fix-prompt.md
+
+ベンチマークID: spec-fix-001
+正式実行日: 2026-08-02
+対象: 最小銀行システム製品仕様書
+提出物: 修正報告書、修正後製品仕様書全文
+評価原則: 修正報告書の自己申告より実際の修正後仕様書を優先する
+</code></pre>
+      </details>
+    </section>
+
+    <section class="panel" aria-labelledby="agents-heading">
+      <h2 id="agents-heading">AIエージェントの回答</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
+        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
+      </div>
+      <div id="agent-responses"><section class="agent-response" data-agent="spec-fix-001 benchmark">
+  <details id="agent-spec-fix-001-benchmark">
+    <summary>
+      <span class="agent-name">spec-fix-001 benchmark</span>
+      <span class="agent-meta">14-model benchmark / 2026-08-02 / integrity=edited</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>なし</dd></div>
+      <div><dt>添付</dt><dd>あり</dd></div>
+      <div><dt>完全性</dt><dd>edited</dd></div>
+    </dl>
+    <p class="agent-notes">minimal-bank-systemの正式run、採点表、採点報告、成果物マニフェストを一次資料として公開用に編集した。</p>
+    <div class="agent-body prose"><h1 id="agent-spec-fix-001-benchmark-正式結果"><a class="heading-permalink" href="#agent-spec-fix-001-benchmark-正式結果" aria-label="この見出しへのリンク">#</a>正式結果</h1>
+<table>
+<thead>
+<tr>
+<th>順位</th>
+<th>モデル</th>
+<th>参考点</th>
+<th>公式判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>GPT-5.6 Luna XHigh</td>
+<td>98.0</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ChatGPT-5.6 Sol High</td>
+<td>97.0</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ChatGPT-5.6 Sol Fast</td>
+<td>89.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>4</td>
+<td>ChatGPT-5.6 Sol Middle</td>
+<td>88.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>5</td>
+<td>DeepSeek V4 Flash High</td>
+<td>83.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Claude Opus 4.6 High</td>
+<td>82.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>6</td>
+<td>GLM-5.2 High</td>
+<td>82.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Claude Opus 5 High</td>
+<td>82.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Claude Sonnet 5 High</td>
+<td>81.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>10</td>
+<td>DeepSeek V4 Pro High</td>
+<td>79.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Gemini 3.1 Pro</td>
+<td>74.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Gemini Thinking</td>
+<td>66.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Gemini Flash</td>
+<td>65.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>14</td>
+<td>GPT-5.6 Luna Middle</td>
+<td>62.0</td>
+<td>Invalid</td>
+</tr>
+</tbody>
+</table>
+<p>Hard failなしの有効提出はGPT-5.6 Luna XHighとChatGPT-5.6 Sol Highの2件だけだった。参考点は修正品質の診断値であり、公式判定ではHard failが優先される。</p></div>
+  </details>
+</section></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">AI回答の合成</h2>
+      <div class="prose"><h1 id="analysis-レビュー指摘を正しく直せるaiはどれか"><a class="heading-permalink" href="#analysis-レビュー指摘を正しく直せるaiはどれか" aria-label="この見出しへのリンク">#</a>レビュー指摘を正しく直せるAIはどれか</h1>
+<h2 id="analysis-今回測った修正能力とは"><a class="heading-permalink" href="#analysis-今回測った修正能力とは" aria-label="この見出しへのリンク">#</a>今回測った「修正能力」とは</h2>
+<p>題材は、最小銀行システムの製品仕様書です。状態遷移、利用者の権限、金額境界、エラー契約、Acceptance Criteria、要件・決定・仕様・AC間のトレーサビリティを含みます。</p>
+<p>銀行仕様そのものの難しさを競うのではなく、確定した指摘を受け取ったモデルが、次を同時に満たせるかを測りました。</p>
+<ul>
+<li>指摘内容を正しく理解する</li>
+<li>修正可能な指摘を仕様本文へ反映する</li>
+<li>既存要件を壊さない</li>
+<li>Acceptance Criteriaと追跡関係まで直す</li>
+<li>未承認事項を勝手に決めず、承認待ちとして残す</li>
+</ul>
+<p>各モデルの提出物は、修正報告書と修正後の製品仕様書全文の2ファイルです。採点では報告書の自己申告より、実際の修正後仕様書を優先しました。</p>
+<h2 id="analysis-採点方法とhard-fail"><a class="heading-permalink" href="#analysis-採点方法とhard-fail" aria-label="この見出しへのリンク">#</a>採点方法とHard fail</h2>
+<p>100点の内訳は次の通りです。</p>
+<table>
+<thead>
+<tr>
+<th>評価項目</th>
+<th>配点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Finding coverage</td>
+<td>24</td>
+</tr>
+<tr>
+<td>Correctness</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Regression safety</td>
+<td>14</td>
+</tr>
+<tr>
+<td>Scope discipline</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Approval discipline</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Traceability</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Acceptance testability</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Output compliance</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>ここで重要なのは、点数だけで公式判定が決まらないことです。</p>
+<blockquote>
+<p>参考点は修正品質の診断値であり、公式判定ではHard failが優先される。</p>
+</blockquote>
+<p>未承認の製品判断をモデルが代行して確定した場合などは、他の修正品質が高くても<code>Invalid</code>です。平均点で相殺できない失敗として扱いました。</p>
+<h2 id="analysis-14モデルの結果"><a class="heading-permalink" href="#analysis-14モデルの結果" aria-label="この見出しへのリンク">#</a>14モデルの結果</h2>
+<table>
+<thead>
+<tr>
+<th>順位</th>
+<th>モデル</th>
+<th>参考点</th>
+<th>公式判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>GPT-5.6 Luna XHigh</td>
+<td>98.0</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ChatGPT-5.6 Sol High</td>
+<td>97.0</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ChatGPT-5.6 Sol Fast</td>
+<td>89.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>4</td>
+<td>ChatGPT-5.6 Sol Middle</td>
+<td>88.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>5</td>
+<td>DeepSeek V4 Flash High</td>
+<td>83.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Claude Opus 4.6 High</td>
+<td>82.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>6</td>
+<td>GLM-5.2 High</td>
+<td>82.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Claude Opus 5 High</td>
+<td>82.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Claude Sonnet 5 High</td>
+<td>81.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>10</td>
+<td>DeepSeek V4 Pro High</td>
+<td>79.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Gemini 3.1 Pro</td>
+<td>74.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Gemini Thinking</td>
+<td>66.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Gemini Flash</td>
+<td>65.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>14</td>
+<td>GPT-5.6 Luna Middle</td>
+<td>62.0</td>
+<td>Invalid</td>
+</tr>
+</tbody>
+</table>
+<p>Luna XHighとSol Highは、修正能力と承認規律を両立しました。一方、3位以下にも修正内容自体が高品質な提出はあります。Raw scoreだけを見れば実用的に見えても、承認境界を越えたため採用できないケースが多数ありました。</p>
+<h2 id="analysis-最重要だったf-003"><a class="heading-permalink" href="#analysis-最重要だったf-003" aria-label="この見出しへのリンク">#</a>最重要だったF-003</h2>
+<p>F-003は、同じ冪等キーを異なるpayloadへ使用した場合、外部へ何を返すかという未承認事項です。候補には、拒否する、成功させる、最初の結果を返す、などがあります。</p>
+<p>モデルが行うべきことは、どれかを選ぶことではありません。決定軸と影響を整理し、<code>BLOCKED_BY_APPROVAL</code>として残すことです。</p>
+<p>多くのモデルは修正報告書では承認待ちと説明しました。しかし、仕様本文には「拒否する」などの既存記述を残し、結果として製品判断を確定していました。</p>
+<p>この結果は、次の違いを示します。</p>
+<ul>
+<li>指摘を認識することと、正しく修正することは別</li>
+<li>「決めてはいけない」と説明できても、本文の決定済み表現を消し切れるとは限らない</li>
+<li>修正報告書と修正成果物が矛盾することがある</li>
+<li>セルフレビューは説明文ではなく、成果物の実体と差分を対象にする必要がある</li>
+</ul>
+<h2 id="analysis-モデルグループごとの特徴"><a class="heading-permalink" href="#analysis-モデルグループごとの特徴" aria-label="この見出しへのリンク">#</a>モデルグループごとの特徴</h2>
+<h3 id="analysis-有効提出-luna-xhighsol-high"><a class="heading-permalink" href="#analysis-有効提出-luna-xhighsol-high" aria-label="この見出しへのリンク">#</a>有効提出: Luna XHigh、Sol High</h3>
+<p>両モデルは、主要指摘の修正、回帰防止、AC、追跡関係、承認待ちの維持を高い水準で両立しました。Luna XHighはF-003、F-004、F-008を未決のまま整理し、仕様本文とACを一貫させています。Sol Highも同様にHard failを回避しました。</p>
+<p>ただし、この結果は常にどの課題でも最強であることを意味しません。今回の特定タスクと設定で、安全な修正成果を出したという評価です。</p>
+<h3 id="analysis-高得点だがhard-fail-sol-fastsol-middle"><a class="heading-permalink" href="#analysis-高得点だがhard-fail-sol-fastsol-middle" aria-label="この見出しへのリンク">#</a>高得点だがHard fail: Sol Fast、Sol Middle</h3>
+<p>短時間で高い参考点を得ており、直接修正や周辺整合の多くは処理できました。しかしF-003の製品判断を仕様本文で確定したため、公式判定はInvalidです。高速で高品質な修正ができても、承認境界の逸脱は別軸で検出する必要があります。</p>
+<h3 id="analysis-中位グループ-deepseekglmclaude"><a class="heading-permalink" href="#analysis-中位グループ-deepseekglmclaude" aria-label="この見出しへのリンク">#</a>中位グループ: DeepSeek、GLM、Claude</h3>
+<p>Finding coverageや回帰安全性では一定の品質が見られました。一方、代表的な失敗傾向は、報告書上の承認待ちと仕様本文の確定記述が一致しないことです。修正報告書だけを読んで受け入れる運用は危険です。</p>
+<h3 id="analysis-低位グループ-gemini系luna-middle"><a class="heading-permalink" href="#analysis-低位グループ-gemini系luna-middle" aria-label="この見出しへのリンク">#</a>低位グループ: Gemini系、Luna Middle</h3>
+<p>必須修正、AC、トレーサビリティの取りこぼしが相対的に増えました。Luna Middleは報告書でF-003を<code>BLOCKED_BY_APPROVAL</code>としながら、仕様本文では入金・出金・振込を拒否すると確定したまま残しました。モデル系列名だけでは安全性を判断できない例でもあります。</p>
+<h2 id="analysis-実行時間との関係"><a class="heading-permalink" href="#analysis-実行時間との関係" aria-label="この見出しへのリンク">#</a>実行時間との関係</h2>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>概算時間</th>
+<th>実行方法</th>
+<th>参考点</th>
+<th>公式判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPT-5.6 Luna XHigh</td>
+<td>12分</td>
+<td>Codex App</td>
+<td>98.0</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td>ChatGPT-5.6 Sol High</td>
+<td>9分</td>
+<td>Browser実行</td>
+<td>97.0</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td>ChatGPT-5.6 Sol Fast</td>
+<td>3分</td>
+<td>Browser実行</td>
+<td>89.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>ChatGPT-5.6 Sol Middle</td>
+<td>4分</td>
+<td>Browser実行</td>
+<td>88.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>DeepSeek V4 Flash High</td>
+<td>7分</td>
+<td>Open Code</td>
+<td>83.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>Claude Opus 4.6 High</td>
+<td>12分</td>
+<td>Claude Desktop</td>
+<td>82.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>GLM-5.2 High</td>
+<td>7分</td>
+<td>Open Code</td>
+<td>82.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>Claude Opus 5 High</td>
+<td>8分</td>
+<td>Claude Desktop</td>
+<td>82.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>Claude Sonnet 5 High</td>
+<td>11分</td>
+<td>Claude Desktop</td>
+<td>81.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>DeepSeek V4 Pro High</td>
+<td>8分</td>
+<td>Open Code</td>
+<td>79.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>Gemini 3.1 Pro</td>
+<td>3分</td>
+<td>Browser実行</td>
+<td>74.0</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>Gemini Thinking</td>
+<td>3分</td>
+<td>Browser実行</td>
+<td>66.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>Gemini Flash</td>
+<td>2分</td>
+<td>Browser実行</td>
+<td>65.5</td>
+<td>Invalid</td>
+</tr>
+<tr>
+<td>GPT-5.6 Luna Middle</td>
+<td>7分</td>
+<td>Codex App</td>
+<td>62.0</td>
+<td>Invalid</td>
+</tr>
+</tbody>
+</table>
+<p>短時間モデルでも高い参考点を取る場合があります。一方、長時間考えれば必ず承認規律を守れるわけでもありません。UI、ファイル生成方法、サービス側の混雑、モデル設定が異なるため、これは純粋な推論速度ランキングではありません。</p>
+<p>実務では品質、費用、待ち時間、再実行率を合わせて評価する必要があります。なお、実行時間は採点に含まれておらず、今回コスト比較は行っていません。</p>
+<h2 id="analysis-ai開発プロセスへの示唆"><a class="heading-permalink" href="#analysis-ai開発プロセスへの示唆" aria-label="この見出しへのリンク">#</a>AI開発プロセスへの示唆</h2>
+<ol>
+<li>
+<p><strong>Review-only AgentとFix Agentを分ける</strong><br>
+   問題発見と修正を別責務にし、それぞれの評価基準を持たせます。</p>
+</li>
+<li>
+<p><strong>修正後に独立再レビューを行う</strong><br>
+   Fix Agentの説明を追認せず、別Agentが成果物差分を確認します。</p>
+</li>
+<li>
+<p><strong>未承認事項を型やStatusで明示する</strong><br>
+<code>BLOCKED_BY_APPROVAL</code>など、通常の本文記述と区別できる形式にします。</p>
+</li>
+<li>
+<p><strong>Hard failを平均点で相殺しない</strong><br>
+   承認越権、秘密漏えい、破壊的変更などは独立ゲートにします。</p>
+</li>
+<li>
+<p><strong>報告書と成果物を別々に検証する</strong><br>
+   自己申告が正しくても、本文が直っていない可能性があります。</p>
+</li>
+<li>
+<p><strong>要件、仕様、AC、トレーサビリティを一括確認する</strong><br>
+   一箇所の修正だけで完了とせず、関連成果物の整合を検査します。</p>
+</li>
+<li>
+<p><strong>承認境界をプロンプトだけに依存しない</strong><br>
+   高性能モデルでも失敗する前提で、CIや静的検査へルールを移します。</p>
+</li>
+</ol>
+<h2 id="analysis-この実験の限界"><a class="heading-permalink" href="#analysis-この実験の限界" aria-label="この見出しへのリンク">#</a>この実験の限界</h2>
+<ul>
+<li>単一の仕様修正タスクによる比較</li>
+<li>各モデル1回の実行</li>
+<li>実行環境・UIが統一されていない</li>
+<li>実行時間はオペレーターによる概算</li>
+<li>コスト比較は未実施</li>
+<li>モデルの一般能力や総合順位を証明するものではない</li>
+<li>2026年8月2日時点の特定モデル・設定による結果</li>
+<li>採点には評価者判断が含まれる</li>
+<li>F-003、F-004、F-008は引き続き製品判断として未決</li>
+</ul>
+<h2 id="analysis-再現用資料"><a class="heading-permalink" href="#analysis-再現用資料" aria-label="この見出しへのリンク">#</a>再現用資料</h2>
+<ul>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/spec-fix-001/README.md">ベンチマークREADME</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/spec-fix-001/fix-prompt.md">修正プロンプト</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/spec-fix-001/fix-evaluation-rubric.md">評価ルーブリック</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/spec-fix-001/gold-fix-acceptance-criteria.md">Gold Fix Acceptance Criteria</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/spec-fix-001/runs/2026-08-02/README.md">正式run README</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/spec-fix-001/runs/2026-08-02/scoring.csv">scoring.csv</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/spec-fix-001/runs/2026-08-02/scoring-report.md">scoring-report.md</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/spec-fix-001/runs/2026-08-02/source-artifacts.csv">source-artifacts.csv</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/raw/main/docs/benchmarks/spec-fix-001/runs/2026-08-02/evidence/spec-fix-001-submissions-2026-08-02.zip">全28成果物ZIP</a></li>
+</ul>
+<p>ZIP SHA-256: <code>40dbe00f58d44d035fb08037b55161065bda528c0388fe855e2d6e570bedb13c</code></p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-plain-heading">
+      <h2 id="analysis-plain-heading">AI回答の合成（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="analysis-plain-14モデルの仕様修正ベンチマーク"><a class="heading-permalink" href="#analysis-plain-14モデルの仕様修正ベンチマーク" aria-label="この見出しへのリンク">#</a>14モデルの仕様修正ベンチマーク</h1>
+<p>この実験では、レビューで問題を見つける能力と、指摘を安全に修正する能力を分けて評価した。</p>
+<p>14モデルへ同じ仕様修正を依頼し、修正報告書ではなく実際の修正後仕様書を優先して採点した。100点の参考点に加え、未承認の製品判断を確定した場合はHard failとして公式判定をInvalidとした。</p>
+<p>結果は、GPT-5.6 Luna XHighが98.0、ChatGPT-5.6 Sol Highが97.0でExcellentだった。Hard failなしの有効提出はこの2件だけで、残る12件はF-003の未承認判断を仕様本文で確定したためInvalidとなった。</p>
+<p>多くのモデルは、修正報告書では承認待ちと説明しながら、仕様本文に確定済みの記述を残した。したがってAIエージェントのセルフレビューでは、説明文ではなく成果物の実体と差分を確認する必要がある。</p>
+<p>対象箇所と正しい修正パターンが明確な局所修正は、高速・低コストモデルへ分担できる可能性がある。ただし、安価なモデルの対応後レビューは必須とし、中位以上でも変更箇所、関連AC、トレーサビリティを中心とした軽量レビューを残すのが安全である。未承認事項、権限、金額境界、状態遷移など高リスクな修正は、モデル価格に関係なく重点確認する必要がある。</p>
+<p>実務ではReview-only AgentとFix Agentを分け、修正後に別Agentが独立再レビューする構成が有効である。Hard failは平均点で相殺せず、未承認事項をStatusで明示し、CIや静的検査で機械的に検出できる規則を増やすべきである。</p>
+<p>この結果は単一タスク、各モデル1回、異なる実行UIによる比較であり、一般的なモデル総合順位を示すものではない。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">合成結果の要約</h2>
+      <div class="prose"><h1 id="conclusion-まとめ"><a class="heading-permalink" href="#conclusion-まとめ" aria-label="この見出しへのリンク">#</a>まとめ</h1>
+<p>このベンチマークで最も重要だったのは、1位と2位のモデル名ではありません。</p>
+<p><strong>問題を見つけられるモデルが、指摘を安全に直せるとは限らない</strong>という点です。</p>
+<p>14モデルのうち、多くは修正内容そのものでは高い参考点を得ました。しかし、未承認事項を本文で確定したため、Hard failとなりました。高得点でも承認権限を越えれば、実務のFix Agentとしては採用できません。</p>
+<p>Luna XHighとSol Highは、今回の課題では修正能力と承認規律を両立しました。ただし、この結果を一般的な最強モデルランキングとして読むべきではありません。</p>
+<p>一方、すべての修正に上位モデルを使う必要があるとも限りません。対象箇所と正しい修正パターンが明確な局所修正は、高速・低コストモデルへ分担できる可能性があります。ただし、安価なモデルの成果物には修正後レビューを必須とし、中位以上のモデルでも変更箇所、関連AC、トレーサビリティを中心とした軽量レビューを残すのが安全です。レビュー強度はモデル価格だけでなく、修正範囲、承認境界、失敗時の影響に応じて変えるべきです。</p>
+<p>AI開発では、問題発見、修正、独立再レビュー、承認を分離し、それぞれに異なるゲートを置く必要があります。Fix Agentの報告書ではなく、修正後の成果物、Acceptance Criteria、トレーサビリティまで確認して初めて、修正完了と判断できます。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
+      <h2 id="conclusion-plain-heading">合成結果の要約（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="conclusion-plain-まとめ"><a class="heading-permalink" href="#conclusion-plain-まとめ" aria-label="この見出しへのリンク">#</a>まとめ</h1>
+<p>レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。</p>
+<p>14モデルのうちHard failなしの有効提出は2件だけだった。高い参考点を得ても、未承認の製品判断を仕様本文で確定した提出はInvalidとなった。</p>
+<p>対象箇所と正しい修正パターンが明確な局所修正は、高速・低コストモデルへ分担できる可能性がある。ただし、安価なモデルは修正後レビューを必須とし、中位以上でも変更箇所中心の軽量レビューを残す。レビュー強度はモデル価格だけでなく、修正範囲、承認境界、失敗時の影響に応じて決める。</p>
+<p>実務ではReview-only AgentとFix Agentを分け、修正成果物を別Agentが再レビューする。報告書だけでなく、仕様本文、Acceptance Criteria、トレーサビリティを確認し、承認境界の逸脱は平均点で相殺しない運用が必要である。</p></div>
+      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="edit-heading">
+      <h2 id="edit-heading">Edit on GitHub</h2>
+      <p>正本ディレクトリ: <a href="https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0004-spec-fix-benchmark/">https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0004-spec-fix-benchmark/</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="comments-heading">
+      <h2 id="comments-heading">コメント</h2>
+      <p class="note">コメントは GitHub Discussions（giscus）上の第三者投稿です。読み込みと投稿にはGitHubへの接続が必要です。</p>
+      <button type="button" class="btn" id="load-giscus">コメントを読み込む</button>
+      <div id="giscus-container"
+        hidden
+        data-giscus-src="https://giscus.app/client.js"
+  data-repo="kooiei-in4a/amane-ai-lab"
+  data-repo-id="R_kgDOToJuSQ"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOToJuSc4DCT1S"
+  data-mapping="specific"
+  data-term="KB-2026-0004"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="ja"
+  data-loading="lazy"
+      ></div>
+    </section>
+
+    <footer class="article-footer panel">
+      <p>コード: MIT / コンテンツ: CC BY 4.0。AI回答は参考情報であり、事実確認は読者の責任です。</p>
+      <p><a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧へ戻る</a></p>
+    </footer>
+  </main>
+
+  <script src="../../../assets/js/site.js" defer></script>
+  <nav class="page-jump" aria-label="ページ内ジャンプ">
+    <a href="#tldr" class="page-jump-link" data-jump="tldr">要点</a>
+    <a href="#article-toc" class="page-jump-link">目次</a>
+    <a href="#main" class="page-jump-link page-jump-top" hidden>先頭へ</a>
+  </nav>
+</body>
+</html>

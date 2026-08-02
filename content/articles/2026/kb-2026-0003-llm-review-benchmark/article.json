@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "KB-2026-0003",
+  "slug": "llm-review-benchmark",
+  "title": "16件のLLM独立レビューで分かったこと――仕様レビュー精度とマルチモデル審理の実務",
+  "description": "同一の製品仕様と正本資料を16件のLLMへ渡し、Round 1で確定したGold Findingに照らして再評価した。上位モデルでも重大な見逃しは残り、16件中、根拠と重大度を含めて正しくFAILへ到達したのは8件だった。単発レビューや多数決ではなく、異種モデルの独立レビューと根本原因単位の審理を組み合わせる必要がある。",
+  "status": "published",
+  "publishedAt": "2026-08-02",
+  "updatedAt": "2026-08-02",
+  "lastVerifiedAt": "2026-08-02",
+  "tags": [
+    "LLM",
+    "AIレビュー",
+    "仕様レビュー",
+    "ベンチマーク",
+    "マルチエージェント",
+    "品質保証"
+  ],
+  "agents": [
+    {
+      "name": "16-model benchmark",
+      "model": "ChatGPT 5.6 / Claude Sonnet 5 / Gemini 3.6 / DeepSeek V4 / GLM 5.2 / Gork 4.5 / Kimi K3 / Composer 2.5",
+      "responseFile": "responses/benchmark-results.md",
+      "executedAt": "2026-08-02",
+      "webSearch": false,
+      "attachmentsUsed": true,
+      "integrity": "edited",
+      "notes": "16件の独立レビュー原文を、Round 1で確定したGold Findingへ照合した公開用要約。個別レビュー全文、Finding審理マトリクス、モデル評価、Round比較は参照先リポジトリに保存している。"
+    }
+  ],
+  "giscusTerm": "KB-2026-0003",
+  "supersededBy": null
+}

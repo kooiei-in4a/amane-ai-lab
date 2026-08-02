@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "source": "benchmark",
+      "label": "実験",
+      "text": "同一仕様と同一Evidenceを使い、16件のLLM独立レビューを比較した。",
+      "href": "#background-heading"
+    },
+    {
+      "source": "adjudication",
+      "label": "判定",
+      "text": "最終仕様判定はFAIL / NOT READYで、Major Findingは4件だった。",
+      "href": "#conclusion-heading"
+    },
+    {
+      "source": "benchmark",
+      "label": "精度",
+      "text": "根拠と重大度を含めて正しくFAILへ到達したのは16件中8件だった。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "benchmark",
+      "label": "上位",
+      "text": "この課題ではSol Highが最もバランス良く、Sol XHighが最も網羅的だった。",
+      "href": "#agents-heading"
+    },
+    {
+      "source": "review",
+      "label": "限界",
+      "text": "同じモデルでも点数とVerdictが大きく変わり、単発結果は安定しなかった。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "結論",
+      "text": "異種モデルの独立レビューと、根本原因単位の人間審理を組み合わせる必要がある。",
+      "href": "#conclusion-heading"
+    }
+  ]
+}

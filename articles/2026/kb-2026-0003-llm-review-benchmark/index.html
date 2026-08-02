@@ -44,7 +44,7 @@
     </header>
 
     <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-benchmark">実験</span> <a class="tldr-link" href="#background-heading">同一仕様と同一Evidenceを使い、16件のLLM独立レビューを比較した。</a></li><li><span class="tldr-source tldr-source-adjudication">判定</span> <a class="tldr-link" href="#conclusion-heading">最終仕様判定はFAIL / NOT READYで、Major Findingは4件だった。</a></li><li><span class="tldr-source tldr-source-benchmark">精度</span> <a class="tldr-link" href="#analysis-heading">根拠と重大度を含めて正しくFAILへ到達したのは16件中8件だった。</a></li><li><span class="tldr-source tldr-source-benchmark">上位</span> <a class="tldr-link" href="#agents-heading">この課題ではSol Highが最もバランス良く、Sol XHighが最も網羅的だった。</a></li><li><span class="tldr-source tldr-source-review">限界</span> <a class="tldr-link" href="#analysis-heading">同じモデルでも点数とVerdictが大きく変わり、単発結果は安定しなかった。</a></li><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#conclusion-heading">異種モデルの独立レビューと、根本原因単位の人間審理を組み合わせる必要がある。</a></li></ol></section>
-    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-16-model-benchmark">16-model benchmark</a><ul><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-最終仕様判定">最終仕様判定</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-モデル別総合順位">モデル別総合順位</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-verdictの内訳">Verdictの内訳</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-gold-findingの検出状況">Gold Findingの検出状況</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-round-1とround-2の比較">Round 1とRound 2の比較</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-同一モデルの再現性">同一モデルの再現性</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
+    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-16-model-benchmark">16-model benchmark</a><ul><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-最終仕様判定">最終仕様判定</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-round-2の実行環境">Round 2の実行環境</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-モデル別総合順位実行時間">モデル別総合順位・実行時間</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-精度と速度を合わせて読む">精度と速度を合わせて読む</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-verdictの内訳">Verdictの内訳</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-gold-findingの検出状況">Gold Findingの検出状況</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-round-1とround-2の比較">Round 1とRound 2の比較</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-同一モデルの再現性">同一モデルの再現性</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
 
     <section class="panel" aria-labelledby="background-heading">
       <h2 id="background-heading">検討に至った背景</h2>
@@ -143,123 +143,191 @@
 <li>冪等性の結果固定と競合後再試行の外部契約が未確定</li>
 <li>利用者管理・役割権限管理のv0.1.0製品範囲が未定義</li>
 </ol>
-<h2 id="agent-16-model-benchmark-モデル別総合順位"><a class="heading-permalink" href="#agent-16-model-benchmark-モデル別総合順位" aria-label="この見出しへのリンク">#</a>モデル別総合順位</h2>
+<h2 id="agent-16-model-benchmark-round-2の実行環境"><a class="heading-permalink" href="#agent-16-model-benchmark-round-2の実行環境" aria-label="この見出しへのリンク">#</a>Round 2の実行環境</h2>
+<p>Round 2は、同じポータブルプロンプトとEvidence bundleを各実行環境へ投入しました。環境ごとのUI、ファイル読込み、推論モード、ツール実装は同一ではありません。</p>
+<table>
+<thead>
+<tr>
+<th>実行環境</th>
+<th>モデル・設定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Browser</td>
+<td>ChatGPT 5.6 Sol High、Sol XHigh、Sol Middle、Sol Fast、Luna XHigh、Gemini 3.6 Flash、Gemini 3.6 Pro、Gemini 3.6 Thinking、Claude Sonnet 5 High（browser実行）</td>
+</tr>
+<tr>
+<td>Cursor</td>
+<td>Gork 4.5 High Fast、Composer 2.5 Fast</td>
+</tr>
+<tr>
+<td>OpenCode</td>
+<td>Kimi K3、GLM 5.2 High、DeepSeek V4 Pro、DeepSeek V4 Flash</td>
+</tr>
+<tr>
+<td>Claude Desktop app</td>
+<td>Claude Sonnet 5 High（通常実行）</td>
+</tr>
+</tbody>
+</table>
+<p>Claude Sonnet 5 Highは、Browser実行とDesktop app実行を別レビューとして評価しました。したがって、レビュー成果物は16件、モデル・構成ラベルは15種類です。</p>
+<h2 id="agent-16-model-benchmark-モデル別総合順位実行時間"><a class="heading-permalink" href="#agent-16-model-benchmark-モデル別総合順位実行時間" aria-label="この見出しへのリンク">#</a>モデル別総合順位・実行時間</h2>
 <table>
 <thead>
 <tr>
 <th>順位</th>
 <th>モデル</th>
+<th>実行環境</th>
 <th>点数</th>
 <th>Verdict評価</th>
+<th>概算時間</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
 <td>ChatGPT 5.6 Sol High</td>
+<td>Browser</td>
 <td>95</td>
 <td>正しい</td>
+<td>約7分</td>
 </tr>
 <tr>
 <td>2</td>
 <td>ChatGPT 5.6 Sol XHigh</td>
+<td>Browser</td>
 <td>92</td>
 <td>正しい</td>
+<td>約10分</td>
 </tr>
 <tr>
 <td>3</td>
 <td>ChatGPT 5.6 Sol Middle</td>
+<td>Browser</td>
 <td>91</td>
 <td>正しい</td>
+<td>約4分</td>
 </tr>
 <tr>
 <td>4</td>
 <td>ChatGPT 5.6 Sol Fast</td>
+<td>Browser</td>
 <td>90</td>
 <td>正しい</td>
+<td>約2分</td>
 </tr>
 <tr>
 <td>5</td>
 <td>Gork 4.5 High Fast</td>
+<td>Cursor</td>
 <td>88</td>
 <td>正しい</td>
+<td>約4分</td>
 </tr>
 <tr>
 <td>6</td>
 <td>ChatGPT 5.6 Luna XHigh</td>
+<td>Browser</td>
 <td>86</td>
 <td>正しい</td>
+<td>約7分</td>
 </tr>
 <tr>
 <td>7</td>
 <td>Claude Sonnet 5 High（browser実行）</td>
+<td>Browser</td>
 <td>77</td>
 <td>正しい</td>
+<td>約12分</td>
 </tr>
 <tr>
 <td>8</td>
 <td>Kimi K3</td>
+<td>OpenCode</td>
 <td>76</td>
 <td>正しい</td>
+<td>約18分</td>
 </tr>
 <tr>
 <td>9</td>
 <td>Composer 2.5 Fast</td>
+<td>Cursor</td>
 <td>73</td>
 <td>不正確</td>
+<td>約2分</td>
 </tr>
 <tr>
 <td>10</td>
 <td>GLM 5.2 High</td>
+<td>OpenCode</td>
 <td>62</td>
 <td>不正確</td>
+<td>約5分</td>
 </tr>
 <tr>
 <td>11</td>
 <td>Claude Sonnet 5 High（通常実行）</td>
+<td>Claude Desktop app</td>
 <td>58</td>
 <td>不正確</td>
+<td>約12分</td>
 </tr>
 <tr>
 <td>12</td>
 <td>DeepSeek V4 Pro</td>
+<td>OpenCode</td>
 <td>56</td>
 <td>不正確</td>
+<td>約5分</td>
 </tr>
 <tr>
 <td>13</td>
 <td>DeepSeek V4 Flash</td>
+<td>OpenCode</td>
 <td>55</td>
 <td>不正確</td>
+<td>約7分</td>
 </tr>
 <tr>
 <td>14</td>
 <td>Gemini 3.6 Flash</td>
+<td>Browser</td>
 <td>54</td>
 <td>結論のみ正しい</td>
+<td>約1分</td>
 </tr>
 <tr>
 <td>15</td>
 <td>Gemini 3.6 Pro</td>
+<td>Browser</td>
 <td>52</td>
 <td>不正確</td>
+<td>約4分</td>
 </tr>
 <tr>
 <td>16</td>
 <td>Gemini 3.6 Thinking</td>
+<td>Browser</td>
 <td>51</td>
 <td>不正確</td>
+<td>約2分</td>
 </tr>
 </tbody>
 </table>
 <p>点数は、この固定課題に対する手動審理結果です。モデルの一般性能ランキングではありません。</p>
+<p>時間は手元で計測した概算の参考値です。API単体の推論時間ではなく、画面操作、Evidence読込み、ツール処理、回答表示までを含む場合があります。実行環境、混雑、キャッシュ、出力量が統制されていないため、厳密な速度ベンチマークとして扱えません。</p>
+<h2 id="agent-16-model-benchmark-精度と速度を合わせて読む"><a class="heading-permalink" href="#agent-16-model-benchmark-精度と速度を合わせて読む" aria-label="この見出しへのリンク">#</a>精度と速度を合わせて読む</h2>
+<p>今回の課題では、Sol Fastは約2分で90点、Sol Middleは約4分で91点でした。高いPrecisionを保ちながら短時間で一次判定する用途では有力です。</p>
+<p>Sol HighとSol XHighは時間を多く使いますが、正本横断のMajor Findingまで検出しました。最終ゲートや高リスク仕様では、追加時間に意味があります。</p>
+<p>一方、短時間で終わること自体は品質を保証しません。Gemini 3.6 Flashは約1分でしたが、主要根拠の多くを外しました。Kimi K3は約18分を要しましたが、点数は76でした。時間と精度は単純比例しません。</p>
 <h2 id="agent-16-model-benchmark-verdictの内訳"><a class="heading-permalink" href="#agent-16-model-benchmark-verdictの内訳" aria-label="この見出しへのリンク">#</a>Verdictの内訳</h2>
 <ul>
 <li>根拠と重大度を含めて正しい<code>FAIL / NOT READY</code>: 8件</li>
 <li>結論だけ<code>FAIL</code>で、主要根拠または重大度が不正確: 1件</li>
 <li>誤って<code>READY FOR KOO APPROVAL</code>: 7件</li>
 </ul>
-<p>半数のレビューは、Majorが残る仕様を承認可能と判断しました。</p>
+<p>半数近くのレビューは、Majorが残る仕様を承認可能と判断しました。</p>
 <h2 id="agent-16-model-benchmark-gold-findingの検出状況"><a class="heading-permalink" href="#agent-16-model-benchmark-gold-findingの検出状況" aria-label="この見出しへのリンク">#</a>Gold Findingの検出状況</h2>
 <table>
 <thead>
@@ -379,24 +447,30 @@
 <thead>
 <tr>
 <th>実行</th>
+<th>環境</th>
 <th>点数</th>
 <th>Verdict</th>
+<th>概算時間</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>通常実行</td>
+<td>Claude Desktop app</td>
 <td>58</td>
 <td>READY</td>
+<td>約12分</td>
 </tr>
 <tr>
 <td>browser実行</td>
+<td>Browser</td>
 <td>77</td>
 <td>NOT READY</td>
+<td>約12分</td>
 </tr>
 </tbody>
 </table>
-<p>同じモデルラベルでも19点差があり、Verdictが反転しました。実行環境、サンプリング、読み取り順、ツール利用などの影響をモデル能力と分離できないため、単発結果を確定判定に使うべきではありません。</p></div>
+<p>同じモデルラベル、ほぼ同じ所要時間でも19点差があり、Verdictが反転しました。実行環境、サンプリング、読み取り順、ツール利用などの影響をモデル能力と分離できないため、単発結果を確定判定に使うべきではありません。</p></div>
   </details>
 </section></div>
     </section>
@@ -502,9 +576,22 @@
     <section class="panel" aria-labelledby="analysis-plain-heading">
       <h2 id="analysis-plain-heading">AI回答の合成（わかりやすい説明）</h2>
       <div class="prose"><h1 id="analysis-plain-16件のレビュー結果をわかりやすく説明すると"><a class="heading-permalink" href="#analysis-plain-16件のレビュー結果をわかりやすく説明すると" aria-label="この見出しへのリンク">#</a>16件のレビュー結果を、わかりやすく説明すると</h1>
+<h2 id="analysis-plain-まずどこで実行したか"><a class="heading-permalink" href="#analysis-plain-まずどこで実行したか" aria-label="この見出しへのリンク">#</a>まず、どこで実行したか</h2>
+<p>Round 2は一つのサービスだけで実行していません。</p>
+<ul>
+<li>Browser: ChatGPT 5.6系、Gemini 3.6系、Claude Sonnet 5 Highのbrowser実行</li>
+<li>Cursor: Gork 4.5 High Fast、Composer 2.5 Fast</li>
+<li>OpenCode: Kimi K3、GLM 5.2 High、DeepSeek V4 Pro／Flash</li>
+<li>Claude Desktop app: Claude Sonnet 5 Highの通常実行</li>
+</ul>
+<p>同じプロンプトと資料を渡しましたが、画面、ファイル読込み、推論モード、ツールの仕組みは異なります。この結果は、モデル名だけでなく「モデルと実行環境を組み合わせた結果」です。</p>
 <h2 id="analysis-plain-aiを増やせば自動的に正しくなるわけではない"><a class="heading-permalink" href="#analysis-plain-aiを増やせば自動的に正しくなるわけではない" aria-label="この見出しへのリンク">#</a>AIを増やせば自動的に正しくなるわけではない</h2>
 <p>同じ仕様書を16回レビューしてもらいましたが、重大な問題をすべて見つけたAIはありませんでした。</p>
 <p>見つけやすい問題と、見つけにくい問題があります。表にテスト項目が足りないことは多くのAIが気付きました。一方で、別々の文書に書かれたルールを組み合わせて、「この操作は許可されない」と判断できたAIは少数でした。</p>
+<h2 id="analysis-plain-速さと正しさは単純比例しない"><a class="heading-permalink" href="#analysis-plain-速さと正しさは単純比例しない" aria-label="この見出しへのリンク">#</a>速さと正しさは単純比例しない</h2>
+<p>概算時間では、Sol Fastは約2分で90点、Sol Middleは約4分で91点でした。一次レビュー用途では効率の良い結果です。</p>
+<p>しかし、約1分のGemini 3.6 Flashは54点、約18分のKimi K3は76点でした。長く考えれば必ず正しくなるわけでも、速ければ必ず浅いわけでもありません。</p>
+<p>時間には画面操作や資料読込みも含まれ、厳密な速度比較ではありません。費用や速度を判断するには、同じAPI、同じ出力量、同じ計測方法で別の実験が必要です。</p>
 <h2 id="analysis-plain-長い回答が良い回答とは限らない"><a class="heading-permalink" href="#analysis-plain-長い回答が良い回答とは限らない" aria-label="この見出しへのリンク">#</a>長い回答が良い回答とは限らない</h2>
 <p>たくさん指摘するAIの中には、同じ問題を何件にも分けたり、単なる改善案を重大な欠陥として扱ったりするものがありました。</p>
 <p>レビューでは、指摘数より次が重要です。</p>
@@ -515,14 +602,14 @@
 <li>最終的な合格・不合格判定と指摘内容が合っているか</li>
 </ul>
 <h2 id="analysis-plain-同じaiでも結果が変わる"><a class="heading-permalink" href="#analysis-plain-同じaiでも結果が変わる" aria-label="この見出しへのリンク">#</a>同じAIでも結果が変わる</h2>
-<p>同じClaude Sonnet 5 Highを2回実行したところ、一方は合格可能、もう一方は不合格と判断しました。点数も19点違いました。</p>
+<p>同じClaude Sonnet 5 HighをBrowserとDesktop appで実行したところ、一方は合格可能、もう一方は不合格と判断しました。どちらも約12分でしたが、点数は19点違いました。</p>
 <p>そのため、「このモデルなら毎回同じ品質」とは考えない方が安全です。</p>
 <h2 id="analysis-plain-実務では役割を分ける"><a class="heading-permalink" href="#analysis-plain-実務では役割を分ける" aria-label="この見出しへのリンク">#</a>実務では役割を分ける</h2>
 <p>1つのAIへすべて任せるより、役割を分けた方が安定します。</p>
 <ul>
-<li>広く問題を探すAI</li>
-<li>誤検知を減らすAI</li>
-<li>冪等性や権限など難しい論点を見るAI</li>
+<li>Sol FastやMiddleで短時間の一次レビュー</li>
+<li>Sol HighやXHighで高リスク論点と正本横断を確認</li>
+<li>GorkやLunaで冪等性・製品範囲を補完</li>
 <li>最後に根拠を確認する人間または独立Agent</li>
 </ul>
 <p>重要な仕様では、1回の<code>READY</code>判定だけで次工程へ進めない運用が必要です。</p></div>
@@ -533,39 +620,202 @@
       <div class="prose"><h1 id="conclusion-結論"><a class="heading-permalink" href="#conclusion-結論" aria-label="この見出しへのリンク">#</a>結論</h1>
 <h2 id="conclusion-1-最終判定"><a class="heading-permalink" href="#conclusion-1-最終判定" aria-label="この見出しへのリンク">#</a>1. 最終判定</h2>
 <p>同一仕様を16件のLLMへ独立レビューさせた結果、最終判定は<code>FAIL / NOT READY</code>でした。Majorは4件残っており、16件中、根拠と重大度を含めて正しくFAILへ到達したのは8件です。</p>
-<h2 id="conclusion-2-モデル評価"><a class="heading-permalink" href="#conclusion-2-モデル評価" aria-label="この見出しへのリンク">#</a>2. モデル評価</h2>
+<h2 id="conclusion-2-実験条件"><a class="heading-permalink" href="#conclusion-2-実験条件" aria-label="この見出しへのリンク">#</a>2. 実験条件</h2>
+<p>Round 2はBrowser、Cursor、OpenCode、Claude Desktop appの4種類の実行環境を使用しました。同じポータブルプロンプトとEvidence bundleを渡しましたが、UI、ファイル読込み、推論モード、ツール実装は統制されていません。</p>
+<p>したがって、本結果はモデルの純粋なAPI性能ではなく、モデル・設定・実行環境を含む実務的なレビュー成果の比較です。</p>
+<h2 id="conclusion-3-モデル評価"><a class="heading-permalink" href="#conclusion-3-モデル評価" aria-label="この見出しへのリンク">#</a>3. モデル評価</h2>
 <p>この課題では、ChatGPT 5.6 Sol Highが最もバランス良く、Sol XHighが最も網羅的、Sol Fastが最も高Precisionで簡潔でした。Gork 4.5 High FastとChatGPT 5.6 Luna XHighは、冪等性と製品範囲の補完に有効でした。</p>
 <p>ただし、最上位モデルでもGold Findingをすべて検出していません。モデル順位だけでレビュー品質を保証できません。</p>
-<h2 id="conclusion-3-プロンプト改善だけでは不十分"><a class="heading-permalink" href="#conclusion-3-プロンプト改善だけでは不十分" aria-label="この見出しへのリンク">#</a>3. プロンプト改善だけでは不十分</h2>
+<h2 id="conclusion-4-速度評価"><a class="heading-permalink" href="#conclusion-4-速度評価" aria-label="この見出しへのリンク">#</a>4. 速度評価</h2>
+<p>概算時間では、Sol Fastが約2分で90点、Sol Middleが約4分で91点でした。一次レビューの速度と精度のバランスは良好です。Sol Highは約7分、Sol XHighは約10分で、正本横断の難しいMajorまで検出しました。</p>
+<p>一方、最速のGemini 3.6 Flashは約1分で54点、最も時間を要したKimi K3は約18分で76点でした。実行時間とレビュー精度は単純比例しません。</p>
+<p>この時間は画面操作、Evidence読込み、ツール処理、回答表示を含む概算であり、厳密なAPI速度ベンチマークではありません。</p>
+<h2 id="conclusion-5-プロンプト改善だけでは不十分"><a class="heading-permalink" href="#conclusion-5-プロンプト改善だけでは不十分" aria-label="この見出しへのリンク">#</a>5. プロンプト改善だけでは不十分</h2>
 <p>Round 2では独立性、Evidence検証、Finding基準、重大度判断の指示を強化しました。出力品質は一部改善しましたが、同一モデル5組の平均点は1.8点の上昇にとどまり、正しいVerdict数は増えませんでした。</p>
 <p>プロンプトは必要ですが、モデル固有の横断推論能力を代替しません。</p>
-<h2 id="conclusion-4-単発レビューと多数決を避ける"><a class="heading-permalink" href="#conclusion-4-単発レビューと多数決を避ける" aria-label="この見出しへのリンク">#</a>4. 単発レビューと多数決を避ける</h2>
-<p>同じモデルでも実行ごとにVerdictが反転しました。また、16件中14件が同じMajorを見逃しました。</p>
-<p>したがって、単発の<code>READY</code>や単純多数決を最終ゲートにしてはいけません。</p>
-<h2 id="conclusion-5-推奨する運用"><a class="heading-permalink" href="#conclusion-5-推奨する運用" aria-label="この見出しへのリンク">#</a>5. 推奨する運用</h2>
+<h2 id="conclusion-6-単発レビューと多数決を避ける"><a class="heading-permalink" href="#conclusion-6-単発レビューと多数決を避ける" aria-label="この見出しへのリンク">#</a>6. 単発レビューと多数決を避ける</h2>
+<p>同じClaude Sonnet 5 Highでも、Browser実行は77点・NOT READY、Desktop app実行は58点・READYとなりました。所要時間はいずれも約12分でした。</p>
+<p>また、16件中14件が同じMajorを見逃しました。したがって、単発の<code>READY</code>や単純多数決を最終ゲートにしてはいけません。</p>
+<h2 id="conclusion-7-推奨する運用"><a class="heading-permalink" href="#conclusion-7-推奨する運用" aria-label="この見出しへのリンク">#</a>7. 推奨する運用</h2>
 <ul>
-<li>異種モデルで独立レビューする</li>
-<li>Findingを根本原因単位へ正規化する</li>
+<li>Sol FastまたはMiddleで一次レビューする</li>
+<li>Sol HighまたはXHighで高リスク仕様を再確認する</li>
+<li>GorkまたはLunaで冪等性・製品範囲を補完する</li>
+<li>異種モデル間のFindingを根本原因単位へ正規化する</li>
 <li>PrecisionとRecallを分けて評価する</li>
 <li>Major、Required fixes、Open approval items、Verdictの整合を確認する</li>
 <li>正本中の限定語と製品範囲は人間または独立Agentが最終確認する</li>
-<li>モデル名、モード、プロンプト版、Evidenceハッシュ、実行日を記録する</li>
+<li>モデル名、モード、実行環境、概算時間、プロンプト版、Evidenceハッシュ、実行日を記録する</li>
 </ul>
 <p>LLMレビューの価値は、1つのモデルへ正解を委ねることではありません。複数の不完全な観測を、再現可能な証拠と審理手順で統合することにあります。</p></div>
     </section>
 
     <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
       <h2 id="conclusion-plain-heading">合成結果の要約（わかりやすい説明）</h2>
-      <div class="prose"><h1 id="conclusion-plain-結論を短く説明すると"><a class="heading-permalink" href="#conclusion-plain-結論を短く説明すると" aria-label="この見出しへのリンク">#</a>結論を短く説明すると</h1>
-<h2 id="conclusion-plain-1-aiレビューは1回で決めない"><a class="heading-permalink" href="#conclusion-plain-1-aiレビューは1回で決めない" aria-label="この見出しへのリンク">#</a>1. AIレビューは1回で決めない</h2>
-<p>16回レビューしても、重大な問題を全部見つけたAIはありませんでした。半数は正しく不合格にできましたが、7件は誤って承認可能と判断しました。</p>
-<h2 id="conclusion-plain-2-上位モデルでも見逃す"><a class="heading-permalink" href="#conclusion-plain-2-上位モデルでも見逃す" aria-label="この見出しへのリンク">#</a>2. 上位モデルでも見逃す</h2>
-<p>今回もっとも良かったのはChatGPT 5.6 Sol Highでした。ただし、上位モデルもすべての問題を見つけたわけではありません。</p>
-<h2 id="conclusion-plain-3-同じモデルでも結果が変わる"><a class="heading-permalink" href="#conclusion-plain-3-同じモデルでも結果が変わる" aria-label="この見出しへのリンク">#</a>3. 同じモデルでも結果が変わる</h2>
-<p>同じClaude Sonnet 5 Highを2回動かすと、合格と不合格に分かれました。モデル名だけで結果の安定性は保証できません。</p>
-<h2 id="conclusion-plain-4-複数aiを役割分担させる"><a class="heading-permalink" href="#conclusion-plain-4-複数aiを役割分担させる" aria-label="この見出しへのリンク">#</a>4. 複数AIを役割分担させる</h2>
-<p>広く探すAI、誤検知を減らすAI、難しい論点を見るAIを分け、最後に指摘を根本原因ごとに整理します。</p>
-<p>重要な仕様では、単発の<code>READY</code>や多数決ではなく、証拠と審理手順を正本にすることが必要です。</p></div>
+      <div class="prose"><h1 id="conclusion-plain-llm仕様レビュー比較結論と実務での使い方"><a class="heading-permalink" href="#conclusion-plain-llm仕様レビュー比較結論と実務での使い方" aria-label="この見出しへのリンク">#</a>LLM仕様レビュー比較――結論と実務での使い方</h1>
+<h2 id="conclusion-plain-1-この実験で確認したこと"><a class="heading-permalink" href="#conclusion-plain-1-この実験で確認したこと" aria-label="この見出しへのリンク">#</a>1. この実験で確認したこと</h2>
+<p>同じ銀行システム仕様、同じ正本資料、同じレビュー指示を16件のLLM実行へ渡し、重大な欠陥をどこまで見つけられるか比較しました。</p>
+<p>最終的な仕様判定は<code>FAIL / NOT READY</code>です。Major Findingは4件ありましたが、根拠と重大度を含めて正しく不合格へ到達したレビューは16件中8件でした。</p>
+<h2 id="conclusion-plain-2-round-2の実行環境"><a class="heading-permalink" href="#conclusion-plain-2-round-2の実行環境" aria-label="この見出しへのリンク">#</a>2. Round 2の実行環境</h2>
+<table>
+<thead>
+<tr>
+<th>環境</th>
+<th>実行したモデル</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Browser</td>
+<td>ChatGPT 5.6 Sol High／XHigh／Middle／Fast、Luna XHigh、Gemini 3.6 Flash／Pro／Thinking、Claude Sonnet 5 High（browser）</td>
+</tr>
+<tr>
+<td>Cursor</td>
+<td>Gork 4.5 High Fast、Composer 2.5 Fast</td>
+</tr>
+<tr>
+<td>OpenCode</td>
+<td>Kimi K3、GLM 5.2 High、DeepSeek V4 Pro／Flash</td>
+</tr>
+<tr>
+<td>Claude Desktop app</td>
+<td>Claude Sonnet 5 High（通常）</td>
+</tr>
+</tbody>
+</table>
+<p>同じモデル名でも、実行環境やツールの違いによって結果が変わる可能性があります。本記事の点数は、モデル単体ではなく、その実行条件を含む一回の観測です。</p>
+<h2 id="conclusion-plain-3-点数速度用途の一覧"><a class="heading-permalink" href="#conclusion-plain-3-点数速度用途の一覧" aria-label="この見出しへのリンク">#</a>3. 点数・速度・用途の一覧</h2>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>点数</th>
+<th>概算時間</th>
+<th>この実験での位置づけ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ChatGPT 5.6 Sol High</td>
+<td>95</td>
+<td>約7分</td>
+<td>最もバランスが良い。最終レビュー向け</td>
+</tr>
+<tr>
+<td>ChatGPT 5.6 Sol XHigh</td>
+<td>92</td>
+<td>約10分</td>
+<td>最も網羅的。高リスク仕様向け</td>
+</tr>
+<tr>
+<td>ChatGPT 5.6 Sol Middle</td>
+<td>91</td>
+<td>約4分</td>
+<td>速度と精度のバランスが良い</td>
+</tr>
+<tr>
+<td>ChatGPT 5.6 Sol Fast</td>
+<td>90</td>
+<td>約2分</td>
+<td>高Precisionで高速。一次レビュー向け</td>
+</tr>
+<tr>
+<td>Gork 4.5 High Fast</td>
+<td>88</td>
+<td>約4分</td>
+<td>冪等性・製品範囲の補完に有効</td>
+</tr>
+<tr>
+<td>ChatGPT 5.6 Luna XHigh</td>
+<td>86</td>
+<td>約7分</td>
+<td>冪等性・管理機能の専門補完</td>
+</tr>
+<tr>
+<td>Claude Sonnet 5 High（browser）</td>
+<td>77</td>
+<td>約12分</td>
+<td>一部のAC・error code論点に強い</td>
+</tr>
+<tr>
+<td>Kimi K3</td>
+<td>76</td>
+<td>約18分</td>
+<td>正しいFAILには到達したが時間が長い</td>
+</tr>
+<tr>
+<td>Composer 2.5 Fast</td>
+<td>73</td>
+<td>約2分</td>
+<td>指摘は有用だがMajorを過小評価</td>
+</tr>
+<tr>
+<td>GLM 5.2 High</td>
+<td>62</td>
+<td>約5分</td>
+<td>部分検出にとどまりREADYを誤判定</td>
+</tr>
+<tr>
+<td>Claude Sonnet 5 High（通常）</td>
+<td>58</td>
+<td>約12分</td>
+<td>browser実行とVerdictが反転</td>
+</tr>
+<tr>
+<td>DeepSeek V4 Pro</td>
+<td>56</td>
+<td>約5分</td>
+<td>Precisionは改善したがRecall不足</td>
+</tr>
+<tr>
+<td>DeepSeek V4 Flash</td>
+<td>55</td>
+<td>約7分</td>
+<td>一部AC不足のみ検出</td>
+</tr>
+<tr>
+<td>Gemini 3.6 Flash</td>
+<td>54</td>
+<td>約1分</td>
+<td>最速だが主要根拠を多数見逃し</td>
+</tr>
+<tr>
+<td>Gemini 3.6 Pro</td>
+<td>52</td>
+<td>約4分</td>
+<td>冪等性の一部だけを検出</td>
+</tr>
+<tr>
+<td>Gemini 3.6 Thinking</td>
+<td>51</td>
+<td>約2分</td>
+<td>API設計寄りの改善へ偏った</td>
+</tr>
+</tbody>
+</table>
+<p>時間は手元で測った概算です。APIの純粋な推論時間ではなく、画面操作、資料読込み、ツール処理、回答表示を含む場合があります。厳密な速度ランキングではありません。</p>
+<h2 id="conclusion-plain-4-重要な発見"><a class="heading-permalink" href="#conclusion-plain-4-重要な発見" aria-label="この見出しへのリンク">#</a>4. 重要な発見</h2>
+<h3 id="conclusion-plain-上位モデルでも全部は見つからない"><a class="heading-permalink" href="#conclusion-plain-上位モデルでも全部は見つからない" aria-label="この見出しへのリンク">#</a>上位モデルでも全部は見つからない</h3>
+<p>今回の最上位モデルでも、Gold Findingをすべて検出していません。特に「解約後に許可する操作は2種類だけ」という限定は、16件中14件が見逃しました。</p>
+<h3 id="conclusion-plain-速さと精度は単純比例しない"><a class="heading-permalink" href="#conclusion-plain-速さと精度は単純比例しない" aria-label="この見出しへのリンク">#</a>速さと精度は単純比例しない</h3>
+<p>Sol Fastは約2分で90点でした。一方、約1分のGemini Flashは54点、約18分のKimi K3は76点です。長時間実行やThinking設定だけで品質が保証されるわけではありません。</p>
+<h3 id="conclusion-plain-同じモデルでも結論が変わる"><a class="heading-permalink" href="#conclusion-plain-同じモデルでも結論が変わる" aria-label="この見出しへのリンク">#</a>同じモデルでも結論が変わる</h3>
+<p>Claude Sonnet 5 Highは、Browserでは77点・NOT READY、Desktop appでは58点・READYでした。どちらも約12分です。モデル名だけでは再現性を保証できません。</p>
+<h3 id="conclusion-plain-多数決も安全ではない"><a class="heading-permalink" href="#conclusion-plain-多数決も安全ではない" aria-label="この見出しへのリンク">#</a>多数決も安全ではない</h3>
+<p>重大な欠陥を14件が見逃した例がありました。多数派が正しいとは限りません。重要なのは票数ではなく、正本に照らした根拠です。</p>
+<h2 id="conclusion-plain-5-実務で推奨する構成"><a class="heading-permalink" href="#conclusion-plain-5-実務で推奨する構成" aria-label="この見出しへのリンク">#</a>5. 実務で推奨する構成</h2>
+<h3 id="conclusion-plain-日常的な一次レビュー"><a class="heading-permalink" href="#conclusion-plain-日常的な一次レビュー" aria-label="この見出しへのリンク">#</a>日常的な一次レビュー</h3>
+<p>Sol FastまたはSol Middleを使います。短時間で高いPrecisionが得られ、明らかな不備を早期に絞り込めます。</p>
+<h3 id="conclusion-plain-高リスク仕様の最終レビュー"><a class="heading-permalink" href="#conclusion-plain-高リスク仕様の最終レビュー" aria-label="この見出しへのリンク">#</a>高リスク仕様の最終レビュー</h3>
+<p>Sol HighまたはSol XHighを追加します。別文書をまたぐ制約、限定語、製品範囲など、横断推論が必要な論点を確認します。</p>
+<h3 id="conclusion-plain-専門論点の補完"><a class="heading-permalink" href="#conclusion-plain-専門論点の補完" aria-label="この見出しへのリンク">#</a>専門論点の補完</h3>
+<p>GorkまたはLuna XHighで、冪等性、競合後再試行、利用者管理、役割権限などを確認します。</p>
+<h3 id="conclusion-plain-最終審理"><a class="heading-permalink" href="#conclusion-plain-最終審理" aria-label="この見出しへのリンク">#</a>最終審理</h3>
+<p>複数モデルの指摘をそのまま足し合わせず、同じ根本原因を統合します。正本の該当箇所、重大度、修正方針、最終Verdictの整合を人間または独立Agentが確認します。</p>
+<h2 id="conclusion-plain-6-最終結論"><a class="heading-permalink" href="#conclusion-plain-6-最終結論" aria-label="この見出しへのリンク">#</a>6. 最終結論</h2>
+<p>LLMレビューは有用ですが、1モデルの1回の回答を承認ゲートにしてはいけません。</p>
+<p>実務上の基本形は、<strong>高速な一次レビュー、高精度モデルによる再確認、専門モデルによる補完、根本原因単位の最終審理</strong>です。</p>
+<p>モデルの点数だけでなく、実行環境、所要時間、見逃した論点、誤検知、Verdictの整合まで記録することで、LLMレビューを再現可能な品質保証プロセスへ近づけられます。</p></div>
       <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
     </section>
 

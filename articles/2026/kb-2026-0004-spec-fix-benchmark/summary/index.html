@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>レビュー指摘を正しく直せるAIはどれか――14モデルの仕様修正ベンチマーク — 資料版 — amane AI Lab Knowledge Base</title>
-  <meta name="description" content="レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定してInvalidとなる提出が多く、Hard failなしの有効提出は2件だけだった。">
+  <meta name="description" content="レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定して公式には無効となる提出が多く、重大失格なしの有効提出は2件だけだった。">
   <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/summary/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="レビュー指摘を正しく直せるAIはどれか――14モデルの仕様修正ベンチマーク — 資料版">
-  <meta property="og:description" content="レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定してInvalidとなる提出が多く、Hard failなしの有効提出は2件だけだった。">
+  <meta property="og:description" content="レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定して公式には無効となる提出が多く、重大失格なしの有効提出は2件だけだった。">
   <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/summary/">
   <meta property="og:site_name" content="amane-ai-lab">
   <meta name="twitter:card" content="summary">
@@ -57,10 +57,10 @@
       <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol></ol></nav>
       <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
         <h1>まとめ</h1>
-<p>レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。</p>
-<p>14モデルのうちHard failなしの有効提出は2件だけだった。高い参考点を得ても、未承認の製品判断を仕様本文で確定した提出はInvalidとなった。</p>
-<p>対象箇所と正しい修正パターンが明確な局所修正は、高速・低コストモデルへ分担できる可能性がある。ただし、安価なモデルは修正後レビューを必須とし、中位以上でも変更箇所中心の軽量レビューを残す。レビュー強度はモデル価格だけでなく、修正範囲、承認境界、失敗時の影響に応じて決める。</p>
-<p>実務ではReview-only AgentとFix Agentを分け、修正成果物を別Agentが再レビューする。報告書だけでなく、仕様本文、Acceptance Criteria、トレーサビリティを確認し、承認境界の逸脱は平均点で相殺しない運用が必要である。</p>
+<p>レビューで問題を見つける能力と、指摘を安全に修正する能力は別です。</p>
+<p>14モデルのうち、重大失格なしの有効提出は2件だけでした。高い参考点を得ても、未承認の製品判断を仕様本文で確定した提出は、公式には無効となりました。</p>
+<p>実務では、問題を探すレビュー専任AIと、実際に直す修正担当AIを分けます。修正成果物は別のAIが再レビューし、報告書だけでなく、仕様本文、受け入れ条件、要件との対応関係を確認します。承認境界を越えた失敗は、他の高得点で相殺しません。</p>
+<p>局所的で明確な修正は安価なモデルへ任せられる可能性がありますが、安価なモデルは修正後レビューを必須とし、中位以上でも軽い確認を残すのが安全です。</p>
       </article>
     </div>
 

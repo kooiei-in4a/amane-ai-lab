@@ -1,29 +1,9 @@
 {
   "schemaVersion": 1,
   "items": [
-    {
-      "source": "synthesis",
-      "label": "結論",
-      "text": "レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。",
-      "href": "#analysis-heading"
-    },
-    {
-      "source": "benchmark",
-      "label": "正式結果",
-      "text": "14モデル中、Hard failなしの有効提出はLuna XHighとSol Highの2件だけだった。",
-      "href": "#agents-heading"
-    },
-    {
-      "source": "benchmark",
-      "label": "重要な失敗",
-      "text": "多くのモデルは報告書で承認待ちとしながら、仕様本文では未承認判断を確定した。",
-      "href": "#analysis-heading"
-    },
-    {
-      "source": "synthesis",
-      "label": "実務",
-      "text": "局所修正は安価なモデルへ分担できるが、安価なモデルは修正後レビュー必須、中位以上も軽量レビューを残す。",
-      "href": "#conclusion-heading"
-    }
+    {"source": "synthesis", "label": "結論", "text": "レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。", "href": "#analysis-heading"},
+    {"source": "benchmark", "label": "正式結果", "text": "14モデル中、重大失格なしの有効提出はLuna XHighとSol Highの2件だけだった。", "href": "#agents-heading"},
+    {"source": "benchmark", "label": "重要な失敗", "text": "多くのモデルは報告書で承認待ちとしながら、仕様本文では未承認判断を確定した。", "href": "#analysis-heading"},
+    {"source": "synthesis", "label": "実務", "text": "安価なモデルは修正後レビュー必須、中位以上も変更箇所中心の軽量レビューを残す。", "href": "#conclusion-heading"}
   ]
 }

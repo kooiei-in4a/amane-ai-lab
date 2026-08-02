@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>16件のLLM独立レビューで分かったこと――仕様レビュー精度とマルチモデル審理の実務 — 資料版 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="同一の製品仕様と正本資料を16件のLLMへ渡し、Round 1で確定したGold Findingに照らして再評価した。上位モデルでも重大な見逃しは残り、16件中、根拠と重大度を含めて正しくFAILへ到達したのは8件だった。単発レビューや多数決ではなく、異種モデルの独立レビューと根本原因単位の審理を組み合わせる必要がある。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/summary/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="16件のLLM独立レビューで分かったこと――仕様レビュー精度とマルチモデル審理の実務 — 資料版">
+  <meta property="og:description" content="同一の製品仕様と正本資料を16件のLLMへ渡し、Round 1で確定したGold Findingに照らして再評価した。上位モデルでも重大な見逃しは残り、16件中、根拠と重大度を含めて正しくFAILへ到達したのは8件だった。単発レビューや多数決ではなく、異種モデルの独立レビューと根本原因単位の審理を組み合わせる必要がある。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/summary/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="../../../../assets/css/site.css">
+</head>
+<body class="summary-doc-page">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane-ai-lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/">記事本文</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap summary-doc">
+    <header class="summary-doc-header panel">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0003</span>
+        <span class="pill">資料版</span>
+        <span>更新: 2026-08-02</span>
+      </p>
+      <h1>結論を短く説明すると</h1>
+      <p class="summary-doc-subtitle">合成結果を、わかりやすい言葉で短くまとめた資料版。</p>
+      <nav class="summary-source-links" aria-label="記事本文の関連セクション">
+        <p class="summary-source-links-label">記事本文の関連セクション</p>
+        <ul>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#background-heading">検討に至った背景</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#prompt-heading">調査プロンプト</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#agents-heading">AIエージェントの回答</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#analysis-heading">AI回答の合成</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#analysis-plain-heading">合成（わかりやすい説明）</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#conclusion-heading">要約</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#conclusion-plain-heading">要約（わかりやすい説明）</a></li>
+        </ul>
+      </nav>
+      <p class="summary-doc-nav">
+        <a class="btn btn-secondary" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/">← 記事本文へ戻る</a>
+      </p>
+    </header>
+
+    <div class="summary-doc-layout">
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol><li><a href="#section-1">1. AIレビューは1回で決めない</a></li><li><a href="#section-2">2. 上位モデルでも見逃す</a></li><li><a href="#section-3">3. 同じモデルでも結果が変わる</a></li><li><a href="#section-4">4. 複数AIを役割分担させる</a></li></ol></nav>
+      <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
+        <h1>結論を短く説明すると</h1>
+<h2 id="section-1">1. AIレビューは1回で決めない</h2>
+<p>16回レビューしても、重大な問題を全部見つけたAIはありませんでした。半数は正しく不合格にできましたが、7件は誤って承認可能と判断しました。</p>
+<h2 id="section-2">2. 上位モデルでも見逃す</h2>
+<p>今回もっとも良かったのはChatGPT 5.6 Sol Highでした。ただし、上位モデルもすべての問題を見つけたわけではありません。</p>
+<h2 id="section-3">3. 同じモデルでも結果が変わる</h2>
+<p>同じClaude Sonnet 5 Highを2回動かすと、合格と不合格に分かれました。モデル名だけで結果の安定性は保証できません。</p>
+<h2 id="section-4">4. 複数AIを役割分担させる</h2>
+<p>広く探すAI、誤検知を減らすAI、難しい論点を見るAIを分け、最後に指摘を根本原因ごとに整理します。</p>
+<p>重要な仕様では、単発の<code>READY</code>や多数決ではなく、証拠と審理手順を正本にすることが必要です。</p>
+      </article>
+    </div>
+
+    <footer class="summary-doc-footer panel">
+      <p class="note">この資料は記事の「合成結果の要約（わかりやすい説明）」（<code>conclusion-plain.md</code>）から自動生成しています。</p>
+      <p>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#background-heading">背景</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#prompt-heading">プロンプト</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#agents-heading">AI回答</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#analysis-heading">合成</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#analysis-plain-heading">合成（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#conclusion-heading">要約</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/#conclusion-plain-heading">要約（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

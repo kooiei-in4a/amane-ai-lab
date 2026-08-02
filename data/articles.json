@@ -3,6 +3,29 @@
   "generatedFrom": "content/articles",
   "articles": [
     {
+      "id": "KB-2026-0003",
+      "slug": "llm-review-benchmark",
+      "title": "16件のLLM独立レビューで分かったこと――仕様レビュー精度とマルチモデル審理の実務",
+      "description": "同一の製品仕様と正本資料を16件のLLMへ渡し、Round 1で確定したGold Findingに照らして再評価した。上位モデルでも重大な見逃しは残り、16件中、根拠と重大度を含めて正しくFAILへ到達したのは8件だった。単発レビューや多数決ではなく、異種モデルの独立レビューと根本原因単位の審理を組み合わせる必要がある。",
+      "status": "published",
+      "publishedAt": "2026-08-02",
+      "updatedAt": "2026-08-02",
+      "lastVerifiedAt": "2026-08-02",
+      "tags": [
+        "LLM",
+        "AIレビュー",
+        "仕様レビュー",
+        "ベンチマーク",
+        "マルチエージェント",
+        "品質保証"
+      ],
+      "agents": [
+        "16-model benchmark"
+      ],
+      "url": "/articles/2026/kb-2026-0003-llm-review-benchmark/",
+      "year": "2026"
+    },
+    {
       "id": "KB-2026-0002",
       "slug": "china-ai-api-evaluation",
       "title": "中国製AIモデルAPIを日本から導入する前に確認すべきこと――3つのAI調査の比較と検証計画",

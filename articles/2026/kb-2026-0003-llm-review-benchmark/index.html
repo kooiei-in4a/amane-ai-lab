@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>16件のLLM独立レビューで分かったこと――仕様レビュー精度とマルチモデル審理の実務 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="同一の製品仕様と正本資料を16件のLLMへ渡し、Round 1で確定したGold Findingに照らして再評価した。上位モデルでも重大な見逃しは残り、16件中、根拠と重大度を含めて正しくFAILへ到達したのは8件だった。単発レビューや多数決ではなく、異種モデルの独立レビューと根本原因単位の審理を組み合わせる必要がある。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="16件のLLM独立レビューで分かったこと――仕様レビュー精度とマルチモデル審理の実務">
+  <meta property="og:description" content="同一の製品仕様と正本資料を16件のLLMへ渡し、Round 1で確定したGold Findingに照らして再評価した。上位モデルでも重大な見逃しは残り、16件中、根拠と重大度を含めて正しくFAILへ到達したのは8件だった。単発レビューや多数決ではなく、異種モデルの独立レビューと根本原因単位の審理を組み合わせる必要がある。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0003-llm-review-benchmark/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="16件のLLM独立レビューで分かったこと――仕様レビュー精度とマルチモデル審理の実務">
+  <meta name="twitter:description" content="同一の製品仕様と正本資料を16件のLLMへ渡し、Round 1で確定したGold Findingに照らして再評価した。上位モデルでも重大な見逃しは残り、16件中、根拠と重大度を含めて正しくFAILへ到達したのは8件だった。単発レビューや多数決ではなく、異種モデルの独立レビューと根本原因単位の審理を組み合わせる必要がある。">
+  <link rel="stylesheet" href="../../../assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane-ai-lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap article-page">
+    <header class="article-header">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0003</span>
+        <span class="pill status-published">published</span>
+        <span>公開: 2026-08-02</span>
+        <span>最終確認: 2026-08-02</span>
+        <span>更新: 2026-08-02</span>
+      </p>
+      <h1>16件のLLM独立レビューで分かったこと――仕様レビュー精度とマルチモデル審理の実務</h1>
+      <p class="article-summary">同一の製品仕様と正本資料を16件のLLMへ渡し、Round 1で確定したGold Findingに照らして再評価した。上位モデルでも重大な見逃しは残り、16件中、根拠と重大度を含めて正しくFAILへ到達したのは8件だった。単発レビューや多数決ではなく、異種モデルの独立レビューと根本原因単位の審理を組み合わせる必要がある。</p>
+      <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
+      <ul class="tag-list"><li>LLM</li><li>AIレビュー</li><li>仕様レビュー</li><li>ベンチマーク</li><li>マルチエージェント</li><li>品質保証</li></ul>
+    </header>
+
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-benchmark">実験</span> <a class="tldr-link" href="#background-heading">同一仕様と同一Evidenceを使い、16件のLLM独立レビューを比較した。</a></li><li><span class="tldr-source tldr-source-adjudication">判定</span> <a class="tldr-link" href="#conclusion-heading">最終仕様判定はFAIL / NOT READYで、Major Findingは4件だった。</a></li><li><span class="tldr-source tldr-source-benchmark">精度</span> <a class="tldr-link" href="#analysis-heading">根拠と重大度を含めて正しくFAILへ到達したのは16件中8件だった。</a></li><li><span class="tldr-source tldr-source-benchmark">上位</span> <a class="tldr-link" href="#agents-heading">この課題ではSol Highが最もバランス良く、Sol XHighが最も網羅的だった。</a></li><li><span class="tldr-source tldr-source-review">限界</span> <a class="tldr-link" href="#analysis-heading">同じモデルでも点数とVerdictが大きく変わり、単発結果は安定しなかった。</a></li><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#conclusion-heading">異種モデルの独立レビューと、根本原因単位の人間審理を組み合わせる必要がある。</a></li></ol></section>
+    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-16-model-benchmark">16-model benchmark</a><ul><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-最終仕様判定">最終仕様判定</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-モデル別総合順位">モデル別総合順位</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-verdictの内訳">Verdictの内訳</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-gold-findingの検出状況">Gold Findingの検出状況</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-round-1とround-2の比較">Round 1とRound 2の比較</a></li><li class="toc-item toc-level-2"><a href="#agent-16-model-benchmark-同一モデルの再現性">同一モデルの再現性</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
+
+    <section class="panel" aria-labelledby="background-heading">
+      <h2 id="background-heading">検討に至った背景</h2>
+      <div class="prose"><h1 id="background-検討に至った背景"><a class="heading-permalink" href="#background-検討に至った背景" aria-label="この見出しへのリンク">#</a>検討に至った背景</h1>
+<p>AIエージェントへ仕様書やPull Requestのレビューを依頼すると、もっともらしい指摘は多数得られます。しかし、実務で重要なのは指摘数ではありません。</p>
+<ul>
+<li>本当に重要な欠陥を見つけられたか</li>
+<li>正本にない改善案を欠陥として扱っていないか</li>
+<li>MajorをMinorへ過小評価していないか</li>
+<li><code>READY</code>や<code>FAIL</code>の結論が指摘内容と整合しているか</li>
+<li>同じモデルを再実行したとき、同じ結論になるか</li>
+</ul>
+<p>これらを確認するため、最小銀行システムの製品仕様書を固定対象とし、複数のLLMへ独立レビューを依頼しました。</p>
+<h2 id="background-実験の特徴"><a class="heading-permalink" href="#background-実験の特徴" aria-label="この見出しへのリンク">#</a>実験の特徴</h2>
+<p>対象は1つの仕様書、1つの固定Base SHA、1つの固定Head SHAです。レビュー対象や正本を途中で変更せず、各モデルへ同じEvidence bundleを渡しました。</p>
+<p>Round 1では複数モデルの指摘を人間が審理し、根本原因単位のGold Findingを確定しました。Round 2ではプロンプトを改善し、外部検索、他モデル結果、Gold Finding、過去の評価結果をモデルへ渡さず、16件の独立レビューを再実行しました。</p>
+<p>この構成により、単なるモデル人気や自己申告ではなく、同一課題に対するFinding Precision、Gold Finding Recall、重大度判断、根拠、修正案、Scope disciplineを比較できます。</p>
+<h2 id="background-公開データ"><a class="heading-permalink" href="#background-公開データ" aria-label="この見出しへのリンク">#</a>公開データ</h2>
+<p>実験データは次のリポジトリに保存しています。</p>
+<ul>
+<li>Round 1: <code>kooiei-in4a/minimal-bank-system/docs/reviews/spec-review-001/</code></li>
+<li>Round 2: <code>kooiei-in4a/minimal-bank-system/docs/reviews/spec-review-002/</code></li>
+<li>対象仕様: <code>docs/specs/bank-system-specification.md</code></li>
+</ul>
+<p>Round 2には16件の生レビュー、Finding審理、モデル評価、Round 1との比較、最終統合分析が含まれます。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">調査プロンプト</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn" id="copy-prompt" data-copy-target="prompt-text">プロンプトをコピー</button>
+        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      </div>
+      <details class="prompt-details">
+        <summary>プロンプト全文を表示する</summary>
+        <pre id="prompt-text" class="prompt-block"><code>この公開記事では、次の固定条件で実施したLLM独立レビュー・ベンチマークを要約する。
+
+目的:
+- 同じ製品仕様と同じ正本資料を複数LLMへ渡したとき、重大な仕様欠陥をどこまで検出できるかを比較する。
+- 指摘数ではなく、Finding Precision、Gold Finding Recall、重大度、根拠、修正案、Scope disciplineを評価する。
+- Round 1とRound 2で同じモデルの変化を比較する。
+- 同一モデルの再実行差も確認する。
+
+固定レビュー対象:
+- Repository: kooiei-in4a/minimal-bank-system
+- PR: #9
+- Base SHA: dedbcaf31fd4c40b966facd1829c7535b8d0e4ba
+- Head SHA: 4944fb22806526f9e92dc47b516b57431c6c7f0a
+- Target: docs/specs/bank-system-specification.md
+
+独立性条件:
+- 外部Web、現在のGitHub状態、他モデルのレビュー、Gold Finding、Round 1の評価結果を参照しない。
+- review-prompt.mdとreview-evidence-bundle.mdだけを使用する。
+- 対象仕様、Issue、PR、ゲート、リポジトリを変更しない。
+
+公開記事では、個々の長いレビュー全文を転載せず、固定Gold Findingへの照合結果、モデル別評価、Round比較、再現性、実務上の推奨を再構成する。
+
+完全な実行プロンプトとEvidence bundleは、minimal-bank-systemリポジトリのspec-review-002成果物を参照する。
+</code></pre>
+      </details>
+    </section>
+
+    <section class="panel" aria-labelledby="agents-heading">
+      <h2 id="agents-heading">AIエージェントの回答</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
+        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
+      </div>
+      <div id="agent-responses"><section class="agent-response" data-agent="16-model benchmark">
+  <details id="agent-16-model-benchmark">
+    <summary>
+      <span class="agent-name">16-model benchmark</span>
+      <span class="agent-meta">ChatGPT 5.6 / Claude Sonnet 5 / Gemini 3.6 / DeepSeek V4 / GLM 5.2 / Gork 4.5 / Kimi K3 / Composer 2.5 / 2026-08-02 / integrity=edited</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>なし</dd></div>
+      <div><dt>添付</dt><dd>あり</dd></div>
+      <div><dt>完全性</dt><dd>edited</dd></div>
+    </dl>
+    <p class="agent-notes">16件の独立レビュー原文を、Round 1で確定したGold Findingへ照合した公開用要約。個別レビュー全文、Finding審理マトリクス、モデル評価、Round比較は参照先リポジトリに保存している。</p>
+    <div class="agent-body prose"><h1 id="agent-16-model-benchmark-16件のllmレビュー結果"><a class="heading-permalink" href="#agent-16-model-benchmark-16件のllmレビュー結果" aria-label="この見出しへのリンク">#</a>16件のLLMレビュー結果</h1>
+<h2 id="agent-16-model-benchmark-最終仕様判定"><a class="heading-permalink" href="#agent-16-model-benchmark-最終仕様判定" aria-label="この見出しへのリンク">#</a>最終仕様判定</h2>
+<p>16件のレビューを統合しても、仕様そのものの最終結論はRound 1から変わりませんでした。</p>
+<ul>
+<li>Verdict: <code>FAIL</code></li>
+<li>Ready recommendation: <code>NOT READY</code></li>
+<li>Blocker: 0</li>
+<li>Major: 4</li>
+<li>Minor: 5</li>
+<li>Nit: 2</li>
+</ul>
+<p>Majorは次の4件です。</p>
+<ol>
+<li>解約後の口座基本情報参照・現在残高直接参照が未定義</li>
+<li>必須Acceptance CriteriaとREQ追跡が実質的に不足</li>
+<li>冪等性の結果固定と競合後再試行の外部契約が未確定</li>
+<li>利用者管理・役割権限管理のv0.1.0製品範囲が未定義</li>
+</ol>
+<h2 id="agent-16-model-benchmark-モデル別総合順位"><a class="heading-permalink" href="#agent-16-model-benchmark-モデル別総合順位" aria-label="この見出しへのリンク">#</a>モデル別総合順位</h2>
+<table>
+<thead>
+<tr>
+<th>順位</th>
+<th>モデル</th>
+<th>点数</th>
+<th>Verdict評価</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>ChatGPT 5.6 Sol High</td>
+<td>95</td>
+<td>正しい</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ChatGPT 5.6 Sol XHigh</td>
+<td>92</td>
+<td>正しい</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ChatGPT 5.6 Sol Middle</td>
+<td>91</td>
+<td>正しい</td>
+</tr>
+<tr>
+<td>4</td>
+<td>ChatGPT 5.6 Sol Fast</td>
+<td>90</td>
+<td>正しい</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Gork 4.5 High Fast</td>
+<td>88</td>
+<td>正しい</td>
+</tr>
+<tr>
+<td>6</td>
+<td>ChatGPT 5.6 Luna XHigh</td>
+<td>86</td>
+<td>正しい</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Claude Sonnet 5 High（browser実行）</td>
+<td>77</td>
+<td>正しい</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Kimi K3</td>
+<td>76</td>
+<td>正しい</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Composer 2.5 Fast</td>
+<td>73</td>
+<td>不正確</td>
+</tr>
+<tr>
+<td>10</td>
+<td>GLM 5.2 High</td>
+<td>62</td>
+<td>不正確</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Claude Sonnet 5 High（通常実行）</td>
+<td>58</td>
+<td>不正確</td>
+</tr>
+<tr>
+<td>12</td>
+<td>DeepSeek V4 Pro</td>
+<td>56</td>
+<td>不正確</td>
+</tr>
+<tr>
+<td>13</td>
+<td>DeepSeek V4 Flash</td>
+<td>55</td>
+<td>不正確</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Gemini 3.6 Flash</td>
+<td>54</td>
+<td>結論のみ正しい</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Gemini 3.6 Pro</td>
+<td>52</td>
+<td>不正確</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Gemini 3.6 Thinking</td>
+<td>51</td>
+<td>不正確</td>
+</tr>
+</tbody>
+</table>
+<p>点数は、この固定課題に対する手動審理結果です。モデルの一般性能ランキングではありません。</p>
+<h2 id="agent-16-model-benchmark-verdictの内訳"><a class="heading-permalink" href="#agent-16-model-benchmark-verdictの内訳" aria-label="この見出しへのリンク">#</a>Verdictの内訳</h2>
+<ul>
+<li>根拠と重大度を含めて正しい<code>FAIL / NOT READY</code>: 8件</li>
+<li>結論だけ<code>FAIL</code>で、主要根拠または重大度が不正確: 1件</li>
+<li>誤って<code>READY FOR KOO APPROVAL</code>: 7件</li>
+</ul>
+<p>半数のレビューは、Majorが残る仕様を承認可能と判断しました。</p>
+<h2 id="agent-16-model-benchmark-gold-findingの検出状況"><a class="heading-permalink" href="#agent-16-model-benchmark-gold-findingの検出状況" aria-label="この見出しへのリンク">#</a>Gold Findingの検出状況</h2>
+<table>
+<thead>
+<tr>
+<th>Finding</th>
+<th>Full</th>
+<th>Partial</th>
+<th>Miss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>解約後参照</td>
+<td>2</td>
+<td>0</td>
+<td>14</td>
+</tr>
+<tr>
+<td>AC・実質トレーサビリティ</td>
+<td>6</td>
+<td>8</td>
+<td>2</td>
+</tr>
+<tr>
+<td>冪等性・競合後再試行</td>
+<td>6</td>
+<td>4</td>
+<td>6</td>
+</tr>
+<tr>
+<td>利用者・役割管理範囲</td>
+<td>6</td>
+<td>1</td>
+<td>9</td>
+</tr>
+<tr>
+<td>error code原因対応</td>
+<td>4</td>
+<td>4</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Audit Log／障害ログ</td>
+<td>4</td>
+<td>1</td>
+<td>11</td>
+</tr>
+<tr>
+<td>ADR文言の方式先取り</td>
+<td>1</td>
+<td>0</td>
+<td>15</td>
+</tr>
+<tr>
+<td>取引履歴0件</td>
+<td>1</td>
+<td>0</td>
+<td>15</td>
+</tr>
+<tr>
+<td>§7.3と未決事項の矛盾</td>
+<td>3</td>
+<td>3</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>もっとも見つかりにくかったMajorは、正本中の「解約後に許可する操作は、顧客情報参照と取引履歴閲覧のみ」という限定でした。明確に検出したのはSol HighとSol XHighだけです。</p>
+<h2 id="agent-16-model-benchmark-round-1とround-2の比較"><a class="heading-permalink" href="#agent-16-model-benchmark-round-1とround-2の比較" aria-label="この見出しへのリンク">#</a>Round 1とRound 2の比較</h2>
+<p>同一モデル・同一モードで比較できた5組は次のとおりです。</p>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>Round 1</th>
+<th>Round 2</th>
+<th>差分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kimi K3</td>
+<td>80</td>
+<td>76</td>
+<td>-4</td>
+</tr>
+<tr>
+<td>Composer 2.5 Fast</td>
+<td>78</td>
+<td>73</td>
+<td>-5</td>
+</tr>
+<tr>
+<td>Gork 4.5 High Fast</td>
+<td>76</td>
+<td>88</td>
+<td>+12</td>
+</tr>
+<tr>
+<td>GLM 5.2 High</td>
+<td>66</td>
+<td>62</td>
+<td>-4</td>
+</tr>
+<tr>
+<td>DeepSeek V4 Pro</td>
+<td>46</td>
+<td>56</td>
+<td>+10</td>
+</tr>
+</tbody>
+</table>
+<p>平均は69.2から71.0へ上昇しましたが、正しいVerdict数は2件から2件のままでした。プロンプト改善だけでは、主要な見逃しを安定して解消できませんでした。</p>
+<h2 id="agent-16-model-benchmark-同一モデルの再現性"><a class="heading-permalink" href="#agent-16-model-benchmark-同一モデルの再現性" aria-label="この見出しへのリンク">#</a>同一モデルの再現性</h2>
+<p>Claude Sonnet 5 Highは同じRound 2で2回実行しました。</p>
+<table>
+<thead>
+<tr>
+<th>実行</th>
+<th>点数</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通常実行</td>
+<td>58</td>
+<td>READY</td>
+</tr>
+<tr>
+<td>browser実行</td>
+<td>77</td>
+<td>NOT READY</td>
+</tr>
+</tbody>
+</table>
+<p>同じモデルラベルでも19点差があり、Verdictが反転しました。実行環境、サンプリング、読み取り順、ツール利用などの影響をモデル能力と分離できないため、単発結果を確定判定に使うべきではありません。</p></div>
+  </details>
+</section></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">AI回答の合成</h2>
+      <div class="prose"><h1 id="analysis-16件のレビューから何が分かったか"><a class="heading-permalink" href="#analysis-16件のレビューから何が分かったか" aria-label="この見出しへのリンク">#</a>16件のレビューから何が分かったか</h1>
+<h2 id="analysis-1-強いモデルでもすべての重大欠陥は拾えない"><a class="heading-permalink" href="#analysis-1-強いモデルでもすべての重大欠陥は拾えない" aria-label="この見出しへのリンク">#</a>1. 強いモデルでも、すべての重大欠陥は拾えない</h2>
+<p>上位モデルは、冪等性、権限管理、Acceptance Criteriaなど複数節を横断する論点に強い傾向を示しました。しかし、最上位モデルでも全Gold Findingを完全には検出していません。</p>
+<p>特に見逃されやすかったのは、仕様書の長い節に埋もれた細かな表現ではなく、上位正本にある限定語でした。</p>
+<blockquote>
+<p>解約後に許可する操作は、顧客情報参照と取引履歴閲覧のみ</p>
+</blockquote>
+<p>この「のみ」を、別の権限表へ正しく適用できたレビューは16件中2件でした。モデルは表やAcceptance Criteriaの欠落には反応しやすい一方、離れた正本間の限定関係を保持することが苦手です。</p>
+<h2 id="analysis-2-finding数は品質指標にならない"><a class="heading-permalink" href="#analysis-2-finding数は品質指標にならない" aria-label="この見出しへのリンク">#</a>2. Finding数は品質指標にならない</h2>
+<p>多くのFindingを出したレビューが高得点とは限りません。</p>
+<ul>
+<li>同じ根本原因を複数のFindingへ分割する</li>
+<li>既知の承認事項を新規Majorとして再報告する</li>
+<li>API設計やDB設計の選択を仕様欠陥として扱う</li>
+<li>一般的なベストプラクティスを正本より優先する</li>
+<li>本文に存在する契約を「欠落」と誤認する</li>
+</ul>
+<p>このような指摘は、レビューを長くしますが、意思決定の品質を上げません。今回の採点では、Recallと同じ程度にPrecisionとScope disciplineを重視しました。</p>
+<h2 id="analysis-3-正しいfindingでも重大度を誤る"><a class="heading-permalink" href="#analysis-3-正しいfindingでも重大度を誤る" aria-label="この見出しへのリンク">#</a>3. 正しいFindingでも重大度を誤る</h2>
+<p>Composer 2.5 Fastなどは、冪等性や監査ログの問題を部分的に捉えていました。しかし、外部挙動が分岐する問題をMinorとし、最終的に<code>READY</code>と判定しました。</p>
+<p>レビューの実務では、Finding本文だけでなく、次の整合を確認する必要があります。</p>
+<ul>
+<li>Findingの重大度</li>
+<li>Required fixes</li>
+<li>Open approval items</li>
+<li>Verdict</li>
+<li>Ready recommendation</li>
+</ul>
+<p>Majorを報告しながら<code>READY</code>とする、または新規の重要判断が必要なのに承認可能とする出力は、そのままゲート判定へ使えません。</p>
+<h2 id="analysis-4-プロンプト改善の効果には限界がある"><a class="heading-permalink" href="#analysis-4-プロンプト改善の効果には限界がある" aria-label="この見出しへのリンク">#</a>4. プロンプト改善の効果には限界がある</h2>
+<p>Round 2では、次を明示しました。</p>
+<ul>
+<li>正本を先に読み、PR本文の主張を根拠にしない</li>
+<li>Findingにしないものを定義する</li>
+<li>Gold Findingや他モデル結果を参照しない</li>
+<li>Majorを発見してもレビューを途中終了しない</li>
+<li>新規製品判断と技術設計判断を区別する</li>
+<li>Evidenceの欠落・切断時は停止する</li>
+</ul>
+<p>これにより、出力形式、独立性、Finding水増しは改善しました。一方、同一5モデルの平均点上昇は1.8点で、正しいVerdict数は増えませんでした。</p>
+<p>プロンプトはレビュープロセスを整えますが、モデル固有の読解力、長文保持、横断推論、重大度判断を置き換えません。</p>
+<h2 id="analysis-5-同じモデルでも結果は安定しない"><a class="heading-permalink" href="#analysis-5-同じモデルでも結果は安定しない" aria-label="この見出しへのリンク">#</a>5. 同じモデルでも結果は安定しない</h2>
+<p>Claude Sonnet 5 Highの2実行は、同じEvidenceと同じレビュー目的でも結果が大きく異なりました。</p>
+<p>通常実行は顧客更新や表示項目の細部を指摘して<code>READY</code>とし、browser実行は振込同時実行AC、エラー原因境界、未決事項の矛盾を検出して<code>NOT READY</code>としました。</p>
+<p>これは「browserを使えば必ず良くなる」という証明ではありません。むしろ、モデル名だけでは結果を再現できないことを示します。</p>
+<p>記録すべきなのはモデル名だけではなく、少なくとも次です。</p>
+<ul>
+<li>実行サービスと推論モード</li>
+<li>プロンプト版</li>
+<li>Evidence版とハッシュ</li>
+<li>実行日</li>
+<li>Tool利用可否</li>
+<li>出力全文</li>
+<li>審理ルール</li>
+</ul>
+<h2 id="analysis-6-多数決も正解ではない"><a class="heading-permalink" href="#analysis-6-多数決も正解ではない" aria-label="この見出しへのリンク">#</a>6. 多数決も正解ではない</h2>
+<p>16件のうち7件が誤って<code>READY</code>と判定しました。単純多数決ならFAIL側が勝ちますが、課題が変われば逆転する可能性があります。</p>
+<p>また、同じ誤解を複数モデルが共有する場合、多数決は誤りを増幅します。今回も、正本中の限定語を14件が見逃しました。</p>
+<p>必要なのはVerdictの票数ではなく、Findingを根本原因へ正規化し、各Findingについて次を審理することです。</p>
+<ol>
+<li>正本に要求されているか</li>
+<li>現在の仕様に実際に欠落・矛盾があるか</li>
+<li>外部挙動や製品範囲が分岐するか</li>
+<li>重大度は妥当か</li>
+<li>修正案が正本を変更していないか</li>
+</ol>
+<h2 id="analysis-7-実務で推奨するレビュー構成"><a class="heading-permalink" href="#analysis-7-実務で推奨するレビュー構成" aria-label="この見出しへのリンク">#</a>7. 実務で推奨するレビュー構成</h2>
+<h3 id="analysis-精度を優先する場合"><a class="heading-permalink" href="#analysis-精度を優先する場合" aria-label="この見出しへのリンク">#</a>精度を優先する場合</h3>
+<ol>
+<li>高Recallモデルで全体レビューする</li>
+<li>高Precisionモデルで過剰Findingを削る</li>
+<li>冪等性、権限、並行処理など専門論点を別モデルで確認する</li>
+<li>モデル名を隠してFindingを根本原因単位で審理する</li>
+<li>最終的に人間または独立Agentが正本の限定語と未決事項を確認する</li>
+</ol>
+<p>今回のモデルでは、Sol HighまたはSol XHighを全体レビュー、Sol Fastを収束判定、GorkまたはLuna XHighを冪等性・製品範囲の補完に使う構成が有効でした。</p>
+<h3 id="analysis-コストと速度を優先する場合"><a class="heading-permalink" href="#analysis-コストと速度を優先する場合" aria-label="この見出しへのリンク">#</a>コストと速度を優先する場合</h3>
+<ol>
+<li>高速・高Precisionモデルで一次レビュー</li>
+<li>FAIL、製品範囲変更、金銭・権限・並行処理を含む場合だけ上位モデルへ昇格</li>
+<li>単発の<code>READY</code>を採用せず、最低1つの異種モデルで再確認</li>
+<li>Major候補だけを人間が審理する</li>
+</ol>
+<h2 id="analysis-8-この実験の限界"><a class="heading-permalink" href="#analysis-8-この実験の限界" aria-label="この見出しへのリンク">#</a>8. この実験の限界</h2>
+<p>この結果は1つの仕様レビュー課題に基づきます。一般的なモデルランキングではありません。</p>
+<ul>
+<li>対象は日本語の製品仕様書</li>
+<li>正本、Issue、決定コメント、Acceptance Criteriaの横断照合が中心</li>
+<li>コードレビュー、脆弱性診断、数学、一般知識では順位が変わり得る</li>
+<li>各設定の実行回数は少ない</li>
+<li>手動審理にも判断誤差がある</li>
+<li>モデル名は実行サービスが付けたラベルで、基盤内部IDを検証できない場合がある</li>
+</ul>
+<p>したがって、点数そのものより、評価方法と運用上の示唆を再利用するのが適切です。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-plain-heading">
+      <h2 id="analysis-plain-heading">AI回答の合成（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="analysis-plain-16件のレビュー結果をわかりやすく説明すると"><a class="heading-permalink" href="#analysis-plain-16件のレビュー結果をわかりやすく説明すると" aria-label="この見出しへのリンク">#</a>16件のレビュー結果を、わかりやすく説明すると</h1>
+<h2 id="analysis-plain-aiを増やせば自動的に正しくなるわけではない"><a class="heading-permalink" href="#analysis-plain-aiを増やせば自動的に正しくなるわけではない" aria-label="この見出しへのリンク">#</a>AIを増やせば自動的に正しくなるわけではない</h2>
+<p>同じ仕様書を16回レビューしてもらいましたが、重大な問題をすべて見つけたAIはありませんでした。</p>
+<p>見つけやすい問題と、見つけにくい問題があります。表にテスト項目が足りないことは多くのAIが気付きました。一方で、別々の文書に書かれたルールを組み合わせて、「この操作は許可されない」と判断できたAIは少数でした。</p>
+<h2 id="analysis-plain-長い回答が良い回答とは限らない"><a class="heading-permalink" href="#analysis-plain-長い回答が良い回答とは限らない" aria-label="この見出しへのリンク">#</a>長い回答が良い回答とは限らない</h2>
+<p>たくさん指摘するAIの中には、同じ問題を何件にも分けたり、単なる改善案を重大な欠陥として扱ったりするものがありました。</p>
+<p>レビューでは、指摘数より次が重要です。</p>
+<ul>
+<li>本当に仕様や正本に反しているか</li>
+<li>重要度は正しいか</li>
+<li>修正案が勝手に製品方針を変えていないか</li>
+<li>最終的な合格・不合格判定と指摘内容が合っているか</li>
+</ul>
+<h2 id="analysis-plain-同じaiでも結果が変わる"><a class="heading-permalink" href="#analysis-plain-同じaiでも結果が変わる" aria-label="この見出しへのリンク">#</a>同じAIでも結果が変わる</h2>
+<p>同じClaude Sonnet 5 Highを2回実行したところ、一方は合格可能、もう一方は不合格と判断しました。点数も19点違いました。</p>
+<p>そのため、「このモデルなら毎回同じ品質」とは考えない方が安全です。</p>
+<h2 id="analysis-plain-実務では役割を分ける"><a class="heading-permalink" href="#analysis-plain-実務では役割を分ける" aria-label="この見出しへのリンク">#</a>実務では役割を分ける</h2>
+<p>1つのAIへすべて任せるより、役割を分けた方が安定します。</p>
+<ul>
+<li>広く問題を探すAI</li>
+<li>誤検知を減らすAI</li>
+<li>冪等性や権限など難しい論点を見るAI</li>
+<li>最後に根拠を確認する人間または独立Agent</li>
+</ul>
+<p>重要な仕様では、1回の<code>READY</code>判定だけで次工程へ進めない運用が必要です。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">合成結果の要約</h2>
+      <div class="prose"><h1 id="conclusion-結論"><a class="heading-permalink" href="#conclusion-結論" aria-label="この見出しへのリンク">#</a>結論</h1>
+<h2 id="conclusion-1-最終判定"><a class="heading-permalink" href="#conclusion-1-最終判定" aria-label="この見出しへのリンク">#</a>1. 最終判定</h2>
+<p>同一仕様を16件のLLMへ独立レビューさせた結果、最終判定は<code>FAIL / NOT READY</code>でした。Majorは4件残っており、16件中、根拠と重大度を含めて正しくFAILへ到達したのは8件です。</p>
+<h2 id="conclusion-2-モデル評価"><a class="heading-permalink" href="#conclusion-2-モデル評価" aria-label="この見出しへのリンク">#</a>2. モデル評価</h2>
+<p>この課題では、ChatGPT 5.6 Sol Highが最もバランス良く、Sol XHighが最も網羅的、Sol Fastが最も高Precisionで簡潔でした。Gork 4.5 High FastとChatGPT 5.6 Luna XHighは、冪等性と製品範囲の補完に有効でした。</p>
+<p>ただし、最上位モデルでもGold Findingをすべて検出していません。モデル順位だけでレビュー品質を保証できません。</p>
+<h2 id="conclusion-3-プロンプト改善だけでは不十分"><a class="heading-permalink" href="#conclusion-3-プロンプト改善だけでは不十分" aria-label="この見出しへのリンク">#</a>3. プロンプト改善だけでは不十分</h2>
+<p>Round 2では独立性、Evidence検証、Finding基準、重大度判断の指示を強化しました。出力品質は一部改善しましたが、同一モデル5組の平均点は1.8点の上昇にとどまり、正しいVerdict数は増えませんでした。</p>
+<p>プロンプトは必要ですが、モデル固有の横断推論能力を代替しません。</p>
+<h2 id="conclusion-4-単発レビューと多数決を避ける"><a class="heading-permalink" href="#conclusion-4-単発レビューと多数決を避ける" aria-label="この見出しへのリンク">#</a>4. 単発レビューと多数決を避ける</h2>
+<p>同じモデルでも実行ごとにVerdictが反転しました。また、16件中14件が同じMajorを見逃しました。</p>
+<p>したがって、単発の<code>READY</code>や単純多数決を最終ゲートにしてはいけません。</p>
+<h2 id="conclusion-5-推奨する運用"><a class="heading-permalink" href="#conclusion-5-推奨する運用" aria-label="この見出しへのリンク">#</a>5. 推奨する運用</h2>
+<ul>
+<li>異種モデルで独立レビューする</li>
+<li>Findingを根本原因単位へ正規化する</li>
+<li>PrecisionとRecallを分けて評価する</li>
+<li>Major、Required fixes、Open approval items、Verdictの整合を確認する</li>
+<li>正本中の限定語と製品範囲は人間または独立Agentが最終確認する</li>
+<li>モデル名、モード、プロンプト版、Evidenceハッシュ、実行日を記録する</li>
+</ul>
+<p>LLMレビューの価値は、1つのモデルへ正解を委ねることではありません。複数の不完全な観測を、再現可能な証拠と審理手順で統合することにあります。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
+      <h2 id="conclusion-plain-heading">合成結果の要約（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="conclusion-plain-結論を短く説明すると"><a class="heading-permalink" href="#conclusion-plain-結論を短く説明すると" aria-label="この見出しへのリンク">#</a>結論を短く説明すると</h1>
+<h2 id="conclusion-plain-1-aiレビューは1回で決めない"><a class="heading-permalink" href="#conclusion-plain-1-aiレビューは1回で決めない" aria-label="この見出しへのリンク">#</a>1. AIレビューは1回で決めない</h2>
+<p>16回レビューしても、重大な問題を全部見つけたAIはありませんでした。半数は正しく不合格にできましたが、7件は誤って承認可能と判断しました。</p>
+<h2 id="conclusion-plain-2-上位モデルでも見逃す"><a class="heading-permalink" href="#conclusion-plain-2-上位モデルでも見逃す" aria-label="この見出しへのリンク">#</a>2. 上位モデルでも見逃す</h2>
+<p>今回もっとも良かったのはChatGPT 5.6 Sol Highでした。ただし、上位モデルもすべての問題を見つけたわけではありません。</p>
+<h2 id="conclusion-plain-3-同じモデルでも結果が変わる"><a class="heading-permalink" href="#conclusion-plain-3-同じモデルでも結果が変わる" aria-label="この見出しへのリンク">#</a>3. 同じモデルでも結果が変わる</h2>
+<p>同じClaude Sonnet 5 Highを2回動かすと、合格と不合格に分かれました。モデル名だけで結果の安定性は保証できません。</p>
+<h2 id="conclusion-plain-4-複数aiを役割分担させる"><a class="heading-permalink" href="#conclusion-plain-4-複数aiを役割分担させる" aria-label="この見出しへのリンク">#</a>4. 複数AIを役割分担させる</h2>
+<p>広く探すAI、誤検知を減らすAI、難しい論点を見るAIを分け、最後に指摘を根本原因ごとに整理します。</p>
+<p>重要な仕様では、単発の<code>READY</code>や多数決ではなく、証拠と審理手順を正本にすることが必要です。</p></div>
+      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="edit-heading">
+      <h2 id="edit-heading">Edit on GitHub</h2>
+      <p>正本ディレクトリ: <a href="https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0003-llm-review-benchmark/">https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0003-llm-review-benchmark/</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="comments-heading">
+      <h2 id="comments-heading">コメント</h2>
+      <p class="note">コメントは GitHub Discussions（giscus）上の第三者投稿です。読み込みと投稿にはGitHubへの接続が必要です。</p>
+      <button type="button" class="btn" id="load-giscus">コメントを読み込む</button>
+      <div id="giscus-container"
+        hidden
+        data-giscus-src="https://giscus.app/client.js"
+  data-repo="kooiei-in4a/amane-ai-lab"
+  data-repo-id="R_kgDOToJuSQ"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOToJuSc4DCT1S"
+  data-mapping="specific"
+  data-term="KB-2026-0003"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="ja"
+  data-loading="lazy"
+      ></div>
+    </section>
+
+    <footer class="article-footer panel">
+      <p>コード: MIT / コンテンツ: CC BY 4.0。AI回答は参考情報であり、事実確認は読者の責任です。</p>
+      <p><a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧へ戻る</a></p>
+    </footer>
+  </main>
+
+  <script src="../../../assets/js/site.js" defer></script>
+  <nav class="page-jump" aria-label="ページ内ジャンプ">
+    <a href="#tldr" class="page-jump-link" data-jump="tldr">要点</a>
+    <a href="#article-toc" class="page-jump-link">目次</a>
+    <a href="#main" class="page-jump-link page-jump-top" hidden>先頭へ</a>
+  </nav>
+</body>
+</html>

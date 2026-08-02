@@ -7,13 +7,15 @@ on:
       - ".github/workflows/kb-2026-0003-generate.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -22,15 +24,13 @@ jobs:
       - run: python scripts/validate_content.py
       - run: python scripts/check_sensitive_data.py
       - run: python -m unittest discover -s tests -v
-      - name: Package generated files
+      - name: Commit generated files and remove helper workflow
+        shell: bash
         run: |
-          mkdir -p _generated/articles/2026
-          cp -R articles/2026/kb-2026-0003-llm-review-benchmark _generated/articles/2026/
-          mkdir -p _generated/data
-          cp data/articles.json data/tags.json _generated/data/
-          cp index.html sitemap.xml feed.xml _generated/
-      - uses: actions/upload-artifact@v4
-        with:
-          name: kb-2026-0003-generated
-          path: _generated
-          if-no-files-found: error
+          set -euo pipefail
+          rm -f .github/workflows/kb-2026-0003-generate.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add articles data index.html sitemap.xml feed.xml .github/workflows/kb-2026-0003-generate.yml
+          git commit -m "build: generate KB-2026-0003 site artifacts"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}

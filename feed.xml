@@ -12,7 +12,7 @@
     <id>https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/</id>
     <updated>2026-08-02T00:00:00Z</updated>
     <published>2026-08-02T00:00:00Z</published>
-    <summary type="text">レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定してInvalidとなる提出が多く、Hard failなしの有効提出は2件だけだった。</summary>
+    <summary type="text">レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定して公式には無効となる提出が多く、重大失格なしの有効提出は2件だけだった。</summary>
   </entry>
   <entry>
     <title>16件のLLM独立レビューで分かったこと――仕様レビュー精度とマルチモデル審理の実務</title>

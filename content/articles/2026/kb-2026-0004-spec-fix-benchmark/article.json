@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "KB-2026-0004",
+  "slug": "spec-fix-benchmark",
+  "title": "レビュー指摘を正しく直せるAIはどれか――14モデルの仕様修正ベンチマーク",
+  "description": "レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。14モデルへ同じ仕様修正を依頼したところ、参考点が高くても未承認の製品判断を確定してInvalidとなる提出が多く、Hard failなしの有効提出は2件だけだった。",
+  "status": "published",
+  "publishedAt": "2026-08-02",
+  "updatedAt": "2026-08-02",
+  "lastVerifiedAt": "2026-08-02",
+  "tags": ["LLM", "AIエージェント", "仕様修正", "ベンチマーク", "独立レビュー", "品質保証"],
+  "agents": [{
+    "name": "spec-fix-001 benchmark",
+    "model": "14-model benchmark",
+    "responseFile": "responses/benchmark-results.md",
+    "executedAt": "2026-08-02",
+    "webSearch": false,
+    "attachmentsUsed": true,
+    "integrity": "edited",
+    "notes": "minimal-bank-systemの正式run、採点表、採点報告、成果物マニフェストを一次資料として公開用に編集した。"
+  }],
+  "giscusTerm": "KB-2026-0004",
+  "supersededBy": null
+}

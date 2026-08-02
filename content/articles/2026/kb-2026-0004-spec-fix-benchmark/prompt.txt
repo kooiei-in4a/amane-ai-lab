@@ -1,0 +1,9 @@
+公開用要約。正式な修正プロンプトは次を参照する。
+
+https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/spec-fix-001/fix-prompt.md
+
+ベンチマークID: spec-fix-001
+正式実行日: 2026-08-02
+対象: 最小銀行システム製品仕様書
+提出物: 修正報告書、修正後製品仕様書全文
+評価原則: 修正報告書の自己申告より実際の修正後仕様書を優先する

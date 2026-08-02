@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {"label": "結論", "text": "レビューで問題を見つける能力と、指摘を安全に修正する能力は別である。", "anchor": "今回測った修正能力とは"},
+    {"label": "正式結果", "text": "14モデル中、Hard failなしの有効提出はLuna XHighとSol Highの2件だけだった。", "anchor": "14モデルの結果"},
+    {"label": "重要な失敗", "text": "多くのモデルは報告書で承認待ちとしながら、仕様本文では未承認判断を確定した。", "anchor": "最重要だったF-003"},
+    {"label": "実務", "text": "Review-only Agent、Fix Agent、独立再レビュー、承認ゲートを分離する。", "anchor": "AI開発プロセスへの示唆"}
+  ]
+}

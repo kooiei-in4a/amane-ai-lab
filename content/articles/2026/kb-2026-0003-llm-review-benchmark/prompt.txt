@@ -1,0 +1,23 @@
+この公開記事では、次の固定条件で実施したLLM独立レビュー・ベンチマークを要約する。
+
+目的:
+- 同じ製品仕様と同じ正本資料を複数LLMへ渡したとき、重大な仕様欠陥をどこまで検出できるかを比較する。
+- 指摘数ではなく、Finding Precision、Gold Finding Recall、重大度、根拠、修正案、Scope disciplineを評価する。
+- Round 1とRound 2で同じモデルの変化を比較する。
+- 同一モデルの再実行差も確認する。
+
+固定レビュー対象:
+- Repository: kooiei-in4a/minimal-bank-system
+- PR: #9
+- Base SHA: dedbcaf31fd4c40b966facd1829c7535b8d0e4ba
+- Head SHA: 4944fb22806526f9e92dc47b516b57431c6c7f0a
+- Target: docs/specs/bank-system-specification.md
+
+独立性条件:
+- 外部Web、現在のGitHub状態、他モデルのレビュー、Gold Finding、Round 1の評価結果を参照しない。
+- review-prompt.mdとreview-evidence-bundle.mdだけを使用する。
+- 対象仕様、Issue、PR、ゲート、リポジトリを変更しない。
+
+公開記事では、個々の長いレビュー全文を転載せず、固定Gold Findingへの照合結果、モデル別評価、Round比較、再現性、実務上の推奨を再構成する。
+
+完全な実行プロンプトとEvidence bundleは、minimal-bank-systemリポジトリのspec-review-002成果物を参照する。

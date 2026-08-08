@@ -18,6 +18,7 @@ def build_sitemap(index: dict, base_url: str) -> str:
     base = base_url.rstrip("/")
     urls = [
         ("/", None),
+        ("/benchmarks/", None),
     ]
     for article in index["articles"]:
         if article["status"] not in {"published", "superseded", "archived"}:

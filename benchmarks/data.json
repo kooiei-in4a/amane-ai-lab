@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-08",
+  "scopeNote": "Rankings are specific to the recorded issue, Model + Agent/Harness + Effort, and execution attempt. They are not general model rankings.",
+  "fnd02Implementation": {
+    "issue": 40,
+    "metric": "Coding Score",
+    "candidates": [
+      {"rank":1,"model":"GPT-5.6 Sol","harness":"Codex","codingScore":96,"time":17,"practicalScore":91.11,"pr":71},
+      {"rank":2,"model":"GPT-5.6 Terra","harness":"Codex","codingScore":95,"time":14,"practicalScore":91.21,"pr":68},
+      {"rank":3,"model":"GPT-5.6 Luna","harness":"Codex","codingScore":94,"time":27,"practicalScore":87.56,"pr":66},
+      {"rank":4,"model":"Grok 4.5","harness":"Cursor","codingScore":92,"time":14,"practicalScore":88.51,"pr":65},
+      {"rank":5,"model":"GPT-5.6 Luna","harness":"Open Code","codingScore":84,"time":29,"practicalScore":78.36,"pr":72},
+      {"rank":6,"model":"Claude Sonnet 5","harness":"Claude Code","codingScore":80,"time":24,"practicalScore":75.33,"pr":80},
+      {"rank":7,"model":"DeepSeek V4 Flash","harness":"Open Code","codingScore":80,"time":24,"practicalScore":75.33,"pr":81},
+      {"rank":8,"model":"Claude Opus 5","harness":"Claude Code","codingScore":72,"time":31,"practicalScore":67.38,"pr":79},
+      {"rank":9,"model":"Composer 2.5","harness":"Cursor","codingScore":70,"time":24,"practicalScore":66.33,"pr":69},
+      {"rank":10,"model":"Qwen3.7 Plus","harness":"Open Code","codingScore":66,"time":30,"practicalScore":62.07,"pr":70},
+      {"rank":11,"model":"MiniMax M3","harness":"Open Code","codingScore":64,"time":11,"practicalScore":64.87,"pr":76},
+      {"rank":12,"model":"MiMo-V2.5-Pro","harness":"Open Code","codingScore":56,"time":35,"practicalScore":52.69,"pr":78},
+      {"rank":13,"model":"MiMo-V2.5","harness":"Open Code","codingScore":55,"time":24,"practicalScore":52.83,"pr":74},
+      {"rank":14,"model":"DeepSeek V4 Pro","harness":"Open Code","codingScore":46,"time":39,"practicalScore":43.45,"pr":67}
+    ]
+  },
+  "fnd02Review": {
+    "targetPr": 83,
+    "candidates": [
+      {"rank":1,"model":"GPT-5.6 Sol xHigh","harness":"Codex","score":100.0},
+      {"rank":2,"model":"Claude Opus 5 xhigh","harness":"Claude Code","score":92.5},
+      {"rank":3,"model":"GPT-5.6 Luna","harness":"Open Code","score":88.0},
+      {"rank":4,"model":"ChatGPT Opus 5.6 Sol xhigh","harness":"Browser","score":87.5},
+      {"rank":5,"model":"GPT-5.6 Luna xHigh","harness":"Codex","score":82.0},
+      {"rank":6,"model":"DeepSeek V4 Flash","harness":"Open Code","score":77.0},
+      {"rank":7,"model":"GPT-5.6 Terra xHigh","harness":"Codex","score":75.5},
+      {"rank":8,"model":"Claude Sonnet 5 xhigh","harness":"Claude Code","score":60.0},
+      {"rank":9,"model":"Composer 2.5","harness":"Cursor","score":54.5},
+      {"rank":10,"model":"Grok 4.5 high fast","harness":"Cursor","score":54.0},
+      {"rank":11,"model":"ChatGPT Opus 5.5 xhigh","harness":"Browser","score":53.0},
+      {"rank":12,"model":"DeepSeek V4 Pro","harness":"Open Code","score":47.5},
+      {"rank":13,"model":"chatgpt o2","harness":"Browser","score":35.0},
+      {"rank":14,"model":"MiMo-V2.5-Pro","harness":"Open Code","score":19.0},
+      {"rank":15,"model":"MiMo-V2.5","harness":"Open Code","score":7.0},
+      {"rank":16,"model":"Qwen3.7 Plus","harness":"Open Code","score":2.0},
+      {"rank":17,"model":"MiniMax M3","harness":"Open Code","score":0.0}
+    ]
+  },
+  "fnd01": {
+    "issue": 39,
+    "rankingStatus": "not-recorded",
+    "note": "Candidate Coding Scores were not retained in the archive; raw execution records are published without inventing a ranking.",
+    "candidates": [
+      {"model":"DeepSeek V4 Pro","harness":"Open Code","time":6,"pr":48,"ci":"SUCCESS"},
+      {"model":"Qwen3.7 Plus","harness":"Open Code","time":12,"pr":49,"ci":"SUCCESS"},
+      {"model":"GPT-5.6 Luna","harness":"Open Code","time":15,"pr":50,"ci":"SUCCESS"},
+      {"model":"DeepSeek V4 Flash","harness":"Open Code","time":10,"pr":51,"ci":"SUCCESS"},
+      {"model":"MiMo-V2.5","harness":"Open Code","time":12,"pr":52,"ci":"SUCCESS"},
+      {"model":"MiMo-V2.5-Pro","harness":"Open Code","time":9,"pr":53,"ci":"SUCCESS"},
+      {"model":"MiniMax M3","harness":"Open Code","time":17,"pr":54,"ci":"SUCCESS"},
+      {"model":"GPT-5.6 Luna","harness":"Codex","time":14,"pr":55,"ci":"SUCCESS"},
+      {"model":"GPT-5.6 Terra","harness":"Codex","time":13,"pr":56,"ci":"SUCCESS"},
+      {"model":"GPT-5.6 Sol","harness":"Codex","time":17,"pr":57,"ci":"SUCCESS"},
+      {"model":"Grok 4.5","harness":"Cursor","time":8,"pr":58,"ci":"SUCCESS"},
+      {"model":"Composer 2.5","harness":"Cursor","time":5,"pr":59,"ci":"SUCCESS"},
+      {"model":"Claude Sonnet 5","harness":"Claude Code","time":16,"pr":60,"ci":"SUCCESS"},
+      {"model":"Claude Opus 5","harness":"Claude Code","time":19,"pr":61,"ci":"SUCCESS"}
+    ]
+  }
+}

@@ -71,7 +71,7 @@ jobs:
       - name: Assemble public tree
         run: |
           mkdir -p _site
-          cp -R articles assets data index.html sitemap.xml feed.xml .nojekyll _site/
+          cp -R articles assets benchmarks data index.html sitemap.xml feed.xml .nojekyll _site/
           # Optional root documents for transparency.
           cp README.md LICENSE LICENSE-CONTENT _site/ 2>/dev/null || true
 

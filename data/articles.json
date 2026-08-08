@@ -6,7 +6,7 @@
       "id": "KB-2026-0005",
       "slug": "28-ai-implementations",
       "title": "28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった",
-      "description": "14のModel + Agent/Harnessを、.NET基盤構築とAPI実行契約の2課題で独立実装した。候補28件のCIはすべて成功したが、実務で見るべき差は要件適合、Scope、runtime wiring、テストの証拠、変更の最小性に残った。モデル名だけでなく、実行環境と検証方法まで含めて評価する必要がある。",
+      "description": "14のAIコーディング構成を、性質の違う2つのIssueで比較した。候補28件のCIはすべて成功。それでも、実コード、Scope、テストの質、本番に近い検証まで見ると差は残った。",
       "status": "published",
       "publishedAt": "2026-08-08",
       "updatedAt": "2026-08-08",

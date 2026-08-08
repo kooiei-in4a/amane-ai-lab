@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった — 資料版 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="14のModel + Agent/Harnessを、.NET基盤構築とAPI実行契約の2課題で独立実装した。候補28件のCIはすべて成功したが、実務で見るべき差は要件適合、Scope、runtime wiring、テストの証拠、変更の最小性に残った。モデル名だけでなく、実行環境と検証方法まで含めて評価する必要がある。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/summary/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった — 資料版">
+  <meta property="og:description" content="14のModel + Agent/Harnessを、.NET基盤構築とAPI実行契約の2課題で独立実装した。候補28件のCIはすべて成功したが、実務で見るべき差は要件適合、Scope、runtime wiring、テストの証拠、変更の最小性に残った。モデル名だけでなく、実行環境と検証方法まで含めて評価する必要がある。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/summary/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="../../../../assets/css/site.css">
+</head>
+<body class="summary-doc-page">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane-ai-lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/">記事本文</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap summary-doc">
+    <header class="summary-doc-header panel">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0005</span>
+        <span class="pill">資料版</span>
+        <span>更新: 2026-08-08</span>
+      </p>
+      <h1>まとめ（かんたん版）</h1>
+      <p class="summary-doc-subtitle">合成結果を、わかりやすい言葉で短くまとめた資料版。</p>
+      <nav class="summary-source-links" aria-label="記事本文の関連セクション">
+        <p class="summary-source-links-label">記事本文の関連セクション</p>
+        <ul>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#background-heading">検討に至った背景</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#prompt-heading">調査プロンプト</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#agents-heading">AIエージェントの回答</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#analysis-heading">AI回答の合成</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#analysis-plain-heading">合成（わかりやすい説明）</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#conclusion-heading">要約</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#conclusion-plain-heading">要約（わかりやすい説明）</a></li>
+        </ul>
+      </nav>
+      <p class="summary-doc-nav">
+        <a class="btn btn-secondary" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/">← 記事本文へ戻る</a>
+      </p>
+    </header>
+
+    <div class="summary-doc-layout">
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol></ol></nav>
+      <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
+        <h1>まとめ（かんたん版）</h1>
+<p>28件のAI実装は、全部CIに成功しました。</p>
+<p>でも、それだけでは「全部同じ品質」とは言えません。</p>
+<p>基盤を作るFND-01では、余計なものを作らないことが重要でした。API実行契約を作るFND-02では、本番に近い経路で本当に期待したerrorやlogが出るかを確認する必要がありました。</p>
+<p>特にFND-02では、14候補を比較して作った統合版にも独立レビューを掛け、問題を直してからmergeしています。</p>
+<p>普段の開発で14候補を毎回作る必要はありません。</p>
+<p>普通のIssueなら、1つのAIに実装させて別のAIにレビューさせる。重要なIssueなら、2〜3のAIに別々に作らせて差分を比較し、良い部分を選んでから別のAIに再レビューさせる。</p>
+<p>今のところ、この使い方が一番実務へ持ち込みやすいと考えています。</p>
+<p>モデル名だけで選ぶより、実際に残ったコードとテストを見る方が確実です。</p>
+      </article>
+    </div>
+
+    <footer class="summary-doc-footer panel">
+      <p class="note">この資料は記事の「合成結果の要約（わかりやすい説明）」（<code>conclusion-plain.md</code>）から自動生成しています。</p>
+      <p>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#background-heading">背景</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#prompt-heading">プロンプト</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#agents-heading">AI回答</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#analysis-heading">合成</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#analysis-plain-heading">合成（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#conclusion-heading">要約</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#conclusion-plain-heading">要約（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

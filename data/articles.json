@@ -3,6 +3,30 @@
   "generatedFrom": "content/articles",
   "articles": [
     {
+      "id": "KB-2026-0005",
+      "slug": "28-ai-implementations",
+      "title": "28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった",
+      "description": "14のModel + Agent/Harnessを、.NET基盤構築とAPI実行契約の2課題で独立実装した。候補28件のCIはすべて成功したが、実務で見るべき差は要件適合、Scope、runtime wiring、テストの証拠、変更の最小性に残った。モデル名だけでなく、実行環境と検証方法まで含めて評価する必要がある。",
+      "status": "review",
+      "publishedAt": null,
+      "updatedAt": "2026-08-08",
+      "lastVerifiedAt": "2026-08-08",
+      "tags": [
+        "AIコーディング",
+        "AIエージェント",
+        "実装比較",
+        "ベンチマーク",
+        "マルチエージェント",
+        "品質保証"
+      ],
+      "agents": [
+        "FND-01 実装比較ベンチマーク",
+        "FND-02 実装比較ベンチマーク"
+      ],
+      "url": "/articles/2026/kb-2026-0005-28-ai-implementations/",
+      "year": "2026"
+    },
+    {
       "id": "KB-2026-0004",
       "slug": "spec-fix-benchmark",
       "title": "レビュー指摘を正しく直せるAIはどれか――14モデルの仕様修正ベンチマーク",

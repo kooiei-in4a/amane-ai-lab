@@ -15,14 +15,17 @@
   <meta name="twitter:title" content="{{TITLE}}">
   <meta name="twitter:description" content="{{DESCRIPTION}}">
   <link rel="stylesheet" href="{{ASSET_PREFIX}}/assets/css/site.css">
+  <link rel="stylesheet" href="{{ASSET_PREFIX}}/assets/css/article-readability.css">
 </head>
 <body>
   <a class="skip-link" href="#main">本文へスキップ</a>
   <header class="site-header">
     <div class="wrap">
-      <p class="brand"><a href="{{HOME_HREF}}">{{SITE_NAME}}</a></p>
+      <p class="brand"><a href="{{HOME_HREF}}">amane AI Lab</a></p>
       <nav aria-label="サイト">
-        <a href="{{HOME_HREF}}">記事一覧</a>
+        <a href="{{HOME_HREF}}#articles">記事</a>
+        <a href="../../../benchmarks/">Benchmarks</a>
+        <a href="{{HOME_HREF}}#about">このLabについて</a>
         <a href="{{REPO_URL}}">GitHub</a>
       </nav>
     </div>
@@ -111,7 +114,7 @@
 
     <footer class="article-footer panel">
       <p>コード: MIT / コンテンツ: CC BY 4.0。AI回答は参考情報であり、事実確認は読者の責任です。</p>
-      <p><a href="{{HOME_HREF}}">記事一覧へ戻る</a></p>
+      <p><a href="{{HOME_HREF}}">記事一覧へ戻る</a> · <a href="../../../benchmarks/">Benchmarksを見る</a></p>
     </footer>
   </main>
 

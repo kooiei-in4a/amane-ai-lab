@@ -3,6 +3,18 @@
   "items": [
     {
       "source": "benchmark",
+      "label": "実装順位",
+      "text": "FND-02のCoding Scoreは1位 GPT-5.6 Sol / Codex 96、2位 Terra / Codex 95、3位 Luna / Codex 94。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "benchmark",
+      "label": "レビュー順位",
+      "text": "FND-02独立レビューは1位 GPT-5.6 Sol xHigh / Codex 100、2位 Claude Opus 5 xhigh 92.5、3位 GPT-5.6 Luna / Open Code 88。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "benchmark",
       "label": "結果",
       "text": "FND-01とFND-02のcandidate 28件は、archive上すべてCI SUCCESSだった。",
       "href": "#analysis-heading"
@@ -10,14 +22,8 @@
     {
       "source": "synthesis",
       "label": "教訓",
-      "text": "CIが緑でも、要件適合、Scope、変更の最小性、runtime wiringの証拠までは保証しない。",
+      "text": "CIが緑でも、実コード、Scope、変更の最小性、本番に近い検証の質までは保証しない。",
       "href": "#analysis-heading"
-    },
-    {
-      "source": "benchmark",
-      "label": "FND-02",
-      "text": "Final synthesisも独立レビューで修正を受け、productionに近いKestrelと実JSON logの検証まで強化した。",
-      "href": "#agents-heading"
     },
     {
       "source": "synthesis",

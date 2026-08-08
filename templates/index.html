@@ -3,26 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{SITE_TITLE}}</title>
-  <meta name="description" content="{{DESCRIPTION}}">
+  <title>amane AI Lab — AI開発の実験記録</title>
+  <meta name="description" content="実際のソフトウェア開発でAIエージェントを試し、コード・テスト・CI・レビュー結果まで公開しています。Koo（伊江厚一郎）によるAI開発の実験記録です。">
   <link rel="canonical" href="{{CANONICAL_URL}}">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="{{SITE_TITLE}}">
-  <meta property="og:description" content="{{DESCRIPTION}}">
+  <meta property="og:title" content="amane AI Lab — AI開発の実験記録">
+  <meta property="og:description" content="実際のソフトウェア開発でAIエージェントを試し、コード・テスト・CI・レビュー結果まで公開しています。">
   <meta property="og:url" content="{{OG_URL}}">
-  <meta property="og:site_name" content="{{SITE_NAME}}">
+  <meta property="og:site_name" content="amane AI Lab">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="{{SITE_TITLE}}">
-  <meta name="twitter:description" content="{{DESCRIPTION}}">
+  <meta name="twitter:title" content="amane AI Lab — AI開発の実験記録">
+  <meta name="twitter:description" content="実際のソフトウェア開発でAIエージェントを試し、コード・テスト・CI・レビュー結果まで公開しています。">
   <link rel="stylesheet" href="{{ASSET_PREFIX}}/assets/css/site.css">
 </head>
 <body>
   <a class="skip-link" href="#main">本文へスキップ</a>
   <header class="site-header">
     <div class="wrap">
-      <p class="brand"><a href="./">{{SITE_NAME}}</a></p>
+      <p class="brand"><a href="./">amane AI Lab</a></p>
       <nav aria-label="サイト">
-        <a href="./">記事一覧</a>
+        <a href="#about">このLabについて</a>
+        <a href="#articles">記事一覧</a>
         <a href="{{REPO_URL}}">GitHub</a>
         <a href="./feed.xml">Feed</a>
       </nav>
@@ -30,14 +31,35 @@
   </header>
 
   <main id="main" class="wrap home-page">
-    <section class="home-intro">
-      <h1>{{SITE_NAME}}</h1>
-      <p class="lede">{{DESCRIPTION}}</p>
+    <section class="home-intro" id="about">
+      <p class="note">Koo（伊江 厚一郎） / AIエンジニア</p>
+      <h1>amane AI Lab</h1>
+      <p class="lede">AIエージェントを、実際の開発で試しています。</p>
+      <p>
+        同じGitHub Issueを複数のAIに実装させて差分を比べたり、レビューの見逃しや過剰指摘を調べたりしています。
+        モデルの評判ではなく、実際のコード、テスト、CI、レビュー結果を見て判断します。
+      </p>
       <p class="count">公開対象を含む記事: <strong id="article-count">{{ARTICLE_COUNT}}</strong> 件</p>
     </section>
 
-    <section class="filters panel" aria-labelledby="filter-heading">
-      <h2 id="filter-heading">絞り込み</h2>
+    <section class="panel" aria-labelledby="lab-heading">
+      <h2 id="lab-heading">実験で見ていること</h2>
+      <ul>
+        <li><strong>実装</strong> — 同じ課題でも、AIや開発ツールが変わると何が変わるか。</li>
+        <li><strong>レビュー</strong> — 何を見つけ、何を見逃し、指摘をどこまで正しく直せるか。</li>
+        <li><strong>記録</strong> — うまくいった結果だけでなく、条件、失敗、迷った点も残す。</li>
+      </ul>
+      <p class="note">
+        単発の結果だけで「このモデルが最強」とは決めません。実行環境や条件によって結果は変わるからです。
+      </p>
+      <p class="note">
+        このLabはKoo（伊江 厚一郎）が運営しています。仕事やこれまでの経歴は
+        <a href="https://in4a.jp/" target="_blank" rel="noopener noreferrer">IN4A合同会社</a>にまとめています。
+      </p>
+    </section>
+
+    <section class="filters panel" aria-labelledby="filter-heading" id="articles">
+      <h2 id="filter-heading">記事を探す</h2>
       <div class="filter-grid">
         <label>
           キーワード
@@ -77,7 +99,7 @@
   </main>
 
   <footer class="site-footer wrap">
-    <p><a href="{{REPO_URL}}">GitHubリポジトリ</a> · コード MIT / コンテンツ CC BY 4.0</p>
+    <p>Koo（伊江 厚一郎） · <a href="https://in4a.jp/" target="_blank" rel="noopener noreferrer">IN4A</a> · <a href="{{REPO_URL}}">GitHubリポジトリ</a> · コード MIT / コンテンツ CC BY 4.0</p>
   </footer>
 
   <script src="{{ASSET_PREFIX}}/assets/js/site.js" defer></script>

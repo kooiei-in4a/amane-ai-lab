@@ -4,8 +4,16 @@
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/" rel="alternate"/>
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/feed.xml" rel="self"/>
   <id>https://kooiei-in4a.github.io/amane-ai-lab/</id>
-  <updated>2026-08-02T00:00:00Z</updated>
+  <updated>2026-08-08T00:00:00Z</updated>
   <subtitle>AIエージェントによる検証結果を公開するナレッジベース</subtitle>
+  <entry>
+    <title>28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった</title>
+    <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/" rel="alternate"/>
+    <id>https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/</id>
+    <updated>2026-08-08T00:00:00Z</updated>
+    <published>2026-08-08T00:00:00Z</published>
+    <summary type="text">14のModel + Agent/Harnessを、.NET基盤構築とAPI実行契約の2課題で独立実装した。候補28件のCIはすべて成功したが、実務で見るべき差は要件適合、Scope、runtime wiring、テストの証拠、変更の最小性に残った。モデル名だけでなく、実行環境と検証方法まで含めて評価する必要がある。</summary>
+  </entry>
   <entry>
     <title>レビュー指摘を正しく直せるAIはどれか――14モデルの仕様修正ベンチマーク</title>
     <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0004-spec-fix-benchmark/" rel="alternate"/>

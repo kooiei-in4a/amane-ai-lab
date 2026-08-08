@@ -1,0 +1,28 @@
+minimal-bank-system の次の一次資料を使って、FND-01 / FND-02 の実装比較を1本の記事として整理する。
+
+対象:
+- Issue #39 [FND-01] Solution・project・build/test CIを確立する
+- docs/benchmarks/fnd01-model-comparison/analysis.md
+- PR #62 Final integrated implementation
+- Issue #40 [FND-02] 共通API実行契約を確立する
+- docs/benchmarks/fnd02-model-comparison/analysis.md
+- PR #83 Final synthesis
+- docs/benchmarks/model-implementation-benchmark-methodology.md
+
+記事の目的:
+- モデルの人気や公開ベンチマークではなく、実repository上の実装結果からAIコーディングの評価方法を考える
+- 14のModel + Agent/Harnessを2課題へ独立実装した意味を整理する
+- candidate CIが全件SUCCESSでも品質評価が終わらない理由を説明する
+- FND-01とFND-02で評価上の難しさがどう変わったかを説明する
+- ModelとAgent/Harness、Effortを混同しない
+- Final synthesisを15番目のモデルとして扱わない
+- 各候補1試行なので、モデル一般性能の断定を避ける
+- archiveに候補別Coding Scoreが正式記録されていない場合、順位や点数を補完しない
+- 読者が実務で使える開発フローへ落とし込む
+
+文章:
+- 日本語
+- Labの実験記録として書く
+- 過剰な煽りや「最強モデル」断定を避ける
+- 専門語は必要な場合だけ使い、初出で意味が分かるようにする
+- AI生成文に見えやすい抽象的なまとめ文を増やさず、事実と自分の判断を分ける

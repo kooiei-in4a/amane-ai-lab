@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="14のModel + Agent/Harnessを、.NET基盤構築とAPI実行契約の2課題で独立実装した。候補28件のCIはすべて成功したが、実務で見るべき差は要件適合、Scope、runtime wiring、テストの証拠、変更の最小性に残った。モデル名だけでなく、実行環境と検証方法まで含めて評価する必要がある。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった">
+  <meta property="og:description" content="14のModel + Agent/Harnessを、.NET基盤構築とAPI実行契約の2課題で独立実装した。候補28件のCIはすべて成功したが、実務で見るべき差は要件適合、Scope、runtime wiring、テストの証拠、変更の最小性に残った。モデル名だけでなく、実行環境と検証方法まで含めて評価する必要がある。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった">
+  <meta name="twitter:description" content="14のModel + Agent/Harnessを、.NET基盤構築とAPI実行契約の2課題で独立実装した。候補28件のCIはすべて成功したが、実務で見るべき差は要件適合、Scope、runtime wiring、テストの証拠、変更の最小性に残った。モデル名だけでなく、実行環境と検証方法まで含めて評価する必要がある。">
+  <link rel="stylesheet" href="../../../assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane-ai-lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap article-page">
+    <header class="article-header">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0005</span>
+        <span class="pill status-published">published</span>
+        <span>公開: 2026-08-08</span>
+        <span>最終確認: 2026-08-08</span>
+        <span>更新: 2026-08-08</span>
+      </p>
+      <h1>28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった</h1>
+      <p class="article-summary">14のModel + Agent/Harnessを、.NET基盤構築とAPI実行契約の2課題で独立実装した。候補28件のCIはすべて成功したが、実務で見るべき差は要件適合、Scope、runtime wiring、テストの証拠、変更の最小性に残った。モデル名だけでなく、実行環境と検証方法まで含めて評価する必要がある。</p>
+      <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
+      <ul class="tag-list"><li>AIコーディング</li><li>AIエージェント</li><li>実装比較</li><li>ベンチマーク</li><li>マルチエージェント</li><li>品質保証</li></ul>
+    </header>
+
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-benchmark">結果</span> <a class="tldr-link" href="#analysis-heading">FND-01とFND-02のcandidate 28件は、archive上すべてCI SUCCESSだった。</a></li><li><span class="tldr-source tldr-source-synthesis">教訓</span> <a class="tldr-link" href="#analysis-heading">CIが緑でも、要件適合、Scope、変更の最小性、runtime wiringの証拠までは保証しない。</a></li><li><span class="tldr-source tldr-source-benchmark">FND-02</span> <a class="tldr-link" href="#agents-heading">Final synthesisも独立レビューで修正を受け、productionに近いKestrelと実JSON logの検証まで強化した。</a></li><li><span class="tldr-source tldr-source-synthesis">実務</span> <a class="tldr-link" href="#conclusion-heading">重要Issueでは少数の独立候補を作り、diff比較、統合、独立レビューまで分ける方が使いやすい。</a></li></ol></section>
+    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-fnd-01">FND-01 実装比較ベンチマーク</a><ul><li class="toc-item toc-level-2"><a href="#agent-fnd-01-対象issue">対象Issue</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-01-14候補">14候補</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-01-比較で見たもの">比較で見たもの</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-01-final-integrated-implementation">Final integrated implementation</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-01-一次資料">一次資料</a></li></ul></li><li><a href="#agent-fnd-02">FND-02 実装比較ベンチマーク</a><ul><li class="toc-item toc-level-2"><a href="#agent-fnd-02-対象issue">対象Issue</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-02-14候補">14候補</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-02-fnd-02で増えた証拠の質という観点">FND-02で増えた「証拠の質」という観点</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-02-final-synthesisも一度では終わらなかった">Final synthesisも一度では終わらなかった</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-02-一次資料">一次資料</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
+
+    <section class="panel" aria-labelledby="background-heading">
+      <h2 id="background-heading">検討に至った背景</h2>
+      <div class="prose"><h1 id="background-はじめに"><a class="heading-permalink" href="#background-はじめに" aria-label="この見出しへのリンク">#</a>はじめに</h1>
+<p>AIコーディングの比較記事は、モデル名と点数だけでも作れます。けれど、実際の開発で知りたいのはもう少し地味なことです。</p>
+<ul>
+<li>既存の仕様やADRを読めるか</li>
+<li>Issueの範囲だけを直せるか</li>
+<li>buildやtestが本当に通るか</li>
+<li>テストが「実装したつもり」を確認しているだけになっていないか</li>
+<li>余計な機能を先回りして入れないか</li>
+<li>最後に人間が安心してmergeできる差分になっているか</li>
+</ul>
+<p>そこで <code>minimal-bank-system</code> では、同じGitHub Issueを複数のAIコーディング環境へ独立して実装させる実験を2回行いました。</p>
+<p>1回目のFND-01は、.NET 10のSolution、project境界、build/test CIを作る基盤整備です。2回目のFND-02は、共通error envelope、correlation ID、<code>TimeProvider</code>、JSON technical loggingといったAPI実行契約です。</p>
+<p>どちらも14の <code>Model + Agent/Harness</code> 構成を使いました。Open Code、Codex、Cursor、Claude Codeが混在し、一部は同じモデルを別のHarnessでも実行しています。</p>
+<p>結果だけ先に書くと、archiveに残ったcandidate 28件のCIはすべてSUCCESSでした。</p>
+<p>それでも、比較を「全員合格」で終わらせることはできませんでした。</p>
+<p>この記事では個別モデルの勝敗より、2回の実装比較から見えてきた<strong>AI実装をどう評価するか</strong>と、<strong>複数のAIをどう開発工程へ組み込むか</strong>をまとめます。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">調査プロンプト</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn" id="copy-prompt" data-copy-target="prompt-text">プロンプトをコピー</button>
+        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      </div>
+      <details class="prompt-details">
+        <summary>プロンプト全文を表示する</summary>
+        <pre id="prompt-text" class="prompt-block"><code>minimal-bank-system の次の一次資料を使って、FND-01 / FND-02 の実装比較を1本の記事として整理する。
+
+対象:
+- Issue #39 [FND-01] Solution・project・build/test CIを確立する
+- docs/benchmarks/fnd01-model-comparison/analysis.md
+- PR #62 Final integrated implementation
+- Issue #40 [FND-02] 共通API実行契約を確立する
+- docs/benchmarks/fnd02-model-comparison/analysis.md
+- PR #83 Final synthesis
+- docs/benchmarks/model-implementation-benchmark-methodology.md
+
+記事の目的:
+- モデルの人気や公開ベンチマークではなく、実repository上の実装結果からAIコーディングの評価方法を考える
+- 14のModel + Agent/Harnessを2課題へ独立実装した意味を整理する
+- candidate CIが全件SUCCESSでも品質評価が終わらない理由を説明する
+- FND-01とFND-02で評価上の難しさがどう変わったかを説明する
+- ModelとAgent/Harness、Effortを混同しない
+- Final synthesisを15番目のモデルとして扱わない
+- 各候補1試行なので、モデル一般性能の断定を避ける
+- archiveに候補別Coding Scoreが正式記録されていない場合、順位や点数を補完しない
+- 読者が実務で使える開発フローへ落とし込む
+
+文章:
+- 日本語
+- Labの実験記録として書く
+- 過剰な煽りや「最強モデル」断定を避ける
+- 専門語は必要な場合だけ使い、初出で意味が分かるようにする
+- AI生成文に見えやすい抽象的なまとめ文を増やさず、事実と自分の判断を分ける
+</code></pre>
+      </details>
+    </section>
+
+    <section class="panel" aria-labelledby="agents-heading">
+      <h2 id="agents-heading">AIエージェントの回答</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
+        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
+      </div>
+      <div id="agent-responses"><section class="agent-response" data-agent="FND-01 実装比較ベンチマーク">
+  <details id="agent-fnd-01">
+    <summary>
+      <span class="agent-name">FND-01 実装比較ベンチマーク</span>
+      <span class="agent-meta">14 Model + Agent/Harness / 2026-08-08 / integrity=edited</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>なし</dd></div>
+      <div><dt>添付</dt><dd>なし</dd></div>
+      <div><dt>完全性</dt><dd>edited</dd></div>
+    </dl>
+    <p class="agent-notes">minimal-bank-systemのIssue #39、FND-01 benchmark archive、候補PR/CI、Final integrated implementationを一次資料として公開用に整理した。</p>
+    <div class="agent-body prose"><h1 id="agent-fnd-01-fnd-01-実装比較ベンチマーク"><a class="heading-permalink" href="#agent-fnd-01-fnd-01-実装比較ベンチマーク" aria-label="この見出しへのリンク">#</a>FND-01 実装比較ベンチマーク</h1>
+<h2 id="agent-fnd-01-対象issue"><a class="heading-permalink" href="#agent-fnd-01-対象issue" aria-label="この見出しへのリンク">#</a>対象Issue</h2>
+<p>Issue #39 <code>[FND-01] Solution・project・build/test CIを確立する</code> は、.NET 10 modular monolithの土台を作るIssueです。</p>
+<p>主な対象は次のとおりです。</p>
+<ul>
+<li>API / Application / Domain / Infrastructure / Testsのproject境界</li>
+<li>project reference</li>
+<li><code>net10.0</code></li>
+<li>nullable、analyzer、warning policy</li>
+<li>exact NuGet version pinning</li>
+<li>localとCIで同じrestore / build / testを実行できる状態</li>
+</ul>
+<p>一方、error envelope、correlation ID、<code>TimeProvider</code>、logging、PostgreSQL、Docker、business codeなどは明示的にOut of scopeでした。</p>
+<p>この「入れてはいけないもの」が多い点が、FND-01の重要な評価ポイントです。</p>
+<h2 id="agent-fnd-01-14候補"><a class="heading-permalink" href="#agent-fnd-01-14候補" aria-label="この見出しへのリンク">#</a>14候補</h2>
+<p>同一Issueを、次の14構成へ独立実装させました。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Model</th>
+<th>Agent / Harness</th>
+<th>Effort</th>
+<th>実験時の処理時間記録</th>
+<th>Candidate PR</th>
+<th>CI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>DeepSeek V4 Pro</td>
+<td>Open Code</td>
+<td>Max</td>
+<td>6</td>
+<td>#48</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Qwen3.7 Plus</td>
+<td>Open Code</td>
+<td>Max</td>
+<td>12</td>
+<td>#49</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GPT-5.6 Luna</td>
+<td>Open Code</td>
+<td>Max</td>
+<td>15</td>
+<td>#50</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>4</td>
+<td>DeepSeek V4 Flash</td>
+<td>Open Code</td>
+<td>Max</td>
+<td>10</td>
+<td>#51</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>5</td>
+<td>MiMo-V2.5</td>
+<td>Open Code</td>
+<td>未指定</td>
+<td>12</td>
+<td>#52</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>6</td>
+<td>MiMo-V2.5-Pro</td>
+<td>Open Code</td>
+<td>未指定</td>
+<td>9</td>
+<td>#53</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>7</td>
+<td>MiniMax M3</td>
+<td>Open Code</td>
+<td>Thinking</td>
+<td>17</td>
+<td>#54</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>8</td>
+<td>GPT-5.6 Luna</td>
+<td>Codex</td>
+<td>Xhigh</td>
+<td>14</td>
+<td>#55</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>9</td>
+<td>GPT-5.6 Terra</td>
+<td>Codex</td>
+<td>Xhigh</td>
+<td>13</td>
+<td>#56</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>10</td>
+<td>GPT-5.6 Sol</td>
+<td>Codex</td>
+<td>Xhigh</td>
+<td>17</td>
+<td>#57</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Grok 4.5</td>
+<td>Cursor</td>
+<td>high</td>
+<td>8</td>
+<td>#58</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Composer 2.5</td>
+<td>Cursor</td>
+<td>未指定</td>
+<td>5</td>
+<td>#59</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Sonnet 5</td>
+<td>Claude Code</td>
+<td>Xhigh</td>
+<td>16</td>
+<td>#60</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Opus 5</td>
+<td>Claude Code</td>
+<td>Xhigh</td>
+<td>19</td>
+<td>#61</td>
+<td>SUCCESS</td>
+</tr>
+</tbody>
+</table>
+<p>処理時間は実験時の記録値です。archiveでは単位を補完していないため、この記事でも勝手に「分」などへ置き換えません。</p>
+<p>candidate 14件はすべてCI SUCCESSでした。各candidate PRはmergeせずcloseし、Headはannotated tagで固定されています。</p>
+<h2 id="agent-fnd-01-比較で見たもの"><a class="heading-permalink" href="#agent-fnd-01-比較で見たもの" aria-label="この見出しへのリンク">#</a>比較で見たもの</h2>
+<p>FND-01の比較では、単にbuildできるかではなく、主に次を確認しました。</p>
+<ul>
+<li>solution / project構成</li>
+<li>project referenceの依存方向</li>
+<li>package version</li>
+<li>compiler / analyzer設定</li>
+<li>test構成</li>
+<li>CI</li>
+<li>secret混入</li>
+<li>placeholder実装</li>
+<li>unrelated change</li>
+<li>過剰設計</li>
+<li>後続Issueの先取り</li>
+</ul>
+<p>共通のCoding Scoreは100点で、Issue達成度25、正しさ15、Scope遵守15、設計10、テスト10、コード品質10、変更精度10、リスク管理5という枠組みです。</p>
+<p>ただし、FND-01のarchiveにはcandidateごとの正式なCoding Scoreが記録されていません。archive作業では再採点もしていません。そのため、この記事ではcandidate順位を復元しません。</p>
+<h2 id="agent-fnd-01-final-integrated-implementation"><a class="heading-permalink" href="#agent-fnd-01-final-integrated-implementation" aria-label="この見出しへのリンク">#</a>Final integrated implementation</h2>
+<p>14候補を比較した後、良い設計と検証方法を選んでFinal integrated implementationを作りました。</p>
+<ul>
+<li>Branch: <code>agent/issue-39-fnd-01-final-code</code></li>
+<li>Head: <code>d8e75bc6eab7fd14b7a58042b24deabe2227e189</code></li>
+<li>Coding Score: 99/100</li>
+<li>PR: #62</li>
+<li>Final candidateではなく、curated / synthesized implementation</li>
+</ul>
+<p>PR #62では、clean相当の状態からrestore、build、testが成功し、warning 0、Unit 3件、Integration 2件がPASSしています。Agent B独立レビューもBlocker / Major / Minor / Nitすべて0で、merge後のmain CIもPASSしました。</p>
+<p>重要なのは、このFinal integrated implementationを「15番目のモデル」として扱っていない点です。14候補の比較後、人間の選択を含めて作った統合成果物です。</p>
+<h2 id="agent-fnd-01-一次資料"><a class="heading-permalink" href="#agent-fnd-01-一次資料" aria-label="この見出しへのリンク">#</a>一次資料</h2>
+<ul>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/issues/39">Issue #39</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd01-model-comparison/analysis.md">FND-01 benchmark archive</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/model-implementation-benchmark-methodology.md">共通benchmark方法論</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/62">Final implementation PR #62</a></li>
+</ul></div>
+  </details>
+</section>
+<section class="agent-response" data-agent="FND-02 実装比較ベンチマーク">
+  <details id="agent-fnd-02">
+    <summary>
+      <span class="agent-name">FND-02 実装比較ベンチマーク</span>
+      <span class="agent-meta">14 Model + Agent/Harness / 2026-08-08 / integrity=edited</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>なし</dd></div>
+      <div><dt>添付</dt><dd>なし</dd></div>
+      <div><dt>完全性</dt><dd>edited</dd></div>
+    </dl>
+    <p class="agent-notes">minimal-bank-systemのIssue #40、FND-02 benchmark archive、候補PR/CI、Final synthesisと独立レビュー結果を一次資料として公開用に整理した。</p>
+    <div class="agent-body prose"><h1 id="agent-fnd-02-fnd-02-実装比較ベンチマーク"><a class="heading-permalink" href="#agent-fnd-02-fnd-02-実装比較ベンチマーク" aria-label="この見出しへのリンク">#</a>FND-02 実装比較ベンチマーク</h1>
+<h2 id="agent-fnd-02-対象issue"><a class="heading-permalink" href="#agent-fnd-02-対象issue" aria-label="この見出しへのリンク">#</a>対象Issue</h2>
+<p>Issue #40 <code>[FND-02] 共通API実行契約を確立する</code> は、FND-01で作った基盤の上に、API request共通の実行契約を置くIssueです。</p>
+<p>主な対象は次のとおりです。</p>
+<ul>
+<li>共通REST error envelope</li>
+<li>exception-to-HTTP mappingの拡張点</li>
+<li>correlation IDの生成・伝播</li>
+<li>caller supplied correlation IDの扱い</li>
+<li>injected <code>TimeProvider</code></li>
+<li>JSON console technical logging</li>
+<li>sensitive dataをtechnical logへ出さない方針</li>
+<li>request-level API integration test</li>
+</ul>
+<p>business error code全件、Audit Log persistence、認証認可、PostgreSQL、Docker、health contractなどはOut of scopeでした。</p>
+<p>FND-01より難しいのは、コードが存在するだけでは足りず、HTTP request、middleware、DI、serializer、logging providerを通った<strong>最終的な外部出力</strong>まで確認する必要がある点です。</p>
+<h2 id="agent-fnd-02-14候補"><a class="heading-permalink" href="#agent-fnd-02-14候補" aria-label="この見出しへのリンク">#</a>14候補</h2>
+<p>FND-01と同じ14のModel + Agent/Harness構成を使いました。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Model</th>
+<th>Agent / Harness</th>
+<th>Candidate PR</th>
+<th>CI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>DeepSeek V4 Pro</td>
+<td>Open Code</td>
+<td>#67</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Qwen3.7 Plus</td>
+<td>Open Code</td>
+<td>#70</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GPT-5.6 Luna</td>
+<td>Open Code</td>
+<td>#72</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>4</td>
+<td>DeepSeek V4 Flash</td>
+<td>Open Code</td>
+<td>#81</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>5</td>
+<td>MiMo-V2.5</td>
+<td>Open Code</td>
+<td>#74</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>6</td>
+<td>MiMo-V2.5-Pro</td>
+<td>Open Code</td>
+<td>#78</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>7</td>
+<td>MiniMax M3</td>
+<td>Open Code</td>
+<td>#76</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>8</td>
+<td>GPT-5.6 Luna</td>
+<td>Codex</td>
+<td>#66</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>9</td>
+<td>GPT-5.6 Terra</td>
+<td>Codex</td>
+<td>#68</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>10</td>
+<td>GPT-5.6 Sol</td>
+<td>Codex</td>
+<td>#71</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Grok 4.5</td>
+<td>Cursor</td>
+<td>#65</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Composer 2.5</td>
+<td>Cursor</td>
+<td>#69</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Claude Sonnet 5</td>
+<td>Claude Code</td>
+<td>#80</td>
+<td>SUCCESS</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Claude Opus 5</td>
+<td>Claude Code</td>
+<td>#79</td>
+<td>SUCCESS</td>
+</tr>
+</tbody>
+</table>
+<p>FND-02もcandidate 14件すべてCI SUCCESSでした。candidate HeadとPR Headを確認したうえでannotated tagへ固定し、candidate PRは比較実験としてcloseされています。</p>
+<p>FND-02のarchiveにもcandidate別の正式Coding Scoreは記録されていません。ここでも点数や順位は補完しません。</p>
+<h2 id="agent-fnd-02-fnd-02で増えた証拠の質という観点"><a class="heading-permalink" href="#agent-fnd-02-fnd-02で増えた証拠の質という観点" aria-label="この見出しへのリンク">#</a>FND-02で増えた「証拠の質」という観点</h2>
+<p>FND-02の比較を通して、共通benchmark方法論には検証証拠の扱いが追加されました。</p>
+<p>runtime wiringや外部から見えるcontractを評価するとき、次の3つは同じ証拠ではありません。</p>
+<ol>
+<li>production entry point / production pipelineを通すrequest-level test</li>
+<li>test側でproduction componentを組み直したhost</li>
+<li>middleware / handler / serviceの直接呼出し</li>
+</ol>
+<p>3でも局所的なロジックは確認できます。しかし、実際のDI設定、middleware順序、serializer、logging設定が本番と同じかまでは証明できません。</p>
+<p>loggingやsecret non-disclosureも同じです。test loggerが作った文字列だけを確認しても、実際のJSON console providerが何を出すかの証拠にはなりません。</p>
+<p>この知見はFND-02の比較後、共通benchmark方法論へ反映されました。</p>
+<h2 id="agent-fnd-02-final-synthesisも一度では終わらなかった"><a class="heading-permalink" href="#agent-fnd-02-final-synthesisも一度では終わらなかった" aria-label="この見出しへのリンク">#</a>Final synthesisも一度では終わらなかった</h2>
+<p>14候補を比較した後、<code>agent/issue-40-fnd-02-final-code</code> でFinal synthesisを作成しました。</p>
+<p>その後の独立レビューでは、残ったMajor 1件とMinor 1件への対応が必要になりました。最終PR #83では、承認済み判断D-01 / D-02に沿って次を修正しています。</p>
+<ul>
+<li>generic 500を <code>internal_error</code> として固定</li>
+<li>application pipeline内の404 / 405 / 415を共通error envelopeへ統一</li>
+<li>request abortとapplication内部cancellationを区別</li>
+<li>response開始後のexceptionを正常な200完了として扱わずabort</li>
+<li>実Kestrelと実JSON console出力を使ってsecret非露出を確認</li>
+</ul>
+<p>最終Head <code>d987733d1a606b21c971860565c687e4ba47ff8a</code> では、UnitTests 3/3、IntegrationTests 27/27、warning 0、CI PASS。Agent B再レビューはBlocker / Major / Minor / Nitすべて0、Claude Opus 5による最終レビューもAPPROVE / Merge Ready YESとなり、PR #83はmergeされています。</p>
+<p>ここで重要なのは、14候補を比較して統合版を作っても、それだけでmerge可能とはしなかったことです。Final synthesisにも通常の実装と同じ独立レビューを掛けました。</p>
+<h2 id="agent-fnd-02-一次資料"><a class="heading-permalink" href="#agent-fnd-02-一次資料" aria-label="この見出しへのリンク">#</a>一次資料</h2>
+<ul>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/issues/40">Issue #40</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd02-model-comparison/analysis.md">FND-02 benchmark archive</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/model-implementation-benchmark-methodology.md">共通benchmark方法論</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/83">Final synthesis PR #83</a></li>
+</ul></div>
+  </details>
+</section></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">AI回答の合成</h2>
+      <div class="prose"><h1 id="analysis-28回aiに実装させ28回ciが通ったそれでも良い実装は同じではなかった"><a class="heading-permalink" href="#analysis-28回aiに実装させ28回ciが通ったそれでも良い実装は同じではなかった" aria-label="この見出しへのリンク">#</a>28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった</h1>
+<h2 id="analysis-まず結果"><a class="heading-permalink" href="#analysis-まず結果" aria-label="この見出しへのリンク">#</a>まず結果</h2>
+<p>今回の実験は2ラウンドです。</p>
+<ul>
+<li>FND-01: 14候補</li>
+<li>FND-02: 14候補</li>
+<li>合計: 28候補</li>
+<li>archiveに記録されたcandidate CI: 28件すべてSUCCESS</li>
+</ul>
+<p>ここだけ見ると、「どのAIでも十分だった」で終わりそうです。</p>
+<p>実際には逆でした。</p>
+<p><strong>CIが緑になったところから、比較が始まりました。</strong></p>
+<p>buildとtestが通ることは重要です。ただ、それだけでは「Issueを正しく実装した」「余計なことをしていない」「本番と同じ経路を検証した」とまでは言えません。</p>
+<p>この2ラウンドで一番はっきりしたのは、AIコーディングの評価を成功・失敗の2値にすると、かなり大事な差が消えることでした。</p>
+<h2 id="analysis-2つの課題は意図的に性質が違う"><a class="heading-permalink" href="#analysis-2つの課題は意図的に性質が違う" aria-label="この見出しへのリンク">#</a>2つの課題は意図的に性質が違う</h2>
+<p>FND-01とFND-02は、同じFoundationの連続Issueですが、評価の難しさが違います。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>FND-01</th>
+<th>FND-02</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主題</td>
+<td>Solution / project / build-test CI</td>
+<td>API request共通のruntime contract</td>
+</tr>
+<tr>
+<td>主な成果物</td>
+<td>project境界、reference、compiler設定、CI</td>
+<td>error、correlation、time、technical log</td>
+</tr>
+<tr>
+<td>重要な確認</td>
+<td>必要な基盤だけを作ったか</td>
+<td>実際のHTTP / logging出力まで成立するか</td>
+</tr>
+<tr>
+<td>典型的な危険</td>
+<td>後続Issueの先取り、過剰scaffold</td>
+<td>testだけ成立しproduction wiringが未証明</td>
+</tr>
+</tbody>
+</table>
+<p>FND-01では、<strong>作りすぎないこと</strong>が品質です。</p>
+<p>FND-02では、<strong>どこを通して確認したか</strong>が品質になります。</p>
+<p>同じ「CI SUCCESS」でも、見なければならない中身が違います。</p>
+<h2 id="analysis-14のmodel-agentharnessを同じissueへ投入した"><a class="heading-permalink" href="#analysis-14のmodel-agentharnessを同じissueへ投入した" aria-label="この見出しへのリンク">#</a>14のModel + Agent/Harnessを同じIssueへ投入した</h2>
+<p>2ラウンドとも、Open Code、Codex、Cursor、Claude Codeを含む14構成を使いました。</p>
+<p>モデルにはDeepSeek、Qwen、GPT-5.6 Luna / Terra / Sol、Grok、Composer、Claude Sonnet / Opus、MiMo、MiniMaxが含まれます。</p>
+<p>ここで意図的に <code>Model + Agent/Harness</code> と書いています。</p>
+<p>AIコーディングでは、モデルだけで結果が決まりません。</p>
+<ul>
+<li>repositoryをどう探索するか</li>
+<li>どのファイルを読むか</li>
+<li>shellやGitをどう使うか</li>
+<li>build/testをどこまで回すか</li>
+<li>failure時にretryするか</li>
+<li>diffを最後に見直すか</li>
+<li>contextをどこまで保持できるか</li>
+</ul>
+<p>こうした部分はAgent/Harness側の影響を受けます。</p>
+<p>実験にはGPT-5.6 LunaをOpen CodeとCodexの両方で実行した候補もあります。同じモデル名でも実行環境が違うため、結果をそのまま「Lunaの能力」とは呼べません。</p>
+<p>Effort設定もMax、Xhigh、high、Thinking、未指定が混在しています。各候補1試行です。これは完全統制されたモデル性能試験ではありません。</p>
+<p>その代わり、<strong>実際の開発環境で何が出てくるかを見る実験</strong>として扱っています。</p>
+<h2 id="analysis-fnd-01で見たのは必要な分だけ作れるか"><a class="heading-permalink" href="#analysis-fnd-01で見たのは必要な分だけ作れるか" aria-label="この見出しへのリンク">#</a>FND-01で見たのは「必要な分だけ作れるか」</h2>
+<p>FND-01のClose conditionは、.NET 10 modular monolithのproject境界を作り、localとCIでrestore / build / testが成功することでした。</p>
+<p>ここで面白いのは、Out of scopeがかなり明確だったことです。</p>
+<ul>
+<li>HTTP error contract</li>
+<li>correlation ID</li>
+<li><code>TimeProvider</code></li>
+<li>logging</li>
+<li>PostgreSQL</li>
+<li>Testcontainers</li>
+<li>EF Core</li>
+<li>Docker Compose</li>
+<li>health endpoint</li>
+<li>Identity</li>
+<li>business code</li>
+</ul>
+<p>AIに基盤を作らせると、「将来必要そうだから」という理由で先回りしたくなる余地があります。</p>
+<p>しかし、このIssueでは先回りは加点ではありません。</p>
+<p>後続Issueが所有する責任を勝手に持ち込めば、いまは動いても、次のIssueで責任境界が崩れます。</p>
+<p>そのため共通Coding Scoreでは、Issue達成度だけでなくScope遵守15点、変更精度・最小性10点を独立して持たせました。</p>
+<p><strong>コード量が多いほど高性能、という評価をしないためです。</strong></p>
+<p>FND-01の14候補はすべてCI SUCCESSでした。その後、候補を比較してFinal integrated implementationを作り、99/100で独立レビューを通し、PR #62としてmergeしました。</p>
+<p>ただし、archiveにはcandidate個別の正式Coding Scoreが残っていません。ここは後から都合よく順位を作らず、「未記録」として扱います。</p>
+<p>この点も実験記録としては重要だと思っています。残っていない数字は補完しない方がいい。</p>
+<h2 id="analysis-fnd-02ではテストがあるだけでは足りなくなった"><a class="heading-permalink" href="#analysis-fnd-02ではテストがあるだけでは足りなくなった" aria-label="この見出しへのリンク">#</a>FND-02では「テストがある」だけでは足りなくなった</h2>
+<p>FND-02は一段難しくなります。</p>
+<p>対象はerror envelope、correlation ID、<code>TimeProvider</code>、JSON console technical logging、secret非露出です。</p>
+<p>例えばmiddlewareを直接呼び出すunit testを書けば、そのmiddleware単体の挙動は確認できます。</p>
+<p>でも、それで次まで証明できるでしょうか。</p>
+<ul>
+<li>productionのDIへ本当に登録されているか</li>
+<li>middleware順序が正しいか</li>
+<li>ASP.NET Coreのserializerを通した最終JSONが正しいか</li>
+<li>実際のlogging providerが期待したJSONを出すか</li>
+<li>request / response / logで同じcorrelation IDを追えるか</li>
+</ul>
+<p>ここは別問題です。</p>
+<p>FND-02の比較から、共通benchmark方法論には「検証証拠の忠実度」という考え方を追加しました。</p>
+<p>ざっくり言えば、証拠の強さは次のように違います。</p>
+<ol>
+<li>production entry point / production pipelineを通したrequest-level test</li>
+<li>test側でproduction componentを組み直したhost</li>
+<li>middlewareやserviceを直接呼ぶtest</li>
+</ol>
+<p>下のtestが悪いわけではありません。確認できる範囲が違います。</p>
+<p>特にsecurity、logging、serializationのように<strong>最終的に外へ出るもの</strong>を確認するときは、本番に近い経路を通さないと証拠が弱くなります。</p>
+<h2 id="analysis-final-synthesisもそのままではmergeしなかった"><a class="heading-permalink" href="#analysis-final-synthesisもそのままではmergeしなかった" aria-label="この見出しへのリンク">#</a>Final synthesisも、そのままではmergeしなかった</h2>
+<p>FND-02でも14候補のCIはすべてSUCCESSでした。</p>
+<p>比較後、良い部分を選んでFinal synthesisを作りました。ただし、それをそのままmergeはしていません。</p>
+<p>独立レビューで残ったMajor 1件とMinor 1件に対応し、最終PR #83では次まで詰めました。</p>
+<ul>
+<li>generic 500を <code>internal_error</code> に固定</li>
+<li>application pipeline内の404 / 405 / 415を共通error envelopeへ統一</li>
+<li>request abortと内部cancellationを区別</li>
+<li>response開始後に例外が起きた場合、正常な200として終わらせずabort</li>
+<li>実Kestrelでrequestを通す</li>
+<li>実JSON console outputでpositive controlとsecret非露出を確認</li>
+</ul>
+<p>最終的にUnitTests 3件、IntegrationTests 27件がPASSし、warning 0、CI PASS。Agent B再レビューではBlocker / Major / Minor / Nitがすべて0になりました。</p>
+<p>この流れは、今回の実験でかなり大事な部分です。</p>
+<p><strong>14候補を比較したから正しいのではなく、統合版ももう一度疑う。</strong></p>
+<p>多数決でもありません。</p>
+<p>「多くのAIが同じ実装をしたから採用する」ではなく、Issueと仕様に戻って、最終成果物を独立して確認します。</p>
+<h2 id="analysis-一番強いモデルを決める実験にはしなかった"><a class="heading-permalink" href="#analysis-一番強いモデルを決める実験にはしなかった" aria-label="この見出しへのリンク">#</a>「一番強いモデル」を決める実験にはしなかった</h2>
+<p>最初はモデル比較なので、順位を付けたくなります。</p>
+<p>ただ、2ラウンドやってみると、日常の開発で役立つ問いは少し違いました。</p>
+<ul>
+<li>このモデルはScopeを守りやすいか</li>
+<li>このHarnessはrepository探索とtest実行をきちんとやるか</li>
+<li>runtime contractまで確認したいとき、どんなtestを作るか</li>
+<li>速い候補を下書きに使い、別モデルでレビューできるか</li>
+<li>複数候補から統合する方が、一発勝負より安全か</li>
+</ul>
+<p>この方が実務には近い。</p>
+<p>モデルは更新されます。価格も変わります。Harnessも変わります。</p>
+<p>一方、<strong>Issue、diff、test、CIを証拠にして評価する方法</strong>は比較的長く使えます。</p>
+<h2 id="analysis-14候補を毎回作る必要はない"><a class="heading-permalink" href="#analysis-14候補を毎回作る必要はない" aria-label="この見出しへのリンク">#</a>14候補を毎回作る必要はない</h2>
+<p>14候補×2ラウンドは、普段の開発方法としては多すぎます。</p>
+<p>今回は比較実験なのでここまでやりました。</p>
+<p>実務へ持ち込むなら、私は次のくらいに縮めます。</p>
+<h3 id="analysis-通常のissue"><a class="heading-permalink" href="#analysis-通常のissue" aria-label="この見出しへのリンク">#</a>通常のIssue</h3>
+<p>1つの実装Agentで作る。</p>
+<p>その後、別のModelまたは別Harnessで独立レビューする。</p>
+<h3 id="analysis-基盤認証データ整合性など重要なissue"><a class="heading-permalink" href="#analysis-基盤認証データ整合性など重要なissue" aria-label="この見出しへのリンク">#</a>基盤・認証・データ整合性など重要なIssue</h3>
+<p>2〜3の異なるModel + Harnessへ独立実装させる。</p>
+<p>差分を比較し、良い設計を選んで統合する。</p>
+<p>最後は候補を作ったAgentとは別のReviewerで確認する。</p>
+<h3 id="analysis-評価したい新モデルが出たとき"><a class="heading-permalink" href="#analysis-評価したい新モデルが出たとき" aria-label="この見出しへのリンク">#</a>評価したい新モデルが出たとき</h3>
+<p>既存の実Issueを使い、common baseと採点基準を固定して比較する。</p>
+<p>公開ベンチマークの数字だけではなく、自分のrepositoryで何が起きるかを見る。</p>
+<p>この程度なら、実験で得たやり方を日常の開発へ持ち込みやすいと思います。</p>
+<h2 id="analysis-今回の実験で残したいもの"><a class="heading-permalink" href="#analysis-今回の実験で残したいもの" aria-label="この見出しへのリンク">#</a>今回の実験で残したいもの</h2>
+<p>モデル名より、次の流れを残したいと思っています。</p>
+<pre><code class="language-text">IssueとScopeを先に固定
+        ↓
+複数候補を独立実装
+        ↓
+Head / PR / CIをsnapshot
+        ↓
+実diffを同じ基準で比較
+        ↓
+必要ならFinal synthesis
+        ↓
+別Agentで独立レビュー
+        ↓
+merge
+</code></pre>
+<p>AIがコードを書く速度は上がっています。</p>
+<p>その分、人間側では「何を作らせるか」「どの証拠なら信用するか」「どこで別の目を入れるか」の設計が重要になります。</p>
+<p>今回の28実装は、その確認のための実験でした。</p>
+<h2 id="analysis-この結果の限界"><a class="heading-permalink" href="#analysis-この結果の限界" aria-label="この見出しへのリンク">#</a>この結果の限界</h2>
+<p>この結果を読むときには、少なくとも次を差し引く必要があります。</p>
+<ul>
+<li>各候補1試行</li>
+<li>Effort設定が統一されていない</li>
+<li>Agent/Harnessが異なる</li>
+<li>実行時間の条件も完全統制ではない</li>
+<li>FND-01 / FND-02のarchiveにはcandidate別Coding Scoreが正式記録されていない</li>
+<li>2つのIssueだけでモデル一般性能は決められない</li>
+</ul>
+<p>したがって、「モデルAはモデルBより常に強い」という結論には使いません。</p>
+<p>今回確認できたのは、<strong>同じrepository、同じIssueでも、AI実装を評価するにはCI以外の証拠が必要になる</strong>ということです。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-plain-heading">
+      <h2 id="analysis-plain-heading">AI回答の合成（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="analysis-plain-かんたんに言うと"><a class="heading-permalink" href="#analysis-plain-かんたんに言うと" aria-label="この見出しへのリンク">#</a>かんたんに言うと</h1>
+<p>同じ開発課題を14種類のAI開発環境にやらせる実験を、2回行いました。</p>
+<p>合計28実装です。</p>
+<p>そして、28件ともCIは成功しました。</p>
+<p>これだけ見ると「どれを使っても同じ」に見えますが、実際にはそうではありませんでした。</p>
+<h2 id="analysis-plain-何が違ったのか"><a class="heading-permalink" href="#analysis-plain-何が違ったのか" aria-label="この見出しへのリンク">#</a>何が違ったのか</h2>
+<p>1回目のFND-01は、.NETのproject構成やCIを作る基盤整備です。</p>
+<p>ここでは、余計な機能を追加しないことが重要でした。将来使いそうだからといって、まだ別Issueが担当するerror処理、DB、Dockerなどを先に作ると、かえって責任範囲が崩れます。</p>
+<p>2回目のFND-02は、APIのerror、correlation ID、時刻、loggingを共通化する課題です。</p>
+<p>こちらは、テストが通るだけでは不十分でした。middlewareを直接呼ぶテストと、実際のWebサーバーに近い経路を通すテストでは、確認できる範囲が違います。</p>
+<p>FND-02の最終統合版も、独立レビューで問題が見つかり、実Kestrelと実JSON logまで確認する形へ直してからmergeしました。</p>
+<h2 id="analysis-plain-ciは何を教えてくれるか"><a class="heading-permalink" href="#analysis-plain-ciは何を教えてくれるか" aria-label="この見出しへのリンク">#</a>CIは何を教えてくれるか</h2>
+<p>CI SUCCESSは大切です。</p>
+<p>少なくとも、決めたbuildやtestがそのcommitで通ったことは分かります。</p>
+<p>ただし、次までは自動的に保証しません。</p>
+<ul>
+<li>Issueの要求を全部満たしている</li>
+<li>余計な機能を追加していない</li>
+<li>本番と同じ接続や設定を通している</li>
+<li>security上の最終出力まで確認している</li>
+<li>将来のIssueの責任を先取りしていない</li>
+</ul>
+<p>このため、AIの実装比較では「CIが通ったか」に加えて、実際のGit差分とテスト内容を見る必要があります。</p>
+<h2 id="analysis-plain-モデル名だけでも決められない"><a class="heading-permalink" href="#analysis-plain-モデル名だけでも決められない" aria-label="この見出しへのリンク">#</a>モデル名だけでも決められない</h2>
+<p>今回の候補には、同じGPT-5.6 LunaをOpen CodeとCodexで動かしたものがあります。</p>
+<p>AIコーディングでは、モデルの推論能力だけでなく、開発ツール側のrepository探索、コマンド実行、context管理なども結果に影響します。</p>
+<p>なので、「モデルAが一番強い」と単純には言いません。</p>
+<p>今回評価した単位は、Model + Agent/Harness + Effort + その1回の実行です。</p>
+<h2 id="analysis-plain-普段の開発なら"><a class="heading-permalink" href="#analysis-plain-普段の開発なら" aria-label="この見出しへのリンク">#</a>普段の開発なら</h2>
+<p>14候補を毎回作る必要はありません。</p>
+<p>普通のIssueなら、1つのAIで実装し、別のAIでレビューする程度で十分です。</p>
+<p>認証、基盤、データ整合性など重要なIssueでは、2〜3候補を独立して作り、差分を見比べてから統合するやり方が使えます。</p>
+<p>最後に、統合したAI自身とは別のReviewerで確認します。</p>
+<p>今回の実験で残したいのは、特定モデルの順位ではなく、この開発の進め方です。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">合成結果の要約</h2>
+      <div class="prose"><h1 id="conclusion-まとめ"><a class="heading-permalink" href="#conclusion-まとめ" aria-label="この見出しへのリンク">#</a>まとめ</h1>
+<p>FND-01とFND-02では、14のModel + Agent/Harnessを同じIssueへ独立実装させました。合計28candidateのCIは、archive上すべてSUCCESSでした。</p>
+<p>それでも、AI実装の評価をCIだけで終わらせることはできませんでした。</p>
+<p>FND-01では、後続Issueを先取りせず、必要な基盤だけを作るScope規律と変更の最小性が重要でした。</p>
+<p>FND-02では、テストの有無よりも、production entry point、middleware、serializer、logging providerまで含めて、どの経路を通した証拠なのかが重要になりました。Final synthesisも独立レビューで修正を受け、実Kestrelと実JSON console outputまで確認してからmergeしています。</p>
+<p>この結果から、実務での評価単位はモデル名だけでは足りないと考えています。</p>
+<p>見るべきなのは <code>Model + Agent/Harness + Effort + execution attempt</code> と、その結果として残ったdiff、test、CIです。</p>
+<p>また、14候補を毎回作る必要もありません。</p>
+<p>通常のIssueなら「1実装 + 別AIの独立レビュー」。基盤、認証、データ整合性など重要なIssueなら「2〜3候補を独立実装 → diff比較 → 必要なら統合 → 別Reviewerで再確認」くらいが現実的です。</p>
+<p>今回の実験で残したいのは「どのモデルが1位だったか」より、<strong>AIに複数案を作らせても、最後はIssueと実際の成果物へ戻って判断する</strong>という進め方です。</p>
+<p>なお、FND-01 / FND-02のarchiveにはcandidate別Coding Scoreが正式記録されていません。各候補1試行でEffortやHarnessも異なるため、この記事ではモデル一般性能の順位は出していません。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
+      <h2 id="conclusion-plain-heading">合成結果の要約（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="conclusion-plain-まとめかんたん版"><a class="heading-permalink" href="#conclusion-plain-まとめかんたん版" aria-label="この見出しへのリンク">#</a>まとめ（かんたん版）</h1>
+<p>28件のAI実装は、全部CIに成功しました。</p>
+<p>でも、それだけでは「全部同じ品質」とは言えません。</p>
+<p>基盤を作るFND-01では、余計なものを作らないことが重要でした。API実行契約を作るFND-02では、本番に近い経路で本当に期待したerrorやlogが出るかを確認する必要がありました。</p>
+<p>特にFND-02では、14候補を比較して作った統合版にも独立レビューを掛け、問題を直してからmergeしています。</p>
+<p>普段の開発で14候補を毎回作る必要はありません。</p>
+<p>普通のIssueなら、1つのAIに実装させて別のAIにレビューさせる。重要なIssueなら、2〜3のAIに別々に作らせて差分を比較し、良い部分を選んでから別のAIに再レビューさせる。</p>
+<p>今のところ、この使い方が一番実務へ持ち込みやすいと考えています。</p>
+<p>モデル名だけで選ぶより、実際に残ったコードとテストを見る方が確実です。</p></div>
+      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="edit-heading">
+      <h2 id="edit-heading">Edit on GitHub</h2>
+      <p>正本ディレクトリ: <a href="https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0005-28-ai-implementations/">https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0005-28-ai-implementations/</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="comments-heading">
+      <h2 id="comments-heading">コメント</h2>
+      <p class="note">コメントは GitHub Discussions（giscus）上の第三者投稿です。読み込みと投稿にはGitHubへの接続が必要です。</p>
+      <button type="button" class="btn" id="load-giscus">コメントを読み込む</button>
+      <div id="giscus-container"
+        hidden
+        data-giscus-src="https://giscus.app/client.js"
+  data-repo="kooiei-in4a/amane-ai-lab"
+  data-repo-id="R_kgDOToJuSQ"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOToJuSc4DCT1S"
+  data-mapping="specific"
+  data-term="KB-2026-0005"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="ja"
+  data-loading="lazy"
+      ></div>
+    </section>
+
+    <footer class="article-footer panel">
+      <p>コード: MIT / コンテンツ: CC BY 4.0。AI回答は参考情報であり、事実確認は読者の責任です。</p>
+      <p><a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧へ戻る</a></p>
+    </footer>
+  </main>
+
+  <script src="../../../assets/js/site.js" defer></script>
+  <nav class="page-jump" aria-label="ページ内ジャンプ">
+    <a href="#tldr" class="page-jump-link" data-jump="tldr">要点</a>
+    <a href="#article-toc" class="page-jump-link">目次</a>
+    <a href="#main" class="page-jump-link page-jump-top" hidden>先頭へ</a>
+  </nav>
+</body>
+</html>

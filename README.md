@@ -8,6 +8,26 @@ AIエージェントによる検証結果を公開する、GitHub Pages向け静
 - `docs/adr/`
 - `docs/agent-prompts/bootstrap-implementation.md`
 
+サイト・編集方針:
+
+- `agents/policies/site-direction.md`
+
+## サイトの方向性
+
+amane AI Lab は、AIニュースや製品紹介を中心にするブログではなく、**実際のソフトウェア開発でAIエージェントを試し、その結果と証拠を公開するLab** として運用します。
+
+公開内容は大きく3層に分けます。
+
+| 層 | 役割 |
+|---|---|
+| Articles | 実験から何が分かったかを読みやすく伝える |
+| Benchmarks | 試行ランキング、全候補、実行条件、生データを見せる |
+| GitHub | Issue、branch、SHA、PR、CI、コードなど一次証拠を残す |
+
+ランキングは、その試行で正式な採点結果がある場合は分かりやすく表示します。ただし、特定Issue・Model + Agent/Harness + Effort・1回の実行結果であり、モデル一般の性能順位とは扱いません。
+
+詳細な判断基準は `agents/policies/site-direction.md` を正本とします。
+
 ## 正本と生成物
 
 | 種別 | パス |
@@ -15,6 +35,7 @@ AIエージェントによる検証結果を公開する、GitHub Pages向け静
 | 記事正本 | `content/articles/` |
 | 公開HTML | `articles/`（生成物） |
 | 記事一覧 | `data/articles.json`（生成物） |
+| Benchmark公開ページ | `benchmarks/` |
 
 生成物を直接編集しないでください。
 
@@ -44,6 +65,8 @@ python3 scripts/check_sensitive_data.py
 git add content articles data index.html sitemap.xml feed.xml
 git commit -m "content: add article"
 ```
+
+記事・Benchmark・ランキング・UIを追加または変更する場合は、先に `agents/policies/site-direction.md` を確認してください。
 
 ## AIエージェント
 

@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった — 資料版 — amane AI Lab Knowledge Base</title>
-  <meta name="description" content="14のModel + Agent/Harnessを、.NET基盤構築とAPI実行契約の2課題で独立実装した。候補28件のCIはすべて成功したが、実務で見るべき差は要件適合、Scope、runtime wiring、テストの証拠、変更の最小性に残った。モデル名だけでなく、実行環境と検証方法まで含めて評価する必要がある。">
+  <meta name="description" content="14のAIコーディング構成を、性質の違う2つのIssueで比較した。候補28件のCIはすべて成功。それでも、実コード、Scope、テストの質、本番に近い検証まで見ると差は残った。">
   <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/summary/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった — 資料版">
-  <meta property="og:description" content="14のModel + Agent/Harnessを、.NET基盤構築とAPI実行契約の2課題で独立実装した。候補28件のCIはすべて成功したが、実務で見るべき差は要件適合、Scope、runtime wiring、テストの証拠、変更の最小性に残った。モデル名だけでなく、実行環境と検証方法まで含めて評価する必要がある。">
+  <meta property="og:description" content="14のAIコーディング構成を、性質の違う2つのIssueで比較した。候補28件のCIはすべて成功。それでも、実コード、Scope、テストの質、本番に近い検証まで見ると差は残った。">
   <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/summary/">
   <meta property="og:site_name" content="amane-ai-lab">
   <meta name="twitter:card" content="summary">
@@ -18,10 +18,11 @@
   <a class="skip-link" href="#main">本文へスキップ</a>
   <header class="site-header">
     <div class="wrap">
-      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane-ai-lab</a></p>
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane AI Lab</a></p>
       <nav aria-label="サイト">
         <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/">記事本文</a>
-        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+        <a href="../../../../benchmarks/">Benchmarks</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#articles">記事</a>
         <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
       </nav>
     </div>
@@ -78,6 +79,7 @@
         <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#analysis-plain-heading">合成（平易）</a> ·
         <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#conclusion-heading">要約</a> ·
         <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/#conclusion-plain-heading">要約（平易）</a> ·
+        <a href="../../../../benchmarks/">Benchmarks</a> ·
         <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
       </p>
     </footer>

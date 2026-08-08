@@ -17,7 +17,37 @@
 
 buildとtestが通ることは重要です。ただ、それだけでは「Issueを正しく実装した」「余計なことをしていない」「本番と同じ経路を検証した」とまでは言えません。
 
-この2ラウンドで一番はっきりしたのは、AIコーディングの評価を成功・失敗の2値にすると、かなり大事な差が消えることでした。
+## この試行でのランキング
+
+順位は隠さず出します。ただし、これはこのIssue、このHarness、このEffort、この1回の実行結果です。
+
+### FND-02 実装 — Coding Score
+
+| 順位 | Model | Harness | Score |
+|---:|---|---|---:|
+| 1 | **GPT-5.6 Sol** | **Codex** | **96** |
+| 2 | **GPT-5.6 Terra** | **Codex** | **95** |
+| 3 | **GPT-5.6 Luna** | **Codex** | **94** |
+| 4 | Grok 4.5 | Cursor | 92 |
+| 5 | GPT-5.6 Luna | Open Code | 84 |
+
+実務速度を10%加味したPractical Scoreでは、1位 Terra / Codex、2位 Sol / Codex、3位 Grok / Cursorでした。
+
+### FND-02 独立レビュー
+
+同じFinal Synthesisへ17モデルで独立レビューを掛けた結果です。
+
+| 順位 | Model | Harness | Score |
+|---:|---|---|---:|
+| 1 | **GPT-5.6 Sol xHigh** | **Codex** | **100.0** |
+| 2 | **Claude Opus 5 xhigh** | **Claude Code** | **92.5** |
+| 3 | **GPT-5.6 Luna** | **Open Code** | **88.0** |
+| 4 | ChatGPT Opus 5.6 Sol xhigh | Browser | 87.5 |
+| 5 | GPT-5.6 Luna xHigh | Codex | 82.0 |
+
+全候補、処理時間、PR、CI、評価全文は [Benchmarks](https://kooiei-in4a.github.io/amane-ai-lab/benchmarks/) に分けて載せています。
+
+FND-01は候補別の正式Coding Score表がarchiveに残っていません。PR、CI、処理時間は残っているので生データは公開しますが、後から都合よく順位は作っていません。
 
 ## 2つの課題は意図的に性質が違う
 
@@ -42,9 +72,7 @@ FND-02では、**どこを通して確認したか**が品質になります。
 
 モデルにはDeepSeek、Qwen、GPT-5.6 Luna / Terra / Sol、Grok、Composer、Claude Sonnet / Opus、MiMo、MiniMaxが含まれます。
 
-ここで意図的に `Model + Agent/Harness` と書いています。
-
-AIコーディングでは、モデルだけで結果が決まりません。
+ここで `Model + Agent/Harness` と書いているのは、モデルだけで結果が決まらないからです。
 
 - repositoryをどう探索するか
 - どのファイルを読むか
@@ -58,7 +86,7 @@ AIコーディングでは、モデルだけで結果が決まりません。
 
 実験にはGPT-5.6 LunaをOpen CodeとCodexの両方で実行した候補もあります。同じモデル名でも実行環境が違うため、結果をそのまま「Lunaの能力」とは呼べません。
 
-Effort設定もMax、Xhigh、high、Thinking、未指定が混在しています。各候補1試行です。これは完全統制されたモデル性能試験ではありません。
+Effort設定もMax、Xhigh、high、Thinking、未指定が混在しています。各候補1試行です。完全統制されたモデル性能試験ではありません。
 
 その代わり、**実際の開発環境で何が出てくるかを見る実験**として扱っています。
 
@@ -66,7 +94,7 @@ Effort設定もMax、Xhigh、high、Thinking、未指定が混在しています
 
 FND-01のClose conditionは、.NET 10 modular monolithのproject境界を作り、localとCIでrestore / build / testが成功することでした。
 
-ここで面白いのは、Out of scopeがかなり明確だったことです。
+Out of scopeもかなり明確でした。
 
 - HTTP error contract
 - correlation ID
@@ -92,9 +120,7 @@ AIに基盤を作らせると、「将来必要そうだから」という理由
 
 FND-01の14候補はすべてCI SUCCESSでした。その後、候補を比較してFinal integrated implementationを作り、99/100で独立レビューを通し、PR #62としてmergeしました。
 
-ただし、archiveにはcandidate個別の正式Coding Scoreが残っていません。ここは後から都合よく順位を作らず、「未記録」として扱います。
-
-この点も実験記録としては重要だと思っています。残っていない数字は補完しない方がいい。
+候補別の正式Coding Score表はarchiveされていません。これは記録上の欠落なので、今後同じ実験をするときはランキング表そのものも正本として残すようにします。
 
 ## FND-02では「テストがある」だけでは足りなくなった
 
@@ -151,19 +177,23 @@ FND-02でも14候補のCIはすべてSUCCESSでした。
 
 「多くのAIが同じ実装をしたから採用する」ではなく、Issueと仕様に戻って、最終成果物を独立して確認します。
 
-## 「一番強いモデル」を決める実験にはしなかった
+## 順位は出す。ただし、そのまま一般化しない
 
-最初はモデル比較なので、順位を付けたくなります。
+ランキングは分かりやすいし、実際に役に立ちます。
 
-ただ、2ラウンドやってみると、日常の開発で役立つ問いは少し違いました。
+今回なら、FND-02実装ではCodex上のGPT-5.6 Sol / Terra / Lunaが上位3つでした。独立レビューではGPT-5.6 Sol / Codexが1位、Claude Opus 5 / Claude Codeが2位でした。
 
-- このモデルはScopeを守りやすいか
-- このHarnessはrepository探索とtest実行をきちんとやるか
-- runtime contractまで確認したいとき、どんなtestを作るか
-- 速い候補を下書きに使い、別モデルでレビューできるか
-- 複数候補から統合する方が、一発勝負より安全か
+ここから「GPTは常にClaudeより強い」とは言いません。
 
-この方が実務には近い。
+この実験で言えるのは、**この課題、この設定、この実行環境ではこの順位になった**というところまでです。
+
+順位を入口にしつつ、実務では次も見ます。
+
+- Scopeを守ったか
+- テストの証拠はどこまで強いか
+- 不要な変更が多くないか
+- 速度を含めると順位がどう変わるか
+- 同じモデルでもHarnessを変えるとどうなるか
 
 モデルは更新されます。価格も変わります。Harnessも変わります。
 
@@ -201,7 +231,7 @@ FND-02でも14候補のCIはすべてSUCCESSでした。
 
 ## 今回の実験で残したいもの
 
-モデル名より、次の流れを残したいと思っています。
+モデル名だけでなく、次の流れも残したいと思っています。
 
 ```text
 IssueとScopeを先に固定
@@ -233,7 +263,7 @@ AIがコードを書く速度は上がっています。
 - Effort設定が統一されていない
 - Agent/Harnessが異なる
 - 実行時間の条件も完全統制ではない
-- FND-01 / FND-02のarchiveにはcandidate別Coding Scoreが正式記録されていない
+- FND-01の候補別Coding Score表は保存されていない
 - 2つのIssueだけでモデル一般性能は決められない
 
 したがって、「モデルAはモデルBより常に強い」という結論には使いません。

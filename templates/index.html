@@ -20,9 +20,10 @@
   <a class="skip-link" href="#main">本文へスキップ</a>
   <header class="site-header">
     <div class="wrap">
-      <p class="brand"><a href="./">{{SITE_NAME}}</a></p>
+      <p class="brand"><a href="./">amane AI Lab</a></p>
       <nav aria-label="サイト">
-        <a href="./">記事一覧</a>
+        <a href="#about">このLabについて</a>
+        <a href="#articles">記事一覧</a>
         <a href="{{REPO_URL}}">GitHub</a>
         <a href="./feed.xml">Feed</a>
       </nav>
@@ -30,14 +31,45 @@
   </header>
 
   <main id="main" class="wrap home-page">
-    <section class="home-intro">
-      <h1>{{SITE_NAME}}</h1>
-      <p class="lede">{{DESCRIPTION}}</p>
+    <section class="home-intro" id="about">
+      <p class="note">Koo / AIエンジニア</p>
+      <h1>amane AI Lab</h1>
+      <p class="lede">実際のソフトウェア開発で、AIエージェントを試しています。</p>
+      <p>
+        同じGitHub Issueを複数のAIに実装させて差分を比べたり、レビューの見逃しや過剰指摘を調べたりしています。
+        モデルの評判だけではなく、実際のコード、テスト、CI、レビュー結果まで見て判断します。
+      </p>
+      <p>
+        うまくいった結果だけを載せるサイトではありません。条件、失敗、迷った点もできるだけ残します。
+        「結局、開発でどう使えるのか」まで整理するのがこのLabの目的です。
+      </p>
       <p class="count">公開対象を含む記事: <strong id="article-count">{{ARTICLE_COUNT}}</strong> 件</p>
     </section>
 
-    <section class="filters panel" aria-labelledby="filter-heading">
-      <h2 id="filter-heading">絞り込み</h2>
+    <section class="panel" aria-labelledby="lab-heading">
+      <h2 id="lab-heading">このLabでやっていること</h2>
+      <ul>
+        <li><strong>実装比較</strong> — 同じ課題を複数のModel + Agent/Harnessで実装し、Git差分とテスト結果を比べます。</li>
+        <li><strong>レビュー検証</strong> — AIが何を見つけ、何を見逃し、どこまで直せるかを実際の成果物で確認します。</li>
+        <li><strong>開発方法の検討</strong> — 比較して終わりではなく、次の実装やレビューをどう変えるかまで考えます。</li>
+      </ul>
+      <p class="note">
+        単発の結果で「このモデルが最強」とは決めません。モデル、ツール、Effort、実行条件が違えば結果も変わるためです。
+      </p>
+    </section>
+
+    <section class="panel" aria-labelledby="author-heading">
+      <h2 id="author-heading">書いている人</h2>
+      <p><strong>Koo / AIエンジニア</strong></p>
+      <p>
+        AIを使った開発を実際のリポジトリで試しながら、使えた方法と使えなかった方法を記録しています。
+        流行のモデル名より、「そのIssueで何ができたか」を重視しています。
+      </p>
+      <p><a href="{{REPO_URL}}">GitHubで実験の元データを見る</a></p>
+    </section>
+
+    <section class="filters panel" aria-labelledby="filter-heading" id="articles">
+      <h2 id="filter-heading">記事を探す</h2>
       <div class="filter-grid">
         <label>
           キーワード
@@ -77,7 +109,7 @@
   </main>
 
   <footer class="site-footer wrap">
-    <p><a href="{{REPO_URL}}">GitHubリポジトリ</a> · コード MIT / コンテンツ CC BY 4.0</p>
+    <p>Koo / AIエンジニア · <a href="{{REPO_URL}}">GitHubリポジトリ</a> · コード MIT / コンテンツ CC BY 4.0</p>
   </footer>
 
   <script src="{{ASSET_PREFIX}}/assets/js/site.js" defer></script>

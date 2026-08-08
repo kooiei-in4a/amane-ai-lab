@@ -14,6 +14,12 @@ AIエージェントによる調査・比較・検証結果を、再利用可能
 - `docs/adr/0002-structured-content-source-of-truth.md`
 - `docs/adr/0003-ai-agent-governance.md`
 
+サイト・編集方針:
+
+- `agents/policies/site-direction.md`
+
+記事構成、Benchmark、ランキング、生データ、文章、ナビゲーションなどの判断では、このサイト・編集方針を参照する。
+
 ## 正本と生成物
 
 | 種別 | パス | 扱い |
@@ -28,15 +34,16 @@ AIエージェントによる調査・比較・検証結果を、再利用可能
 ## 標準作業手順
 
 1. この `AGENTS.md` を読む
-2. 対象 workflow を `agents/workflows/` から読む
-3. 変更範囲を特定する
-4. 正本または許可されたソースを変更する
-5. `python3 scripts/build_site.py` を実行する
-6. `python3 scripts/validate_content.py` を実行する
-7. `python3 scripts/check_sensitive_data.py` を実行する
-8. Git差分を確認する
-9. セルフレビューする
-10. 必要な場合のみ Draft PR を作成する
+2. 記事・Benchmark・UI・発信方針に関わる場合は `agents/policies/site-direction.md` を読む
+3. 対象 workflow を `agents/workflows/` から読む
+4. 変更範囲を特定する
+5. 正本または許可されたソースを変更する
+6. `python3 scripts/build_site.py` を実行する
+7. `python3 scripts/validate_content.py` を実行する
+8. `python3 scripts/check_sensitive_data.py` を実行する
+9. Git差分を確認する
+10. セルフレビューする
+11. 必要な場合のみ Draft PR を作成する
 
 ## 禁止操作
 
@@ -84,6 +91,7 @@ AIエージェントによる調査・比較・検証結果を、再利用可能
 
 ## 参照
 
+- サイト・編集方針: `agents/policies/site-direction.md`
 - ポリシー: `agents/policies/`
 - 役割: `agents/roles/`
 - ワークフロー: `agents/workflows/`

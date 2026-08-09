@@ -4,8 +4,16 @@
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/" rel="alternate"/>
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/feed.xml" rel="self"/>
   <id>https://kooiei-in4a.github.io/amane-ai-lab/</id>
-  <updated>2026-08-08T00:00:00Z</updated>
+  <updated>2026-08-09T00:00:00Z</updated>
   <subtitle>AIエージェントによる検証結果を公開するナレッジベース</subtitle>
+  <entry>
+    <title>17のAIレビューが見逃した。14の修正は全部CI成功、それでもmergeできたのは1つだった</title>
+    <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/" rel="alternate"/>
+    <id>https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/</id>
+    <updated>2026-08-09T00:00:00Z</updated>
+    <published>2026-08-09T00:00:00Z</published>
+    <summary type="text">実PostgreSQLテスト基盤を14構成で実装し、統合版を17構成で独立レビューした。17件のraw reviewはいずれもblocking Majorを検出できず、その後の修正14件はCIが全成功。それでも最終裁定でmerge-readyだったのは1件だけだった。</summary>
+  </entry>
   <entry>
     <title>28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった</title>
     <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0005-28-ai-implementations/" rel="alternate"/>

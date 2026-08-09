@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>17のAIレビューが見逃した。14の修正は全部CI成功、それでもmergeできたのは1つだった — 資料版 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="実PostgreSQLテスト基盤を14構成で実装し、統合版を17構成で独立レビューした。17件のraw reviewはいずれもblocking Majorを検出できず、その後の修正14件はCIが全成功。それでも最終裁定でmerge-readyだったのは1件だけだった。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/summary/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="17のAIレビューが見逃した。14の修正は全部CI成功、それでもmergeできたのは1つだった — 資料版">
+  <meta property="og:description" content="実PostgreSQLテスト基盤を14構成で実装し、統合版を17構成で独立レビューした。17件のraw reviewはいずれもblocking Majorを検出できず、その後の修正14件はCIが全成功。それでも最終裁定でmerge-readyだったのは1件だけだった。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/summary/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="../../../../assets/css/site.css">
+  <link rel="stylesheet" href="../../../../assets/css/nav-benchmark.css">
+</head>
+<body class="summary-doc-page">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane AI Lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/">記事本文</a>
+        <a href="../../../../benchmarks/">Benchmarks</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#articles">記事</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap summary-doc">
+    <header class="summary-doc-header panel">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0006</span>
+        <span class="pill">資料版</span>
+        <span>更新: 2026-08-09</span>
+      </p>
+      <h1>まとめ</h1>
+      <p class="summary-doc-subtitle">合成結果を、わかりやすい言葉で短くまとめた資料版。</p>
+      <nav class="summary-source-links" aria-label="記事本文の関連セクション">
+        <p class="summary-source-links-label">記事本文の関連セクション</p>
+        <ul>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#background-heading">検討に至った背景</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#prompt-heading">調査プロンプト</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#agents-heading">AIエージェントの回答</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#analysis-heading">AI回答の合成</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#analysis-plain-heading">合成（わかりやすい説明）</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#conclusion-heading">要約</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#conclusion-plain-heading">要約（わかりやすい説明）</a></li>
+        </ul>
+      </nav>
+      <p class="summary-doc-nav">
+        <a class="btn btn-secondary" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/">← 記事本文へ戻る</a>
+      </p>
+    </header>
+
+    <div class="summary-doc-layout">
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol></ol></nav>
+      <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
+        <h1>まとめ</h1>
+<p>今回の実験では、AIにコードを書かせるだけでなく、別のAIにレビューさせ、見つかった問題をさらに複数のAIに直させました。</p>
+<p>それでも、AIを増やせば自動的に安全になるわけではありませんでした。</p>
+<p>17のレビュー結果は、後から分かった重大なcleanup問題を見つけられていませんでした。問題を教えた後の14修正案は全部CIが成功しましたが、そのままmergeできると判断できたのは1件だけです。</p>
+<p>理由は、通常のテストでは起きにくい失敗経路にありました。</p>
+<p>containerを作った直後や削除の途中で失敗すると、管理objectが壊れたりIDを失ったりして、実際のcontainerだけが残る可能性があります。</p>
+<p>最も強かった修正は、管理objectやcontainer IDだけに頼らず、作成前から専用labelでownershipを持つ方法でした。</p>
+<p>この結果から、重要なコードでは次を確認した方がよいと考えています。</p>
+<ul>
+<li>CIが何を確認していて、何を確認していないか</li>
+<li>失敗したときresourceを誰が回収するか</li>
+<li>依存libraryの実際の挙動を確認したか</li>
+<li>複数AIの意見が同じ前提に依存していないか</li>
+</ul>
+<p>AIの多数決より、最後に一次証拠へ戻ることが重要でした。</p>
+<p>全候補の詳しい順位やスコアはBenchmarksページで公開します。</p>
+      </article>
+    </div>
+
+    <footer class="summary-doc-footer panel">
+      <p class="note">この資料は記事の「合成結果の要約（わかりやすい説明）」（<code>conclusion-plain.md</code>）から自動生成しています。</p>
+      <p>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#background-heading">背景</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#prompt-heading">プロンプト</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#agents-heading">AI回答</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#analysis-heading">合成</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#analysis-plain-heading">合成（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#conclusion-heading">要約</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/#conclusion-plain-heading">要約（平易）</a> ·
+        <a href="../../../../benchmarks/">Benchmarks</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

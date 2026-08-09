@@ -56,7 +56,7 @@
     </header>
 
     <div class="summary-doc-layout">
-      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol></ol></nav>
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol><li><a href="#section-1">FND-04で変えること</a></li></ol></nav>
       <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
         <h1>まとめ</h1>
 <p>今回の実験では、AIにコードを書かせるだけでなく、別のAIにレビューさせ、見つかった問題をさらに複数のAIに直させました。</p>
@@ -73,6 +73,20 @@
 <li>複数AIの意見が同じ前提に依存していないか</li>
 </ul>
 <p>AIの多数決より、最後に一次証拠へ戻ることが重要でした。</p>
+<h2 id="section-1">FND-04で変えること</h2>
+<p>次のFND-04では、FND-03と同じやり方をそのまま繰り返しません。</p>
+<ul>
+<li>実装候補は14から8程度へ減らす</li>
+<li>EF Core / Npgsqlの前提やfailure pathをcandidate実行前に確認する</li>
+<li>evaluator専用のadversarial probeを事前に用意する</li>
+<li>セルフレビューをH0実装、Formal Self-Review、H1修正に分けて効果を測る</li>
+<li>Reviewer数を減らし、仕様、framework、failure path、test assuranceなど役割を分ける</li>
+<li>Real Final Synthesisとは別に、意図的な欠陥を入れたControlled Mutantでreview能力を測る</li>
+<li>Judgeはまず2件とし、重大な不一致がある場合だけ3件目を使う</li>
+<li>Major修正は原則として上位候補だけに絞る</li>
+<li>production mergeとbenchmark archiveを別工程として扱う</li>
+</ul>
+<p>また、実装点数だけでなく、Self-Review Gain、External Review Quality、Gold Alignment、Execution Reliability、Time / Costを分けて記録する予定です。</p>
 <p>全候補の詳しい順位やスコアはBenchmarksページで公開します。</p>
       </article>
     </div>

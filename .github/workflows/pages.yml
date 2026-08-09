@@ -34,6 +34,14 @@ jobs:
       - name: Build site (first pass)
         run: python scripts/build_site.py
 
+      - name: Capture generated FND-03 pages
+        uses: actions/upload-artifact@v4
+        with:
+          name: fnd03-generated-pages
+          path: |
+            articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/index.html
+            articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/summary/index.html
+
       - name: Fail on generated drift
         shell: bash
         run: |
@@ -42,16 +50,6 @@ jobs:
             echo "Generated files are out of date. Refusing to assemble a Pages artifact."
             printf '%s\n' "$changes"
             git --no-pager diff -- articles data index.html sitemap.xml feed.xml
-            for generated in \
-              articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/index.html \
-              articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/summary/index.html; do
-              if [[ -f "$generated" ]]; then
-                echo "GENERATED_BASE64_BEGIN:$generated"
-                base64 -w0 "$generated"
-                echo
-                echo "GENERATED_BASE64_END:$generated"
-              fi
-            done
             exit 1
           fi
 

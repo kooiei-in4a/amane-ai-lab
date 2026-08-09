@@ -39,6 +39,18 @@
 
     <section class="benchmark-grid" aria-label="主要ベンチマーク">
       <article class="benchmark-card">
+        <p class="pill">FND-03 / Major Fix</p>
+        <h2>PostgreSQL test基盤 — 14修正候補</h2>
+        <p>14 / 14 exact Head CI SUCCESS。それでも3-Judge裁定でmerge-readyは1 / 14。</p>
+        <ol class="podium">
+          <li><span class="podium-rank">1</span><span><strong>GPT-5.6 Sol</strong><br>Codex</span><span class="podium-score">94</span></li>
+          <li><span class="podium-rank">2</span><span><strong>Claude Opus 5</strong><br>Claude Code</span><span class="podium-score">80</span></li>
+          <li><span class="podium-rank">3</span><span><strong>GPT-5.6 Luna</strong><br>Codex</span><span class="podium-score">77</span></li>
+        </ol>
+        <p class="benchmark-note"><a href="./fnd03/">初期実装・17レビュー・Major修正の全結果を見る</a></p>
+      </article>
+
+      <article class="benchmark-card">
         <p class="pill">FND-02 / Implementation</p>
         <h2>API実行契約 — 14候補</h2>
         <p>error、correlation ID、TimeProvider、JSON technical loggingを実装。Coding Scoreで比較。</p>
@@ -66,6 +78,27 @@
         <p>Solution、project境界、build/test CIを同じIssueで比較。候補PR・CI・処理時間は保存済みです。</p>
         <p class="benchmark-note">当時の候補別Coding Score表はarchiveに保存されていません。順位を後付けせず、生データを公開しています。</p>
       </article>
+    </section>
+
+    <section class="panel benchmark-section" id="fnd03">
+      <h2>FND-03 完全実験</h2>
+      <p>Issue #41「実PostgreSQL integration test基盤を確立する」。初期実装14構成、Final Synthesisへの17-model independent review、cleanup Major修正14構成、3-Judge adjudication、最終production outcomeまでを一つのarchiveとして追跡できます。</p>
+      <div class="data-table-wrap">
+        <table class="benchmark-table">
+          <thead><tr><th>Stage</th><th>結果</th><th>詳細</th></tr></thead>
+          <tbody>
+            <tr><td>Initial implementation</td><td>1位 GPT-5.6 Sol / Codex — 96</td><td>13 scored / 1 stopped</td></tr>
+            <tr><td>Independent review</td><td>blocking Gold G-01検出 0 / 17</td><td>Goldはpost-hoc adjudication</td></tr>
+            <tr><td>Major fix</td><td>14 / 14 CI SUCCESS、merge-ready 1 / 14</td><td>1位 GPT-5.6 Sol / Codex — 94</td></tr>
+            <tr><td>Production</td><td>Agent B APPROVE / findings 0</td><td>PR #104 MERGED / Issue #41 CLOSED</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="raw-links">
+        <a href="./fnd03/">FND-03 詳細Benchmark</a>
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/tree/main/docs/benchmarks/fnd03-model-comparison">Canonical archive</a>
+        <a href="../articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/">関連記事</a>
+      </div>
     </section>
 
     <section class="panel benchmark-section" id="fnd02-implementation">

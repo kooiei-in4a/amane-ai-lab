@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FND-03 Benchmark — amane AI Lab</title>
+  <meta name="description" content="FND-03 実PostgreSQL integration test基盤の初期実装、17-model independent review、14-model Major修正、最終production outcomeを一次証拠とともにまとめます。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/benchmarks/fnd03/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="FND-03 Benchmark — amane AI Lab">
+  <meta property="og:description" content="実装14候補、独立レビュー17件、Major修正14候補。CI greenだけでは見えなかったfailure-path correctnessを比較。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/benchmarks/fnd03/">
+  <meta property="og:site_name" content="amane AI Lab">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="../../assets/css/site.css">
+  <link rel="stylesheet" href="../../assets/css/benchmarks.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="../../">amane AI Lab</a></p>
+      <nav aria-label="サイト">
+        <a href="../../#articles">記事</a>
+        <a href="../" aria-current="page">Benchmarks</a>
+        <a href="../../#about">このLabについて</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap benchmarks-page">
+    <header class="benchmarks-hero">
+      <p class="note">FND-03 / Complete experiment archive</p>
+      <h1>実PostgreSQL test基盤 — 実装・レビュー・Major修正</h1>
+      <p class="lede">Issue #41を、実装能力・独立レビュー能力・既知Majorの修正能力に分けて比較しました。各Stageは目的とscore semanticsが異なるため、ランキングを相互に混ぜません。</p>
+      <p class="benchmark-note">ここでの順位は、そのIssue・そのModel + Agent/Harness + Effort・その1回の実行結果です。モデル一般の性能順位ではありません。</p>
+      <div class="raw-links">
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/issues/41">Issue #41</a>
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/tree/main/docs/benchmarks/fnd03-model-comparison">Canonical archive</a>
+        <a href="../../articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/">関連記事</a>
+      </div>
+    </header>
+
+    <section class="benchmark-grid" aria-label="FND-03主要結果">
+      <article class="benchmark-card">
+        <p class="pill">Stage 1 / Implementation</p>
+        <h2>初期実装 — 14候補</h2>
+        <p>13候補を100点で採点。1候補はstopped / no-change。</p>
+        <ol class="podium">
+          <li><span class="podium-rank">1</span><span><strong>GPT-5.6 Sol</strong><br>Codex</span><span class="podium-score">96</span></li>
+          <li><span class="podium-rank">2</span><span><strong>GPT-5.6 Terra</strong><br>Codex</span><span class="podium-score">94</span></li>
+          <li><span class="podium-rank">3</span><span><strong>GPT-5.6 Luna</strong><br>Open Code</span><span class="podium-score">93</span></li>
+        </ol>
+      </article>
+
+      <article class="benchmark-card">
+        <p class="pill">Stage 3-4 / Review</p>
+        <h2>独立レビュー — 17構成</h2>
+        <p>後から確定したblocking Gold G-01を実質検出したReviewerは0 / 17。</p>
+        <p class="benchmark-note">Goldは完全blindな事前locked Goldではなく、追加一次source突合を含むpost-hoc adjudicationです。</p>
+      </article>
+
+      <article class="benchmark-card">
+        <p class="pill">Stage 5-6 / Major Fix</p>
+        <h2>Major修正 — 14候補</h2>
+        <p>14 / 14 exact Head CI SUCCESS。それでも3-Judge裁定でmerge-readyは1 / 14。</p>
+        <ol class="podium">
+          <li><span class="podium-rank">1</span><span><strong>GPT-5.6 Sol</strong><br>Codex</span><span class="podium-score">94</span></li>
+          <li><span class="podium-rank">2</span><span><strong>Claude Opus 5</strong><br>Claude Code</span><span class="podium-score">80</span></li>
+          <li><span class="podium-rank">3</span><span><strong>GPT-5.6 Luna</strong><br>Codex</span><span class="podium-score">77</span></li>
+        </ol>
+      </article>
+    </section>
+
+    <section class="panel benchmark-section" id="initial-implementation">
+      <h2>Stage 1 — 初期実装ランキング</h2>
+      <p>Common Base <code>95a8e50e6b68025e3386fdd0672bd73bcbaa60a0</code> から独立実装。主ランキングは実装品質100点です。</p>
+      <div class="data-table-wrap">
+        <table class="benchmark-table">
+          <thead><tr><th class="num">順位</th><th>Model</th><th>Harness</th><th class="num">Score</th><th class="num">Time</th><th>PR / CI</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td><strong>GPT-5.6 Sol</strong></td><td>Codex</td><td class="num"><strong>96</strong></td><td class="num">15</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/93">PR #93</a> / SUCCESS</td></tr>
+            <tr><td class="num">2</td><td><strong>GPT-5.6 Terra</strong></td><td>Codex</td><td class="num"><strong>94</strong></td><td class="num">16</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/98">PR #98</a> / SUCCESS</td></tr>
+            <tr><td class="num">3</td><td><strong>GPT-5.6 Luna</strong></td><td>Open Code</td><td class="num"><strong>93</strong></td><td class="num">30</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/100">PR #100</a> / SUCCESS</td></tr>
+            <tr><td class="num">4</td><td>Claude Sonnet 5</td><td>Claude Code</td><td class="num">92</td><td class="num">19</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/94">PR #94</a> / SUCCESS</td></tr>
+            <tr><td class="num">5</td><td>Qwen3.7 Plus</td><td>Open Code</td><td class="num">87</td><td class="num">14</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/95">PR #95</a> / SUCCESS</td></tr>
+            <tr><td class="num">6=</td><td>DeepSeek V4 Pro</td><td>Open Code</td><td class="num">83</td><td class="num">20</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/90">PR #90</a> / SUCCESS</td></tr>
+            <tr><td class="num">6=</td><td>GPT-5.6 Luna</td><td>Codex</td><td class="num">83</td><td class="num">19</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/96">PR #96</a> / SUCCESS</td></tr>
+            <tr><td class="num">6=</td><td>Claude Opus 5</td><td>Claude Code</td><td class="num">83</td><td class="num">32</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/97">PR #97</a> / SUCCESS</td></tr>
+            <tr><td class="num">9</td><td>MiMo-V2.5-Pro</td><td>Open Code</td><td class="num">82</td><td class="num">24</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/101">PR #101</a> / SUCCESS</td></tr>
+            <tr><td class="num">10=</td><td>DeepSeek V4 Flash</td><td>Open Code</td><td class="num">80</td><td class="num">64</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/102">PR #102</a> / SUCCESS</td></tr>
+            <tr><td class="num">10=</td><td>Composer 2.5</td><td>Cursor</td><td class="num">80</td><td class="num">9</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/89">PR #89</a> / SUCCESS</td></tr>
+            <tr><td class="num">12</td><td>Grok 4.5</td><td>Cursor</td><td class="num">68</td><td class="num">9</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/88">PR #88</a> / SUCCESS</td></tr>
+            <tr><td class="num">13</td><td>MiMo-V2.5</td><td>Open Code</td><td class="num">55</td><td class="num">26</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/99">PR #99</a> / SUCCESS</td></tr>
+            <tr><td class="num">—</td><td>MiniMax M3</td><td>Open Code</td><td class="num">N/A</td><td class="num">—</td><td>stopped / no-change</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="benchmark-note">Timeはarchiveの記録値をそのまま掲載しています。初期summaryでは単位を推定していません。</p>
+      <div class="raw-links">
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/summary.md">要約</a>
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/implementation-evaluation.md">正式評価</a>
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/archive-manifest.json">Archive manifest</a>
+      </div>
+    </section>
+
+    <section class="panel benchmark-section" id="review-benchmark">
+      <h2>Stage 3-4 — 17-model independent review</h2>
+      <p>Final Synthesis PR #104 / Head <code>91e3fca...</code> を同一条件でレビュー。下表のscoreはpost-hoc synthesisで保存されたReview Quality + Gold Alignmentです。</p>
+      <p class="benchmark-note"><strong>重要:</strong> blocking Gold G-01を実質検出したReviewerは0 / 17です。Goldはraw review収集後の追加一次source突合で明確化されたため、完全blindな事前locked Gold benchmarkとは表現しません。</p>
+      <div class="data-table-wrap">
+        <table class="benchmark-table">
+          <thead><tr><th class="num">順位</th><th>Model</th><th>Harness</th><th class="num">Score</th><th>Outcome</th><th>G-01</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td><strong>Claude Opus 5</strong></td><td>Claude Code</td><td class="num"><strong>66.0</strong></td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">2</td><td><strong>Claude Sonnet 5</strong></td><td>Claude Code</td><td class="num"><strong>65.5</strong></td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">3</td><td><strong>GPT-5.6 Sol</strong></td><td>Codex</td><td class="num"><strong>60.5</strong></td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">4</td><td>ChatGPT Opus 5.6 Sol</td><td>Browser</td><td class="num">57.0</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">5</td><td>Grok 4.5</td><td>Cursor</td><td class="num">57.0</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">6</td><td>GPT-5.6 Terra</td><td>Codex</td><td class="num">56.5</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">7</td><td>DeepSeek V4 Pro</td><td>Open Code</td><td class="num">55.5</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">8</td><td>ChatGPT GPT 5.5</td><td>Browser</td><td class="num">54.0</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">9</td><td>Composer 2.5</td><td>Cursor</td><td class="num">51.0</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">10</td><td>MiMo-V2.5-Pro</td><td>Open Code</td><td class="num">50.5</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">11</td><td>GPT-5.6 Luna</td><td>Codex</td><td class="num">49.5</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">12</td><td>MiMo-V2.5</td><td>Open Code</td><td class="num">46.5</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">13</td><td>Qwen3.7 Plus</td><td>Open Code</td><td class="num">46.0</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">14</td><td>GPT-5.6 Luna</td><td>Open Code</td><td class="num">43.0</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">15</td><td>MiniMax M3</td><td>Open Code</td><td class="num">39.0</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">16</td><td>DeepSeek V4 Flash</td><td>Open Code</td><td class="num">37.0</td><td>APPROVE</td><td>FN</td></tr>
+            <tr><td class="num">17</td><td>ChatGPT o3</td><td>Browser</td><td class="num">17.0</td><td>INCOMPLETE</td><td>FN</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="raw-links">
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/review-benchmark/full-evaluation.md">Canonical full evaluation</a>
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/review-benchmark/gold-review.md">Post-hoc Gold</a>
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/tree/main/docs/benchmarks/fnd03-model-comparison/review-benchmark/reviews">Raw reviews</a>
+      </div>
+    </section>
+
+    <section class="panel benchmark-section" id="major-fix">
+      <h2>Stage 5-6 — Major修正ランキング</h2>
+      <p>Common Base <code>91e3fca...</code>。14 / 14 exact Head CI SUCCESS。3 JudgeのFindingを一次sourceで裁定した最終rankingです。</p>
+      <div class="data-table-wrap">
+        <table class="benchmark-table">
+          <thead><tr><th class="num">順位</th><th>Model</th><th>Harness</th><th class="num">Score</th><th class="num">Time min</th><th>Merge-ready</th><th>PR / CI</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td><strong>GPT-5.6 Sol</strong></td><td>Codex</td><td class="num"><strong>94</strong></td><td class="num">28.68</td><td><strong>YES</strong></td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/108">PR #108</a> / SUCCESS</td></tr>
+            <tr><td class="num">2</td><td>Claude Opus 5</td><td>Claude Code</td><td class="num">80</td><td class="num">28</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/109">PR #109</a> / SUCCESS</td></tr>
+            <tr><td class="num">3</td><td>GPT-5.6 Luna</td><td>Codex</td><td class="num">77</td><td class="num">17.65</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/116">PR #116</a> / SUCCESS</td></tr>
+            <tr><td class="num">4</td><td>GPT-5.6 Terra</td><td>Codex</td><td class="num">77</td><td class="num">21</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/113">PR #113</a> / SUCCESS</td></tr>
+            <tr><td class="num">5</td><td>GPT-5.6 Luna</td><td>Open Code</td><td class="num">76</td><td class="num">17</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/115">PR #115</a> / SUCCESS</td></tr>
+            <tr><td class="num">6</td><td>DeepSeek V4 Flash</td><td>Open Code</td><td class="num">74</td><td class="num">75</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/114">PR #114</a> / SUCCESS</td></tr>
+            <tr><td class="num">7</td><td>Grok 4.5</td><td>Cursor</td><td class="num">73</td><td class="num">9.1</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/107">PR #107</a> / SUCCESS</td></tr>
+            <tr><td class="num">8</td><td>Claude Sonnet 5</td><td>Claude Code</td><td class="num">67</td><td class="num">55</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/118">PR #118</a> / SUCCESS</td></tr>
+            <tr><td class="num">9</td><td>DeepSeek V4 Pro</td><td>Open Code</td><td class="num">62</td><td class="num">53</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/111">PR #111</a> / SUCCESS</td></tr>
+            <tr><td class="num">10</td><td>Composer 2.5</td><td>Cursor</td><td class="num">58</td><td class="num">6</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/110">PR #110</a> / SUCCESS</td></tr>
+            <tr><td class="num">11</td><td>MiniMax M3</td><td>Open Code</td><td class="num">48</td><td class="num">65</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/119">PR #119</a> / SUCCESS</td></tr>
+            <tr><td class="num">12</td><td>Qwen3.7 Plus</td><td>Open Code</td><td class="num">42</td><td class="num">54</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/112">PR #112</a> / SUCCESS</td></tr>
+            <tr><td class="num">13</td><td>MiMo-V2.5-Pro</td><td>Open Code</td><td class="num">38</td><td class="num">12</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/117">PR #117</a> / SUCCESS</td></tr>
+            <tr><td class="num">14</td><td>MiMo-V2.5</td><td>Open Code</td><td class="num">34</td><td class="num">110</td><td>NO</td><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/120">PR #120</a> / SUCCESS</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="benchmark-note">Durationはcandidate Draft PR本文の自己申告値。CIはGitHub Actions上でexact Head SHAに紐づくpull_request runを独立確認した値です。</p>
+      <div class="raw-links">
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/final-fix/final-evaluation.md">Adjudicated evaluation</a>
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/final-fix/judges/synthesis.md">3-Judge synthesis</a>
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/final-fix/run.json">Candidate registry</a>
+      </div>
+    </section>
+
+    <section class="panel benchmark-section" id="production-outcome">
+      <h2>Stage 7 — Final production outcome</h2>
+      <p>Benchmark rankingとは別のproduction recordです。1位候補をそのままmergeせず、PR #108のownership architectureを軸に、PR #113のactual latch / second-no-op testとBaseのunreachable-Docker regressionを統合しました。</p>
+      <div class="data-table-wrap">
+        <table class="benchmark-table">
+          <tbody>
+            <tr><th>Final Head</th><td><code>31e957e88d93e0e81fdc97eac7ba65dbd7ca3039</code></td></tr>
+            <tr><th>PR</th><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/pull/104">#104</a> — MERGED</td></tr>
+            <tr><th>Agent B</th><td>APPROVE / Blocker 0 / Major 0 / Minor 0 / Nit 0</td></tr>
+            <tr><th>Post-merge CI</th><td>Run 31301204377 — SUCCESS</td></tr>
+            <tr><th>Issue</th><td><a href="https://github.com/kooiei-in4a/minimal-bank-system/issues/41">#41</a> — CLOSED / COMPLETED</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="raw-links">
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/final-outcome.md">Final production outcome</a>
+        <a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/archive-manifest.json">Complete archive manifest</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer wrap">
+    <p>Koo（伊江 厚一郎） · <a href="https://in4a.jp/">IN4A</a> · <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHubリポジトリ</a> · コード MIT / コンテンツ CC BY 4.0</p>
+  </footer>
+</body>
+</html>

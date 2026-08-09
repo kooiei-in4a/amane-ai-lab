@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>17のAIレビューが見逃した。14の修正は全部CI成功、それでもmergeできたのは1つだった — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="実PostgreSQLテスト基盤を14構成で実装し、統合版を17構成で独立レビューした。17件のraw reviewはいずれもblocking Majorを検出できず、その後の修正14件はCIが全成功。それでも最終裁定でmerge-readyだったのは1件だけだった。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="17のAIレビューが見逃した。14の修正は全部CI成功、それでもmergeできたのは1つだった">
+  <meta property="og:description" content="実PostgreSQLテスト基盤を14構成で実装し、統合版を17構成で独立レビューした。17件のraw reviewはいずれもblocking Majorを検出できず、その後の修正14件はCIが全成功。それでも最終裁定でmerge-readyだったのは1件だけだった。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="17のAIレビューが見逃した。14の修正は全部CI成功、それでもmergeできたのは1つだった">
+  <meta name="twitter:description" content="実PostgreSQLテスト基盤を14構成で実装し、統合版を17構成で独立レビューした。17件のraw reviewはいずれもblocking Majorを検出できず、その後の修正14件はCIが全成功。それでも最終裁定でmerge-readyだったのは1件だけだった。">
+  <link rel="stylesheet" href="../../../assets/css/site.css">
+  <link rel="stylesheet" href="../../../assets/css/nav-benchmark.css">
+  <link rel="stylesheet" href="../../../assets/css/article-readability.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane AI Lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#articles">記事</a>
+        <a href="../../../benchmarks/">Benchmarks</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#about">このLabについて</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap article-page">
+    <header class="article-header">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0006</span>
+        <span class="pill status-published">published</span>
+        <span>公開: 2026-08-09</span>
+        <span>最終確認: 2026-08-09</span>
+        <span>更新: 2026-08-09</span>
+      </p>
+      <h1>17のAIレビューが見逃した。14の修正は全部CI成功、それでもmergeできたのは1つだった</h1>
+      <p class="article-summary">実PostgreSQLテスト基盤を14構成で実装し、統合版を17構成で独立レビューした。17件のraw reviewはいずれもblocking Majorを検出できず、その後の修正14件はCIが全成功。それでも最終裁定でmerge-readyだったのは1件だけだった。</p>
+      <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
+      <ul class="tag-list"><li>AIコーディング</li><li>AIレビュー</li><li>AIエージェント</li><li>ベンチマーク</li><li>Testcontainers</li><li>PostgreSQL</li><li>品質保証</li></ul>
+    </header>
+
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-result">最終結果</span> <a class="tldr-link" href="#analysis-まず結果">Major修正14候補は全件CI SUCCESS。それでもmerge-readyは1 / 14だった。</a></li><li><span class="tldr-source tldr-source-review">レビュー</span> <a class="tldr-link" href="#analysis-17の独立レビューはblocking-majorを見つけられなかった">17件のraw independent reviewは、後から確定したblocking root causeを検出していなかった。</a></li><li><span class="tldr-source tldr-source-finding">核心</span> <a class="tldr-link" href="#analysis-idを取得する前に失敗したら誰がcontainerを回収するのか">resource IDだけに依存せず、create前のownership labelでpartial-create failureを回収した案だけがmerge-readyになった。</a></li><li><span class="tldr-source tldr-source-method">注意</span> <a class="tldr-link" href="#analysis-review-benchmarkには方法論上の注意がある">17-model reviewのGoldは完全blindな事前locked Goldではなく、追加一次調査を含むpost-hoc adjudication。</a></li></ol></section>
+    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-fnd-03">FND-03 完全実験アーカイブ</a><ul><li class="toc-item toc-level-2"><a href="#agent-fnd-03-対象">対象</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-03-実験の流れ">実験の流れ</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-03-canonicalな最終結果">Canonicalな最終結果</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-03-技術的な核心">技術的な核心</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-03-方法論上の注意">方法論上の注意</a></li><li class="toc-item toc-level-2"><a href="#agent-fnd-03-一次資料">一次資料</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
+
+    <section class="panel" aria-labelledby="background-heading">
+      <h2 id="background-heading">検討に至った背景</h2>
+      <div class="prose"><h1 id="background-はじめに"><a class="heading-permalink" href="#background-はじめに" aria-label="この見出しへのリンク">#</a>はじめに</h1>
+<p>AIが書いたコードを、別のAIにレビューさせれば安全になるのか。</p>
+<p>FND-03では、この問いをかなり厳しい形で試すことになりました。</p>
+<p>対象は <code>minimal-bank-system</code> のIssue #41、実PostgreSQL 18を使うintegration test基盤です。TestcontainersでPostgreSQLを起動し、test isolation、parallel execution、cleanup、startup failure、CIまで含めて、後続Issueが安全に使える共通fixtureを作ります。</p>
+<p>最初に14の <code>Model + Agent/Harness</code> へ同じIssueを独立実装させました。比較後、良い設計を統合したFinal Synthesisを作り、当時は98/100相当まで仕上がったと評価していました。</p>
+<p>そのFinal Synthesisを17のAI構成へ独立レビューさせます。</p>
+<p>結果は、completedしたReviewerがすべてAPPROVEでした。</p>
+<p>ところが、その後Testcontainers 4.13.0の一次sourceまで追うと、container cleanupのfailure pathにmerge-blocking Majorが残っていました。</p>
+<p>そこで今度は、そのMajorを14構成へ同一条件で修正させました。14件すべてexact Head CIはSUCCESSです。</p>
+<p>それでも3つのJudgeで一次証拠を突き合わせると、merge-readyと判定できたのは1件だけでした。</p>
+<p>この記事では、細かな候補別採点表を並べるのではなく、<strong>なぜCI greenとAIレビューを重ねても不足したのか</strong>、そして<strong>複数AIを使うとき最後に何を信用すべきか</strong>を整理します。</p>
+<p>全候補、全順位、PR、Head SHA、CI、Judge内訳は <a href="https://kooiei-in4a.github.io/amane-ai-lab/benchmarks/">Benchmarks</a> に分けて掲載します。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">調査プロンプト</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn" id="copy-prompt" data-copy-target="prompt-text">プロンプトをコピー</button>
+        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      </div>
+      <details class="prompt-details">
+        <summary>プロンプト全文を表示する</summary>
+        <pre id="prompt-text" class="prompt-block"><code>minimal-bank-system Issue #41 FND-03「実PostgreSQL integration test基盤を確立する」の完全実験アーカイブを一次資料として確認し、公開記事を作成する。
+
+記事では、初期実装14候補、Final Synthesis、17-model independent review、post-hoc Goldで発見されたTestcontainers cleanup Major、14-model Major-fix benchmark、3-Judge adjudication、最終production outcomeまでを一つの流れとして扱う。
+
+ただし、記事本文へ中間Stageの詳細ランキングや全候補表を詰め込まない。記事は最終結果と実務上の学びを中心にし、候補別スコア、処理時間、PR、CI、Judge内訳など詳細なBenchmark結果はBenchmarksページへ分離する。
+
+重要な方法論上の注意として、review benchmarkのGoldは完全blindな事前locked Goldではなく post-hoc adjudication であることを明記する。CI greenをfailure-path correctnessの証明として扱わない。
+</code></pre>
+      </details>
+    </section>
+
+    <section class="panel" aria-labelledby="agents-heading">
+      <h2 id="agents-heading">AIエージェントの回答</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
+        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
+      </div>
+      <div id="agent-responses"><section class="agent-response" data-agent="FND-03 完全実験アーカイブ">
+  <details id="agent-fnd-03">
+    <summary>
+      <span class="agent-name">FND-03 完全実験アーカイブ</span>
+      <span class="agent-meta">14 implementation + 17 review + 14 fix + 3 judges / 2026-08-09 / integrity=edited</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>なし</dd></div>
+      <div><dt>添付</dt><dd>なし</dd></div>
+      <div><dt>完全性</dt><dd>edited</dd></div>
+    </dl>
+    <p class="agent-notes">minimal-bank-system Issue #41のcanonical archive、candidate exact Head、PR、CI、post-hoc Gold、3-Judge adjudication、最終production outcomeを一次資料として公開用に整理した。</p>
+    <div class="agent-body prose"><h1 id="agent-fnd-03-fnd-03-完全実験アーカイブ"><a class="heading-permalink" href="#agent-fnd-03-fnd-03-完全実験アーカイブ" aria-label="この見出しへのリンク">#</a>FND-03 完全実験アーカイブ</h1>
+<h2 id="agent-fnd-03-対象"><a class="heading-permalink" href="#agent-fnd-03-対象" aria-label="この見出しへのリンク">#</a>対象</h2>
+<p>Issue #41 <code>[FND-03] 実PostgreSQL integration test基盤を確立する</code>。</p>
+<p>PostgreSQL 18 / Testcontainersを使い、test isolation、database lifecycle、parallel execution、cleanup、failure reporting、CI実行までを共通integration test foundationとして成立させる課題です。</p>
+<h2 id="agent-fnd-03-実験の流れ"><a class="heading-permalink" href="#agent-fnd-03-実験の流れ" aria-label="この見出しへのリンク">#</a>実験の流れ</h2>
+<p>FND-03は次の順序で実施しました。</p>
+<ol>
+<li>14構成による初期実装Benchmark</li>
+<li>上位候補の知見を統合したFinal Synthesis</li>
+<li>Final Synthesisへの17-model independent review</li>
+<li>Testcontainers 4.13.0一次source突合によるpost-hoc Gold / cleanup Major確定</li>
+<li>同一Majorを14構成へ独立修正させるBenchmark</li>
+<li>3 JudgeによるFinding adjudication</li>
+<li>選択したarchitectureとtest資産を統合したproduction implementation</li>
+</ol>
+<h2 id="agent-fnd-03-canonicalな最終結果"><a class="heading-permalink" href="#agent-fnd-03-canonicalな最終結果" aria-label="この見出しへのリンク">#</a>Canonicalな最終結果</h2>
+<ul>
+<li>Review Benchmarkのblocking Gold root cause検出: 0 / 17</li>
+<li>Major-fix候補のexact Head CI: 14 / 14 SUCCESS</li>
+<li>3-Judge裁定のmerge-ready: 1 / 14</li>
+<li>Final fix Benchmark 1位: GPT-5.6 Sol / Codex — 94 / 100</li>
+<li>Final production: Agent B APPROVE、Blocker / Major / Minor / Nit = 0 / 0 / 0 / 0</li>
+<li>PR #104 MERGED、Issue #41 CLOSED / COMPLETED</li>
+</ul>
+<p>候補別のランキング、全スコア、処理時間、PR、Head SHA、CI、Judge別結果は記事本文へ重複掲載せず、amane AI LabのBenchmarksページに掲載します。</p>
+<h2 id="agent-fnd-03-技術的な核心"><a class="heading-permalink" href="#agent-fnd-03-技術的な核心" aria-label="この見出しへのリンク">#</a>技術的な核心</h2>
+<p>Testcontainers 4.13.0では、Docker resourceの削除完了前にdisposed stateがlatchされるfailure pathがあり、同じfailed instanceへの2回目のDisposeがno-opになり得ます。</p>
+<p>さらにMajor修正比較では、Docker create成功後・Testcontainers内部へcontainer IDが保存される前に失敗するpartial-create pathが重要な裁定点になりました。</p>
+<p>最終的に選ばれたarchitectureは、create前にunique ownership labelを確立し、Testcontainers instanceやIDだけに依存せず、label query / remove / re-queryでresource absenceを確認します。</p>
+<h2 id="agent-fnd-03-方法論上の注意"><a class="heading-permalink" href="#agent-fnd-03-方法論上の注意" aria-label="この見出しへのリンク">#</a>方法論上の注意</h2>
+<p>17-model review benchmarkのGoldは完全blindな事前locked Goldではありません。</p>
+<p>raw review収集後の追加一次source突合でblocking Majorが明確化されたため、canonical archiveでは <code>post_hoc_adjudication: true</code> としています。</p>
+<p>そのため「17モデルが事前に固定されたblind Gold testで全滅した」とは表現しません。</p>
+<h2 id="agent-fnd-03-一次資料"><a class="heading-permalink" href="#agent-fnd-03-一次資料" aria-label="この見出しへのリンク">#</a>一次資料</h2>
+<ul>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/issues/41">Issue #41</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/tree/main/docs/benchmarks/fnd03-model-comparison">FND-03 Complete Experiment Archive</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/summary.md">Initial implementation summary</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/review-benchmark/full-evaluation.md">Review Benchmark canonical evaluation</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/review-benchmark/gold-review.md">Post-hoc Gold</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/final-fix/final-evaluation.md">Major-fix adjudicated evaluation</a></li>
+<li><a href="https://github.com/kooiei-in4a/minimal-bank-system/blob/main/docs/benchmarks/fnd03-model-comparison/final-outcome.md">Final production outcome</a></li>
+</ul></div>
+  </details>
+</section></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">AI回答の合成</h2>
+      <div class="prose"><h1 id="analysis-17のaiレビューが見逃した14の修正は全部ci成功それでもmergeできたのは1つだった"><a class="heading-permalink" href="#analysis-17のaiレビューが見逃した14の修正は全部ci成功それでもmergeできたのは1つだった" aria-label="この見出しへのリンク">#</a>17のAIレビューが見逃した。14の修正は全部CI成功、それでもmergeできたのは1つだった</h1>
+<h2 id="analysis-まず結果"><a class="heading-permalink" href="#analysis-まず結果" aria-label="この見出しへのリンク">#</a>まず結果</h2>
+<p>FND-03で最終的に残った数字は、かなり極端でした。</p>
+<ul>
+<li>初期実装: 14構成、13件を採点</li>
+<li>Final Synthesis: 当時98/100相当と評価</li>
+<li>独立レビュー: 17構成</li>
+<li>blocking Majorを実質検出したReviewer: <strong>0 / 17</strong></li>
+<li>Major修正: 14構成</li>
+<li>exact Head CI: <strong>14 / 14 SUCCESS</strong></li>
+<li>3-Judge最終裁定でmerge-ready: <strong>1 / 14</strong></li>
+<li>最終production: Agent B APPROVE、Blocker / Major / Minor / Nit = 0 / 0 / 0 / 0</li>
+</ul>
+<p>最終修正Benchmarkの1位は <strong>GPT-5.6 Sol / Codex — 94/100</strong> でした。2位はClaude Opus 5 / Claude Code 80、3位はGPT-5.6 Luna / Codex 77です。</p>
+<p>これは、このIssue、このHarness、このEffort、この1回の実行結果です。モデル一般の性能順位ではありません。</p>
+<p>全14候補の順位、中間Stageのランキング、PR、Head SHA、CI、Judge内訳は <a href="https://kooiei-in4a.github.io/amane-ai-lab/benchmarks/">Benchmarks</a> に分けています。</p>
+<h2 id="analysis-fnd-03で作ったもの"><a class="heading-permalink" href="#analysis-fnd-03で作ったもの" aria-label="この見出しへのリンク">#</a>FND-03で作ったもの</h2>
+<p>FND-03の目的は、実PostgreSQL 18を使うintegration test基盤です。</p>
+<p>単にcontainerを起動してqueryが通れば完了、というIssueではありません。</p>
+<p>後続Issueではrow lock、advisory lock、constraint、trigger、migrationなどPostgreSQL固有の挙動を検証します。その土台になるため、test基盤側で次を保証する必要があります。</p>
+<ul>
+<li>test同士が状態を共有しない</li>
+<li>database lifecycleを自動管理する</li>
+<li>並列実行しても壊れない</li>
+<li>cleanup失敗を握り潰さない</li>
+<li>startup / connection failureを明確なtest failureにする</li>
+<li>CIでも同じ実PostgreSQL testを動かす</li>
+<li>InMemory / SQLiteへfallbackしない</li>
+</ul>
+<p>初期実装比較では、database isolation、parallel safety、cleanup failure handlingで差が付きました。</p>
+<h2 id="analysis-14候補を比較しfinal-synthesisを作った"><a class="heading-permalink" href="#analysis-14候補を比較しfinal-synthesisを作った" aria-label="この見出しへのリンク">#</a>14候補を比較し、Final Synthesisを作った</h2>
+<p>初期BenchmarkではGPT-5.6 Sol / Codexが96/100で1位でした。</p>
+<p>ただし、最終成果物は1位候補をそのまま採用していません。複数候補の良い設計とfailure testを選んでFinal Synthesisを作りました。</p>
+<p>当時の評価は98/100。CIもSUCCESS。cleanup retry、startup failure、connection failure、parallel executionまでかなり厚く検証していました。</p>
+<p>ここだけを見ると、十分にmergeできそうです。</p>
+<p>実際、この評価は後から <strong>SUPERSEDED</strong> になりました。</p>
+<h2 id="analysis-17の独立レビューはblocking-majorを見つけられなかった"><a class="heading-permalink" href="#analysis-17の独立レビューはblocking-majorを見つけられなかった" aria-label="この見出しへのリンク">#</a>17の独立レビューは、blocking Majorを見つけられなかった</h2>
+<p>Final Synthesisへ、同じ条件で17のModel + Harnessを独立レビューとして投入しました。</p>
+<p>completedしたReviewerはすべてAPPROVE。レビュー品質には差がありましたが、後からtechnical Goldになったblocking root causeを実質検出したReviewerは0件でした。</p>
+<p>問題はTestcontainers .NET 4.13.0のdispose semanticsにありました。</p>
+<p>概略すると、cleanup時にDocker resourceの削除が失敗しても、Testcontainers内部では先にdisposed stateが固定される経路があります。そのfailed instanceへもう一度 <code>DisposeAsync()</code> しても、2回目はno-op成功になり得ます。</p>
+<p>Final Synthesisは「同じinstanceでcleanupをretryできる」ことを自分のtestで確認していました。しかし、そのtestが再現していたfailureと、Testcontainers内部の本当のfailure pathは同じではありませんでした。</p>
+<p>つまり、<strong>テストはあった。failure injectionもあった。それでも、依存libraryのstate machineを誤解していた。</strong></p>
+<h2 id="analysis-green-ciはこの問題を反証できない"><a class="heading-permalink" href="#analysis-green-ciはこの問題を反証できない" aria-label="この見出しへのリンク">#</a>Green CIは、この問題を反証できない</h2>
+<p>このMajorが厄介なのは、通常のCIではほぼ見えない点です。</p>
+<p>正常系ではcontainerは消えます。databaseも消えます。testも全部通ります。</p>
+<p>必要なのは、Docker resource削除の途中だけが失敗し、その後同じTestcontainers instanceをretryするような狭いfailure pathです。</p>
+<p>そのためFND-03では、次の区別がはっきりしました。</p>
+<p><strong>CI SUCCESSは「実行したtestが通った」証拠です。実行していないfailure pathまで正しい証拠ではありません。</strong></p>
+<p>これは当たり前に見えますが、14候補すべてCI SUCCESSだった最終修正ラウンドでも、同じことがもう一度起きました。</p>
+<h2 id="analysis-majorを教えてから14構成に直させた"><a class="heading-permalink" href="#analysis-majorを教えてから14構成に直させた" aria-label="この見出しへのリンク">#</a>Majorを教えてから14構成に直させた</h2>
+<p>次の実験では、見つかったcleanup Majorを明示し、14のModel + Harnessへ同一Baseから独立修正させました。</p>
+<p>今度は問題を知っています。</p>
+<p>しかも14件すべてexact Head CI SUCCESSでした。</p>
+<p>それでも3 Judgeで実コードとTestcontainers 4.13.0の一次sourceを突き合わせると、merge-readyは1件だけでした。</p>
+<p>理由は、元のMajorを直そうとしたことで、さらに深いownership問題が見えたためです。</p>
+<h2 id="analysis-idを取得する前に失敗したら誰がcontainerを回収するのか"><a class="heading-permalink" href="#analysis-idを取得する前に失敗したら誰がcontainerを回収するのか" aria-label="この見出しへのリンク">#</a>IDを取得する前に失敗したら、誰がcontainerを回収するのか</h2>
+<p>最終裁定で特に効いたのがpartial-create pathです。</p>
+<p>Docker側ではcontainer creationに成功した。しかしTestcontainersがそのIDを自分の内部stateへ保存する前に失敗した。</p>
+<p>この瞬間には、</p>
+<ul>
+<li>Docker上にはcontainerが存在する</li>
+<li>application側からcandidate IDを取得できない</li>
+<li>Testcontainersのnative Disposeを信用できない</li>
+</ul>
+<p>という状態が起こり得ます。</p>
+<p>多くの修正案は、container IDやTestcontainers instanceをcleanup ownershipの根拠にしていました。そのためIDを失うと、実resourceが残っていてもauthoritativeなownerを失います。</p>
+<p>1位のGPT-5.6 Sol / Codex案は、containerをcreateする前にunique ownership labelを決めました。</p>
+<p>そしてnative Disposeの成否だけに依存せず、labelでDocker resourceを検索し、removeし、もう一度検索して消えたことを確認します。</p>
+<p>重要なのは「retryを増やした」ことではありません。</p>
+<p><strong>壊れ得るlibrary objectとは別に、resource ownershipを識別できる手段を持ったこと</strong>です。</p>
+<h2 id="analysis-多数決ではなく一次証拠でjudgeを裁定した"><a class="heading-permalink" href="#analysis-多数決ではなく一次証拠でjudgeを裁定した" aria-label="この見出しへのリンク">#</a>多数決ではなく、一次証拠でJudgeを裁定した</h2>
+<p>Major修正Benchmarkでは3つのJudgeを使いました。</p>
+<p>Judge同士の評価も一致していません。</p>
+<p>あるJudgeが高く評価した候補を、別Judgeはmerge不可としました。そこでraw scoreの平均を最終結果にはしていません。</p>
+<p>Testcontainers 4.13.0のsource、candidate exact Head、failure test、CIを戻って確認し、Findingごとに成立するかを裁定してから最終順位を決めました。</p>
+<p>これはAIを増やすときに重要だと思っています。</p>
+<p>AI Reviewerを3つ使うことと、3票で多数決することは同じではありません。</p>
+<p><strong>異なるReviewerから異なる仮説を集め、最後は一次証拠へ戻る。</strong></p>
+<p>FND-03ではこの方法が必要でした。</p>
+<h2 id="analysis-review-benchmarkには方法論上の注意がある"><a class="heading-permalink" href="#analysis-review-benchmarkには方法論上の注意がある" aria-label="この見出しへのリンク">#</a>Review Benchmarkには方法論上の注意がある</h2>
+<p>17-model review benchmarkについては、結果の扱いに注意が必要です。</p>
+<p>最終的なGold Majorは、全Reviewerの回答を集める前に完全固定されていたものではありません。</p>
+<p>最初のReferenceを固定した後、追加でTestcontainers 4.13.0の一次sourceを調べてMajorを明確化しました。そのためarchiveでは <code>post_hoc_adjudication: true</code> としています。</p>
+<p>つまり、「17モデルにblind testをして全員不合格だった」という表現はしません。</p>
+<p>正確には、<strong>17件のraw reviewを保存した後、追加一次調査で確定したblocking Goldに照らすと、17件ともそのroot causeを検出していなかった</strong>、です。</p>
+<p>失敗結果を強く見せるために実験条件を単純化しないことも、このLabでは重要だと考えています。</p>
+<h2 id="analysis-実装能力レビュー能力修正能力は分けて見た方がいい"><a class="heading-permalink" href="#analysis-実装能力レビュー能力修正能力は分けて見た方がいい" aria-label="この見出しへのリンク">#</a>実装能力、レビュー能力、修正能力は分けて見た方がいい</h2>
+<p>FND-03全体を見ると、少なくとも3つの能力を分けた方がよさそうです。</p>
+<ol>
+<li>未知のIssueを実装する能力</li>
+<li>一見完成した実装から未知の欠陥を見つける能力</li>
+<li>root causeを提示された後にfailure spaceを閉じる能力</li>
+</ol>
+<p>同じモデルが全部で同じ順位になるとは限りません。</p>
+<p>初期実装で高得点でもReviewerとしてMajorを見つけられるとは限らず、Majorを理解しても完全なfixを作れるとは限りません。</p>
+<p>「コーディング性能」という1つの数字へまとめると、この差は見えなくなります。</p>
+<h2 id="analysis-実務なら14候補も17reviewerも使わない"><a class="heading-permalink" href="#analysis-実務なら14候補も17reviewerも使わない" aria-label="この見出しへのリンク">#</a>実務なら14候補も17Reviewerも使わない</h2>
+<p>この規模はBenchmarkだから行っています。</p>
+<p>普段の開発なら、ここまで増やす必要はありません。</p>
+<p>私なら重要な基盤Issueでは、</p>
+<ul>
+<li>1〜3の独立実装</li>
+<li>別Model / Harnessによる独立レビュー</li>
+<li>failure pathを意識したtest</li>
+<li>依存libraryの挙動が重要なら一次source確認</li>
+<li>最後はIssueと実コードへ戻ってmerge判断</li>
+</ul>
+<p>くらいに縮めます。</p>
+<p>特に、cleanup、transaction、lock、retry、cancellationのような<strong>失敗時のstate transitionが品質を決めるコード</strong>では、正常系CIの緑だけで判断しない方がいいです。</p>
+<h2 id="analysis-今回の最終production"><a class="heading-permalink" href="#analysis-今回の最終production" aria-label="この見出しへのリンク">#</a>今回の最終production</h2>
+<p>最終production implementationでは、1位PR #108のownership architectureを軸に、別候補のactual Testcontainers latch / second-no-op testと、元Baseにあったunreachable-Docker regressionを統合しました。</p>
+<p>Final Headに対するAgent B独立レビューはAPPROVE、Blocker / Major / Minor / Nitはすべて0。pre-merge、post-merge CIもSUCCESSし、Issue #41をcloseしています。</p>
+<p>ここでも「Benchmark 1位をそのままproductionへ入れた」わけではありません。</p>
+<p>候補比較は意思決定材料であって、production outcomeは別の成果物として残しています。</p>
+<h2 id="analysis-最後に残った教訓"><a class="heading-permalink" href="#analysis-最後に残った教訓" aria-label="この見出しへのリンク">#</a>最後に残った教訓</h2>
+<p>FND-03で一番印象に残ったのは、AIが間違えたことではありません。</p>
+<p><strong>かなり強い実装、かなり厚いtest、複数のAI Reviewer、green CIが揃っていても、全員が同じ前提を見誤ることがある</strong>という点です。</p>
+<p>AIを増やすほど安全になるとは限りません。同じ証拠、同じ抽象化、同じlibrary理解に依存していれば、見逃しも共有します。</p>
+<p>だから最後に必要なのは、多数決よりも、</p>
+<ul>
+<li>何を証明したtestなのか</li>
+<li>failure時に誰がresourceを所有するのか</li>
+<li>依存libraryは本当にそのsemanticsなのか</li>
+<li>CI greenが何を証明していないのか</li>
+</ul>
+<p>を一次証拠へ戻って確認する工程でした。</p>
+<p>FND-03は、モデル比較というより、<strong>AIエージェントを使った開発で「何を信用するか」を試した実験</strong>になりました。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-plain-heading">
+      <h2 id="analysis-plain-heading">AI回答の合成（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="analysis-plain-わかりやすく言うと"><a class="heading-permalink" href="#analysis-plain-わかりやすく言うと" aria-label="この見出しへのリンク">#</a>わかりやすく言うと</h1>
+<p>FND-03では、AIにPostgreSQLのテスト基盤を作らせ、それを別のAIにレビューさせ、さらに見つかった問題をまた複数のAIに直させました。</p>
+<p>一番重要だった結果は、次の3つです。</p>
+<ol>
+<li>17のAIレビューでは、後から確定した重大なcleanup問題を誰も見つけられなかった</li>
+<li>問題を教えた後の14修正案は、全部CIが成功した</li>
+<li>それでも最終的にそのままmergeできると判断できた修正は1件だけだった</li>
+</ol>
+<p>なぜこんなことが起きたかというと、通常のテストでは起きにくい失敗経路に問題があったからです。</p>
+<p>PostgreSQL containerを削除するとき、途中で失敗してもTestcontainers側では「もうdispose済み」と扱われる場合があります。その状態で同じobjectをもう一度cleanupしても、本当のcontainerが残っているのに処理が何もしない可能性がありました。</p>
+<p>さらに修正案を比べると、「containerは作られたが、そのIDを取得する前に失敗した場合はどうするか」という別の問題も見つかりました。</p>
+<p>最終的に一番強かった案は、containerのIDだけに頼らず、作る前から専用labelでownershipを持つ方式でした。IDを失っても、そのlabelを使えば残ったcontainerを探して削除できます。</p>
+<p>この実験から、CIが成功していることは重要ですが、それだけで失敗時の挙動まで正しいとは言えないことが分かりました。</p>
+<p>AIレビューも同じです。Reviewerを増やすだけでは、全員が同じ前提を間違えている場合に見逃しを防げません。</p>
+<p>重要なコードでは、複数AIの意見を多数決にするより、実コード、テスト、依存libraryの一次sourceへ戻って確認する方が安全です。</p>
+<p>詳細なランキングや全候補の結果はBenchmarksページに分けています。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">合成結果の要約</h2>
+      <div class="prose"><h1 id="conclusion-まとめ"><a class="heading-permalink" href="#conclusion-まとめ" aria-label="この見出しへのリンク">#</a>まとめ</h1>
+<p>FND-03では、実PostgreSQL integration test基盤を複数AIへ独立実装させ、統合版へ独立レビューを掛け、そこで残ったMajorをさらに複数AIへ独立修正させました。</p>
+<p>最終的に強く残ったのは、モデル順位よりも次の事実です。</p>
+<ul>
+<li>17件のraw independent reviewは、後からtechnical Goldとして確定したblocking root causeを検出していなかった</li>
+<li>Major修正14候補はすべてexact Head CI SUCCESSだった</li>
+<li>3-Judge裁定でmerge-readyだったのは1 / 14だった</li>
+<li>最終productionはBenchmark 1位をそのまま採用せず、複数候補のtest資産と既存regressionを統合して再レビューした</li>
+</ul>
+<p>FND-03の問題は、通常の正常系では見えにくいresource cleanupとownershipのfailure pathにありました。</p>
+<p>この種のコードでは、「testがある」「CIが緑」「複数ReviewerがApprove」という証拠を積み重ねても、それらが同じ前提に依存していると同じ見逃しを共有します。</p>
+<p>特に重要だったのは、壊れ得るTestcontainers instanceそのものをresource ownershipの唯一の根拠にしないことでした。container create前に独立したownership labelを持つことで、ID取得前のfailureでも実resourceを再発見し、cleanupできる設計になりました。</p>
+<p>また、17-model review benchmarkのGoldは完全blindな事前locked Goldではなく、raw review収集後の追加一次source調査で明確化したpost-hoc adjudicationです。この制約も結果と一緒に残します。</p>
+<p>AIを実務で使うとき、候補やReviewerを増やすこと自体は品質保証になりません。</p>
+<p>最終的に必要なのは、<strong>どのtestが何を証明しているか、failure時のownerは誰か、依存libraryのsemanticsは本当に正しいかを一次証拠で確認すること</strong>です。</p>
+<p>FND-03は、AIの実装性能だけでなく、レビュー性能、既知問題の修正性能、そして複数AIの結果をどう裁定するかまで含めた実験になりました。</p>
+<h2 id="conclusion-fnd-04ではどう変えるか"><a class="heading-permalink" href="#conclusion-fnd-04ではどう変えるか" aria-label="この見出しへのリンク">#</a>FND-04ではどう変えるか</h2>
+<p>次のFND-04では、この反省を実験設計へ反映します。</p>
+<p>まず、candidateやReviewerを見る前にReferenceを強くします。FND-04はEF Core / Npgsql migrationの挙動に依存するため、外部libraryの前提、failure path、testが証明する範囲、evaluator専用runtime probeを事前に固定します。特にmodel drift、explicit migrator failure、API startupでschemaが変化しないことは、visible testが存在するだけでなく、意図的に壊したとき本当にFAILすることまで確認します。</p>
+<p>candidate数も減らします。FND-03のように14構成を毎回投入するのではなく、実績の安定したCore候補と少数のChallengerへ絞り、8構成程度を基本とします。一方で、同じモデルを異なるHarnessで継続観測する枠は残します。評価単位は引き続き <code>Model + Agent/Harness + Effort + execution attempt</code> です。</p>
+<p>セルフレビューは、実装execution内の曖昧な確認ではなく、<strong>H0実装 → fresh contextでFormal Self-Review → H1修正</strong>として分離します。これにより、H0 Score、H1 Score、Self-Review Gain、valid finding、false positive、追加時間、追加差分を測定できるようにします。セルフレビューはAgent Bの代替にはしません。</p>
+<p>外部レビューも人数より役割の異質性を優先します。同一プロンプトを多数へ投げる方式から、Specification / Scope、Framework semantics、Runtime / Failure injection、Test assurance、Deep technical、Fast independent reviewのように責務を分けた少数Reviewerへ寄せます。</p>
+<p>さらに、review性能の測定にはReal Final Synthesisだけでなく、事前に欠陥を埋め込んだ<strong>Controlled Mutant</strong>を併用する予定です。Real targetは実際のmerge gate、Mutant targetはpre-locked Goldによるreview能力測定と役割を分けます。これにより、FND-03で発生したpost-hoc Goldの弱点を減らします。</p>
+<p>Judgeも常時3件ではなく、まず2 Judgeで比較し、VerdictやMajor root causeが割れた場合だけ3件目を追加する方式を基本にします。Major修正が必要になった場合も、全モデル一斉修正ではなく上位候補を中心に絞ります。</p>
+<p>最後に、production mergeとbenchmark archiveを分離します。candidate registry、Head、CI、raw artifact、tag、PR close、branch cleanupは継続して残しますが、archive整理そのものを次Issue開始のcritical pathにはしません。</p>
+<p>FND-04では、単一の総合順位だけでなく、<strong>Implementation Score / Self-Review Gain / External Review Quality / Gold Alignment / Execution Reliability / Time・Cost</strong>を別々に蓄積する方向へ進めます。</p>
+<p>詳細な候補別順位、スコア、処理時間、PR、CI、Judge結果は <a href="https://kooiei-in4a.github.io/amane-ai-lab/benchmarks/">Benchmarks</a> にまとめています。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
+      <h2 id="conclusion-plain-heading">合成結果の要約（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="conclusion-plain-まとめ"><a class="heading-permalink" href="#conclusion-plain-まとめ" aria-label="この見出しへのリンク">#</a>まとめ</h1>
+<p>今回の実験では、AIにコードを書かせるだけでなく、別のAIにレビューさせ、見つかった問題をさらに複数のAIに直させました。</p>
+<p>それでも、AIを増やせば自動的に安全になるわけではありませんでした。</p>
+<p>17のレビュー結果は、後から分かった重大なcleanup問題を見つけられていませんでした。問題を教えた後の14修正案は全部CIが成功しましたが、そのままmergeできると判断できたのは1件だけです。</p>
+<p>理由は、通常のテストでは起きにくい失敗経路にありました。</p>
+<p>containerを作った直後や削除の途中で失敗すると、管理objectが壊れたりIDを失ったりして、実際のcontainerだけが残る可能性があります。</p>
+<p>最も強かった修正は、管理objectやcontainer IDだけに頼らず、作成前から専用labelでownershipを持つ方法でした。</p>
+<p>この結果から、重要なコードでは次を確認した方がよいと考えています。</p>
+<ul>
+<li>CIが何を確認していて、何を確認していないか</li>
+<li>失敗したときresourceを誰が回収するか</li>
+<li>依存libraryの実際の挙動を確認したか</li>
+<li>複数AIの意見が同じ前提に依存していないか</li>
+</ul>
+<p>AIの多数決より、最後に一次証拠へ戻ることが重要でした。</p>
+<h2 id="conclusion-plain-fnd-04で変えること"><a class="heading-permalink" href="#conclusion-plain-fnd-04で変えること" aria-label="この見出しへのリンク">#</a>FND-04で変えること</h2>
+<p>次のFND-04では、FND-03と同じやり方をそのまま繰り返しません。</p>
+<ul>
+<li>実装候補は14から8程度へ減らす</li>
+<li>EF Core / Npgsqlの前提やfailure pathをcandidate実行前に確認する</li>
+<li>evaluator専用のadversarial probeを事前に用意する</li>
+<li>セルフレビューをH0実装、Formal Self-Review、H1修正に分けて効果を測る</li>
+<li>Reviewer数を減らし、仕様、framework、failure path、test assuranceなど役割を分ける</li>
+<li>Real Final Synthesisとは別に、意図的な欠陥を入れたControlled Mutantでreview能力を測る</li>
+<li>Judgeはまず2件とし、重大な不一致がある場合だけ3件目を使う</li>
+<li>Major修正は原則として上位候補だけに絞る</li>
+<li>production mergeとbenchmark archiveを別工程として扱う</li>
+</ul>
+<p>また、実装点数だけでなく、Self-Review Gain、External Review Quality、Gold Alignment、Execution Reliability、Time / Costを分けて記録する予定です。</p>
+<p>全候補の詳しい順位やスコアはBenchmarksページで公開します。</p></div>
+      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="edit-heading">
+      <h2 id="edit-heading">Edit on GitHub</h2>
+      <p>正本ディレクトリ: <a href="https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/">https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="comments-heading">
+      <h2 id="comments-heading">コメント</h2>
+      <p class="note">コメントは GitHub Discussions（giscus）上の第三者投稿です。読み込みと投稿にはGitHubへの接続が必要です。</p>
+      <button type="button" class="btn" id="load-giscus">コメントを読み込む</button>
+      <div id="giscus-container"
+        hidden
+        data-giscus-src="https://giscus.app/client.js"
+  data-repo="kooiei-in4a/amane-ai-lab"
+  data-repo-id="R_kgDOToJuSQ"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOToJuSc4DCT1S"
+  data-mapping="specific"
+  data-term="KB-2026-0006"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="ja"
+  data-loading="lazy"
+      ></div>
+    </section>
+
+    <footer class="article-footer panel">
+      <p>コード: MIT / コンテンツ: CC BY 4.0。AI回答は参考情報であり、事実確認は読者の責任です。</p>
+      <p><a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧へ戻る</a> · <a href="../../../benchmarks/">Benchmarksを見る</a></p>
+    </footer>
+  </main>
+
+  <script src="../../../assets/js/site.js" defer></script>
+  <nav class="page-jump" aria-label="ページ内ジャンプ">
+    <a href="#tldr" class="page-jump-link" data-jump="tldr">要点</a>
+    <a href="#article-toc" class="page-jump-link">目次</a>
+    <a href="#main" class="page-jump-link page-jump-top" hidden>先頭へ</a>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,7 @@
+minimal-bank-system Issue #41 FND-03「実PostgreSQL integration test基盤を確立する」の完全実験アーカイブを一次資料として確認し、公開記事を作成する。
+
+記事では、初期実装14候補、Final Synthesis、17-model independent review、post-hoc Goldで発見されたTestcontainers cleanup Major、14-model Major-fix benchmark、3-Judge adjudication、最終production outcomeまでを一つの流れとして扱う。
+
+ただし、記事本文へ中間Stageの詳細ランキングや全候補表を詰め込まない。記事は最終結果と実務上の学びを中心にし、候補別スコア、処理時間、PR、CI、Judge内訳など詳細なBenchmark結果はBenchmarksページへ分離する。
+
+重要な方法論上の注意として、review benchmarkのGoldは完全blindな事前locked Goldではなく post-hoc adjudication であることを明記する。CI greenをfailure-path correctnessの証明として扱わない。

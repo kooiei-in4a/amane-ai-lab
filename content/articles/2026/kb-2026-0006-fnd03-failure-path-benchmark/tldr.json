@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "source": "result",
+      "label": "最終結果",
+      "text": "Major修正14候補は全件CI SUCCESS。それでもmerge-readyは1 / 14だった。",
+      "href": "#analysis-まず結果"
+    },
+    {
+      "source": "review",
+      "label": "レビュー",
+      "text": "17件のraw independent reviewは、後から確定したblocking root causeを検出していなかった。",
+      "href": "#analysis-17の独立レビューはblocking-majorを見つけられなかった"
+    },
+    {
+      "source": "finding",
+      "label": "核心",
+      "text": "resource IDだけに依存せず、create前のownership labelでpartial-create failureを回収した案だけがmerge-readyになった。",
+      "href": "#analysis-idを取得する前に失敗したら誰がcontainerを回収するのか"
+    },
+    {
+      "source": "method",
+      "label": "注意",
+      "text": "17-model reviewのGoldは完全blindな事前locked Goldではなく、追加一次調査を含むpost-hoc adjudication。",
+      "href": "#analysis-review-benchmarkには方法論上の注意がある"
+    }
+  ]
+}

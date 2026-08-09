@@ -11,13 +11,13 @@
       "source": "review",
       "label": "レビュー",
       "text": "17件のraw independent reviewは、後から確定したblocking root causeを検出していなかった。",
-      "href": "#analysis-17の独立レビューは-blocking-majorを見つけられなかった"
+      "href": "#analysis-17の独立レビューはblocking-majorを見つけられなかった"
     },
     {
       "source": "finding",
       "label": "核心",
       "text": "resource IDだけに依存せず、create前のownership labelでpartial-create failureを回収した案だけがmerge-readyになった。",
-      "href": "#analysis-idを取得する前に失敗したら-誰がcontainerを回収するのか"
+      "href": "#analysis-idを取得する前に失敗したら誰がcontainerを回収するのか"
     },
     {
       "source": "method",

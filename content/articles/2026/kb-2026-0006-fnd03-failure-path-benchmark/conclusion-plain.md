@@ -21,4 +21,20 @@ containerを作った直後や削除の途中で失敗すると、管理object�
 
 AIの多数決より、最後に一次証拠へ戻ることが重要でした。
 
+## FND-04で変えること
+
+次のFND-04では、FND-03と同じやり方をそのまま繰り返しません。
+
+- 実装候補は14から8程度へ減らす
+- EF Core / Npgsqlの前提やfailure pathをcandidate実行前に確認する
+- evaluator専用のadversarial probeを事前に用意する
+- セルフレビューをH0実装、Formal Self-Review、H1修正に分けて効果を測る
+- Reviewer数を減らし、仕様、framework、failure path、test assuranceなど役割を分ける
+- Real Final Synthesisとは別に、意図的な欠陥を入れたControlled Mutantでreview能力を測る
+- Judgeはまず2件とし、重大な不一致がある場合だけ3件目を使う
+- Major修正は原則として上位候補だけに絞る
+- production mergeとbenchmark archiveを別工程として扱う
+
+また、実装点数だけでなく、Self-Review Gain、External Review Quality、Gold Alignment、Execution Reliability、Time / Costを分けて記録する予定です。
+
 全候補の詳しい順位やスコアはBenchmarksページで公開します。

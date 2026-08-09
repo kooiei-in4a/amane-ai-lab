@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "KB-2026-0006",
+  "slug": "fnd03-failure-path-benchmark",
+  "title": "17のAIレビューが見逃した。14の修正は全部CI成功、それでもmergeできたのは1つだった",
+  "description": "実PostgreSQLテスト基盤を14構成で実装し、統合版を17構成で独立レビューした。全Reviewerがblocking Majorを見逃し、その後の修正14件もCIは全成功。それでも最終裁定でmerge-readyだったのは1件だけだった。",
+  "status": "published",
+  "publishedAt": "2026-08-09",
+  "updatedAt": "2026-08-09",
+  "lastVerifiedAt": "2026-08-09",
+  "tags": [
+    "AIコーディング",
+    "AIレビュー",
+    "AIエージェント",
+    "ベンチマーク",
+    "Testcontainers",
+    "PostgreSQL",
+    "品質保証"
+  ],
+  "agents": [
+    {
+      "name": "FND-03 完全実験アーカイブ",
+      "model": "14 implementation + 17 review + 14 fix + 3 judges",
+      "responseFile": "responses/fnd03-benchmark.md",
+      "executedAt": "2026-08-09",
+      "webSearch": false,
+      "attachmentsUsed": false,
+      "integrity": "edited",
+      "notes": "minimal-bank-system Issue #41のcanonical archive、candidate exact Head、PR、CI、post-hoc Gold、3-Judge adjudication、最終production outcomeを一次資料として公開用に整理した。"
+    }
+  ],
+  "giscusTerm": "KB-2026-0006",
+  "supersededBy": null
+}

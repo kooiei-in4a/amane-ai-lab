@@ -3,6 +3,30 @@
   "generatedFrom": "content/articles",
   "articles": [
     {
+      "id": "KB-2026-0006",
+      "slug": "fnd03-failure-path-benchmark",
+      "title": "17のAIレビューが見逃した。14の修正は全部CI成功、それでもmergeできたのは1つだった",
+      "description": "実PostgreSQLテスト基盤を14構成で実装し、統合版を17構成で独立レビューした。17件のraw reviewはいずれもblocking Majorを検出できず、その後の修正14件はCIが全成功。それでも最終裁定でmerge-readyだったのは1件だけだった。",
+      "status": "published",
+      "publishedAt": "2026-08-09",
+      "updatedAt": "2026-08-09",
+      "lastVerifiedAt": "2026-08-09",
+      "tags": [
+        "AIコーディング",
+        "AIレビュー",
+        "AIエージェント",
+        "ベンチマーク",
+        "Testcontainers",
+        "PostgreSQL",
+        "品質保証"
+      ],
+      "agents": [
+        "FND-03 完全実験アーカイブ"
+      ],
+      "url": "/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/",
+      "year": "2026"
+    },
+    {
       "id": "KB-2026-0005",
       "slug": "28-ai-implementations",
       "title": "28回AIに実装させ、28回CIが通った。それでも「良い実装」は同じではなかった",

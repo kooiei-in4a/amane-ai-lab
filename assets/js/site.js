@@ -179,6 +179,75 @@
     summary.insertAdjacentElement("afterend", metrics);
   }
 
+  function initHomeMetrics() {
+    var intro = document.querySelector(".home-page .home-intro");
+    if (!intro || intro.querySelector(".home-metrics")) {
+      return;
+    }
+    var count = intro.querySelector(".count");
+    var canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!count || !canonicalLink) {
+      return;
+    }
+
+    var canonical;
+    try {
+      canonical = new URL(canonicalLink.href);
+    } catch (error) {
+      return;
+    }
+    if (canonical.protocol !== "https:" && canonical.protocol !== "http:") {
+      return;
+    }
+    var hitKey = canonical.hostname + canonical.pathname.replace(/\/+$/, "");
+    if (!hitKey) {
+      return;
+    }
+
+    var metrics = document.createElement("p");
+    metrics.className = "meta-row home-metrics";
+    metrics.setAttribute("aria-label", "サイトメトリクス");
+    metrics.style.display = "flex";
+    metrics.style.flexWrap = "wrap";
+    metrics.style.alignItems = "center";
+    metrics.style.gap = "0.5rem";
+    metrics.style.margin = "0.75rem 0 0";
+
+    function addBadge(href, src, alt, title) {
+      var link = document.createElement("a");
+      link.href = href;
+      link.title = title;
+      link.style.display = "inline-flex";
+      link.style.alignItems = "center";
+
+      var img = document.createElement("img");
+      img.src = src;
+      img.alt = alt;
+      img.referrerPolicy = "no-referrer";
+      img.style.display = "block";
+      img.style.height = "20px";
+      img.style.width = "auto";
+      img.style.border = "0";
+      link.appendChild(img);
+      metrics.appendChild(link);
+    }
+
+    addBadge(
+      "https://hits.sh/" + hitKey + "/",
+      "https://hits.sh/" + hitKey + ".svg?label=Views&color=0b7285&labelColor=495057",
+      "Views",
+      "トップページViewsの統計を見る"
+    );
+    addBadge(
+      "https://github.com/kooiei-in4a/amane-ai-lab/stargazers",
+      "https://img.shields.io/github/stars/kooiei-in4a/amane-ai-lab?style=flat&label=Stars&logo=github&color=0b7285&labelColor=495057",
+      "GitHub Stars",
+      "GitHub Starsを見る"
+    );
+
+    count.insertAdjacentElement("afterend", metrics);
+  }
+
   function byUpdated(a, b) {
     return String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")) || String(b.id).localeCompare(String(a.id));
   }
@@ -426,6 +495,7 @@
   initAccordionControls();
   initGiscus();
   initArticleMetrics();
+  initHomeMetrics();
   initHomeList();
   initHashNavigation();
   initHeadingPermalinks();

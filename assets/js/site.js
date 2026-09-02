@@ -108,6 +108,63 @@
     });
   }
 
+  function initArticleMetrics() {
+    var header = document.querySelector(".article-page .article-header");
+    if (!header || header.querySelector(".article-metrics")) {
+      return;
+    }
+    var summary = header.querySelector(".article-summary");
+    var idPill = header.querySelector(".meta-row .pill");
+    if (!summary || !idPill) {
+      return;
+    }
+    var articleId = (idPill.textContent || "").trim();
+    if (!/^KB-\d{4}-\d{4}$/.test(articleId)) {
+      return;
+    }
+
+    var metrics = document.createElement("p");
+    metrics.className = "meta-row article-metrics";
+    metrics.setAttribute("aria-label", "記事メトリクス");
+    metrics.style.margin = "0.75rem 0 1rem";
+    metrics.style.gap = "0.5rem";
+
+    function addBadge(href, src, alt, title) {
+      var link = document.createElement("a");
+      link.href = href;
+      link.title = title;
+      link.style.display = "inline-flex";
+      link.style.alignItems = "center";
+
+      var img = document.createElement("img");
+      img.src = src;
+      img.alt = alt;
+      img.referrerPolicy = "no-referrer";
+      img.style.display = "block";
+      img.style.height = "20px";
+      img.style.width = "auto";
+      img.style.border = "0";
+      link.appendChild(img);
+      metrics.appendChild(link);
+    }
+
+    var key = encodeURIComponent(articleId);
+    addBadge(
+      "https://hits.sh/amane-ai-lab/" + key + "/",
+      "https://hits.sh/amane-ai-lab/" + key + ".svg?label=Views&color=0b7285&labelColor=495057",
+      "Views",
+      "Viewsの統計を見る"
+    );
+    addBadge(
+      "https://github.com/kooiei-in4a/amane-ai-lab/stargazers",
+      "https://img.shields.io/github/stars/kooiei-in4a/amane-ai-lab?style=flat&label=Stars&logo=github&color=0b7285&labelColor=495057",
+      "GitHub Stars",
+      "GitHub Starsを見る"
+    );
+
+    summary.insertAdjacentElement("afterend", metrics);
+  }
+
   function byUpdated(a, b) {
     return String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")) || String(b.id).localeCompare(String(a.id));
   }
@@ -354,6 +411,7 @@
   initCopy();
   initAccordionControls();
   initGiscus();
+  initArticleMetrics();
   initHomeList();
   initHashNavigation();
   initHeadingPermalinks();

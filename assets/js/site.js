@@ -115,11 +115,26 @@
     }
     var summary = header.querySelector(".article-summary");
     var idPill = header.querySelector(".meta-row .pill");
-    if (!summary || !idPill) {
+    var canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!summary || !idPill || !canonicalLink) {
       return;
     }
     var articleId = (idPill.textContent || "").trim();
     if (!/^KB-\d{4}-\d{4}$/.test(articleId)) {
+      return;
+    }
+
+    var canonical;
+    try {
+      canonical = new URL(canonicalLink.href);
+    } catch (error) {
+      return;
+    }
+    if (canonical.protocol !== "https:" && canonical.protocol !== "http:") {
+      return;
+    }
+    var hitKey = canonical.hostname + canonical.pathname.replace(/\/+$/, "");
+    if (!hitKey) {
       return;
     }
 
@@ -148,10 +163,9 @@
       metrics.appendChild(link);
     }
 
-    var key = encodeURIComponent(articleId);
     addBadge(
-      "https://hits.sh/amane-ai-lab/" + key + "/",
-      "https://hits.sh/amane-ai-lab/" + key + ".svg?label=Views&color=0b7285&labelColor=495057",
+      "https://hits.sh/" + hitKey + "/",
+      "https://hits.sh/" + hitKey + ".svg?label=Views&color=0b7285&labelColor=495057",
       "Views",
       "Viewsの統計を見る"
     );

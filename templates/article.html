@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="{{ASSET_PREFIX}}/assets/css/site.css">
   <link rel="stylesheet" href="{{ASSET_PREFIX}}/assets/css/nav-benchmark.css">
   <link rel="stylesheet" href="{{ASSET_PREFIX}}/assets/css/article-readability.css">
+  <link rel="stylesheet" href="{{ASSET_PREFIX}}/assets/css/article-metrics.css">
 </head>
 <body>
   <a class="skip-link" href="#main">本文へスキップ</a>
@@ -43,6 +44,14 @@
       </p>
       <h1>{{TITLE}}</h1>
       <p class="article-summary">{{DESCRIPTION}}</p>
+      <div class="article-metrics" aria-label="記事メトリクス">
+        <a class="article-metric" href="https://hits.sh/amane-ai-lab/{{ARTICLE_ID}}/" title="Viewsの統計を見る">
+          <img src="https://hits.sh/amane-ai-lab/{{ARTICLE_ID}}.svg?label=Views&amp;color=0b7285&amp;labelColor=495057" alt="Views" referrerpolicy="no-referrer">
+        </a>
+        <a class="article-metric" href="{{REPO_URL}}/stargazers" title="GitHub Starsを見る">
+          <img src="https://img.shields.io/github/stars/kooiei-in4a/amane-ai-lab?style=flat&amp;label=Stars&amp;logo=github&amp;color=0b7285&amp;labelColor=495057" alt="GitHub Stars" referrerpolicy="no-referrer">
+        </a>
+      </div>
       {{QUICK_NAV_HTML}}
       <ul class="tag-list">{{TAGS_HTML}}</ul>
     </header>

@@ -4,8 +4,16 @@
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/" rel="alternate"/>
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/feed.xml" rel="self"/>
   <id>https://kooiei-in4a.github.io/amane-ai-lab/</id>
-  <updated>2026-08-09T00:00:00Z</updated>
+  <updated>2026-09-02T00:00:00Z</updated>
   <subtitle>AIエージェントによる検証結果を公開するナレッジベース</subtitle>
+  <entry>
+    <title>AIコーディングエージェントをLinux VMへ分離して分かったこと — Proxmox / Hyper-Vでの実践</title>
+    <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0007-ai-agent-linux-vm-environment/" rel="alternate"/>
+    <id>https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0007-ai-agent-linux-vm-environment/</id>
+    <updated>2026-09-02T00:00:00Z</updated>
+    <published>2026-09-02T00:00:00Z</published>
+    <summary type="text">AIエージェントの実作業をWindows PCからLinux VMへ分離すると、ローカル負荷、環境差分、安全性、マルチエージェント運用をまとめて改善できた。ProxmoxとHyper-Vの両方で構築した経験から、Agent VMを作業環境単位の実行境界として扱う設計と積み残しを整理する。</summary>
+  </entry>
   <entry>
     <title>17のAIレビューが見逃した。14の修正は全部CI成功、それでもmergeできたのは1つだった</title>
     <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0006-fnd03-failure-path-benchmark/" rel="alternate"/>

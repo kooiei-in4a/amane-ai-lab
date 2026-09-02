@@ -3,6 +3,29 @@
   "generatedFrom": "content/articles",
   "articles": [
     {
+      "id": "KB-2026-0007",
+      "slug": "ai-agent-linux-vm-environment",
+      "title": "AIコーディングエージェントをLinux VMへ分離して分かったこと — Proxmox / Hyper-Vでの実践",
+      "description": "AIエージェントの実作業をWindows PCからLinux VMへ分離すると、ローカル負荷、環境差分、安全性、マルチエージェント運用をまとめて改善できた。ProxmoxとHyper-Vの両方で構築した経験から、Agent VMを作業環境単位の実行境界として扱う設計と積み残しを整理する。",
+      "status": "draft",
+      "publishedAt": null,
+      "updatedAt": "2026-09-02",
+      "lastVerifiedAt": "2026-09-02",
+      "tags": [
+        "AIエージェント",
+        "開発環境",
+        "Linux",
+        "Proxmox",
+        "Hyper-V",
+        "マルチエージェント"
+      ],
+      "agents": [
+        "ChatGPT"
+      ],
+      "url": "/articles/2026/kb-2026-0007-ai-agent-linux-vm-environment/",
+      "year": "2026"
+    },
+    {
       "id": "KB-2026-0006",
       "slug": "fnd03-failure-path-benchmark",
       "title": "17のAIレビューが見逃した。14の修正は全部CI成功、それでもmergeできたのは1つだった",

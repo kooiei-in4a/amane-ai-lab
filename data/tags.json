@@ -5,8 +5,11 @@
     "AIコーディング",
     "AIレビュー",
     "API",
+    "Hyper-V",
     "LLM",
+    "Linux",
     "PostgreSQL",
+    "Proxmox",
     "SDLC",
     "Testcontainers",
     "コーディング",
@@ -22,6 +25,7 @@
     "実装比較",
     "未来予測",
     "検証",
-    "独立レビュー"
+    "独立レビュー",
+    "開発環境"
   ]
 }

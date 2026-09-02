@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "source": "synthesis",
+      "label": "結論",
+      "text": "AIエージェントの実作業をLinux VMへ移すと、負荷・環境差分・安全性・並列性をまとめて改善できた。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "設計",
+      "text": "エージェントを弱くするより、十分な権限で動けるVM境界を作り、VM外への到達範囲を制御する方が実用的だった。",
+      "href": "#conclusion-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "運用",
+      "text": "マルチエージェントではAgentごとではなく、作業環境ごとに1台のAgent VMを共有する構成が扱いやすい場面がある。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "次",
+      "text": "次の重点は、Agent VMを構成から再生成できるDisposable Runtimeへすること。",
+      "href": "#conclusion-heading"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "KB-2026-0007",
+  "slug": "ai-agent-linux-vm-environment",
+  "title": "AIコーディングエージェントをLinux VMへ分離して分かったこと — Proxmox / Hyper-Vでの実践",
+  "description": "AIエージェントの実作業をWindows PCからLinux VMへ分離すると、ローカル負荷、環境差分、安全性、マルチエージェント運用をまとめて改善できた。ProxmoxとHyper-Vの両方で構築した経験から、Agent VMを作業環境単位の実行境界として扱う設計と積み残しを整理する。",
+  "status": "published",
+  "publishedAt": "2026-09-02",
+  "updatedAt": "2026-09-02",
+  "lastVerifiedAt": "2026-09-02",
+  "tags": [
+    "AIエージェント",
+    "開発環境",
+    "Linux",
+    "Proxmox",
+    "Hyper-V",
+    "マルチエージェント"
+  ],
+  "agents": [
+    {
+      "name": "ChatGPT",
+      "model": "GPT-5.6 Sol",
+      "responseFile": "responses/chatgpt.md",
+      "executedAt": "2026-09-02",
+      "webSearch": true,
+      "attachmentsUsed": false,
+      "integrity": "redacted",
+      "notes": "公開用に、非公開Project名、ホスト名、IPアドレス、ユーザー名、ローカルパス、VM固有識別子などを削除・一般化した。製品名とRemote SSHの状況は公開情報で再確認した。"
+    }
+  ],
+  "giscusTerm": "KB-2026-0007",
+  "supersededBy": null
+}

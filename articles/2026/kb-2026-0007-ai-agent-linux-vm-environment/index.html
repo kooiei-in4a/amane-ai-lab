@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIコーディングエージェントをLinux VMへ分離して分かったこと — Proxmox / Hyper-Vでの実践 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="AIエージェントの実作業をWindows PCからLinux VMへ分離すると、ローカル負荷、環境差分、安全性、マルチエージェント運用をまとめて改善できた。ProxmoxとHyper-Vの両方で構築した経験から、Agent VMを作業環境単位の実行境界として扱う設計と積み残しを整理する。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0007-ai-agent-linux-vm-environment/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIコーディングエージェントをLinux VMへ分離して分かったこと — Proxmox / Hyper-Vでの実践">
+  <meta property="og:description" content="AIエージェントの実作業をWindows PCからLinux VMへ分離すると、ローカル負荷、環境差分、安全性、マルチエージェント運用をまとめて改善できた。ProxmoxとHyper-Vの両方で構築した経験から、Agent VMを作業環境単位の実行境界として扱う設計と積み残しを整理する。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0007-ai-agent-linux-vm-environment/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AIコーディングエージェントをLinux VMへ分離して分かったこと — Proxmox / Hyper-Vでの実践">
+  <meta name="twitter:description" content="AIエージェントの実作業をWindows PCからLinux VMへ分離すると、ローカル負荷、環境差分、安全性、マルチエージェント運用をまとめて改善できた。ProxmoxとHyper-Vの両方で構築した経験から、Agent VMを作業環境単位の実行境界として扱う設計と積み残しを整理する。">
+  <link rel="stylesheet" href="../../../assets/css/site.css">
+  <link rel="stylesheet" href="../../../assets/css/nav-benchmark.css">
+  <link rel="stylesheet" href="../../../assets/css/article-readability.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane AI Lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#articles">記事</a>
+        <a href="../../../benchmarks/">Benchmarks</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#about">このLabについて</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap article-page">
+    <header class="article-header">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0007</span>
+        <span class="pill status-published">published</span>
+        <span>公開: 2026-09-02</span>
+        <span>最終確認: 2026-09-02</span>
+        <span>更新: 2026-09-02</span>
+      </p>
+      <h1>AIコーディングエージェントをLinux VMへ分離して分かったこと — Proxmox / Hyper-Vでの実践</h1>
+      <p class="article-summary">AIエージェントの実作業をWindows PCからLinux VMへ分離すると、ローカル負荷、環境差分、安全性、マルチエージェント運用をまとめて改善できた。ProxmoxとHyper-Vの両方で構築した経験から、Agent VMを作業環境単位の実行境界として扱う設計と積み残しを整理する。</p>
+      <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
+      <ul class="tag-list"><li>AIエージェント</li><li>開発環境</li><li>Linux</li><li>Proxmox</li><li>Hyper-V</li><li>マルチエージェント</li></ul>
+    </header>
+
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#analysis-heading">AIエージェントの実作業をLinux VMへ移すと、負荷・環境差分・安全性・並列性をまとめて改善できた。</a></li><li><span class="tldr-source tldr-source-synthesis">設計</span> <a class="tldr-link" href="#conclusion-heading">エージェントを弱くするより、十分な権限で動けるVM境界を作り、VM外への到達範囲を制御する方が実用的だった。</a></li><li><span class="tldr-source tldr-source-synthesis">運用</span> <a class="tldr-link" href="#analysis-heading">マルチエージェントではAgentごとではなく、作業環境ごとに1台のAgent VMを共有する構成が扱いやすい場面がある。</a></li><li><span class="tldr-source tldr-source-synthesis">次</span> <a class="tldr-link" href="#conclusion-heading">次の重点は、Agent VMを構成から再生成できるDisposable Runtimeへすること。</a></li></ol></section>
+    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-chatgpt">ChatGPT</a><ul><li class="toc-item toc-level-2"><a href="#agent-chatgpt-結論">結論</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-設計の中心">設計の中心</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-windows側のクライアント">Windows側のクライアント</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-次に改善するなら">次に改善するなら</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
+
+    <section class="panel" aria-labelledby="background-heading">
+      <h2 id="background-heading">検討に至った背景</h2>
+      <div class="prose"><h1 id="background-なぜagent-vmを作ったか"><a class="heading-permalink" href="#background-なぜagent-vmを作ったか" aria-label="この見出しへのリンク">#</a>なぜAgent VMを作ったか</h1>
+<p>AIコーディングエージェントを使う時間が増えるほど、モデル性能とは別の問題が目立つようになりました。ローカルPCで直接動かすと、ビルド、テスト、Docker、依存関係の導入が普段使うPCの負荷になります。さらに、Windows固有の設定やツール差分が、エージェントへの指示そのものに混ざります。</p>
+<p>もう一つの問題は権限です。エージェントに自律的な開発を任せるには、ファイル変更、Git操作、テスト実行、コンテナ操作など、ある程度強い権限が必要です。しかし、その権限を普段使うPCへ直接与えることには抵抗があります。</p>
+<p>そこで、実際の開発作業を専用Linux VMへ移しました。</p>
+<p>今回の検証では、同じ考え方を <strong>Proxmox VE</strong> と <strong>Microsoft Hyper-V</strong> の両方で構築しました。目的はHypervisorの比較ではありません。Hypervisorが変わっても成立する、AIエージェント向けの実行環境パターンを確認することです。</p>
+<p>考え方は単純です。</p>
+<pre><code class="language-text">Windows PC
+    │
+    │ 指示・監督
+    ▼
+Linux Agent VM
+    │
+    ├─ Git
+    ├─ Docker
+    ├─ Build / Test
+    └─ AI coding agents
+</code></pre>
+<p>Windows PCは人間のインターフェースとして残し、コード、Toolchain、Runtime、コンテナなど、実際の作業状態をLinux VMへ寄せます。</p>
+<p>Windows側では、Claude DesktopのCodeタブで提供される <strong>Claude Code Desktop</strong>、<strong>ChatGPT desktop appのCodex</strong>、<strong>Cursor Agent / Cursor CLI</strong> などを利用・検証しました。Claude Code Desktopは公式にSSH環境をサポートしています。OpenCodeについては、今回欲しかったDesktopからのnative Remote SSHがまだFeature Requestとして残っているため、正式な構成には入れていません。</p>
+<p>この記事では、個別のProject名、ホスト名、IPアドレス、ユーザー名、VM固有IDなどは公開しません。公開するのは、別の環境でも再利用できる設計上の知見と運用上の結果です。</p>
+<h2 id="background-参照した公開情報"><a class="heading-permalink" href="#background-参照した公開情報" aria-label="この見出しへのリンク">#</a>参照した公開情報</h2>
+<ul>
+<li><a href="https://code.claude.com/docs/en/desktop">Claude Code Desktop — SSH environments</a></li>
+<li><a href="https://help.openai.com/en/articles/20001276/">OpenAI — Moving to the new ChatGPT desktop app</a></li>
+<li><a href="https://prod.cursor.com/docs/cli/overview">Cursor CLI</a></li>
+<li><a href="https://github.com/anomalyco/opencode/issues/33273">OpenCode — Remote SSH support feature request</a></li>
+</ul></div>
+    </section>
+
+    <section class="panel" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">調査プロンプト</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn" id="copy-prompt" data-copy-target="prompt-text">プロンプトをコピー</button>
+        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      </div>
+      <details class="prompt-details">
+        <summary>プロンプト全文を表示する</summary>
+        <pre id="prompt-text" class="prompt-block"><code>AIコーディングエージェントの実行場所をLocal PCではなく専用Linux VMへ分離した取り組みを、公開ナレッジとして整理する。
+
+含める観点:
+- 目的
+- 構築した環境の考え方
+- Proxmox VE / Microsoft Hyper-Vの両方で試したこと
+- Git worktreeやDockerを使ったマルチエージェント対応
+- 良かった点
+- 改善点と積み残し
+- 構築手順
+- 今回得られた設計上の知見
+
+公開に適さない情報は記載しない。非公開Project名、ホスト名、IPアドレス、ユーザー名、ローカルパス、VM固有識別子などは削除または一般化する。
+
+Windows側で利用するAIエージェントの名称は現行の公式情報を確認する。OpenCodeはRemote SSH周辺の状況も確認する。
+</code></pre>
+      </details>
+    </section>
+
+    <section class="panel" aria-labelledby="agents-heading">
+      <h2 id="agents-heading">AIエージェントの回答</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
+        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
+      </div>
+      <div id="agent-responses"><section class="agent-response" data-agent="ChatGPT">
+  <details id="agent-chatgpt">
+    <summary>
+      <span class="agent-name">ChatGPT</span>
+      <span class="agent-meta">GPT-5.6 Sol / 2026-09-02 / integrity=redacted</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>あり</dd></div>
+      <div><dt>添付</dt><dd>なし</dd></div>
+      <div><dt>完全性</dt><dd>redacted</dd></div>
+    </dl>
+    <p class="agent-notes">公開用に、非公開Project名、ホスト名、IPアドレス、ユーザー名、ローカルパス、VM固有識別子などを削除・一般化した。製品名とRemote SSHの状況は公開情報で再確認した。</p>
+    <div class="agent-body prose"><h1 id="agent-chatgpt-chatgpt回答公開用に編集"><a class="heading-permalink" href="#agent-chatgpt-chatgpt回答公開用に編集" aria-label="この見出しへのリンク">#</a>ChatGPT回答（公開用に編集）</h1>
+<h2 id="agent-chatgpt-結論"><a class="heading-permalink" href="#agent-chatgpt-結論" aria-label="この見出しへのリンク">#</a>結論</h2>
+<p>今回いちばん効果が大きかったのは、AIエージェントを「ローカルPC上で動く開発ツール」として扱うのではなく、<strong>隔離されたLinux開発環境へ接続するクライアント</strong>として扱うようにしたことです。</p>
+<p>Proxmox VEとMicrosoft Hyper-Vの両方で構築した結果、Hypervisor固有の実装差はあっても、次の基本パターンは共通化できました。</p>
+<pre><code class="language-text">Human interface
+    │
+    ▼
+Windows client
+    │
+    ▼
+Linux Agent VM
+    ├─ repositories
+    ├─ worktrees
+    ├─ containers
+    ├─ build / test
+    └─ agent CLIs
+</code></pre>
+<p>特に良かったのは、ローカルPCの負荷低減、開発環境の標準化、操作端末への依存低減、VM境界による安全性、Snapshot / Checkpointによる復旧性、Git worktreeを利用した並行作業です。</p>
+<h2 id="agent-chatgpt-設計の中心"><a class="heading-permalink" href="#agent-chatgpt-設計の中心" aria-label="この見出しへのリンク">#</a>設計の中心</h2>
+<p>エージェントの権限を細かく削りすぎると、自律開発のたびに人間の承認が必要になります。そこで、VM内部では開発に必要な能力を持たせつつ、VMの外側への影響をネットワークと仮想化境界で抑える方法を採りました。</p>
+<p>つまり、重要なのは「エージェントを弱くする」ことよりも、<strong>強いエージェントを安全に動かせる箱を作ること</strong>です。</p>
+<h2 id="agent-chatgpt-windows側のクライアント"><a class="heading-permalink" href="#agent-chatgpt-windows側のクライアント" aria-label="この見出しへのリンク">#</a>Windows側のクライアント</h2>
+<p>2026年9月時点では、Claude側はClaude DesktopのCodeタブでClaude Code Desktopを利用でき、SSH環境も公式サポートされています。OpenAI側は新しいChatGPT desktop appにCodexが統合されています。CursorはAgentとCursor CLIを利用できます。</p>
+<p>OpenCodeは候補でしたが、Desktopのnative Remote SSH supportがFeature Requestとして残っているため、今回の正式構成には含めませんでした。</p>
+<h2 id="agent-chatgpt-次に改善するなら"><a class="heading-permalink" href="#agent-chatgpt-次に改善するなら" aria-label="この見出しへのリンク">#</a>次に改善するなら</h2>
+<p>次の重点はVM構築の自動化です。OS、ネットワークポリシー、Toolchain、Agent CLI、Repository配置、Acceptance Testまでをコード化できれば、Agent VMを修理する環境ではなく、必要に応じて再生成できるDisposable Runtimeへ近づけられます。</p></div>
+  </details>
+</section></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">AI回答の合成</h2>
+      <div class="prose"><h1 id="analysis-まず結果"><a class="heading-permalink" href="#analysis-まず結果" aria-label="この見出しへのリンク">#</a>まず結果</h1>
+<p>専用Linux VMへAIエージェントの実作業を移した判断は、かなり良かったです。</p>
+<p>一番大きかったのは、単にWindows PCの負荷が減ったことではありません。<strong>開発環境そのものを、操作しているPCから切り離せたこと</strong>です。</p>
+<p>ビルド、テスト、Docker、Git、言語Runtime、AIエージェント用CLIをVM側へ寄せると、Windows PCは「指示と監督をする端末」に近づきます。別のWindows PCから接続しても、エージェントが見るRepositoryやToolchainは同じです。</p>
+<p>さらに、VMを作業単位のセキュリティ境界として使えるようになりました。エージェントには開発に必要な権限を与えながら、Local LANなどVM外へのアクセスは別レイヤーで制限できます。</p>
+<p>今回の経験から、マルチエージェントを継続的に使うなら、私は <strong>「作業環境ごとにAgent VMを1つ用意し、複数のエージェントからそのVMを使う」</strong> 方式を有力だと考えています。</p>
+<h1 id="analysis-agent-vmで解決したかった4つの問題"><a class="heading-permalink" href="#analysis-agent-vmで解決したかった4つの問題" aria-label="この見出しへのリンク">#</a>Agent VMで解決したかった4つの問題</h1>
+<h2 id="analysis-1-ローカルpcの負荷"><a class="heading-permalink" href="#analysis-1-ローカルpcの負荷" aria-label="この見出しへのリンク">#</a>1. ローカルPCの負荷</h2>
+<p>AIコーディングエージェントは、回答を生成するだけではありません。Repositoryを探索し、依存関係を導入し、ビルドし、テストし、コンテナを起動します。</p>
+<p>これを普段使用するPC上で複数並行すると、CPU、Memory、Disk I/Oの影響を受けます。VMへ処理を移すことで、少なくとも開発負荷と普段のPC利用を分離できます。</p>
+<h2 id="analysis-2-環境差分"><a class="heading-permalink" href="#analysis-2-環境差分" aria-label="この見出しへのリンク">#</a>2. 環境差分</h2>
+<p>ローカル実行では、利用するPCによってPATH、Git設定、Docker、Runtimeなどが変わります。</p>
+<p>Agent VMでは、実際の開発環境を一か所へ固定できます。</p>
+<pre><code class="language-text">Agent VM
+├─ repositories
+├─ worktrees
+├─ runtime
+├─ artifacts
+└─ scratch
+</code></pre>
+<p>実際のディレクトリ名そのものより、<strong>どのProjectでも同じ役割のディレクトリを同じ規則で使う</strong>ことが重要でした。</p>
+<h2 id="analysis-3-権限と安全性"><a class="heading-permalink" href="#analysis-3-権限と安全性" aria-label="この見出しへのリンク">#</a>3. 権限と安全性</h2>
+<p>AIエージェントへ強い権限を与えたい一方で、普段使うPC全体を操作対象にはしたくありません。</p>
+<p>ここでは権限を細かく減らすより、境界を変えました。</p>
+<pre><code class="language-text">Local PC
+   │
+   ▼
+┌──────────────────┐
+│ Linux Agent VM   │
+│                  │
+│ Git / Docker     │
+│ Build / Test     │
+│ Agent CLI        │
+└──────────────────┘
+   │
+   ├─ Internet: 必要な通信
+   └─ Local LAN: 原則制限
+</code></pre>
+<p>VM内部では開発に必要な能力を持たせ、VM外への到達範囲を制限します。</p>
+<p>この構成では「誤操作を絶対に起こさない」ことより、<strong>誤操作が起きたときのBlast Radiusを限定する</strong>ことを重視できます。</p>
+<h2 id="analysis-4-並行作業"><a class="heading-permalink" href="#analysis-4-並行作業" aria-label="この見出しへのリンク">#</a>4. 並行作業</h2>
+<p>マルチエージェントでは、同じRepositoryに複数のAgentが触ること自体が問題になります。</p>
+<p>Git worktreeを使って作業単位を分けると、ImplementationとReviewを別のWorktreeへ分離できます。</p>
+<pre><code class="language-text">Shared Git repository
+    ├─ Task A / Implementation
+    ├─ Task A / Review
+    └─ Task B / Implementation
+</code></pre>
+<p>DockerもProject単位のnamespaceを使えば、コンテナ、Network、Volumeの衝突を減らせます。</p>
+<p>重要なのは複雑なオーケストレーションではなく、<strong>同時に動いたときに互いを壊さない最低限の規約</strong>でした。</p>
+<h1 id="analysis-proxmoxとhyper-vの両方で試して分かったこと"><a class="heading-permalink" href="#analysis-proxmoxとhyper-vの両方で試して分かったこと" aria-label="この見出しへのリンク">#</a>ProxmoxとHyper-Vの両方で試して分かったこと</h1>
+<p>今回、同じAgent VMの考え方をProxmox VEとMicrosoft Hyper-Vの両方で実装しました。</p>
+<p>Hypervisorごとに具体的な実装方法は違います。ネットワーク分離をHypervisor側で強く掛けやすい環境もあれば、Guest OS側のFirewallを中心にした方が扱いやすい環境もあります。SnapshotやCheckpointの操作方法も異なります。</p>
+<p>それでも、上位の設計はほとんど変わりませんでした。</p>
+<pre><code class="language-text">Agent VM common design
+    │
+    ├─ Linux
+    ├─ standardized toolchain
+    ├─ Git worktree
+    ├─ Docker namespace
+    ├─ SSH access
+    ├─ network boundary
+    └─ recovery point
+</code></pre>
+<p>この結果から、Agent VMはProxmox固有、Hyper-V固有のテクニックではなく、Hypervisorの上に置ける共通アーキテクチャとして扱えます。</p>
+<p>今後文書化するなら、<strong>Common Specification</strong> と <strong>Hypervisor-specific Implementation</strong> を分けるのがよいと考えています。</p>
+<h1 id="analysis-windows側のaiエージェント"><a class="heading-permalink" href="#analysis-windows側のaiエージェント" aria-label="この見出しへのリンク">#</a>Windows側のAIエージェント</h1>
+<p>今回の構成では、Windows側は主に人間が作業を開始・監督する場所です。</p>
+<p>Claude Code DesktopはClaude DesktopのCodeタブから利用でき、公式ドキュメント上もLocal、Remote、SSHを実行環境として選べます。SSHの場合、実処理は接続先のLinuxマシン側で動きます。</p>
+<p>OpenAI側は2026年にCodex appがWindowsへ展開され、その後、新しいChatGPT desktop appへChat、Work、Codexが統合されています。現在の記事では <strong>ChatGPT desktop appのCodex</strong> と表記するのが分かりやすいと判断しました。</p>
+<p>CursorはIDE内のAgentだけでなくCursor CLIも提供しています。VM側にCLIを置くと、Windows側のUIとLinux側の作業環境を分離する構成にも組み込みやすくなります。</p>
+<p>OpenCodeも候補にしましたが、今回欲しかったDesktopからのnative Remote SSHは、公開IssueではFeature Requestの状態です。そのため、無理に回避策を標準構成へ入れず、Remote SSH周辺が成熟してから再評価することにしました。</p>
+<h1 id="analysis-良かった点"><a class="heading-permalink" href="#analysis-良かった点" aria-label="この見出しへのリンク">#</a>良かった点</h1>
+<h2 id="analysis-ローカルpcの負荷が減った"><a class="heading-permalink" href="#analysis-ローカルpcの負荷が減った" aria-label="この見出しへのリンク">#</a>ローカルPCの負荷が減った</h2>
+<p>Build、Test、DockerなどをVM側へ移せます。特に複数エージェントを同時に動かす場合、普段使うPCと実行負荷を分離できる効果は大きくなります。</p>
+<h2 id="analysis-操作端末に依存しにくい"><a class="heading-permalink" href="#analysis-操作端末に依存しにくい" aria-label="この見出しへのリンク">#</a>操作端末に依存しにくい</h2>
+<p>Repository、Runtime、Docker、Git設定などの実体はVM側にあります。</p>
+<p>そのため、「どのWindows PCから操作しているか」は開発環境の主要な差分ではなくなります。</p>
+<h2 id="analysis-エージェントへの指示を標準化できる"><a class="heading-permalink" href="#analysis-エージェントへの指示を標準化できる" aria-label="この見出しへのリンク">#</a>エージェントへの指示を標準化できる</h2>
+<p>同じディレクトリ規約、同じGitモデル、同じDockerルールを前提にできます。</p>
+<p>Agentごと、PCごとに「Repositoryはどこか」「Dockerは使えるか」といった前置きを繰り返す必要が減りました。</p>
+<h2 id="analysis-強い権限を与えやすい"><a class="heading-permalink" href="#analysis-強い権限を与えやすい" aria-label="この見出しへのリンク">#</a>強い権限を与えやすい</h2>
+<p>Local PCへ強い自律操作権限を直接与えるより、専用VMの内部へ閉じ込めた方が判断しやすくなります。</p>
+<p>ここで効いたのはLinuxそのものより、<strong>VMが明確な所有境界になっていること</strong>です。</p>
+<h2 id="analysis-戻せる"><a class="heading-permalink" href="#analysis-戻せる" aria-label="この見出しへのリンク">#</a>戻せる</h2>
+<p>SnapshotやCheckpointがあると、「壊さないこと」だけに設計を寄せなくて済みます。</p>
+<p>エージェントが環境を壊したとき、原因を調査して直すだけでなく、正常なRecovery Pointへ戻す選択肢を持てます。</p>
+<h1 id="analysis-クラウドエージェントとの関係"><a class="heading-permalink" href="#analysis-クラウドエージェントとの関係" aria-label="この見出しへのリンク">#</a>クラウドエージェントとの関係</h1>
+<p>クラウド上で動くAIエージェントには、インフラを用意せずすぐ使える大きな利点があります。</p>
+<p>一方で、複数ベンダーのAgentを同じ開発プロセスで組み合わせる場合、自分で管理するAgent VMにも利点があります。</p>
+<pre><code class="language-text">Claude
+Codex
+Cursor
+Other agents
+    │
+    ▼
+Shared Agent VM
+    ├─ Git
+    ├─ Toolchain
+    ├─ Docker
+    └─ Runtime
+</code></pre>
+<p>エージェントごとに別々の実行環境を持つのではなく、同じRepository、同じテスト環境、同じNetwork Policyを共有できます。</p>
+<p>そのため、すべてをVMへ寄せるか、すべてをクラウドへ寄せるかの二択ではありません。短い単発作業はクラウド、複数Agentが継続して触るProjectはAgent VM、といった使い分けも考えられます。</p>
+<h1 id="analysis-積み残し"><a class="heading-permalink" href="#analysis-積み残し" aria-label="この見出しへのリンク">#</a>積み残し</h1>
+<h2 id="analysis-vm構築の自動化"><a class="heading-permalink" href="#analysis-vm構築の自動化" aria-label="この見出しへのリンク">#</a>VM構築の自動化</h2>
+<p>現状で最も価値がある改善は、Agent VMを再現可能にすることです。</p>
+<p>OS初期設定、Network Policy、Toolchain、AI Agent CLI、Repositoryの初期配置、Acceptance Testまでを自動化できれば、VMを長期間手でメンテナンスする必要が減ります。</p>
+<h2 id="analysis-common-specificationの分離"><a class="heading-permalink" href="#analysis-common-specificationの分離" aria-label="この見出しへのリンク">#</a>Common Specificationの分離</h2>
+<p>ProxmoxとHyper-Vでは実装方法が違うため、「Agent VMとして必ず満たす条件」と「Hypervisor別設定」を分離したいと考えています。</p>
+<h2 id="analysis-agent-toolの更新管理"><a class="heading-permalink" href="#analysis-agent-toolの更新管理" aria-label="この見出しへのリンク">#</a>Agent Toolの更新管理</h2>
+<p>AI Agent関連ツールは更新が速いため、Version確認、Upgrade、Compatibility Test、Rollbackを簡単に回せる仕組みが必要です。</p>
+<h2 id="analysis-opencodeの再評価"><a class="heading-permalink" href="#analysis-opencodeの再評価" aria-label="この見出しへのリンク">#</a>OpenCodeの再評価</h2>
+<p>OpenCodeは正式構成へ入れていません。Remote SSH周辺の機能が今回の運用モデルに適合する状態になった時点で再評価します。</p>
+<h1 id="analysis-構築するときの順序"><a class="heading-permalink" href="#analysis-構築するときの順序" aria-label="この見出しへのリンク">#</a>構築するときの順序</h1>
+<p>次に同じ環境を作るなら、手順は次の順序にします。</p>
+<ol>
+<li>Agent VMの責務とSecurity Boundaryを決める</li>
+<li>Hypervisor上にLinux VMを作る</li>
+<li>StorageとNetwork Policyを設定する</li>
+<li>SSHとユーザー権限を設定する</li>
+<li>Git、Docker、言語Runtimeなど共通Toolchainを入れる</li>
+<li>AI Agent CLIを導入する</li>
+<li>Repository / Worktree / Runtime / Artifactの規約を作る</li>
+<li>Docker resourceのnamespaceルールを決める</li>
+<li>Windows側のAI Agentから接続してE2E確認する</li>
+<li>正常状態のRecovery Pointを作る</li>
+<li>構築手順を自動化する</li>
+</ol>
+<p>最初から個々のAgent設定に入るより、<strong>VM境界、Network境界、Filesystem、Gitモデル、Dockerモデル、Recoveryモデルを先に決める</strong>方がやり直しが減ります。</p>
+<h1 id="analysis-今回得られた知見"><a class="heading-permalink" href="#analysis-今回得られた知見" aria-label="この見出しへのリンク">#</a>今回得られた知見</h1>
+<p>今回の経験を一文にすると、次のようになります。</p>
+<blockquote>
+<p>AIエージェントを細かく縛るより、十分な権限で自由に動いてよい隔離環境を作り、その環境の外へ出られる範囲を制御する方が、実用的な自律開発と安全性を両立しやすい。</p>
+</blockquote>
+<p>そして、マルチエージェントではその「隔離環境」をAgentごとに作るのではなく、<strong>作業環境ごとにAgent VMを用意し、複数Agentが同じ環境を共有する</strong>方が扱いやすい場面があります。</p>
+<p>最終的には、Agent VMを大事に手修復し続けるのではなく、構成から再生成できる <strong>Disposable Agent Runtime</strong> にしていくのが次の目標です。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-plain-heading">
+      <h2 id="analysis-plain-heading">AI回答の合成（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="analysis-plain-わかりやすく言うと"><a class="heading-permalink" href="#analysis-plain-わかりやすく言うと" aria-label="この見出しへのリンク">#</a>わかりやすく言うと</h1>
+<p>今回やったことは、AIに開発させる「作業机」をWindows PCから別のLinux VMへ移した、ということです。</p>
+<p>結果はかなり良好でした。</p>
+<p>Windows PCは人間がClaude、Codex、Cursorなどへ指示を出す場所として使い、実際のRepository、Docker、Build、TestはLinux VM側へ置きます。すると、AIが重い処理をしても普段のPCへの影響を減らせます。</p>
+<p>それ以上に良かったのは、開発環境がPCに依存しなくなったことです。別のPCから操作しても、AIが使う開発環境は同じVMです。</p>
+<h1 id="analysis-plain-安全面で良かったこと"><a class="heading-permalink" href="#analysis-plain-安全面で良かったこと" aria-label="この見出しへのリンク">#</a>安全面で良かったこと</h1>
+<p>AIへ自律的に開発させるには、かなりの操作権限が必要です。</p>
+<p>その権限を普段使っているPCへ直接渡す代わりに、専用VMの中で動かします。</p>
+<p>VMの中ではGit、Docker、Build、Testなどを自由に使わせます。一方、VMの外、特にLocal LANなどへは必要以上に出られないようにします。</p>
+<p>つまり、「AIを何もできないようにする」のではなく、「自由に動ける範囲を箱で囲う」考え方です。</p>
+<h1 id="analysis-plain-複数aiとも相性が良かった"><a class="heading-permalink" href="#analysis-plain-複数aiとも相性が良かった" aria-label="この見出しへのリンク">#</a>複数AIとも相性が良かった</h1>
+<p>Claude、Codex、Cursorなど、違うAIエージェントを使っても、実際の作業場所を同じLinux VMへ揃えられます。</p>
+<p>Git worktreeを使えば、同じProjectでも実装用とレビュー用の作業場所を分けられます。DockerもProjectごとに名前空間を分ければ、複数作業を同時に動かしやすくなります。</p>
+<p>このため、マルチエージェントを使う場合は「Agentごとに環境を作る」より、「開発環境ごとにVMを1台作り、そのVMを複数Agentから使う」方が分かりやすいケースがあります。</p>
+<h1 id="analysis-plain-proxmoxとhyper-v"><a class="heading-permalink" href="#analysis-plain-proxmoxとhyper-v" aria-label="この見出しへのリンク">#</a>ProxmoxとHyper-V</h1>
+<p>今回はProxmox VEとMicrosoft Hyper-Vの両方で試しました。</p>
+<p>FirewallやSnapshotの方法は違いますが、Agent VMとして必要な考え方はほぼ共通でした。</p>
+<p>そのため今後は、共通のAgent VM仕様を1つ作り、Proxmox用とHyper-V用の設定だけを別に持つ形が良さそうです。</p>
+<h1 id="analysis-plain-まだ残っていること"><a class="heading-permalink" href="#analysis-plain-まだ残っていること" aria-label="この見出しへのリンク">#</a>まだ残っていること</h1>
+<p>一番大きいのはVM構築の自動化です。</p>
+<p>新しいAgent VMが必要になったとき、毎回手作業で作るのではなく、設定から再生成できるようにしたいと考えています。</p>
+<p>OpenCodeも候補ですが、今回欲しいRemote SSHの使い方はまだ正式構成へ採用していません。状況が変わったら再確認します。</p>
+<p>最終的には「壊れたVMを直す」のではなく、「壊れたら同じ構成のVMを作り直す」運用を目指します。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">合成結果の要約</h2>
+      <div class="prose"><h1 id="conclusion-結論"><a class="heading-permalink" href="#conclusion-結論" aria-label="この見出しへのリンク">#</a>結論</h1>
+<p>Proxmox VEとMicrosoft Hyper-Vの両方で専用Linux Agent VMを構築した結果、AIコーディングエージェントの実行環境をローカルPCから分離する方式は、実運用上かなり有効でした。</p>
+<p>得られた効果は4つです。</p>
+<ol>
+<li>Build、Test、Dockerなどの負荷を普段使うPCから分離できる</li>
+<li>Repository、Toolchain、Runtimeを一か所へ固定でき、操作端末への依存を減らせる</li>
+<li>AI Agentへ十分な権限を与えつつ、影響範囲をVM境界へ限定できる</li>
+<li>Git worktreeやDocker namespaceを使い、複数Agentの並行作業を整理しやすい</li>
+</ol>
+<p>特に重要だったのは、<strong>「AI Agentをどこまで制限するか」ではなく「AI Agentが自由に動いてよい範囲をどこに置くか」</strong>という視点です。</p>
+<p>VM内部には開発能力を与え、VM外への到達範囲を制御する。この設計なら、自律性を失わずにBlast Radiusを抑えられます。</p>
+<p>また、ProxmoxとHyper-Vで同じ設計が成立したため、これは特定Hypervisorのテクニックというより、Agent execution environmentのアーキテクチャパターンとして扱えます。</p>
+<p>マルチエージェントを前提にする場合は、Agentごとに別環境を作るより、<strong>Projectや作業環境ごとにAgent VMを1つ作り、複数Agentで共有する</strong>構成が有効なケースがあります。</p>
+<p>次の課題は、Agent VMを手作業で維持する環境から、構成定義から再生成できるDisposable Agent Runtimeへ進化させることです。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
+      <h2 id="conclusion-plain-heading">合成結果の要約（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="conclusion-plain-要点"><a class="heading-permalink" href="#conclusion-plain-要点" aria-label="この見出しへのリンク">#</a>要点</h1>
+<p>AIエージェントの作業場所をWindows PCからLinux VMへ移したのは、かなり良い結果でした。</p>
+<p>良かった理由は、PCが軽くなっただけではありません。</p>
+<ul>
+<li>AIが使う開発環境を1か所へ統一できる</li>
+<li>別のPCから操作しても環境が変わらない</li>
+<li>AIへ強い開発権限を与えても、影響範囲をVM内へ閉じ込めやすい</li>
+<li>SnapshotやCheckpointで戻しやすい</li>
+<li>複数のAIを同じ環境で使いやすい</li>
+</ul>
+<p>一番の知見は、AIを細かく何もできないようにするより、<strong>自由に動いてよい専用の箱を作る方が実用的だった</strong>ことです。</p>
+<p>今後は、その箱であるAgent VM自体を自動生成できるようにします。</p></div>
+      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="edit-heading">
+      <h2 id="edit-heading">Edit on GitHub</h2>
+      <p>正本ディレクトリ: <a href="https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0007-ai-agent-linux-vm-environment/">https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0007-ai-agent-linux-vm-environment/</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="comments-heading">
+      <h2 id="comments-heading">コメント</h2>
+      <p class="note">コメントは GitHub Discussions（giscus）上の第三者投稿です。読み込みと投稿にはGitHubへの接続が必要です。</p>
+      <button type="button" class="btn" id="load-giscus">コメントを読み込む</button>
+      <div id="giscus-container"
+        hidden
+        data-giscus-src="https://giscus.app/client.js"
+  data-repo="kooiei-in4a/amane-ai-lab"
+  data-repo-id="R_kgDOToJuSQ"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOToJuSc4DCT1S"
+  data-mapping="specific"
+  data-term="KB-2026-0007"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="ja"
+  data-loading="lazy"
+      ></div>
+    </section>
+
+    <footer class="article-footer panel">
+      <p>コード: MIT / コンテンツ: CC BY 4.0。AI回答は参考情報であり、事実確認は読者の責任です。</p>
+      <p><a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧へ戻る</a> · <a href="../../../benchmarks/">Benchmarksを見る</a></p>
+    </footer>
+  </main>
+
+  <script src="../../../assets/js/site.js" defer></script>
+  <nav class="page-jump" aria-label="ページ内ジャンプ">
+    <a href="#tldr" class="page-jump-link" data-jump="tldr">要点</a>
+    <a href="#article-toc" class="page-jump-link">目次</a>
+    <a href="#main" class="page-jump-link page-jump-top" hidden>先頭へ</a>
+  </nav>
+</body>
+</html>

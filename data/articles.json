@@ -3,6 +3,30 @@
   "generatedFrom": "content/articles",
   "articles": [
     {
+      "id": "KB-2026-0008",
+      "slug": "opencode-linux-agent-vm-poc",
+      "title": "OpenCodeをLinux Agent VMで使えるか検証した — SSHトンネル＋Web UIで実用化",
+      "description": "Native Remote SSHがないOpenCodeを、Linux Agent VM上で動かしWindowsからSSH経由で使えるかPoCした。結論は、localhost限定のOpenCode WebをSSHポートフォワードで開く構成なら、OpenCode Go、日本語、Git、build/test、Docker、再接続まで実用できた。ただしheadless起動、Git worktree、非対話SSHのPATH、終了処理にはwrapperが必要だった。",
+      "status": "published",
+      "publishedAt": "2026-09-03",
+      "updatedAt": "2026-09-03",
+      "lastVerifiedAt": "2026-09-03",
+      "tags": [
+        "OpenCode",
+        "OpenCode Go",
+        "AIエージェント",
+        "Linux",
+        "SSH",
+        "開発環境",
+        "PoC"
+      ],
+      "agents": [
+        "ChatGPT"
+      ],
+      "url": "/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/",
+      "year": "2026"
+    },
+    {
       "id": "KB-2026-0007",
       "slug": "ai-agent-linux-vm-environment",
       "title": "AIコーディングエージェントをLinux VMへ分離して分かったこと — Proxmox / Hyper-Vでの実践",

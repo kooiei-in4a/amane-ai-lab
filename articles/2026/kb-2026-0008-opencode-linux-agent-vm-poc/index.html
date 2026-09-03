@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenCodeをLinux Agent VMで使えるか検証した — SSHトンネル＋Web UIで実用化 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="Native Remote SSHがないOpenCodeを、Linux Agent VM上で動かしWindowsからSSH経由で使えるかPoCした。結論は、localhost限定のOpenCode WebをSSHポートフォワードで開く構成なら、OpenCode Go、日本語、Git、build/test、Docker、再接続まで実用できた。ただしheadless起動、Git worktree、非対話SSHのPATH、終了処理にはwrapperが必要だった。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="OpenCodeをLinux Agent VMで使えるか検証した — SSHトンネル＋Web UIで実用化">
+  <meta property="og:description" content="Native Remote SSHがないOpenCodeを、Linux Agent VM上で動かしWindowsからSSH経由で使えるかPoCした。結論は、localhost限定のOpenCode WebをSSHポートフォワードで開く構成なら、OpenCode Go、日本語、Git、build/test、Docker、再接続まで実用できた。ただしheadless起動、Git worktree、非対話SSHのPATH、終了処理にはwrapperが必要だった。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="OpenCodeをLinux Agent VMで使えるか検証した — SSHトンネル＋Web UIで実用化">
+  <meta name="twitter:description" content="Native Remote SSHがないOpenCodeを、Linux Agent VM上で動かしWindowsからSSH経由で使えるかPoCした。結論は、localhost限定のOpenCode WebをSSHポートフォワードで開く構成なら、OpenCode Go、日本語、Git、build/test、Docker、再接続まで実用できた。ただしheadless起動、Git worktree、非対話SSHのPATH、終了処理にはwrapperが必要だった。">
+  <link rel="stylesheet" href="../../../assets/css/site.css">
+  <link rel="stylesheet" href="../../../assets/css/nav-benchmark.css">
+  <link rel="stylesheet" href="../../../assets/css/article-readability.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane AI Lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#articles">記事</a>
+        <a href="../../../benchmarks/">Benchmarks</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#about">このLabについて</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap article-page">
+    <header class="article-header">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0008</span>
+        <span class="pill status-published">published</span>
+        <span>公開: 2026-09-03</span>
+        <span>最終確認: 2026-09-03</span>
+        <span>更新: 2026-09-03</span>
+      </p>
+      <h1>OpenCodeをLinux Agent VMで使えるか検証した — SSHトンネル＋Web UIで実用化</h1>
+      <p class="article-summary">Native Remote SSHがないOpenCodeを、Linux Agent VM上で動かしWindowsからSSH経由で使えるかPoCした。結論は、localhost限定のOpenCode WebをSSHポートフォワードで開く構成なら、OpenCode Go、日本語、Git、build/test、Docker、再接続まで実用できた。ただしheadless起動、Git worktree、非対話SSHのPATH、終了処理にはwrapperが必要だった。</p>
+      <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
+      <ul class="tag-list"><li>OpenCode</li><li>OpenCode Go</li><li>AIエージェント</li><li>Linux</li><li>SSH</li><li>開発環境</li><li>PoC</li></ul>
+    </header>
+
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#analysis-heading">OpenCodeはLinux Agent VM上で動かし、Windows BrowserからSSH tunnel経由で使う構成なら実用できた。</a></li><li><span class="tldr-source tldr-source-synthesis">検証</span> <a class="tldr-link" href="#analysis-heading">OpenCode Go、日本語、clipboard、Git、build/test、Docker、再接続、Securityまで主要PoC項目はすべてPASSした。</a></li><li><span class="tldr-source tldr-source-synthesis">制約</span> <a class="tldr-link" href="#conclusion-heading">Native Remote SSH、headless起動、Git worktree、非対話SSH PATH、終了処理は現時点で補助実装が必要だった。</a></li><li><span class="tldr-source tldr-source-synthesis">運用</span> <a class="tldr-link" href="#conclusion-heading">当面はordinary isolated clone + localhost限定Web UI + SSH tunnel + lifecycle wrapperを正式経路にする。</a></li></ol></section>
+    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-chatgpt">ChatGPT</a><ul><li class="toc-item toc-level-2"><a href="#agent-chatgpt-結論">結論</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-推奨構成">推奨構成</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-公開情報として確認したopencode側の状況">公開情報として確認したOpenCode側の状況</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-poc結果">PoC結果</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-問題点と対応">問題点と対応</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-実運用用に作った役割">実運用用に作った役割</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-実際に試して分かった細かいこと">実際に試して分かった細かいこと</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-判断">判断</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-参照">参照</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
+
+    <section class="panel" aria-labelledby="background-heading">
+      <h2 id="background-heading">検討に至った背景</h2>
+      <div class="prose"><h1 id="background-検討に至った背景"><a class="heading-permalink" href="#background-検討に至った背景" aria-label="この見出しへのリンク">#</a>検討に至った背景</h1>
+<p>2026年9月、AIコーディングエージェントの実行場所をWindows PCからLinux VMへ分離する構成を、OpenCodeでも実現できるかを検証した。</p>
+<p>前提となるAgent VMの考え方は、先に公開した <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0007-ai-agent-linux-vm-environment/">KB-2026-0007: AIコーディングエージェントをLinux VMへ分離して分かったこと</a> で整理している。Windowsは指示・監督のUIに寄せ、Git、Docker、build/test、AIエージェント本体はLinux VM側に置く構成である。</p>
+<p>OpenCodeでも理想はWindows側のDesktopからRemote SSHでLinux VMを直接開くことだった。しかし、2026-09-03時点でOpenCode DesktopのRemote SSH要望 <a href="https://github.com/anomalyco/opencode/issues/33273">#33273</a> はOpenのままだった。また、SSH上でTUIを直接操作する方式にはclipboard問題 <a href="https://github.com/anomalyco/opencode/issues/46377">#46377</a> が残っている。</p>
+<p>そこで、OpenCode自体はLinux VM上で動かし、Web UIだけをWindowsブラウザへ出す構成を試した。</p>
+<pre><code class="language-text">Windows Browser
+    ↓
+127.0.0.1:4096
+    ↓ SSH port forwarding
+Linux Agent VM
+    ↓
+OpenCode Web / OpenCode Go
+    ↓
+Git / build / test / Docker
+</code></pre>
+<p>PoCの判定対象は「インストールできるか」ではなく、実際の開発作業に必要な一連の操作が成立するかとした。OpenCode Go認証、日本語入力、clipboard、実Repository読解、ファイル編集、.NET build/test、Docker、再接続、セッション復旧、localhost限定公開、cleanupまで段階的に確認した。</p>
+<p>この記事では実機環境のホスト名、IPアドレス、ユーザー名、ローカルパスは公開しない。コマンド例も公開可能な一般形へ置き換えている。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">調査プロンプト</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn" id="copy-prompt" data-copy-target="prompt-text">プロンプトをコピー</button>
+        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      </div>
+      <details class="prompt-details">
+        <summary>プロンプト全文を表示する</summary>
+        <pre id="prompt-text" class="prompt-block"><code>OpenCodeをLinux Agent VMへ導入し、WindowsからSSH経由で実用的に開発できるかを検証してください。
+
+前提:
+- AIエージェント本体、Git、Docker、build/testはLinux VM側で実行する
+- Windowsは操作UIとして使う
+- OpenCode DesktopのNative Remote SSHが未実装である点を考慮する
+- SSH上のTUIを直接使う方式に既知問題がある場合は、Web UI + SSH port forwardingを代替案として検証する
+
+確認したい内容:
+1. OpenCode CLIのLinux導入
+2. OpenCode Go認証と日本語応答
+3. localhost限定のOpenCode Web起動
+4. Windows BrowserからSSH tunnel経由で接続
+5. 日本語入力とclipboard
+6. 実Repositoryのread-only調査
+7. isolated環境でのファイル編集、build、test
+8. Docker操作
+9. Browser / SSH tunnel / Web server再起動後のセッション復旧
+10. localhost限定公開、credential権限、push経路などのSecurity確認
+11. cleanup
+12. 実運用に必要なwrapperや回避策
+
+結論から、問題点、対応方法、実際に試して分かった細かい点の順に整理してください。
+公開時はホスト名、IP、ユーザー名、ローカルパスなどの環境固有情報を一般化してください。
+</code></pre>
+      </details>
+    </section>
+
+    <section class="panel" aria-labelledby="agents-heading">
+      <h2 id="agents-heading">AIエージェントの回答</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
+        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
+      </div>
+      <div id="agent-responses"><section class="agent-response" data-agent="ChatGPT">
+  <details id="agent-chatgpt">
+    <summary>
+      <span class="agent-name">ChatGPT</span>
+      <span class="agent-meta">GPT-5.6 Sol / 2026-09-03 / integrity=redacted</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>あり</dd></div>
+      <div><dt>添付</dt><dd>なし</dd></div>
+      <div><dt>完全性</dt><dd>redacted</dd></div>
+    </dl>
+    <p class="agent-notes">実機PoCの会話ログを公開用に再構成し、ホスト名、IPアドレス、ユーザー名、ローカルパスなどを削除・一般化した。OpenCode側の関連Issueは公開GitHubで再確認した。</p>
+    <div class="agent-body prose"><h1 id="agent-chatgpt-chatgpt回答"><a class="heading-permalink" href="#agent-chatgpt-chatgpt回答" aria-label="この見出しへのリンク">#</a>ChatGPT回答</h1>
+<h2 id="agent-chatgpt-結論"><a class="heading-permalink" href="#agent-chatgpt-結論" aria-label="この見出しへのリンク">#</a>結論</h2>
+<p>OpenCodeは、2026-09-03時点ではWindows DesktopからLinux Agent VMへNative Remote SSHする用途には向いていない。一方で、<strong>Linux VM上でOpenCode Webをlocalhost限定で起動し、WindowsからSSH port forwarding経由でブラウザ接続する構成なら、実開発に必要な機能は一通り成立した。</strong></p>
+<p>PoCではOpenCode 1.18.27を使用し、OpenCode Go認証、日本語、clipboard、実Repository読解、ファイル編集、.NET build/test、Docker、再接続、セッション復旧、Security確認、cleanupまでPASSした。</p>
+<p>ただし、素のOpenCodeをそのまま使うだけでは運用が煩雑だった。headless環境でのブラウザ自動起動、manual Git worktreeの扱い、非対話SSHのPATH差異、SSH切断時のWebプロセス終了などをwrapperで吸収する必要があった。</p>
+<h2 id="agent-chatgpt-推奨構成"><a class="heading-permalink" href="#agent-chatgpt-推奨構成" aria-label="この見出しへのリンク">#</a>推奨構成</h2>
+<pre><code class="language-text">Windows Browser
+      ↓
+localhost
+      ↓
+SSH port forwarding
+      ↓
+Linux Agent VM
+      ├─ OpenCode Web
+      ├─ OpenCode Go
+      ├─ Git
+      ├─ build / test
+      └─ Docker
+</code></pre>
+<p>Linux側は次のようにlocalhostだけでWeb UIを待ち受ける。</p>
+<pre><code class="language-bash">opencode web --hostname 127.0.0.1 --port 4096
+</code></pre>
+<p>Windows側はSSH tunnelを作る。</p>
+<pre><code class="language-text">ssh -N -L 127.0.0.1:4096:127.0.0.1:4096 &lt;agent-vm&gt;
+</code></pre>
+<p>ブラウザでは <code>http://127.0.0.1:4096/</code> を開く。</p>
+<h2 id="agent-chatgpt-公開情報として確認したopencode側の状況"><a class="heading-permalink" href="#agent-chatgpt-公開情報として確認したopencode側の状況" aria-label="この見出しへのリンク">#</a>公開情報として確認したOpenCode側の状況</h2>
+<p>2026-09-03にOpenCodeの公開GitHubを再確認した。</p>
+<ul>
+<li>OpenCode DesktopのRemote SSH要望 <a href="https://github.com/anomalyco/opencode/issues/33273">#33273</a> はOpen。</li>
+<li><code>opencode web</code> でブラウザ自動起動を抑止する <code>--no-open</code> 相当の要望 <a href="https://github.com/anomalyco/opencode/issues/43636">#43636</a> はOpen。</li>
+<li>SSH上のOpenCode TUIでclipboardが機能しない報告 <a href="https://github.com/anomalyco/opencode/issues/46377">#46377</a> はOpen。</li>
+<li>Web UIのproject navigation / Git worktree UX改善要望 <a href="https://github.com/anomalyco/opencode/issues/24002">#24002</a> はClosed / not planned。今回の実機PoCでもmanual Git worktreeをWeb UIから期待通りに開けず、通常cloneへ切り替えると成功した。</li>
+</ul>
+<h2 id="agent-chatgpt-poc結果"><a class="heading-permalink" href="#agent-chatgpt-poc結果" aria-label="この見出しへのリンク">#</a>PoC結果</h2>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux CLI導入</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>OpenCode Go認証</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>日本語応答</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>Windows Browser + SSH tunnel</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>約300文字のclipboard貼り付け</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>実Repository read-only調査</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>isolated環境でのファイル編集</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>.NET build</td>
+<td>PASS、0 Warning / 0 Error</td>
+</tr>
+<tr>
+<td>.NET test</td>
+<td>PASS、347 passed / 1 skipped / 0 failed</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>Browser / tunnel再接続</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>Web server再起動後のsession復旧</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>localhost限定listen</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>credential permission</td>
+<td>PASS、0600</td>
+</tr>
+<tr>
+<td>push経路なしの隔離</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>cleanup</td>
+<td>PASS</td>
+</tr>
+</tbody>
+</table>
+<p>Docker検証ではDocker Engine 29.7.2、Docker Compose v5.5.0で一時コンテナを <code>--rm</code> 実行し、終了後の残存がないことを確認した。</p>
+<h2 id="agent-chatgpt-問題点と対応"><a class="heading-permalink" href="#agent-chatgpt-問題点と対応" aria-label="この見出しへのリンク">#</a>問題点と対応</h2>
+<h3 id="agent-chatgpt-1-native-remote-sshがない"><a class="heading-permalink" href="#agent-chatgpt-1-native-remote-sshがない" aria-label="この見出しへのリンク">#</a>1. Native Remote SSHがない</h3>
+<p>Windows版OpenCode DesktopをRemote SSHクライアントとして使う構成は採れなかった。</p>
+<p><strong>対応:</strong> SSHを画面転送ではなく安全なtransportとして使い、Windows BrowserからOpenCode Webを操作する。</p>
+<h3 id="agent-chatgpt-2-ssh-tuiのclipboard問題を避けたい"><a class="heading-permalink" href="#agent-chatgpt-2-ssh-tuiのclipboard問題を避けたい" aria-label="この見出しへのリンク">#</a>2. SSH TUIのclipboard問題を避けたい</h3>
+<p>SSH上でOpenCode TUIを直接操作する方式には公開Issueがある。</p>
+<p><strong>対応:</strong> Browser UIを使う。今回のPoCでは日本語入力と約300文字の貼り付けが正常に動いた。</p>
+<h3 id="agent-chatgpt-3-headless-linuxで-opencode-web-がブラウザを開こうとする"><a class="heading-permalink" href="#agent-chatgpt-3-headless-linuxで-opencode-web-がブラウザを開こうとする" aria-label="この見出しへのリンク">#</a>3. headless Linuxで <code>opencode web</code> がブラウザを開こうとする</h3>
+<p>GUIのないLinux VMではブラウザ起動処理が不要で、環境によっては <code>xdg-open</code> 不在で起動に失敗した。ブラウザ自動起動を止める公式flagはまだ要望段階だった。</p>
+<p><strong>対応:</strong> OpenCodeプロセスにだけ見える軽量な <code>xdg-open</code> shimを用意し、OS全体へGUI関連packageを追加しない。</p>
+<h3 id="agent-chatgpt-4-manual-git-worktreeをweb-uiで開けなかった"><a class="heading-permalink" href="#agent-chatgpt-4-manual-git-worktreeをweb-uiで開けなかった" aria-label="この見出しへのリンク">#</a>4. manual Git worktreeをWeb UIで開けなかった</h3>
+<p>Agent VMの通常運用ではGit worktreeが便利だが、今回のOpenCode Webでは手動作成したworktreeを期待通りに開けなかった。</p>
+<p><strong>対応:</strong> OpenCode用には普通のisolated cloneを作る。PoCではcloneへ切り替えた後、read/write/build/testが正常に動いた。</p>
+<h3 id="agent-chatgpt-5-非対話sshではpathが違う"><a class="heading-permalink" href="#agent-chatgpt-5-非対話sshではpathが違う" aria-label="この見出しへのリンク">#</a>5. 非対話SSHではPATHが違う</h3>
+<p>対話SSHでは見えていたOpenCodeが、Windows launcherからのremote commandでは見つからなかった。非対話SSHのPATHにユーザーlocal binが含まれていなかったためだった。</p>
+<p><strong>対応:</strong> launcher/helper内部ではOpenCode実体を絶対位置で解決し、interactive shellのPATHへ依存しない。</p>
+<h3 id="agent-chatgpt-6-ssh切断だけではopencode-webが終了しない"><a class="heading-permalink" href="#agent-chatgpt-6-ssh切断だけではopencode-webが終了しない" aria-label="この見出しへのリンク">#</a>6. SSH切断だけではOpenCode Webが終了しない</h3>
+<p>Windows側でSSHを切った後もLinux側にOpenCode Webが残るケースを確認した。HUP/TERM trapやSSH session監視だけでは安定しなかった。</p>
+<p><strong>対応:</strong> lifecycleを明示管理する。Windows launcherは起動前にstale processをcleanupし、通常終了時には別SSH commandで対象project/portのOpenCodeを明示停止する。次回起動時にもpreflight cleanupを行う。</p>
+<h2 id="agent-chatgpt-実運用用に作った役割"><a class="heading-permalink" href="#agent-chatgpt-実運用用に作った役割" aria-label="この見出しへのリンク">#</a>実運用用に作った役割</h2>
+<p>最終的には次の役割をhelperへ分離した。</p>
+<ul>
+<li><code>opencode-agent-project</code>: 最新baseからOpenCode専用isolated cloneを作る。初期状態ではremoteを外し、誤push経路を持たせない。</li>
+<li><code>opencode-agent-web</code>: 対象projectでlocalhost限定のOpenCode Webを起動する。headless差異と非対話SSH PATHを吸収する。</li>
+<li><code>opencode-agent-stop</code>: 対象projectとportに一致するOpenCodeだけを明示停止する。</li>
+<li><code>opencode-agent-cleanup</code>: dirty、追加commit、想定外remoteがあるprojectは削除を拒否する。</li>
+<li>Windows launcher: preflight cleanup → SSH tunnel → OpenCode起動 → HTTP 200待機 → Browser起動 → 明示停止、をまとめる。</li>
+</ul>
+<h2 id="agent-chatgpt-実際に試して分かった細かいこと"><a class="heading-permalink" href="#agent-chatgpt-実際に試して分かった細かいこと" aria-label="この見出しへのリンク">#</a>実際に試して分かった細かいこと</h2>
+<ul>
+<li>新規cloneで <code>dotnet build --no-restore</code> を先に実行するとassets不足で失敗した。既存projectで宣言済みのNuGet依存をrestoreした後はbuild/testとも成功した。</li>
+<li>OpenCodeは依存取得が必要な場面で人間へ許可を求めて停止できた。PoCとしては望ましい挙動だった。</li>
+<li>SSH tunnelはOpenCode Webより先にlistenするため、起動直後に <code>connect failed: Connection refused</code> が数回見えることがある。HTTP 200を待ってからBrowserを開けば問題なかった。</li>
+<li><code>OPENCODE_SERVER_PASSWORD is not set</code> という警告は出るが、PoCでは <code>127.0.0.1</code> のみにbindしSSH tunnelからだけ接続したため、LANへ直接公開しなかった。</li>
+<li>Browserを閉じてもLinux側のRepository状態は保持される。SSH tunnel再接続とWeb server再起動の両方で同じproject/sessionへ戻れた。</li>
+<li>認証情報はowner-only permissionで保持し、Repository内にcredential様文字列がないことを確認した。</li>
+</ul>
+<h2 id="agent-chatgpt-判断"><a class="heading-permalink" href="#agent-chatgpt-判断" aria-label="この見出しへのリンク">#</a>判断</h2>
+<p><strong>技術的には採用可能。運用面ではwrapper前提。</strong></p>
+<p>Native Remote SSHを持つAI開発クライアントと比べると、OpenCodeはAgent VMで使うための初期整備が一段多い。ただしwrapperで差異を隠せば、日常操作は「project作成」「Windows launcher起動」「不要時cleanup」程度まで単純化できる。</p>
+<p>OpenCode側でRemote SSH、<code>--no-open</code>、worktree UXが改善されたら、現在のwrapperを順に削っていくのがよい。</p>
+<h2 id="agent-chatgpt-参照"><a class="heading-permalink" href="#agent-chatgpt-参照" aria-label="この見出しへのリンク">#</a>参照</h2>
+<ul>
+<li><a href="https://opencode.ai/docs/web/">OpenCode Web documentation</a></li>
+<li><a href="https://opencode.ai/docs/go/">OpenCode Go documentation</a></li>
+<li><a href="https://github.com/anomalyco/opencode/issues/33273">Remote SSH support for OpenCode desktop #33273</a></li>
+<li><a href="https://github.com/anomalyco/opencode/issues/43636">Flag to start web server without launching browser #43636</a></li>
+<li><a href="https://github.com/anomalyco/opencode/issues/46377">Clipboard copying does not work when OpenCode is running over SSH #46377</a></li>
+<li><a href="https://github.com/anomalyco/opencode/issues/24002">Web UI project navigation / Git worktree support #24002</a></li>
+</ul></div>
+  </details>
+</section></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">AI回答の合成</h2>
+      <div class="prose"><h1 id="analysis-opencodeをagent-vmで使うpocの結果"><a class="heading-permalink" href="#analysis-opencodeをagent-vmで使うpocの結果" aria-label="この見出しへのリンク">#</a>OpenCodeをAgent VMで使うPoCの結果</h1>
+<h2 id="analysis-結論"><a class="heading-permalink" href="#analysis-結論" aria-label="この見出しへのリンク">#</a>結論</h2>
+<p>OpenCodeは、Linux Agent VM上で実行し、WindowsからSSH経由で操作する構成に<strong>採用可能</strong>だった。</p>
+<p>ただし、2026-09-03時点ではNative Remote SSHがないため、Windows側のOpenCode DesktopからLinux VMを直接開く構成ではない。実用になったのは、Linux VM上のOpenCode Webを <code>127.0.0.1</code> だけで待ち受け、WindowsからSSH port forwardingで接続する方式だった。</p>
+<p>この構成で、OpenCode Go、日本語、clipboard、実Repository読解、ファイル編集、build/test、Docker、Browser/tunnel再接続、Web server再起動後のsession復旧、Security確認まで通った。</p>
+<p>一方、素のOpenCodeをそのままAgent VMへ載せるだけでは運用上の穴が残った。正式運用にはhelper / launcherで差異を吸収する必要がある。</p>
+<h2 id="analysis-検証した構成"><a class="heading-permalink" href="#analysis-検証した構成" aria-label="この見出しへのリンク">#</a>検証した構成</h2>
+<pre><code class="language-text">Windows Browser
+      ↓
+127.0.0.1:4096
+      ↓
+SSH port forwarding
+      ↓
+Linux Agent VM
+      ├─ OpenCode 1.18.27
+      ├─ OpenCode Go
+      ├─ Git
+      ├─ .NET build / test
+      └─ Docker
+</code></pre>
+<p>Windows PCはUIと指示・監督に寄せ、Repository、shell、Docker、認証、AIエージェントの実行状態はLinux VM側に置いた。</p>
+<h2 id="analysis-問題点"><a class="heading-permalink" href="#analysis-問題点" aria-label="この見出しへのリンク">#</a>問題点</h2>
+<h3 id="analysis-native-remote-sshはまだ使えない"><a class="heading-permalink" href="#analysis-native-remote-sshはまだ使えない" aria-label="この見出しへのリンク">#</a>Native Remote SSHはまだ使えない</h3>
+<p>OpenCode DesktopのRemote SSH要望 <a href="https://github.com/anomalyco/opencode/issues/33273">#33273</a> は2026-09-03時点でOpenだった。</p>
+<p>そのため、Claude Code Desktop等で期待する「WindowsアプリからSSH先を開く」体験はまだ前提にできない。</p>
+<h3 id="analysis-ssh上のtuiを直接操作する方式には既知問題がある"><a class="heading-permalink" href="#analysis-ssh上のtuiを直接操作する方式には既知問題がある" aria-label="この見出しへのリンク">#</a>SSH上のTUIを直接操作する方式には既知問題がある</h3>
+<p>SSH上でOpenCodeを直接起動する方式は可能だが、clipboardが機能しない報告 <a href="https://github.com/anomalyco/opencode/issues/46377">#46377</a> がOpenだった。</p>
+<p>今回の目的は日本語や長文を含む日常開発なので、TUI over SSHを主経路にせずBrowserへ逃がした。</p>
+<h3 id="analysis-headless-linuxと-opencode-web-の相性"><a class="heading-permalink" href="#analysis-headless-linuxと-opencode-web-の相性" aria-label="この見出しへのリンク">#</a>headless Linuxと <code>opencode web</code> の相性</h3>
+<p>GUIのないVMで <code>opencode web</code> を起動すると、環境によってはブラウザを開くための <code>xdg-open</code> がなく起動できなかった。ブラウザ自動起動を止める <code>--no-open</code> 相当の要望 <a href="https://github.com/anomalyco/opencode/issues/43636">#43636</a> はOpenである。</p>
+<h3 id="analysis-git-worktreeは今回のweb-uiで扱いにくかった"><a class="heading-permalink" href="#analysis-git-worktreeは今回のweb-uiで扱いにくかった" aria-label="この見出しへのリンク">#</a>Git worktreeは今回のWeb UIで扱いにくかった</h3>
+<p>Agent VMの既存運用ではGit worktreeを使って並列作業を分離している。しかし今回のPoCではmanual worktreeをOpenCode Webのprojectとして期待通りに開けなかった。</p>
+<p>Web UIのproject navigation / Git worktree UX改善要望 <a href="https://github.com/anomalyco/opencode/issues/24002">#24002</a> はClosed / not plannedであり、当面これを前提にした方がよい。</p>
+<h3 id="analysis-非対話sshのpathは対話sshと違う"><a class="heading-permalink" href="#analysis-非対話sshのpathは対話sshと違う" aria-label="この見出しへのリンク">#</a>非対話SSHのPATHは対話SSHと違う</h3>
+<p>Windows launcherからSSH remote commandを起動したところ、対話SSHでは見えていたOpenCode実体を見つけられなかった。原因は非対話SSHのPATHにユーザーlocal binが含まれないことだった。</p>
+<h3 id="analysis-ssh切断だけではremote-process-cleanupにならない"><a class="heading-permalink" href="#analysis-ssh切断だけではremote-process-cleanupにならない" aria-label="この見出しへのリンク">#</a>SSH切断だけではremote process cleanupにならない</h3>
+<p>Windows側でSSHを終了してもOpenCode WebがLinux側に残るケースを確認した。signal trapやSSH session監視だけでは安定しなかった。</p>
+<h2 id="analysis-対応方法"><a class="heading-permalink" href="#analysis-対応方法" aria-label="この見出しへのリンク">#</a>対応方法</h2>
+<h3 id="analysis-web-ui-ssh-tunnelを正式経路にする"><a class="heading-permalink" href="#analysis-web-ui-ssh-tunnelを正式経路にする" aria-label="この見出しへのリンク">#</a>Web UI + SSH tunnelを正式経路にする</h3>
+<p>Linux側ではlocalhostだけでOpenCode Webを起動する。</p>
+<pre><code class="language-bash">opencode web --hostname 127.0.0.1 --port 4096
+</code></pre>
+<p>Windows側ではloopback同士をSSH port forwardingする。</p>
+<pre><code class="language-text">ssh -N -L 127.0.0.1:4096:127.0.0.1:4096 &lt;agent-vm&gt;
+</code></pre>
+<p>これでLANへOpenCode Webを直接公開せず、Windows Browserから利用できる。</p>
+<h3 id="analysis-headless差異はprocess-local-shimで吸収する"><a class="heading-permalink" href="#analysis-headless差異はprocess-local-shimで吸収する" aria-label="この見出しへのリンク">#</a>headless差異はprocess-local shimで吸収する</h3>
+<p><code>xdg-open</code> のためだけにGUI関連packageをVMへ追加するのではなく、OpenCode起動時のPATHにだけno-op shimを差し込む。</p>
+<p>これはOpenCode側に <code>--no-open</code> が入れば削除できる暫定策である。</p>
+<h3 id="analysis-opencode用projectはordinary-cloneにする"><a class="heading-permalink" href="#analysis-opencode用projectはordinary-cloneにする" aria-label="この見出しへのリンク">#</a>OpenCode用projectはordinary cloneにする</h3>
+<p>manual worktreeに固執せず、OpenCode用のisolated cloneを別に作る。PoCでは通常cloneへ切り替えるとproject選択、read/write、build/testがすべて通った。</p>
+<p>安全側に倒すため、PoC後の運用helperでは初期状態でGit remoteを外し、AIが誤ってpushできる経路を持たせない構成にした。</p>
+<h3 id="analysis-非対話sshでは実体を明示解決する"><a class="heading-permalink" href="#analysis-非対話sshでは実体を明示解決する" aria-label="この見出しへのリンク">#</a>非対話SSHでは実体を明示解決する</h3>
+<p>helper内部でinteractive shellのPATHを期待しない。OpenCode実体を明示的に解決し、起動時PATHも必要最小限に固定する。</p>
+<h3 id="analysis-lifecycleを明示管理する"><a class="heading-permalink" href="#analysis-lifecycleを明示管理する" aria-label="この見出しへのリンク">#</a>lifecycleを明示管理する</h3>
+<p>Windows launcherは次の順で処理する。</p>
+<pre><code class="language-text">preflight stale cleanup
+↓
+SSH tunnel + remote OpenCode Web起動
+↓
+HTTP 200まで待機
+↓
+Windows Browser起動
+↓
+作業
+↓
+remote stop helperで明示停止
+↓
+SSH終了
+</code></pre>
+<p>Windows側が異常終了した場合も、次回起動時のpreflight cleanupで前回のstale processを回収できる。</p>
+<h3 id="analysis-cleanupはfail-closedにする"><a class="heading-permalink" href="#analysis-cleanupはfail-closedにする" aria-label="この見出しへのリンク">#</a>cleanupはfail-closedにする</h3>
+<p>OpenCode用projectを消すhelperは、次の場合に削除を拒否する。</p>
+<ul>
+<li>uncommitted changeがある</li>
+<li>base以降のcommitがある</li>
+<li>想定外のGit remoteがある</li>
+<li>OpenCode processがまだprojectを利用している</li>
+</ul>
+<p>「AI用の一時cloneだから消してよい」と推測せず、作業消失を防ぐ。</p>
+<h2 id="analysis-実機pocのacceptance結果"><a class="heading-permalink" href="#analysis-実機pocのacceptance結果" aria-label="この見出しへのリンク">#</a>実機PoCのAcceptance結果</h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>内容</th>
+<th>結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>OpenCode CLI導入</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>2</td>
+<td>OpenCode Go認証、日本語応答</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>3</td>
+<td>localhost限定Web起動</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Windows Browser + SSH tunnel</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>5</td>
+<td>実Repository read-only調査</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>6</td>
+<td>ファイル編集、build、test</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Docker / Toolchain</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Session / Recovery</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Security</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Cleanup</td>
+<td>PASS</td>
+</tr>
+</tbody>
+</table>
+<h3 id="analysis-build-test"><a class="heading-permalink" href="#analysis-build-test" aria-label="この見出しへのリンク">#</a>build / test</h3>
+<p>公開Repositoryを使ったisolated write testでは、PoC専用ファイル1件だけを追加した状態でbuild/testを実施した。</p>
+<ul>
+<li>build: 0 Warning / 0 Error</li>
+<li>test: 347 passed / 1 skipped / 0 failed</li>
+<li>HEAD / branchは変更なし</li>
+<li>commit / pushなし</li>
+</ul>
+<p>新規cloneではrestore済みassetsがなかったため、最初の <code>--no-restore</code> は失敗した。既存projectで宣言済みの依存をrestoreした後は正常に通った。</p>
+<h3 id="analysis-docker"><a class="heading-permalink" href="#analysis-docker" aria-label="この見出しへのリンク">#</a>Docker</h3>
+<p>Docker Engine 29.7.2 / Docker Compose v5.5.0で、一時コンテナを <code>--rm</code> 付きで実行した。</p>
+<ul>
+<li>exit code 0</li>
+<li>想定文字列を出力</li>
+<li>privilegedなし</li>
+<li>host networkなし</li>
+<li>host mountなし</li>
+<li>volume / networkの明示作成なし</li>
+<li>終了後のcontainer残存なし</li>
+</ul>
+<h3 id="analysis-session-recovery"><a class="heading-permalink" href="#analysis-session-recovery" aria-label="この見出しへのリンク">#</a>Session / Recovery</h3>
+<p>次を実際に切断・再起動した。</p>
+<ul>
+<li>Browser tab</li>
+<li>SSH tunnel</li>
+<li>OpenCode Web server</li>
+</ul>
+<p>再接続後に同じprojectへ戻れ、会話sessionも復旧した。Windows側が一時的に消えても、Linux VM側のRepository状態は維持された。</p>
+<h3 id="analysis-security"><a class="heading-permalink" href="#analysis-security" aria-label="この見出しへのリンク">#</a>Security</h3>
+<ul>
+<li>OpenCode Webは <code>127.0.0.1</code> のみにlisten</li>
+<li>LAN直接公開なし</li>
+<li>OpenCode Go credentialはowner-only permission（0600）</li>
+<li>Repository内のcredential様文字列scanはPASS</li>
+<li>PoC isolated cloneはGit remoteなし</li>
+<li>cleanup後にport / process / PoC artifact残存なし</li>
+</ul>
+<h2 id="analysis-試して分かった細かいこと"><a class="heading-permalink" href="#analysis-試して分かった細かいこと" aria-label="この見出しへのリンク">#</a>試して分かった細かいこと</h2>
+<h3 id="analysis-connection-refused-が数回出ても必ずしも失敗ではない"><a class="heading-permalink" href="#analysis-connection-refused-が数回出ても必ずしも失敗ではない" aria-label="この見出しへのリンク">#</a><code>Connection refused</code> が数回出ても、必ずしも失敗ではない</h3>
+<p>SSH tunnelはOpenCode Webより先にlistenする。このためlauncherがHTTP確認を始めた瞬間は、remote側4096がまだ起動しておらずSSHの <code>connect failed: Connection refused</code> が出ることがある。</p>
+<p>最終的にHTTP 200を確認してからBrowserを開けば問題ない。launcher側は「TCP portが開いたか」ではなく「HTTP 200が返ったか」をready条件にした方がよい。</p>
+<h3 id="analysis-opencode_server_password-is-not-set-警告の扱い"><a class="heading-permalink" href="#analysis-opencode_server_password-is-not-set-警告の扱い" aria-label="この見出しへのリンク">#</a><code>OPENCODE_SERVER_PASSWORD is not set</code> 警告の扱い</h3>
+<p>localhost-onlyでも警告は表示された。今回の構成ではOpenCodeを <code>0.0.0.0</code> へbindせず、SSH tunnelからしか到達させないことで外部公開を避けた。</p>
+<p>今後LANや別hostへ直接公開する設計に変えるなら、このPoCのSecurity前提は成立しないため、認証を含めて再設計が必要になる。</p>
+<h3 id="analysis-api-keyのtui貼り付けで詰まった"><a class="heading-permalink" href="#analysis-api-keyのtui貼り付けで詰まった" aria-label="この見出しへのリンク">#</a>API keyのTUI貼り付けで詰まった</h3>
+<p>SSH TUIへAPI keyを貼れなかったため、先にWeb UIを成立させ、Windows BrowserからOpenCode Goを接続した。この経路ならWindows clipboardをそのまま使えた。</p>
+<h3 id="analysis-約300文字の日本語clipboardは問題なかった"><a class="heading-permalink" href="#analysis-約300文字の日本語clipboardは問題なかった" aria-label="この見出しへのリンク">#</a>約300文字の日本語clipboardは問題なかった</h3>
+<p>Web UI経由では長めの日本語貼り付けが成功した。TUIのSSH clipboard問題を避けるという狙いは達成できた。</p>
+<h3 id="analysis-direct-sshの-ctrlc-をremote-cleanupと考えない"><a class="heading-permalink" href="#analysis-direct-sshの-ctrlc-をremote-cleanupと考えない" aria-label="この見出しへのリンク">#</a>direct SSHの <code>Ctrl+C</code> をremote cleanupと考えない</h3>
+<p>remote OpenCodeが残ることがあったため、SSH transportの終了とAgent process lifecycleを分けて考える必要がある。正式運用では明示stopを採用した。</p>
+<h2 id="analysis-運用判断"><a class="heading-permalink" href="#analysis-運用判断" aria-label="この見出しへのリンク">#</a>運用判断</h2>
+<p>今回の結論は「OpenCodeはAgent VMで使えない」ではない。</p>
+<p><strong>機能的には十分使える。ただしNative Remote SSHがない現状では、Agent VM運用を成立させるための薄い運用レイヤーが必要である。</strong></p>
+<p>wrapper完成後の日常操作は、次の3つ程度まで落とせる。</p>
+<pre><code class="language-text">project作成
+↓
+Windows launcherで起動
+↓
+不要になったらcleanup
+</code></pre>
+<p>一方、初期構築だけを見るとNative Remote SSH対応のクライアントより明らかに煩雑だった。OpenCode側でRemote SSH、<code>--no-open</code>、worktree UXが改善されれば、この補助レイヤーは順次削除したい。</p>
+<h2 id="analysis-関連情報"><a class="heading-permalink" href="#analysis-関連情報" aria-label="この見出しへのリンク">#</a>関連情報</h2>
+<ul>
+<li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0007-ai-agent-linux-vm-environment/">KB-2026-0007: AIコーディングエージェントをLinux VMへ分離して分かったこと</a></li>
+<li><a href="https://opencode.ai/docs/web/">OpenCode Web documentation</a></li>
+<li><a href="https://opencode.ai/docs/go/">OpenCode Go documentation</a></li>
+<li><a href="https://github.com/anomalyco/opencode/issues/33273">Remote SSH support for OpenCode desktop #33273</a></li>
+<li><a href="https://github.com/anomalyco/opencode/issues/43636">Flag to start web server without launching browser #43636</a></li>
+<li><a href="https://github.com/anomalyco/opencode/issues/46377">Clipboard copying does not work when OpenCode is running over SSH #46377</a></li>
+<li><a href="https://github.com/anomalyco/opencode/issues/24002">Web UI project navigation / Git worktree support #24002</a></li>
+</ul></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-plain-heading">
+      <h2 id="analysis-plain-heading">AI回答の合成（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="analysis-plain-opencodeをlinux-vmで使って分かったこと"><a class="heading-permalink" href="#analysis-plain-opencodeをlinux-vmで使って分かったこと" aria-label="この見出しへのリンク">#</a>OpenCodeをLinux VMで使って分かったこと</h1>
+<p>結論は、<strong>OpenCodeはLinux VM上で動かしてWindowsブラウザから使える。ただし、そのままでは少し面倒なので補助スクリプトが必要だった</strong>、というものだった。</p>
+<h2 id="analysis-plain-何がうまくいったか"><a class="heading-permalink" href="#analysis-plain-何がうまくいったか" aria-label="この見出しへのリンク">#</a>何がうまくいったか</h2>
+<p>WindowsからSSHでLinux VMへ入り、OpenCodeを直接TUIで操作する方法ではなく、Linux側でOpenCode Webを起動し、WindowsブラウザからSSH tunnel経由で使った。</p>
+<p>この方法なら、OpenCode Go、日本語入力、コピー&amp;ペースト、コード読解、ファイル編集、build/test、Dockerまで問題なく使えた。ブラウザやSSH tunnelを一度切っても、再接続して同じ作業へ戻れた。</p>
+<h2 id="analysis-plain-何が面倒だったか"><a class="heading-permalink" href="#analysis-plain-何が面倒だったか" aria-label="この見出しへのリンク">#</a>何が面倒だったか</h2>
+<p>OpenCodeにはまだDesktopのNative Remote SSHがない。そのため、他のRemote SSH対応ツールのように「WindowsアプリでSSH先を選ぶだけ」にはならなかった。</p>
+<p>さらに実際に試すと、次の差異があった。</p>
+<ul>
+<li>GUIのないLinuxでOpenCode Webがブラウザを開こうとして失敗する</li>
+<li>Git worktreeをWeb UIで期待通りに開けない</li>
+<li>対話SSHと非対話SSHでPATHが違う</li>
+<li>SSHを切っただけではLinux側のOpenCodeが残ることがある</li>
+</ul>
+<h2 id="analysis-plain-どう解決したか"><a class="heading-permalink" href="#analysis-plain-どう解決したか" aria-label="この見出しへのリンク">#</a>どう解決したか</h2>
+<p>OpenCode専用の小さなhelperを用意した。</p>
+<ul>
+<li>OpenCode用のisolated cloneを作る</li>
+<li>localhost限定でOpenCode Webを起動する</li>
+<li>headless環境の差異を隠す</li>
+<li>Windows launcherからSSH tunnelを張る</li>
+<li>HTTP 200になってからBrowserを開く</li>
+<li>終了時はOpenCodeを明示的に停止する</li>
+<li>作業が残っているprojectはcleanupしない</li>
+</ul>
+<p>これで普段の操作はかなり単純にできる。</p>
+<pre><code class="language-text">OpenCode用projectを作る
+↓
+Windows launcherで起動する
+↓
+Browserで開発する
+↓
+不要になったらcleanupする
+</code></pre>
+<h2 id="analysis-plain-実用性はどうだったか"><a class="heading-permalink" href="#analysis-plain-実用性はどうだったか" aria-label="この見出しへのリンク">#</a>実用性はどうだったか</h2>
+<p>PoCではすべての主要項目がPASSした。</p>
+<ul>
+<li>OpenCode Go: PASS</li>
+<li>日本語: PASS</li>
+<li>約300文字の貼り付け: PASS</li>
+<li>実Repositoryの読解: PASS</li>
+<li>ファイル編集: PASS</li>
+<li>build: 0 Warning / 0 Error</li>
+<li>test: 347 passed / 1 skipped / 0 failed</li>
+<li>Docker: PASS</li>
+<li>再接続: PASS</li>
+<li>Web server再起動後のsession復旧: PASS</li>
+<li>localhost限定公開: PASS</li>
+<li>cleanup: PASS</li>
+</ul>
+<p>つまり、<strong>OpenCodeそのものの開発能力に問題があったわけではない。WindowsからLinux Agent VMへつなぐ周辺運用が未成熟だった</strong>。</p>
+<h2 id="analysis-plain-現時点での扱い"><a class="heading-permalink" href="#analysis-plain-現時点での扱い" aria-label="この見出しへのリンク">#</a>現時点での扱い</h2>
+<p>OpenCodeはAgent VMへ導入して使える。ただし、Native Remote SSH対応ツールと比べると初期整備は一段多い。</p>
+<p>当面はWeb UI + SSH tunnel + wrapperで運用し、OpenCode側にRemote SSHやheadless向けの改善が入ったら回避策を減らしていくのがよい。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">合成結果の要約</h2>
+      <div class="prose"><h1 id="conclusion-合成結果の要約"><a class="heading-permalink" href="#conclusion-合成結果の要約" aria-label="この見出しへのリンク">#</a>合成結果の要約</h1>
+<h2 id="conclusion-結論"><a class="heading-permalink" href="#conclusion-結論" aria-label="この見出しへのリンク">#</a>結論</h2>
+<p>OpenCodeはLinux Agent VM上で実行し、Windows BrowserからSSH port forwarding経由で操作する構成なら実用できた。</p>
+<p>OpenCode 1.18.27 + OpenCode Goで、日本語、clipboard、実Repository読解、ファイル編集、.NET build/test、Docker、再接続、Web server再起動後のsession復旧、Security確認、cleanupまでPASSした。</p>
+<h2 id="conclusion-問題点"><a class="heading-permalink" href="#conclusion-問題点" aria-label="この見出しへのリンク">#</a>問題点</h2>
+<p>2026-09-03時点では、Agent VM運用にそのまま使うには次の不足がある。</p>
+<ul>
+<li>OpenCode DesktopのNative Remote SSHが未実装</li>
+<li>SSH TUIのclipboard問題が残る</li>
+<li>headless Linuxで <code>opencode web</code> のブラウザ自動起動を抑止しにくい</li>
+<li>manual Git worktreeをWeb UIで扱いにくい</li>
+<li>非対話SSHのPATHが対話shellと異なる</li>
+<li>SSH切断だけではremote OpenCodeが残ることがある</li>
+</ul>
+<h2 id="conclusion-対応方法"><a class="heading-permalink" href="#conclusion-対応方法" aria-label="この見出しへのリンク">#</a>対応方法</h2>
+<p>当面の運用は次で安定した。</p>
+<ol>
+<li>OpenCode用にはordinary isolated cloneを使う</li>
+<li>Linux側は <code>127.0.0.1</code> だけでOpenCode Webを起動する</li>
+<li>WindowsからSSH tunnelでlocalhostへ接続する</li>
+<li>headless差異とPATH差異はLinux helperで吸収する</li>
+<li>Windows launcherはHTTP 200を待ってBrowserを開く</li>
+<li>終了時は別SSH commandでOpenCodeを明示停止する</li>
+<li>cleanupはdirty / additional commit / unexpected remoteがあれば拒否する</li>
+</ol>
+<h2 id="conclusion-pocで確認した結果"><a class="heading-permalink" href="#conclusion-pocで確認した結果" aria-label="この見出しへのリンク">#</a>PoCで確認した結果</h2>
+<ul>
+<li>OpenCode Go認証・日本語: PASS</li>
+<li>約300文字のclipboard貼り付け: PASS</li>
+<li>read-only Repository調査: PASS</li>
+<li>isolated write: PASS</li>
+<li>build: 0 Warning / 0 Error</li>
+<li>test: 347 passed / 1 skipped / 0 failed</li>
+<li>Docker: PASS</li>
+<li>Browser / SSH tunnel再接続: PASS</li>
+<li>Web server再起動後のsession復旧: PASS</li>
+<li>localhost限定listen: PASS</li>
+<li>credential permission 0600: PASS</li>
+<li>cleanup後のport / process / artifact残存なし</li>
+</ul>
+<h2 id="conclusion-運用判断"><a class="heading-permalink" href="#conclusion-運用判断" aria-label="この見出しへのリンク">#</a>運用判断</h2>
+<p><strong>採用可能。ただしwrapper前提。</strong></p>
+<p>OpenCode自体の開発機能はAgent VM上で十分使えた。一方、Native Remote SSH対応クライアントと比べると接続・起動・終了の運用を自前で補う必要がある。</p>
+<p>当面はWeb UI + SSH tunnel方式を使い、Remote SSH、<code>--no-open</code>、Git worktree UXなどの上流改善が入れば補助レイヤーを順次削除する。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
+      <h2 id="conclusion-plain-heading">合成結果の要約（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="conclusion-plain-合成結果の要約わかりやすい説明"><a class="heading-permalink" href="#conclusion-plain-合成結果の要約わかりやすい説明" aria-label="この見出しへのリンク">#</a>合成結果の要約（わかりやすい説明）</h1>
+<p>OpenCodeはLinux VM上で動かし、WindowsのブラウザからSSH経由で使えることを確認できた。</p>
+<p>日本語、コピー&amp;ペースト、コードの読取り、ファイル編集、build/test、Docker、再接続まで問題なく動いたので、開発機能としては実用できる。</p>
+<p>ただし、OpenCodeにはまだWindows DesktopからLinuxへ直接Remote SSHする機能がなく、headless LinuxやGit worktree、SSH切断時の終了処理にも細かい問題があった。</p>
+<p>そのため当面は、OpenCode専用のcloneを作り、Linux側でWeb UIをlocalhostだけに起動し、WindowsからSSH tunnelで接続する。起動・停止・cleanupは補助スクリプトでまとめる。</p>
+<p>結論は、<strong>OpenCodeはAgent VMで使えるが、現時点ではwrapperを用意して使うのが現実的</strong>というものになった。</p></div>
+      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="edit-heading">
+      <h2 id="edit-heading">Edit on GitHub</h2>
+      <p>正本ディレクトリ: <a href="https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/">https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="comments-heading">
+      <h2 id="comments-heading">コメント</h2>
+      <p class="note">コメントは GitHub Discussions（giscus）上の第三者投稿です。読み込みと投稿にはGitHubへの接続が必要です。</p>
+      <button type="button" class="btn" id="load-giscus">コメントを読み込む</button>
+      <div id="giscus-container"
+        hidden
+        data-giscus-src="https://giscus.app/client.js"
+  data-repo="kooiei-in4a/amane-ai-lab"
+  data-repo-id="R_kgDOToJuSQ"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOToJuSc4DCT1S"
+  data-mapping="specific"
+  data-term="KB-2026-0008"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="ja"
+  data-loading="lazy"
+      ></div>
+    </section>
+
+    <footer class="article-footer panel">
+      <p>コード: MIT / コンテンツ: CC BY 4.0。AI回答は参考情報であり、事実確認は読者の責任です。</p>
+      <p><a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧へ戻る</a> · <a href="../../../benchmarks/">Benchmarksを見る</a></p>
+    </footer>
+  </main>
+
+  <script src="../../../assets/js/site.js" defer></script>
+  <nav class="page-jump" aria-label="ページ内ジャンプ">
+    <a href="#tldr" class="page-jump-link" data-jump="tldr">要点</a>
+    <a href="#article-toc" class="page-jump-link">目次</a>
+    <a href="#main" class="page-jump-link page-jump-top" hidden>先頭へ</a>
+  </nav>
+</body>
+</html>

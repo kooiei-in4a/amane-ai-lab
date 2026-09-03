@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenCodeをLinux Agent VMで使えるか検証した — SSHトンネル＋Web UIで実用化 — 資料版 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="Native Remote SSHがないOpenCodeを、Linux Agent VM上で動かしWindowsからSSH経由で使えるかPoCした。結論は、localhost限定のOpenCode WebをSSHポートフォワードで開く構成なら、OpenCode Go、日本語、Git、build/test、Docker、再接続まで実用できた。ただしheadless起動、Git worktree、非対話SSHのPATH、終了処理にはwrapperが必要だった。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/summary/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="OpenCodeをLinux Agent VMで使えるか検証した — SSHトンネル＋Web UIで実用化 — 資料版">
+  <meta property="og:description" content="Native Remote SSHがないOpenCodeを、Linux Agent VM上で動かしWindowsからSSH経由で使えるかPoCした。結論は、localhost限定のOpenCode WebをSSHポートフォワードで開く構成なら、OpenCode Go、日本語、Git、build/test、Docker、再接続まで実用できた。ただしheadless起動、Git worktree、非対話SSHのPATH、終了処理にはwrapperが必要だった。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/summary/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="../../../../assets/css/site.css">
+  <link rel="stylesheet" href="../../../../assets/css/nav-benchmark.css">
+</head>
+<body class="summary-doc-page">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane AI Lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/">記事本文</a>
+        <a href="../../../../benchmarks/">Benchmarks</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#articles">記事</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap summary-doc">
+    <header class="summary-doc-header panel">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0008</span>
+        <span class="pill">資料版</span>
+        <span>更新: 2026-09-03</span>
+      </p>
+      <h1>合成結果の要約（わかりやすい説明）</h1>
+      <p class="summary-doc-subtitle">合成結果を、わかりやすい言葉で短くまとめた資料版。</p>
+      <nav class="summary-source-links" aria-label="記事本文の関連セクション">
+        <p class="summary-source-links-label">記事本文の関連セクション</p>
+        <ul>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#background-heading">検討に至った背景</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#prompt-heading">調査プロンプト</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#agents-heading">AIエージェントの回答</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#analysis-heading">AI回答の合成</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#analysis-plain-heading">合成（わかりやすい説明）</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#conclusion-heading">要約</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#conclusion-plain-heading">要約（わかりやすい説明）</a></li>
+        </ul>
+      </nav>
+      <p class="summary-doc-nav">
+        <a class="btn btn-secondary" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/">← 記事本文へ戻る</a>
+      </p>
+    </header>
+
+    <div class="summary-doc-layout">
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol></ol></nav>
+      <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
+        <h1>合成結果の要約（わかりやすい説明）</h1>
+<p>OpenCodeはLinux VM上で動かし、WindowsのブラウザからSSH経由で使えることを確認できた。</p>
+<p>日本語、コピー&amp;ペースト、コードの読取り、ファイル編集、build/test、Docker、再接続まで問題なく動いたので、開発機能としては実用できる。</p>
+<p>ただし、OpenCodeにはまだWindows DesktopからLinuxへ直接Remote SSHする機能がなく、headless LinuxやGit worktree、SSH切断時の終了処理にも細かい問題があった。</p>
+<p>そのため当面は、OpenCode専用のcloneを作り、Linux側でWeb UIをlocalhostだけに起動し、WindowsからSSH tunnelで接続する。起動・停止・cleanupは補助スクリプトでまとめる。</p>
+<p>結論は、<strong>OpenCodeはAgent VMで使えるが、現時点ではwrapperを用意して使うのが現実的</strong>というものになった。</p>
+      </article>
+    </div>
+
+    <footer class="summary-doc-footer panel">
+      <p class="note">この資料は記事の「合成結果の要約（わかりやすい説明）」（<code>conclusion-plain.md</code>）から自動生成しています。</p>
+      <p>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#background-heading">背景</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#prompt-heading">プロンプト</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#agents-heading">AI回答</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#analysis-heading">合成</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#analysis-plain-heading">合成（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#conclusion-heading">要約</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/#conclusion-plain-heading">要約（平易）</a> ·
+        <a href="../../../../benchmarks/">Benchmarks</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

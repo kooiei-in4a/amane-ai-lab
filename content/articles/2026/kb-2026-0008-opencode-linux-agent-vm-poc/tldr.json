@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "source": "synthesis",
+      "label": "結論",
+      "text": "OpenCodeはLinux Agent VM上で動かし、Windows BrowserからSSH tunnel経由で使う構成なら実用できた。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "検証",
+      "text": "OpenCode Go、日本語、clipboard、Git、build/test、Docker、再接続、Securityまで主要PoC項目はすべてPASSした。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "制約",
+      "text": "Native Remote SSH、headless起動、Git worktree、非対話SSH PATH、終了処理は現時点で補助実装が必要だった。",
+      "href": "#conclusion-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "運用",
+      "text": "当面はordinary isolated clone + localhost限定Web UI + SSH tunnel + lifecycle wrapperを正式経路にする。",
+      "href": "#conclusion-heading"
+    }
+  ]
+}

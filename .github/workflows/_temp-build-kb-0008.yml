@@ -1,0 +1,46 @@
+name: Temporary build KB-2026-0008
+
+on:
+  push:
+    branches:
+      - article/kb-2026-0008-opencode-linux-agent-vm-poc
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: article/kb-2026-0008-opencode-linux-agent-vm-poc
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Build site
+        run: python scripts/build_site.py
+
+      - name: Validate content
+        run: python scripts/validate_content.py
+
+      - name: Sensitive data check
+        run: python scripts/check_sensitive_data.py
+
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Commit generated files and remove temporary workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add articles data index.html sitemap.xml feed.xml
+          git rm .github/workflows/_temp-build-kb-0008.yml
+          git commit -m "Build site for KB-2026-0008"
+          git push origin HEAD:article/kb-2026-0008-opencode-linux-agent-vm-poc

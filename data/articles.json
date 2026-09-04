@@ -3,6 +3,33 @@
   "generatedFrom": "content/articles",
   "articles": [
     {
+      "id": "KB-2026-0009",
+      "slug": "human-decision-escalation-ai-era",
+      "title": "AIが賢くなるほど、人間には何を聞くべきか — Paid InboxからHuman Decision Escalationまで",
+      "description": "Paid Inboxの事業案を4つのLLMで複数ラウンド検討し、Human API、Verified Human Judgment、競合比較まで進めた。最終的に残ったのは「AIが分からない時」ではなく、本人の意思・実体験・現実・権限・第三者確認など、Humanでなければ答えの経済的意味が変わる時だけ人間へEscalateする、という原則だった。",
+      "status": "published",
+      "publishedAt": "2026-09-04",
+      "updatedAt": "2026-09-04",
+      "lastVerifiedAt": "2026-09-04",
+      "tags": [
+        "AIエージェント",
+        "Human-in-the-loop",
+        "Human Decision",
+        "新規事業",
+        "マルチLLM",
+        "リサーチ",
+        "Human API"
+      ],
+      "agents": [
+        "Claude",
+        "Gemini",
+        "Grok",
+        "ChatGPT"
+      ],
+      "url": "/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/",
+      "year": "2026"
+    },
+    {
       "id": "KB-2026-0008",
       "slug": "opencode-linux-agent-vm-poc",
       "title": "OpenCodeをLinux Agent VMで使えるか検証した — SSHトンネル＋Web UIで実用化",

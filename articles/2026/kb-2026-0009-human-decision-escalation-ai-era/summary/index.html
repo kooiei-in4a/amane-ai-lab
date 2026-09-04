@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIが賢くなるほど、人間には何を聞くべきか — Paid InboxからHuman Decision Escalationまで — 資料版 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="Paid Inboxの事業案を4つのLLMで複数ラウンド検討し、Human API、Verified Human Judgment、競合比較まで進めた。最終的に残ったのは「AIが分からない時」ではなく、本人の意思・実体験・現実・権限・第三者確認など、Humanでなければ答えの経済的意味が変わる時だけ人間へEscalateする、という原則だった。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/summary/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIが賢くなるほど、人間には何を聞くべきか — Paid InboxからHuman Decision Escalationまで — 資料版">
+  <meta property="og:description" content="Paid Inboxの事業案を4つのLLMで複数ラウンド検討し、Human API、Verified Human Judgment、競合比較まで進めた。最終的に残ったのは「AIが分からない時」ではなく、本人の意思・実体験・現実・権限・第三者確認など、Humanでなければ答えの経済的意味が変わる時だけ人間へEscalateする、という原則だった。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/summary/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="../../../../assets/css/site.css">
+  <link rel="stylesheet" href="../../../../assets/css/nav-benchmark.css">
+</head>
+<body class="summary-doc-page">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane AI Lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/">記事本文</a>
+        <a href="../../../../benchmarks/">Benchmarks</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#articles">記事</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap summary-doc">
+    <header class="summary-doc-header panel">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0009</span>
+        <span class="pill">資料版</span>
+        <span>更新: 2026-09-04</span>
+      </p>
+      <h1>結論：Humanを呼ぶ基準を「AIの知識不足」から変える</h1>
+      <p class="summary-doc-subtitle">合成結果を、わかりやすい言葉で短くまとめた資料版。</p>
+      <nav class="summary-source-links" aria-label="記事本文の関連セクション">
+        <p class="summary-source-links-label">記事本文の関連セクション</p>
+        <ul>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#background-heading">検討に至った背景</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#prompt-heading">調査プロンプト</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#agents-heading">AIエージェントの回答</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#analysis-heading">AI回答の合成</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#analysis-plain-heading">合成（わかりやすい説明）</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#conclusion-heading">要約</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#conclusion-plain-heading">要約（わかりやすい説明）</a></li>
+        </ul>
+      </nav>
+      <p class="summary-doc-nav">
+        <a class="btn btn-secondary" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/">← 記事本文へ戻る</a>
+      </p>
+    </header>
+
+    <div class="summary-doc-layout">
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol><li><a href="#section-1">1. Knowledge GapだけではHumanを呼ばない</a></li><li><a href="#section-2">2. Humanでなければ意味が変わる場合だけ呼ぶ</a></li><li><a href="#section-3">3. Internal HumanとExternal Humanを分ける</a></li><li><a href="#section-4">4. Verificationは商品ではなく品質機構</a></li><li><a href="#section-5">5. AI Assistanceは許容する</a></li><li><a href="#section-6">6. Human APIは未来オプションに留める</a></li><li><a href="#section-7">7. 事業は作る前に売る</a></li><li><a href="#section-8">最後の一文</a></li></ol></nav>
+      <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
+        <h1>結論：Humanを呼ぶ基準を「AIの知識不足」から変える</h1>
+<h2 id="section-1">1. Knowledge GapだけではHumanを呼ばない</h2>
+<p>AIが知らないから人間へ聞く、という設計はAI能力の向上で消えやすい。一般知識・技術知識はまずAIで処理する。</p>
+<h2 id="section-2">2. Humanでなければ意味が変わる場合だけ呼ぶ</h2>
+<p>残りやすいのは、本人の意思、実体験、Fresh Ground Truth、権限、独立第三者確認である。</p>
+<h2 id="section-3">3. Internal HumanとExternal Humanを分ける</h2>
+<p>社内Context、機密、権限、責任が必要なら社内Human。顧客本人、現地確認、独立第三者、社内にない経験が必要ならExternal Humanを検討する。</p>
+<h2 id="section-4">4. Verificationは商品ではなく品質機構</h2>
+<p>本人確認、属性確認、操作Evidence、音声説明は重要だが、顧客が買うのは「確認済み」というバッジではなく、失敗を減らすOutcomeである。</p>
+<h2 id="section-5">5. AI Assistanceは許容する</h2>
+<p>人間がAIで文章を整えることまで禁止しない。問題は本人が考えずAIの回答をそのまま提出するAI Substitutionである。テキスト検知より、実操作や口頭説明などInteraction Evidenceを重視する。</p>
+<h2 id="section-6">6. Human APIは未来オプションに留める</h2>
+<p>同じTask Schemaが高頻度で繰り返され、顧客自身からJSON、Webhook、API連携を求められるまで作らない。</p>
+<h2 id="section-7">7. 事業は作る前に売る</h2>
+<p>現在の市場テスト候補はJapan Enterprise Readiness Gate。日本企業の情シス経験者3人がPricing / SSO / SecurityのBlockerを48時間で確認する。まず実際に発注・支払いが起きるかを見る。</p>
+<h2 id="section-8">最後の一文</h2>
+<p><strong>AIに聞けることはAIに聞く。Humanへ聞くのは、Humanでなければその答えの経済的意味が変わる場合だけ。そして未来を語る前に、まず現実の顧客へ売る。</strong></p>
+      </article>
+    </div>
+
+    <footer class="summary-doc-footer panel">
+      <p class="note">この資料は記事の「合成結果の要約（わかりやすい説明）」（<code>conclusion-plain.md</code>）から自動生成しています。</p>
+      <p>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#background-heading">背景</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#prompt-heading">プロンプト</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#agents-heading">AI回答</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#analysis-heading">合成</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#analysis-plain-heading">合成（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#conclusion-heading">要約</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/#conclusion-plain-heading">要約（平易）</a> ·
+        <a href="../../../../benchmarks/">Benchmarks</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

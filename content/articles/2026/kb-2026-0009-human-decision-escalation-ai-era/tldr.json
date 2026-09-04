@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "source": "synthesis",
+      "label": "最大の気づき",
+      "text": "AIが分からないからHumanを呼ぶ、では長期的に弱い。Humanでなければ答えの経済的意味が変わる時だけEscalateする。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "残る価値",
+      "text": "本人の意思、実体験、Fresh Ground Truth、Authority、独立第三者確認はAIによる推測と同じ意味にはならない。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "competition",
+      "label": "競合確認",
+      "text": "Verified、高速、API、AIからHumanを呼ぶ機能の多くは既存サービスにあり、単独では新規性やMoatにならない。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "事業仮説",
+      "text": "現在のWedgeはJapan Enterprise Readiness Gate。ただしプロダクトは作らず、まず実際の有料発注と再発注を確認する。",
+      "href": "#conclusion-heading"
+    },
+    {
+      "source": "method",
+      "label": "LLM活用",
+      "text": "4モデルの多数決ではなく、対立する前提を取り出し、Freshな競合確認と市場で反証することで仮説を削った。",
+      "href": "#conclusion-heading"
+    }
+  ]
+}

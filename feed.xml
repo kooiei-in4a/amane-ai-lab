@@ -4,8 +4,16 @@
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/" rel="alternate"/>
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/feed.xml" rel="self"/>
   <id>https://kooiei-in4a.github.io/amane-ai-lab/</id>
-  <updated>2026-09-03T00:00:00Z</updated>
+  <updated>2026-09-04T00:00:00Z</updated>
   <subtitle>AIエージェントによる検証結果を公開するナレッジベース</subtitle>
+  <entry>
+    <title>AIが賢くなるほど、人間には何を聞くべきか — Paid InboxからHuman Decision Escalationまで</title>
+    <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/" rel="alternate"/>
+    <id>https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0009-human-decision-escalation-ai-era/</id>
+    <updated>2026-09-04T00:00:00Z</updated>
+    <published>2026-09-04T00:00:00Z</published>
+    <summary type="text">Paid Inboxの事業案を4つのLLMで複数ラウンド検討し、Human API、Verified Human Judgment、競合比較まで進めた。最終的に残ったのは「AIが分からない時」ではなく、本人の意思・実体験・現実・権限・第三者確認など、Humanでなければ答えの経済的意味が変わる時だけ人間へEscalateする、という原則だった。</summary>
+  </entry>
   <entry>
     <title>OpenCodeをLinux Agent VMで使えるか検証した — SSHトンネル＋Web UIで実用化</title>
     <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0008-opencode-linux-agent-vm-poc/" rel="alternate"/>

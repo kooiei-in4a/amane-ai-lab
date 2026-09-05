@@ -3,6 +3,30 @@
   "generatedFrom": "content/articles",
   "articles": [
     {
+      "id": "KB-2026-0010",
+      "slug": "ai-era-business-exploration-axes",
+      "title": "AI時代の新規事業機会 — 事業案ではなく「探索軸」を増やす仮説カタログ",
+      "description": "2026年以降のAI・AIエージェント・ソフトウェア環境の変化から、新しい商売の種が生まれる原理を探索した。既存のA/B/Cを再定義し、他LLMの発散結果も原文で保存したうえで、委任、文脈、例外、信頼、退出、学習、注意、アクセスなど32の追加軸と上位分類へ統合する。市場成立を断定する資料ではなく、次回以降の事業案生成と検証に再利用する仮説カタログである。",
+      "status": "published",
+      "publishedAt": "2026-09-05",
+      "updatedAt": "2026-09-05",
+      "lastVerifiedAt": "2026-09-05",
+      "tags": [
+        "新規事業",
+        "AIエージェント",
+        "事業探索",
+        "仮説",
+        "Micro SaaS",
+        "ソフトウェア",
+        "マルチLLM"
+      ],
+      "agents": [
+        "ChatGPT"
+      ],
+      "url": "/articles/2026/kb-2026-0010-ai-era-business-exploration-axes/",
+      "year": "2026"
+    },
+    {
       "id": "KB-2026-0009",
       "slug": "human-decision-escalation-ai-era",
       "title": "AIが賢くなるほど、人間には何を聞くべきか — Paid InboxからHuman Decision Escalationまで",

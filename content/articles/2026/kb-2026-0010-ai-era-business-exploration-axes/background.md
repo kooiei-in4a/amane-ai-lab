@@ -26,9 +26,9 @@
 
 ## Raw source
 
-他LLMの結果は要約だけでなく原文をそのまま残している。
+他LLMの結果は要約だけでなく、元Markdownへ完全復元できるRaw snapshotとして保存している。大きな入力をそのまま正本本文へ混在させず、Base64分割（Source Bはgzip圧縮後）で保持し、元ファイルのSHA-256を `sources/README.md` に固定した。
 
-- `sources/llm-result-a.md` — 35軸 + 仮説軸 + 上位分類を含む独立ブレスト
-- `sources/llm-result-b.md` — 40軸 + 仮説軸 + 希少性の移動による上位分類を含む独立ブレスト
+- Source A — 35軸 + 仮説軸 + 上位分類を含む独立ブレスト
+- Source B — 40軸 + 仮説軸 + 希少性の移動による上位分類を含む独立ブレスト
 
-統合後の内容は `responses/chatgpt.md` と本記事の合成セクションに残す。
+復元手順・元ファイル名・サイズ・SHA-256は `sources/README.md` を参照する。統合後の完全版は `responses/chatgpt.md` に残す。

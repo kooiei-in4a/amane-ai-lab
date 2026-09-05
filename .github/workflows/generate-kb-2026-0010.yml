@@ -1,0 +1,32 @@
+name: Generate KB-2026-0010 artifacts
+
+on:
+  push:
+    branches:
+      - article/kb-2026-0010-ai-era-business-exploration-axes
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    if: github.event.head_commit.message != 'chore: refresh KB-2026-0010 generated site'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: article/kb-2026-0010-ai-era-business-exploration-axes
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - run: python scripts/build_site.py
+      - name: Commit generated files
+        run: |
+          if [[ -n "$(git status --porcelain=v1 --untracked-files=all -- articles data index.html sitemap.xml feed.xml)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add articles data index.html sitemap.xml feed.xml
+            git commit -m "chore: refresh KB-2026-0010 generated site"
+            git push origin HEAD:article/kb-2026-0010-ai-era-business-exploration-axes
+          fi

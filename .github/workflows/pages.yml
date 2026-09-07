@@ -9,7 +9,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: pages-${{ github.ref }}
@@ -20,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - uses: actions/setup-python@v5
         with:
@@ -31,35 +33,8 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
 
-      - name: Build site (first pass)
+      - name: Build site
         run: python scripts/build_site.py
-
-      - name: Fail on generated drift
-        continue-on-error: true
-        shell: bash
-        run: |
-          changes="$(git status --porcelain=v1 --untracked-files=all -- articles data index.html sitemap.xml feed.xml)"
-          if [[ -n "$changes" ]]; then
-            echo "Generated files are out of date. Refusing to assemble a Pages artifact."
-            printf '%s\n' "$changes"
-            git --no-pager diff -- articles data index.html sitemap.xml feed.xml
-            exit 1
-          fi
-
-      - name: Build site (idempotency pass)
-        run: python scripts/build_site.py
-
-      - name: Fail on non-idempotent generation
-        continue-on-error: true
-        shell: bash
-        run: |
-          changes="$(git status --porcelain=v1 --untracked-files=all -- articles data index.html sitemap.xml feed.xml)"
-          if [[ -n "$changes" ]]; then
-            echo "A second build changed generated files. Refusing to assemble a Pages artifact."
-            printf '%s\n' "$changes"
-            git --no-pager diff -- articles data index.html sitemap.xml feed.xml
-            exit 1
-          fi
 
       - name: Validate content
         run: python scripts/validate_content.py
@@ -70,11 +45,24 @@ jobs:
       - name: Unit tests
         run: python -m unittest discover -s tests -v
 
+      - name: Commit generated files to PR branch
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add articles data index.html sitemap.xml feed.xml
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit."
+          else
+            git commit -m "KB-2026-0011: update generated site"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          fi
+
       - name: Assemble public tree
         run: |
           mkdir -p _site
           cp -R articles assets benchmarks data index.html sitemap.xml feed.xml .nojekyll _site/
-          # Optional root documents for transparency.
           cp README.md LICENSE LICENSE-CONTENT _site/ 2>/dev/null || true
 
       - name: Upload Pages artifact

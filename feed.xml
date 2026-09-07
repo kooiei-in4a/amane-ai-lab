@@ -12,7 +12,7 @@
     <id>https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/</id>
     <updated>2026-09-07T00:00:00Z</updated>
     <published>2026-09-07T00:00:00Z</published>
-    <summary type="text">amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailを低コストのTransactional特化候補として扱うのが妥当と判断した。</summary>
+    <summary type="text">amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailをTransactional Email特化のクレジット制候補として扱うのが妥当と判断した。</summary>
   </entry>
   <entry>
     <title>AI時代の新規事業機会 — 事業案ではなく「探索軸」を増やす仮説カタログ</title>

@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>トランザクションメール送信基盤を比較した — Azure ACSを基準にSES・SendGrid・Mailgun・ZeptoMailを選ぶ — amane AI Lab Knowledge Base</title>
-  <meta name="description" content="amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailを低コストのTransactional特化候補として扱うのが妥当と判断した。">
+  <meta name="description" content="amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailをTransactional Email特化のクレジット制候補として扱うのが妥当と判断した。">
   <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/">
   <meta property="og:type" content="article">
   <meta property="og:title" content="トランザクションメール送信基盤を比較した — Azure ACSを基準にSES・SendGrid・Mailgun・ZeptoMailを選ぶ">
-  <meta property="og:description" content="amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailを低コストのTransactional特化候補として扱うのが妥当と判断した。">
+  <meta property="og:description" content="amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailをTransactional Email特化のクレジット制候補として扱うのが妥当と判断した。">
   <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/">
   <meta property="og:site_name" content="amane-ai-lab">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="トランザクションメール送信基盤を比較した — Azure ACSを基準にSES・SendGrid・Mailgun・ZeptoMailを選ぶ">
-  <meta name="twitter:description" content="amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailを低コストのTransactional特化候補として扱うのが妥当と判断した。">
+  <meta name="twitter:description" content="amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailをTransactional Email特化のクレジット制候補として扱うのが妥当と判断した。">
   <link rel="stylesheet" href="../../../assets/css/site.css">
   <link rel="stylesheet" href="../../../assets/css/nav-benchmark.css">
   <link rel="stylesheet" href="../../../assets/css/article-readability.css">
@@ -42,13 +42,13 @@
         <span>更新: 2026-09-07</span>
       </p>
       <h1>トランザクションメール送信基盤を比較した — Azure ACSを基準にSES・SendGrid・Mailgun・ZeptoMailを選ぶ</h1>
-      <p class="article-summary">amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailを低コストのTransactional特化候補として扱うのが妥当と判断した。</p>
-      <nav class="article-quick-nav" aria-label="主要セクション"><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
+      <p class="article-summary">amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailをTransactional Email特化のクレジット制候補として扱うのが妥当と判断した。</p>
+      <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
       <ul class="tag-list"><li>Email</li><li>Transactional Email</li><li>Azure Communication Services</li><li>Amazon SES</li><li>SendGrid</li><li>Mailgun</li><li>ZeptoMail</li></ul>
     </header>
 
-    
-    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-chatgpt">ChatGPT</a><ul><li class="toc-item toc-level-2"><a href="#agent-chatgpt-先に結論">先に結論</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-料金比較">料金比較</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-1通05-mb代表価格の一覧">1通0.5 MB・代表価格の一覧</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-2025年以降の普及度">2025年以降の普及度</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-amane-mailerから見た意味">amane-mailerから見た意味</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-設計上の示唆">設計上の示唆</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-調査時点">調査時点</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-synthesis">結論</span> <a class="tldr-link" href="#analysis-heading">amane-mailerの第2ProviderはAmazon SESを第一候補とし、2社目でAzure依存の境界を洗い出す。</a></li><li><span class="tldr-source tldr-source-synthesis">料金</span> <a class="tldr-link" href="#agent-chatgpt-1通05-mb代表価格の一覧">0.5 MB・月100万通ではACS約$310、SESアラカルト約$100〜160。SendGridは約$739、MailgunとZeptoMailは条件確認が必要。</a></li><li><span class="tldr-source tldr-source-synthesis">普及度</span> <a class="tldr-link" href="#agent-chatgpt-2025年以降の普及度">6sense推定ではSendGrid 14.45%、Amazon SES 13.97%、Mailgun 9.39%。これは送信通数シェアではない。</a></li><li><span class="tldr-source tldr-source-synthesis">設計</span> <a class="tldr-link" href="#agent-chatgpt-設計上の示唆">共通機能とProvider固有Capabilityを分け、Bounce、Complaint、Suppression、Delivery Eventなどを段階的に抽象化する。</a></li></ol></section>
+    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-chatgpt">ChatGPT</a><ul><li class="toc-item toc-level-2"><a href="#agent-chatgpt-先に結論">先に結論</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-料金比較">料金比較</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-1通05-mb代表価格の一覧">1通0.5 MB・代表価格の一覧</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-2025年以降の普及度">2025年以降の普及度</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-amane-mailerから見た意味">amane-mailerから見た意味</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-設計上の示唆">設計上の示唆</a></li><li class="toc-item toc-level-2"><a href="#agent-chatgpt-調査時点">調査時点</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
 
     <section class="panel" aria-labelledby="background-heading">
       <h2 id="background-heading">検討に至った背景</h2>
@@ -63,12 +63,14 @@
 <p>比較対象は、現行のACS Emailに加えて、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailとした。</p>
 <h2 id="background-前提と注意"><a class="heading-permalink" href="#background-前提と注意" aria-label="この見出しへのリンク">#</a>前提と注意</h2>
 <ul>
-<li>価格は2026-09-07時点で確認できた公開料金を使用する。</li>
+<li>料金・料金体系は2026-09-07時点の公式情報を確認する。公式ページで現行の具体額を確定できない場合は推定しない。</li>
 <li>税、為替、Dedicated IP、Email Validation、Deliverability系アドオン等は基本比較に含めない。</li>
+<li>Azureの表示価格はUSDベースの概算で、契約形態、購入日、通貨等により実請求は変わり得る。</li>
 <li>Azure ACS Emailはメール全体の転送データ量に課金される。</li>
 <li>Amazon SESのアラカルト追加データ料金は送信した添付データが対象であり、0.5 MBのメール全体をそのままAzureと同じ式で課金してはいけない。</li>
+<li>Amazon SESは2026-07-21以降、一部の新規アカウント等でEssentialsから開始する。本文の最安比較は明示的にアラカルトへ切り替えた場合である。</li>
 <li>SendGridやMailgunは月額プランと超過課金があるため、従量課金サービスと単価構造が異なる。</li>
-<li>ZeptoMailはTransactional Email専用で、ニュースレター等のBulk/Promotional用途を対象にしない。</li>
+<li>ZeptoMailはTransactional Email専用で、ニュースレター等のBulk/Promotional用途を対象にしない。現行Pricingページは2026-07-01以降の新規契約向け価格改定を告知し、具体額を表示せずContact salesとしている。一方、別のZohoページには旧来の$2.50/10,000通表示が残っているため、この記事では現行価格として採用しない。</li>
 <li>市場シェアは6senseが推定するTransactional Email製品の導入企業シェアを参照した。これは送信通数、売上、SMTPトラフィックのシェアではない。</li>
 </ul>
 <p>この調査はProvider採用の最終決定ではなく、<code>amane-mailer</code> の次の実装順序を考えるための技術選定メモとして位置づける。</p></div>
@@ -116,7 +118,7 @@
       <div><dt>添付</dt><dd>なし</dd></div>
       <div><dt>完全性</dt><dd>edited</dd></div>
     </dl>
-    <p class="agent-notes">会話中の調査を公開用に再構成し、2026-09-07時点で各社公式料金ページと6senseのTransactional Emailカテゴリを再確認した。市場シェアは推定導入シェアであり送信通数シェアではない。</p>
+    <p class="agent-notes">会話中の調査を公開用に再構成し、2026-09-07時点で各社公式料金ページと6senseのTransactional Emailカテゴリを再確認した。ZeptoMailは公式Pricingページと他のZohoページで価格表示が一致しないため、現行の具体額は推定せず要問い合わせとして扱った。市場シェアは推定導入シェアであり送信通数シェアではない。</p>
     <div class="agent-body prose"><h1 id="agent-chatgpt-調査結果"><a class="heading-permalink" href="#agent-chatgpt-調査結果" aria-label="この見出しへのリンク">#</a>調査結果</h1>
 <h2 id="agent-chatgpt-先に結論"><a class="heading-permalink" href="#agent-chatgpt-先に結論" aria-label="この見出しへのリンク">#</a>先に結論</h2>
 <p><code>amane-mailer</code> の次Providerを考えるなら、現時点では次の順序が扱いやすい。</p>
@@ -124,7 +126,7 @@
 <li><strong>Amazon SES</strong> — 第2Providerの第一候補</li>
 <li><strong>Twilio SendGrid</strong> — 専業ESPの代表として有力</li>
 <li><strong>Mailgun</strong> — Webhook、Suppression、Inboundを含む別系統の専業ESP</li>
-<li><strong>Zoho ZeptoMail</strong> — 低コストのTransactional Email特化候補</li>
+<li><strong>Zoho ZeptoMail</strong> — Transactional Email特化のクレジット制候補</li>
 </ol>
 <p>Azure Communication Services Email（ACS Email）は既存Providerとして継続する。</p>
 <p>これは「サービス一般の優劣ランキング」ではない。<code>amane-mailer</code> のProvider abstractionを段階的に検証するための実装順序である。</p>
@@ -164,8 +166,12 @@
 </tr>
 </tbody>
 </table>
-<p>Azureはヘッダー、本文、画像、添付を含む受信者ごとの転送データ量を課金対象としている。</p>
-<p>出典: <a href="https://learn.microsoft.com/en-us/azure/communication-services/concepts/email-pricing">Microsoft Learn - Email pricing in Azure Communication Services</a></p>
+<p>Azureはヘッダー、本文、画像、添付を含む受信者ごとの転送データ量を課金対象としている。Azure Pricingページでは、表示価格はUSDベースの概算であり、契約形態、購入日、通貨等で実請求が変わり得るとも明記されている。</p>
+<p>出典:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/communication-services/concepts/email-pricing">Microsoft Learn - Email pricing in Azure Communication Services</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/communication-services/">Azure Communication Services pricing</a></li>
+</ul>
 <h3 id="agent-chatgpt-amazon-ses"><a class="heading-permalink" href="#agent-chatgpt-amazon-ses" aria-label="この見出しへのリンク">#</a>Amazon SES</h3>
 <p>Amazon SESは2026年7月にEssentials / Pro / Enterpriseの料金プランを追加した。一方で、<strong>アラカルト料金へ切り替えることも可能</strong>である。</p>
 <p>アラカルトのOutbound Emailは、</p>
@@ -202,56 +208,14 @@
 </tbody>
 </table>
 <p>仮に0.5 MBがすべて添付データだった場合は、概算で1,000通あたり約$0.06が追加され、1,000通あたり約$0.16、100万通で約$160になる。実際には0.5 MBのメール全体が添付とは限らないので、Azure ACSと同じ計算式で比較しない。</p>
-<p>2026-07-21以降、新規SESアカウント等はEssentialsから開始する条件があるが、公式にはアラカルトへ切り替え可能とされている。</p>
+<p>2026-07-21以降、新しいSESアカウント等はEssentialsから開始する条件があり、0〜1,000万通/月では$0.16/1,000通である。ただし公式にはアラカルトへ切り替え可能とされている。この記事の比較表は<strong>アラカルトへ切り替えた場合</strong>を示す。</p>
 <p>出典:</p>
 <ul>
 <li><a href="https://aws.amazon.com/ses/pricing/">Amazon SES pricing</a></li>
 <li><a href="https://aws.amazon.com/about-aws/whats-new/2026/07/amazon-ses-pricing-plans/">Amazon SES introduces pricing plans</a></li>
 </ul>
-<h3 id="agent-chatgpt-zoho-zeptomail"><a class="heading-permalink" href="#agent-chatgpt-zoho-zeptomail" aria-label="この見出しへのリンク">#</a>Zoho ZeptoMail</h3>
-<p>ZeptoMailは月額サブスクリプションではなくクレジット制で、</p>
-<ul>
-<li><strong>1 Credit = 10,000 emails</strong></li>
-<li><strong>1 Credit = $2.50</strong></li>
-<li>購入クレジットは6か月有効</li>
-</ul>
-<p>となっている。</p>
-<p>単純換算では、</p>
-<table>
-<thead>
-<tr>
-<th>月間通数</th>
-<th>必要クレジット相当</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1,000</td>
-<td>$2.50を購入し残りを後日利用</td>
-</tr>
-<tr>
-<td>10,000</td>
-<td>$2.50</td>
-</tr>
-<tr>
-<td>100,000</td>
-<td>$25</td>
-</tr>
-<tr>
-<td>1,000,000</td>
-<td>$250</td>
-</tr>
-</tbody>
-</table>
-<p>小量時には最低購入単位が効くが、継続利用時の単価は1,000通あたり$0.25相当である。</p>
-<p>ZeptoMailはTransactional Email向けであり、Bulk EmailやPromotional Emailを対象にしない。</p>
-<p>出典:</p>
-<ul>
-<li><a href="https://www.zoho.com/zeptomail/help/getting-started.html">Zoho ZeptoMail - Getting started</a></li>
-<li><a href="https://www.zoho.com/zeptomail/articles/managing-high-volume-emails.html">Zoho ZeptoMail - high volume email</a></li>
-</ul>
 <h3 id="agent-chatgpt-twilio-sendgrid"><a class="heading-permalink" href="#agent-chatgpt-twilio-sendgrid" aria-label="この見出しへのリンク">#</a>Twilio SendGrid</h3>
-<p>SendGrid Email APIは従量制ではなく月額プランが中心である。2026年9月時点の公開情報では、代表的なプランは次の通り。</p>
+<p>SendGrid Email APIは月額プランが中心である。2026年9月時点の公開情報では、代表的なプランは次の通り。</p>
 <ul>
 <li>Free trial: 100 emails/day、60日間</li>
 <li>Essentials 50K: <strong>$19.95 / month</strong></li>
@@ -261,7 +225,9 @@
 <li>Pro 700K: $499 / month</li>
 <li>Pro 1.5M: $799 / month</li>
 </ul>
-<p>最小コスト側で見ると概ね次の規模感になる。</p>
+<p>100万通では、Pro 700Kに30万通の超過を加える単純計算なら、現行の超過単価$0.0008/emailを使って、</p>
+<p><code>$499 + 300,000 × $0.0008 = 約$739</code></p>
+<p>となる。</p>
 <table>
 <thead>
 <tr>
@@ -284,15 +250,15 @@
 </tr>
 <tr>
 <td>1,000,000</td>
-<td>約$730台（700Kプラン＋超過を使う場合の目安）</td>
+<td>約$739（Pro 700K + 30万通超過）</td>
 </tr>
 </tbody>
 </table>
-<p>実際の請求は選択プランと超過単価で決まるため、100万通付近では購入時に最新のvolume selectorを再確認する必要がある。</p>
+<p>実際の請求は契約経路や選択プランで変わり得るため、購入時には最新のPricingページを再確認する。</p>
 <p>出典:</p>
 <ul>
 <li><a href="https://www.twilio.com/en-us/products/email-api/pricing">Twilio SendGrid Email API pricing</a></li>
-<li><a href="https://sendgrid.com/content/dam/sendgrid/global/en/other/sendgrid-pricing/twi121--sendgrid-pricing-pdf-st1.pdf">SendGrid Email API plan comparison</a></li>
+<li><a href="https://aws.amazon.com/marketplace/pp/prodview-dp5xcsvbvixai">AWS Marketplace - Twilio SendGrid Email</a></li>
 </ul>
 <h3 id="agent-chatgpt-mailgun"><a class="heading-permalink" href="#agent-chatgpt-mailgun" aria-label="この見出しへのリンク">#</a>Mailgun</h3>
 <p>Mailgun Sendの公開料金では、</p>
@@ -300,14 +266,14 @@
 <li>Free: $0、100 emails/day</li>
 <li>Basic: <strong>$15 / month、10,000 emails</strong></li>
 <li>Foundation: <strong>$35 / month、50,000 emails</strong></li>
-<li>Scale: <strong>$90 / month、100,000 emails</strong> から</li>
+<li>Scale: <strong>$90 / month、100,000 emails</strong></li>
 </ul>
-<p>となっている。各プランには超過料金があり、volumeによって段階的に変わる。</p>
+<p>となっている。各プランには超過料金があり、Scaleでは送信量に応じて1,000通あたりの超過単価が$1.10、$0.90、$0.75、$0.60、$0.50…と段階的に示されている。</p>
 <table>
 <thead>
 <tr>
 <th>月間通数</th>
-<th>公開料金から見た目安</th>
+<th>公開料金から確認できる範囲</th>
 </tr>
 </thead>
 <tbody>
@@ -321,22 +287,66 @@
 </tr>
 <tr>
 <td>100,000</td>
-<td>約$75〜90程度のvolume tierを要確認</td>
+<td>$90</td>
 </tr>
 <tr>
 <td>1,000,000</td>
-<td>約$700前後のScale volume tierが目安。購入時再確認</td>
+<td>Scale $90 + 超過料金。総額は契約前にControl Panelで確認</td>
 </tr>
 </tbody>
 </table>
+<p>Mailgun自身が、個別アカウントの最終料金・overageはControl PanelのBilling / Upgradeページを正本として確認するよう案内している。そのため100万通の総額は、この記事では一意の金額に丸めない。</p>
 <p>Mailgunは価格だけでなく、REST API、SMTP relay、Tracking、Analytics、Webhook、Suppression、Inbound routingなどを一体で提供する専業ESPである。</p>
 <p>出典:</p>
 <ul>
 <li><a href="https://www.mailgun.com/pricing/">Mailgun pricing</a></li>
 <li><a href="https://help.mailgun.com/hc/en-us/articles/6745531451547-What-happens-if-I-send-more-emails-than-my-monthly-plan-provides">Mailgun Help - overage pricing</a></li>
 </ul>
+<h3 id="agent-chatgpt-zoho-zeptomail"><a class="heading-permalink" href="#agent-chatgpt-zoho-zeptomail" aria-label="この見出しへのリンク">#</a>Zoho ZeptoMail</h3>
+<p>ZeptoMailは月額サブスクリプションではなくクレジット制で、</p>
+<ul>
+<li><strong>1 Credit = 10,000 emails</strong></li>
+<li>購入クレジットは6か月有効</li>
+<li>最初の1 Credit（10,000通）は1か月有効の無料枠</li>
+</ul>
+<p>という仕組みである。</p>
+<p>ただし、現行の公式Pricingページには<strong>「2026-07-01以降の新規契約からPricing Updateを適用」</strong>という告知があり、具体的なper-credit金額は表示せず<code>Contact sales for pricing</code>としている。一方、Zohoの別ランディングページには従来の<code>$2.50 / 10,000 emails</code>表示が残っている。</p>
+<p>同一ベンダーの公開ページ間で価格表示が一致していないため、この記事では$2.50を2026-09-07時点の現行価格として採用しない。</p>
+<table>
+<thead>
+<tr>
+<th>月間通数</th>
+<th>現行公開情報で言えること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1,000</td>
+<td>初回無料Creditの範囲内。ただし1日100通上限あり</td>
+</tr>
+<tr>
+<td>10,000</td>
+<td>初回1 Creditは無料・1か月有効</td>
+</tr>
+<tr>
+<td>100,000</td>
+<td>10 Credits相当。購入単価は要問い合わせ</td>
+</tr>
+<tr>
+<td>1,000,000</td>
+<td>100 Credits相当。購入単価は要問い合わせ</td>
+</tr>
+</tbody>
+</table>
+<p>ZeptoMailはTransactional Email向けであり、Bulk EmailやPromotional Emailを対象にしない。</p>
+<p>出典:</p>
+<ul>
+<li><a href="https://www.zoho.com/zeptomail/pricing.html">Zoho ZeptoMail pricing</a></li>
+<li><a href="https://www.zoho.com/zeptomail/help/getting-started.html">Zoho ZeptoMail - Getting started</a></li>
+<li><a href="https://www.zoho.com/zeptomail/">Zoho ZeptoMail - product page</a></li>
+</ul>
 <h2 id="agent-chatgpt-1通05-mb代表価格の一覧"><a class="heading-permalink" href="#agent-chatgpt-1通05-mb代表価格の一覧" aria-label="この見出しへのリンク">#</a>1通0.5 MB・代表価格の一覧</h2>
-<p>条件差を含めて見ると、概ね次の順になる。</p>
+<p>料金体系が異なるため、単純な安い順ではなく、公式情報から同じ通数で確認できる範囲を並べる。</p>
 <table>
 <thead>
 <tr>
@@ -350,22 +360,6 @@
 </thead>
 <tbody>
 <tr>
-<td>Amazon SES（アラカルト）</td>
-<td>$0.10〜約$0.16</td>
-<td>$1〜約$1.6</td>
-<td>$10〜約$16</td>
-<td>$100〜約$160</td>
-<td>完全従量＋添付データ</td>
-</tr>
-<tr>
-<td>ZeptoMail</td>
-<td>$2.50最低購入</td>
-<td>$2.50</td>
-<td>$25</td>
-<td>$250</td>
-<td>1万通単位クレジット</td>
-</tr>
-<tr>
 <td>Azure ACS Email</td>
 <td>$0.31</td>
 <td>$3.10</td>
@@ -374,26 +368,43 @@
 <td>完全従量＋転送データ</td>
 </tr>
 <tr>
+<td>Amazon SES（アラカルト）</td>
+<td>$0.10〜約$0.16</td>
+<td>$1〜約$1.6</td>
+<td>$10〜約$16</td>
+<td>$100〜約$160</td>
+<td>完全従量＋添付データ</td>
+</tr>
+<tr>
 <td>SendGrid</td>
 <td>$19.95</td>
 <td>$19.95</td>
 <td>$34.95</td>
-<td>約$730台</td>
+<td>約$739</td>
 <td>月額＋超過</td>
 </tr>
 <tr>
 <td>Mailgun</td>
 <td>$0または$15</td>
 <td>$15</td>
-<td>約$75〜90</td>
-<td>約$700前後</td>
+<td>$90</td>
+<td>Scale $90 + 超過（要確認）</td>
 <td>月額＋超過</td>
+</tr>
+<tr>
+<td>ZeptoMail</td>
+<td>初回無料枠内</td>
+<td>初回1 Credit無料</td>
+<td>10 Credits相当・価格要問い合わせ</td>
+<td>100 Credits相当・価格要問い合わせ</td>
+<td>クレジット制</td>
 </tr>
 </tbody>
 </table>
 <p>この表は機能やDeliverability支援を同一化したものではない。Dedicated IP、Validation、Deliverability monitoring、サポート等を含めると条件は変わる。</p>
+<p>また、SESのレンジ上限は「0.5 MBがすべて添付データ」という比較用の厳しめな仮定であり、通常のメール全体サイズにそのまま適用するものではない。</p>
 <h2 id="agent-chatgpt-2025年以降の普及度"><a class="heading-permalink" href="#agent-chatgpt-2025年以降の普及度" aria-label="この見出しへのリンク">#</a>2025年以降の普及度</h2>
-<p>2026年9月に確認した6senseのTransactional Emailカテゴリでは、274,597社を追跡し、上位は次のように推定されている。</p>
+<p>2026年9月に確認した6senseのTransactional Emailカテゴリでは、ページ上部に274,597 Companies Trackedと表示され、上位は次のように推定されている。</p>
 <table>
 <thead>
 <tr>
@@ -473,8 +484,8 @@
 <p>一方、SendGridとMailgunは専業ESPとして、Webhook、Suppression、Analytics、Deliverability運用などをサービスの中心に置いている。</p>
 <p>したがって第3・第4Providerとして追加すると、単なるクラウドAPI差分ではなく、<strong>専業ESP型の機能モデルまで共通化すべきか</strong>を検証できる。</p>
 <h3 id="agent-chatgpt-zeptomailを後段に置く理由"><a class="heading-permalink" href="#agent-chatgpt-zeptomailを後段に置く理由" aria-label="この見出しへのリンク">#</a>ZeptoMailを後段に置く理由</h3>
-<p>ZeptoMailは価格が安くTransactional Emailに特化しているため、<code>amane-mailer</code> の用途との相性はよい。</p>
-<p>ただし、まずSESと専業ESPを通して共通モデルを固めた後に追加した方が、Provider abstractionの検証順序として得られる情報が多い。</p>
+<p>ZeptoMailはTransactional Emailに特化し、API/SMTP、Webhook、Bounce reports、Suppressionなど、<code>amane-mailer</code> と相性のよい機能を持つ。</p>
+<p>一方、現行価格は公式ページ間で表示が一致しておらず、正確な購入単価は契約前の確認が必要である。設計検証という意味でも、まずSESと専業ESPを通して共通モデルを固めた後に追加した方が得られる情報が多い。</p>
 <h2 id="agent-chatgpt-設計上の示唆"><a class="heading-permalink" href="#agent-chatgpt-設計上の示唆" aria-label="この見出しへのリンク">#</a>設計上の示唆</h2>
 <p>Providerを増やすなら、共通化対象を単純な<code>SendAsync()</code>だけにしない。</p>
 <p>最低限、次の概念をProvider非依存で扱えるか検討する価値がある。</p>
@@ -495,7 +506,7 @@
 <p><strong>Common core + Provider capabilities</strong> とし、例えばSuppression、Dedicated IP、Tags、Inbound routing等はCapabilityとして表現する方が自然である。</p>
 <h2 id="agent-chatgpt-調査時点"><a class="heading-permalink" href="#agent-chatgpt-調査時点" aria-label="この見出しへのリンク">#</a>調査時点</h2>
 <p>最終確認: <strong>2026-09-07</strong></p>
-<p>料金とプランは変更されるため、実装または契約時には各Providerの公式料金ページを再確認する。</p></div>
+<p>料金とプランは変更されるため、実装または契約時には各Providerの公式料金ページと、必要に応じて管理画面・営業見積を再確認する。</p></div>
   </details>
 </section></div>
     </section>
@@ -504,7 +515,7 @@
       <h2 id="analysis-heading">AI回答の合成</h2>
       <div class="prose"><h1 id="analysis-分析"><a class="heading-permalink" href="#analysis-分析" aria-label="この見出しへのリンク">#</a>分析</h1>
 <p>今回の比較では、単純な料金順位と <code>amane-mailer</code> の実装優先順位を分けて考える必要がある。</p>
-<p>価格だけならAmazon SESのアラカルトが最も強く、ZeptoMailとAzure ACS Emailがその次に来る。一方、SendGridやMailgunは月額プランが中心で、送信単価だけを見ると高い。しかし専業ESPとしてWebhook、Suppression、Analytics、Deliverability運用まで含むため、比較対象としての価値は別にある。</p>
+<p>公開額を同じ条件で比較しやすいのはAmazon SESとAzure ACS Emailで、送信単価ではSESのアラカルトが強い。SendGridとMailgunは月額プランと超過課金が中心で、単価だけではなくWebhook、Suppression、Analytics、Deliverability運用などを含む専業ESPとして見る必要がある。ZeptoMailはTransactional Email特化のクレジット制だが、2026-07-01以降の価格改定後の具体額を公式Pricingページから確定できないため、価格順位には入れない。</p>
 <h2 id="analysis-市場シェアの読み方"><a class="heading-permalink" href="#analysis-市場シェアの読み方" aria-label="この見出しへのリンク">#</a>市場シェアの読み方</h2>
 <p>6senseの2026年推定では、SendGrid 14.45%、Amazon SES 13.97%、Mailgun 9.39%で、この3製品はTransactional Emailカテゴリの主要サービスとして広く検出されている。</p>
 <p>ただし、この数字は「全世界の送信メールの何%を処理したか」ではない。6senseが追跡する企業における推定導入シェアである。ACS EmailとZeptoMailに同じ定義の比較可能な値がないため、シェア不明を低品質や低利用と結び付けない。</p>
@@ -512,7 +523,7 @@
 <p>第2ProviderとしてSESを追加する価値は、コスト削減よりも<strong>抽象化境界の検証</strong>にある。</p>
 <p>ACSだけで設計している間は、Delivery Report、Event Grid、Azure固有IDやエラー分類が共通概念に見えやすい。SESを追加すると、Bounce/Complaint、SNS/EventBridge等のイベント経路、Suppression、Configuration Setなど別の概念体系と向き合うことになる。</p>
 <p>この段階でCommon coreを固め、その後SendGridまたはMailgunを追加すれば、hyperscaler型だけでなく専業ESP型にも抽象化が耐えられるか確認できる。</p>
-<p>ZeptoMailはTransactional Email特化で価格も低いため有力だが、設計検証という意味ではSESと専業ESPを先に実装した方が、先に異質な差分を発見しやすい。</p>
+<p>ZeptoMailはTransactional Email特化で、API/SMTP、Webhook、Bounce reports、Suppressionなど用途との相性はよい。ただし価格比較の確度は他候補より低いため、採用判断時に現行見積を確認する必要がある。設計検証という意味でも、SESと専業ESPを先に実装した方が異質な差分を早く発見しやすい。</p>
 <h2 id="analysis-暫定的な実装順"><a class="heading-permalink" href="#analysis-暫定的な実装順" aria-label="この見出しへのリンク">#</a>暫定的な実装順</h2>
 <pre><code class="language-text">Application
     ↓
@@ -523,7 +534,7 @@ Provider abstraction
     ├─ Amazon SES      ← next
     ├─ SendGrid        ← specialist ESP
     ├─ Mailgun         ← specialist ESP / inbound-capable
-    └─ ZeptoMail       ← low-cost transactional specialist
+    └─ ZeptoMail       ← transactional specialist / credit-based
 </code></pre>
 <p>順番は固定ではない。第3ProviderはSendGridかMailgunのどちらか一方を先に実装すれば、Provider abstractionの検証としては十分な可能性が高い。</p>
 <p>重要なのは、Provider数を増やすこと自体ではなく、2社目・3社目で見つかった差分を共通モデルとProvider固有Capabilityへ正しく分離することである。</p></div>
@@ -535,7 +546,7 @@ Provider abstraction
 <p>今の <code>amane-mailer</code> はAzure ACS Emailで動いている。次に対応するならAmazon SESが最もよい候補になる。</p>
 <p>理由は、SESが安いからだけではない。Azureとは別の大規模メール基盤なので、2社目として実装すると「今の設計のどこがAzure専用になっているか」が分かりやすい。</p>
 <p>その次にSendGridかMailgunを入れると、クラウド事業者のメールAPIだけでなく、メール配信専業サービスにも同じ設計が通用するか確認できる。</p>
-<p>ZeptoMailは安く、トランザクションメール専用なので用途には合う。ただし設計を鍛える順序としては、SESと専業ESPを先に試す方が得られる情報が多い。</p>
+<p>ZeptoMailはトランザクションメール専用で、APIやWebhook、バウンス管理など用途には合う。ただし2026年7月の価格改定後、公式ページ間で価格表示が一致していないため、現在の購入単価は契約前に確認した方がよい。</p>
 <p>今回の市場シェア数字は送信通数ではなく、調査会社が検出した導入企業の推定比率である。SendGrid、Amazon SES、Mailgunが広く使われていることの参考にはなるが、それだけで品質や到達率を決めるものではない。</p></div>
     </section>
 
@@ -547,9 +558,9 @@ Provider abstraction
 <li><strong>Azure ACS Email</strong>を現行baselineとして維持する。</li>
 <li><strong>Amazon SES</strong>を第2Providerの第一候補とする。</li>
 <li>第3Providerでは<strong>SendGridまたはMailgun</strong>を入れ、専業ESP型のAPI・Webhook・Suppression運用まで抽象化が耐えられるか確認する。</li>
-<li><strong>ZeptoMail</strong>は低コストかつTransactional Email特化の追加候補として扱う。</li>
+<li><strong>ZeptoMail</strong>はTransactional Email特化のクレジット制候補として扱い、採用時に現行価格を確認する。</li>
 </ol>
-<p>1通0.5 MB、月100万通の単純な料金規模では、Azure ACS Emailは約$310、SESアラカルトは基本$100で、0.5 MBがすべて添付だった厳しめの仮定でも約$160が目安になる。ZeptoMailはクレジット換算で約$250、SendGrid/Mailgunは月額プラン中心で約$700台の規模になる。</p>
+<p>1通0.5 MB、月100万通の比較では、Azure ACS Emailは約$310、SESアラカルトは基本$100で、0.5 MBがすべて添付だった厳しめの仮定でも約$160が目安になる。SendGridはPro 700Kと30万通の超過を単純計算すると約$739。MailgunはScale $90に超過料金が加わるが、個別アカウントのControl Panelが最終料金の正本とされているため、この記事では100万通総額を一意に断定しない。ZeptoMailは2026-07-01以降の新規契約向け価格改定後、公式Pricingページで具体額を確定できないため要問い合わせとした。</p>
 <p>ただし、送信単価だけでProviderを選ばない。実際の設計では、Bounce、Complaint、Suppression、Delivery Event、Retryability、Provider message ID、Sender/Domain verification、Provider固有Capabilityをどこまで共通化するかが重要になる。</p>
 <p>2026年の6sense推定ではSendGrid、Amazon SES、MailgunがTransactional Emailカテゴリの主要導入製品として確認できる。一方、ACS EmailとZeptoMailには同じ定義で比較できる有力な公開シェア値を確認できなかった。</p>
 <p>このため、次工程では「多数のProviderを一気に追加する」のではなく、<strong>まずSESを2社目として実装し、その差分からProvider abstractionを固める</strong>ことを優先する。</p></div>
@@ -560,7 +571,7 @@ Provider abstraction
       <div class="prose"><h1 id="conclusion-plain-まとめ"><a class="heading-permalink" href="#conclusion-plain-まとめ" aria-label="この見出しへのリンク">#</a>まとめ</h1>
 <p><code>amane-mailer</code> は今のAzure ACS対応を残しつつ、次はAmazon SES対応を追加するのがよい。</p>
 <p>SESは安く、利用規模も大きく、Azureとは違う仕組みを持っているため、2社目として実装すると共通設計の弱いところを見つけやすい。</p>
-<p>その後にSendGridかMailgunを追加すれば、メール配信専業サービスにも同じ設計が使えるか確認できる。ZeptoMailは低価格で相性もよいので、その後の追加候補になる。</p>
+<p>その後にSendGridかMailgunを追加すれば、メール配信専業サービスにも同じ設計が使えるか確認できる。ZeptoMailもトランザクションメール専用で相性はよいが、2026年7月の価格改定後の購入単価は契約前に確認する必要がある。</p>
 <p>大事なのはサービス数ではなく、送信、配信結果、バウンス、迷惑メール報告、再送可否などを、Providerに依存しすぎない形で扱えるようにすることである。</p></div>
       <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
     </section>

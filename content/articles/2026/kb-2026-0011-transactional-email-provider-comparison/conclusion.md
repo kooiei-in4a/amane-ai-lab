@@ -5,9 +5,9 @@
 1. **Azure ACS Email**を現行baselineとして維持する。
 2. **Amazon SES**を第2Providerの第一候補とする。
 3. 第3Providerでは**SendGridまたはMailgun**を入れ、専業ESP型のAPI・Webhook・Suppression運用まで抽象化が耐えられるか確認する。
-4. **ZeptoMail**は低コストかつTransactional Email特化の追加候補として扱う。
+4. **ZeptoMail**はTransactional Email特化のクレジット制候補として扱い、採用時に現行価格を確認する。
 
-1通0.5 MB、月100万通の単純な料金規模では、Azure ACS Emailは約$310、SESアラカルトは基本$100で、0.5 MBがすべて添付だった厳しめの仮定でも約$160が目安になる。ZeptoMailはクレジット換算で約$250、SendGrid/Mailgunは月額プラン中心で約$700台の規模になる。
+1通0.5 MB、月100万通の比較では、Azure ACS Emailは約$310、SESアラカルトは基本$100で、0.5 MBがすべて添付だった厳しめの仮定でも約$160が目安になる。SendGridはPro 700Kと30万通の超過を単純計算すると約$739。MailgunはScale $90に超過料金が加わるが、個別アカウントのControl Panelが最終料金の正本とされているため、この記事では100万通総額を一意に断定しない。ZeptoMailは2026-07-01以降の新規契約向け価格改定後、公式Pricingページで具体額を確定できないため要問い合わせとした。
 
 ただし、送信単価だけでProviderを選ばない。実際の設計では、Bounce、Complaint、Suppression、Delivery Event、Retryability、Provider message ID、Sender/Domain verification、Provider固有Capabilityをどこまで共通化するかが重要になる。
 

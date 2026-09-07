@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "KB-2026-0011",
+  "slug": "transactional-email-provider-comparison",
+  "title": "トランザクションメール送信基盤を比較した — Azure ACSを基準にSES・SendGrid・Mailgun・ZeptoMailを選ぶ",
+  "description": "amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailを低コストのTransactional特化候補として扱うのが妥当と判断した。",
+  "status": "published",
+  "publishedAt": "2026-09-07",
+  "updatedAt": "2026-09-07",
+  "lastVerifiedAt": "2026-09-07",
+  "tags": [
+    "Email",
+    "Transactional Email",
+    "Azure Communication Services",
+    "Amazon SES",
+    "SendGrid",
+    "Mailgun",
+    "ZeptoMail"
+  ],
+  "agents": [
+    {
+      "name": "ChatGPT",
+      "model": "GPT-5.6 Sol",
+      "responseFile": "responses/chatgpt.md",
+      "executedAt": "2026-09-07",
+      "webSearch": true,
+      "attachmentsUsed": false,
+      "integrity": "edited",
+      "notes": "会話中の調査を公開用に再構成し、2026-09-07時点で各社公式料金ページと6senseのTransactional Emailカテゴリを再確認した。市場シェアは推定導入シェアであり送信通数シェアではない。"
+    }
+  ],
+  "giscusTerm": "KB-2026-0011",
+  "supersededBy": null
+}

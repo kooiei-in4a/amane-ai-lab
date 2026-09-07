@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>トランザクションメール送信基盤を比較した — Azure ACSを基準にSES・SendGrid・Mailgun・ZeptoMailを選ぶ — 資料版 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailをTransactional Email特化のクレジット制候補として扱うのが妥当と判断した。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/summary/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="トランザクションメール送信基盤を比較した — Azure ACSを基準にSES・SendGrid・Mailgun・ZeptoMailを選ぶ — 資料版">
+  <meta property="og:description" content="amane-mailerの送信Provider拡張を見据え、Azure Communication Services Emailを現行基準として、Amazon SES、Twilio SendGrid、Mailgun、Zoho ZeptoMailの料金と2025年以降に確認できる普及度を比較した。現時点ではSESを第2Providerの第一候補とし、SendGrid/Mailgunを専業ESPの代表、ZeptoMailをTransactional Email特化のクレジット制候補として扱うのが妥当と判断した。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/summary/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="../../../../assets/css/site.css">
+  <link rel="stylesheet" href="../../../../assets/css/nav-benchmark.css">
+</head>
+<body class="summary-doc-page">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane AI Lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/">記事本文</a>
+        <a href="../../../../benchmarks/">Benchmarks</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#articles">記事</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap summary-doc">
+    <header class="summary-doc-header panel">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0011</span>
+        <span class="pill">資料版</span>
+        <span>更新: 2026-09-07</span>
+      </p>
+      <h1>まとめ</h1>
+      <p class="summary-doc-subtitle">合成結果を、わかりやすい言葉で短くまとめた資料版。</p>
+      <nav class="summary-source-links" aria-label="記事本文の関連セクション">
+        <p class="summary-source-links-label">記事本文の関連セクション</p>
+        <ul>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#background-heading">検討に至った背景</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#prompt-heading">調査プロンプト</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#agents-heading">AIエージェントの回答</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#analysis-heading">AI回答の合成</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#analysis-plain-heading">合成（わかりやすい説明）</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#conclusion-heading">要約</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#conclusion-plain-heading">要約（わかりやすい説明）</a></li>
+        </ul>
+      </nav>
+      <p class="summary-doc-nav">
+        <a class="btn btn-secondary" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/">← 記事本文へ戻る</a>
+      </p>
+    </header>
+
+    <div class="summary-doc-layout">
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol></ol></nav>
+      <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
+        <h1>まとめ</h1>
+<p><code>amane-mailer</code> は今のAzure ACS対応を残しつつ、次はAmazon SES対応を追加するのがよい。</p>
+<p>SESは安く、利用規模も大きく、Azureとは違う仕組みを持っているため、2社目として実装すると共通設計の弱いところを見つけやすい。</p>
+<p>その後にSendGridかMailgunを追加すれば、メール配信専業サービスにも同じ設計が使えるか確認できる。ZeptoMailもトランザクションメール専用で相性はよいが、2026年7月の価格改定後の購入単価は契約前に確認する必要がある。</p>
+<p>大事なのはサービス数ではなく、送信、配信結果、バウンス、迷惑メール報告、再送可否などを、Providerに依存しすぎない形で扱えるようにすることである。</p>
+      </article>
+    </div>
+
+    <footer class="summary-doc-footer panel">
+      <p class="note">この資料は記事の「合成結果の要約（わかりやすい説明）」（<code>conclusion-plain.md</code>）から自動生成しています。</p>
+      <p>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#background-heading">背景</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#prompt-heading">プロンプト</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#agents-heading">AI回答</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#analysis-heading">合成</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#analysis-plain-heading">合成（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#conclusion-heading">要約</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/#conclusion-plain-heading">要約（平易）</a> ·
+        <a href="../../../../benchmarks/">Benchmarks</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

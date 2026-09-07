@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "source": "synthesis",
+      "label": "結論",
+      "text": "amane-mailerの第2ProviderはAmazon SESを第一候補とし、2社目でAzure依存の境界を洗い出す。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "料金",
+      "text": "0.5 MB・月100万通ではACS約$310、SESアラカルト約$100〜160。SendGridは約$739、MailgunとZeptoMailは条件確認が必要。",
+      "href": "#agent-chatgpt-1通05-mb代表価格の一覧"
+    },
+    {
+      "source": "synthesis",
+      "label": "普及度",
+      "text": "6sense推定ではSendGrid 14.45%、Amazon SES 13.97%、Mailgun 9.39%。これは送信通数シェアではない。",
+      "href": "#agent-chatgpt-2025年以降の普及度"
+    },
+    {
+      "source": "synthesis",
+      "label": "設計",
+      "text": "共通機能とProvider固有Capabilityを分け、Bounce、Complaint、Suppression、Delivery Eventなどを段階的に抽象化する。",
+      "href": "#agent-chatgpt-設計上の示唆"
+    }
+  ]
+}

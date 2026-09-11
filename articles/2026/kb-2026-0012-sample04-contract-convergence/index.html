@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIへ渡す事前ルールを変えたら、完成率ではなく「実装のそろい方」に差が出た — 9回の比較実験 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="同じ在庫管理の課題を、渡す資料だけ変えて9回実装した。9件とも動いた一方、製品仕様を渡すと業務の意味がそろい、設計資料まで渡すと責任分担もそろった。資料が最も多い条件では、時間とコード量も増えた。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIへ渡す事前ルールを変えたら、完成率ではなく「実装のそろい方」に差が出た — 9回の比較実験">
+  <meta property="og:description" content="同じ在庫管理の課題を、渡す資料だけ変えて9回実装した。9件とも動いた一方、製品仕様を渡すと業務の意味がそろい、設計資料まで渡すと責任分担もそろった。資料が最も多い条件では、時間とコード量も増えた。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AIへ渡す事前ルールを変えたら、完成率ではなく「実装のそろい方」に差が出た — 9回の比較実験">
+  <meta name="twitter:description" content="同じ在庫管理の課題を、渡す資料だけ変えて9回実装した。9件とも動いた一方、製品仕様を渡すと業務の意味がそろい、設計資料まで渡すと責任分担もそろった。資料が最も多い条件では、時間とコード量も増えた。">
+  <link rel="stylesheet" href="../../../assets/css/site.css">
+  <link rel="stylesheet" href="../../../assets/css/nav-benchmark.css">
+  <link rel="stylesheet" href="../../../assets/css/article-readability.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane AI Lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#articles">記事</a>
+        <a href="../../../benchmarks/">Benchmarks</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#about">このLabについて</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap article-page">
+    <header class="article-header">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0012</span>
+        <span class="pill status-published">published</span>
+        <span>公開: 2026-09-11</span>
+        <span>最終確認: 2026-09-11</span>
+        <span>更新: 2026-09-11</span>
+      </p>
+      <h1>AIへ渡す事前ルールを変えたら、完成率ではなく「実装のそろい方」に差が出た — 9回の比較実験</h1>
+      <p class="article-summary">同じ在庫管理の課題を、渡す資料だけ変えて9回実装した。9件とも動いた一方、製品仕様を渡すと業務の意味がそろい、設計資料まで渡すと責任分担もそろった。資料が最も多い条件では、時間とコード量も増えた。</p>
+      <nav class="article-quick-nav" aria-label="主要セクション"><a href="#tldr">要点</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#background-heading">背景</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#prompt-heading">プロンプト</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#agents-heading">AI回答</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#analysis-heading">合成</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-heading">要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#conclusion-plain-heading">平易な要約</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="summary/">資料版</a><span class="quick-nav-sep" aria-hidden="true">·</span><a href="#article-toc">詳細目次</a></nav>
+      <ul class="tag-list"><li>AIエージェント</li><li>AIコーディング</li><li>仕様駆動開発</li><li>実装比較</li><li>ソフトウェア設計</li><li>品質保証</li></ul>
+    </header>
+
+    <section class="tldr panel" id="tldr" aria-labelledby="tldr-heading"><h2 id="tldr-heading">要点（TL;DR）</h2><p class="tldr-note">出典ラベル付き。項目をクリックすると該当箇所へ移動します（折りたたみ内なら自動で開きます）。</p><ol class="tldr-list"><li><span class="tldr-source tldr-source-synthesis">結果</span> <a class="tldr-link" href="#analysis-heading">9回すべて動いたため、事前資料による完成率の差は確認できなかった。</a></li><li><span class="tldr-source tldr-source-experiment">業務の意味</span> <a class="tldr-link" href="#analysis-heading">目標一致はA0が24/27、製品仕様を渡したA2とA1は27/27だった。</a></li><li><span class="tldr-source tldr-source-experiment">設計</span> <a class="tldr-link" href="#analysis-heading">設計資料まで渡したA1だけが、主な設計責任2項目で各3/3一致した。</a></li><li><span class="tldr-source tldr-source-synthesis">実務</span> <a class="tldr-link" href="#conclusion-heading">資料を常に最大化せず、そろえる必要がある範囲に応じて、事前に決める内容の詳しさを変える。</a></li></ol></section>
+    <nav class="article-toc panel" id="article-toc" aria-label="目次"><h2 id="article-toc-heading">目次</h2><ol class="toc-root"><li><a href="#tldr">要点（TL;DR）</a></li><li><a href="#article-toc">目次</a></li><li><a href="#background-heading">検討に至った背景</a></li><li><a href="#prompt-heading">調査プロンプト</a></li><li><a href="#agents-heading">AIエージェントの回答</a><ul class="toc-agents"><li><a href="#agent-sample-04">Sample 04 実験記録</a><ul><li class="toc-item toc-level-2"><a href="#agent-sample-04-実験の目的">実験の目的</a></li><li class="toc-item toc-level-2"><a href="#agent-sample-04-比較条件">比較条件</a></li><li class="toc-item toc-level-2"><a href="#agent-sample-04-製品としての判定">製品としての判定</a></li><li class="toc-item toc-level-2"><a href="#agent-sample-04-事前目標との一致">事前目標との一致</a></li><li class="toc-item toc-level-2"><a href="#agent-sample-04-実装時の測定値">実装時の測定値</a></li><li class="toc-item toc-level-2"><a href="#agent-sample-04-公開資料">公開資料</a></li></ul></li><li><a href="#agent-codex">Codex</a><ul><li class="toc-item toc-level-2"><a href="#agent-codex-要旨">要旨</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-実験の問い">実験の問い</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-対象製品">対象製品</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-3つの条件">3つの条件</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-評価方法">評価方法</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-結果1-9件すべて動いた">結果1: 9件すべて動いた</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-結果2-製品仕様は業務上の意味をそろえた">結果2: 製品仕様は業務上の意味をそろえた</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-結果3-a1は設計上の責任分担もそろえた">結果3: A1は設計上の責任分担もそろえた</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-結果4-そろえるために増えた初回の負担">結果4: そろえるために増えた初回の負担</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-何が分かったか">何が分かったか</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-実務への示唆">実務への示唆</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-限界">限界</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-次に試すこと">次に試すこと</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-公開した根拠資料">公開した根拠資料</a></li><li class="toc-item toc-level-2"><a href="#agent-codex-結論">結論</a></li></ul></li></ul></li><li><a href="#analysis-heading">2回答の合成</a></li><li><a href="#analysis-plain-heading">2回答の合成（わかりやすい説明）</a></li><li><a href="#conclusion-heading">合成結果の要約</a></li><li><a href="#conclusion-plain-heading">合成結果の要約（わかりやすい説明）</a></li><li><a href="#edit-heading">Edit on GitHub</a></li><li><a href="#comments-heading">コメント</a></li></ol></nav>
+
+    <section class="panel" aria-labelledby="background-heading">
+      <h2 id="background-heading">検討に至った背景</h2>
+      <div class="prose"><h1 id="background-はじめに"><a class="heading-permalink" href="#background-はじめに" aria-label="この見出しへのリンク">#</a>はじめに</h1>
+<p>AIに詳しい資料を渡せば、良いソフトウェアを作れるのでしょうか。</p>
+<p>この問いは、単に「最後まで動いたか」だけでは答えられません。特に開発規模が大きくなると、個々の機能が動いていても、チームや部品ごとに業務の意味や責任分担が違えば、組み合わせる段階で手戻りが増えます。</p>
+<p>Amane Engineering Standards（以下、AES）は、実装前に製品の意味、設計上の責任、作業順序、確認方法を合意し、AIエージェントがその合意に沿って作れるかを確かめる方法です。目的は、AIに完成品を作らせることだけではありません。<strong>事前に決めたルールへ実装をそろえられるか</strong>が中心です。</p>
+<p>この記事でいう「事前契約」は、法律上の契約ではありません。実装前に関係者で合意し、あとから確認できる形で書いたルールを指します。</p>
+<p>Sample 04では、倉庫間の在庫移動と予約を扱う同じ課題を、AIへ渡す資料だけ変えて9回実装しました。</p>
+<ul>
+<li>A0: 製品の目的だけを渡す</li>
+<li>A2: 製品の目的と製品仕様を渡す</li>
+<li>A1: 製品仕様に加え、設計、実行計画、確認仕様まで渡す</li>
+</ul>
+<p>元の実験名を保つため、資料の多さと番号順は一致しません。A1が最も多くの資料を渡した条件です。各条件は3回ずつ実施しました。</p>
+<p>この記事では、9回の結果から次を考えます。</p>
+<ol>
+<li>動く製品を作れたか</li>
+<li>事前に決めた業務の意味へそろったか</li>
+<li>事前に決めた設計上の責任分担へそろったか</li>
+<li>そのために時間とコード量がどれだけ増えたか</li>
+<li>小規模な実装と大規模な開発で、事前にどこまで詳しく決めるべきか</li>
+</ol></div>
+    </section>
+
+    <section class="panel" aria-labelledby="prompt-heading">
+      <h2 id="prompt-heading">調査プロンプト</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn" id="copy-prompt" data-copy-target="prompt-text">プロンプトをコピー</button>
+        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      </div>
+      <details class="prompt-details">
+        <summary>プロンプト全文を表示する</summary>
+        <pre id="prompt-text" class="prompt-block"><code>Sample 04の目的に照らし、何を行い、どのような結果が出たかを深く分析してください。
+
+AESの目的は完動品を作ることだけではありません。一定のルールを事前に定義し、そのとおりに作れるかを確かめることが重要です。製品の規模が大きくなるほど、事前の契約が重要になるという観点を中心にしてください。
+
+A1は製品仕様、設計、実行計画、確認仕様をすべて渡したため、完成品の方向性がそろったと言えるかを、A0、A2と比較してください。ただし、資料を渡していない条件には、より効率的に進められる可能性があることも考慮してください。
+
+さらに、実装時間、コードの簡潔さ、ファイル数、依存関係、テスト量、変更や統合に備えた構造など、これまで見ていなかった観点も分析してください。
+
+各条件3回の小規模な実験であるため断定を避け、一定の方向性として示してください。最後に、Sample 04の詳細な実験レポートとしてまとめてください。
+</code></pre>
+      </details>
+    </section>
+
+    <section class="panel" aria-labelledby="agents-heading">
+      <h2 id="agents-heading">AIエージェントの回答</h2>
+      <div class="prompt-toolbar">
+        <button type="button" class="btn btn-secondary" id="expand-all">すべて開く</button>
+        <button type="button" class="btn btn-secondary" id="collapse-all">すべて閉じる</button>
+      </div>
+      <div id="agent-responses"><section class="agent-response" data-agent="Sample 04 実験記録">
+  <details id="agent-sample-04">
+    <summary>
+      <span class="agent-name">Sample 04 実験記録</span>
+      <span class="agent-meta">S04-E2 3条件9試行 / 2026-09-11 / integrity=edited</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>なし</dd></div>
+      <div><dt>添付</dt><dd>あり</dd></div>
+      <div><dt>完全性</dt><dd>edited</dd></div>
+    </dl>
+    <p class="agent-notes">9試行の評価記録から、公開可能な条件、判定、測定値だけを抜き出した。製品コード、非公開の実行記録、ローカル環境情報は含めていない。</p>
+    <div class="agent-body prose"><h1 id="agent-sample-04-sample-04の実験記録"><a class="heading-permalink" href="#agent-sample-04-sample-04の実験記録" aria-label="この見出しへのリンク">#</a>Sample 04の実験記録</h1>
+<h2 id="agent-sample-04-実験の目的"><a class="heading-permalink" href="#agent-sample-04-実験の目的" aria-label="この見出しへのリンク">#</a>実験の目的</h2>
+<p>同じ在庫管理の課題を、AIへ渡す資料だけ変えて9回実装し、次の二つを分けて確認しました。</p>
+<ol>
+<li>製品として必要な機能が動くか</li>
+<li>人が事前に決めた業務の意味と設計にそろうか</li>
+</ol>
+<h2 id="agent-sample-04-比較条件"><a class="heading-permalink" href="#agent-sample-04-比較条件" aria-label="この見出しへのリンク">#</a>比較条件</h2>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>AIへ渡した資料</th>
+<th>試行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>製品の目的</td>
+<td>R01、R06、R08</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>製品の目的、製品仕様</td>
+<td>R02、R04、R09</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>A2に加え、設計、実行計画、確認仕様</td>
+<td>R03、R05、R07</td>
+</tr>
+</tbody>
+</table>
+<p>A1が最も資料の多い条件です。元の実験名を保つため、資料の多さと番号順は一致しません。</p>
+<p>開始時点、AIの設定、実行環境、課題、評価方法は同じにしました。試行ごとに作業場所と実行過程を分離しています。</p>
+<h2 id="agent-sample-04-製品としての判定"><a class="heading-permalink" href="#agent-sample-04-製品としての判定" aria-label="この見出しへのリンク">#</a>製品としての判定</h2>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>有効な試行</th>
+<th>製品として合格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>3/3</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>3/3</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>3/3</td>
+<td>3/3</td>
+</tr>
+</tbody>
+</table>
+<p>在庫の保存、二重利用の防止、負在庫の防止、履歴、再送の安全性、権限、古い更新の拒否、画面、再起動後の保存を確認しました。</p>
+<h2 id="agent-sample-04-事前目標との一致"><a class="heading-permalink" href="#agent-sample-04-事前目標との一致" aria-label="この見出しへのリンク">#</a>事前目標との一致</h2>
+<p>設計項目1は在庫計算を業務処理側へ置くこと、設計項目2は権限確認を処理の入口へ置くことです。</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>業務上の9項目</th>
+<th>設計項目1</th>
+<th>設計項目2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>24/27一致</td>
+<td>2/3一致</td>
+<td>2/3一致</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>27/27一致</td>
+<td>1/3一致</td>
+<td>1/3一致</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>27/27一致</td>
+<td>3/3一致</td>
+<td>3/3一致</td>
+</tr>
+</tbody>
+</table>
+<p>不一致はすべて、事前目標とは違うものの、製品として筋が通る別案でした。不合理な不一致や判定不能はありませんでした。</p>
+<h2 id="agent-sample-04-実装時の測定値"><a class="heading-permalink" href="#agent-sample-04-実装時の測定値" aria-label="この見出しへのリンク">#</a>実装時の測定値</h2>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>平均時間</th>
+<th>製品コード行数</th>
+<th>製品ファイル数</th>
+<th>テスト行数</th>
+<th>テスト件数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>21.4分</td>
+<td>1,936</td>
+<td>5.3</td>
+<td>169</td>
+<td>6.3</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>24.0分</td>
+<td>2,236</td>
+<td>5.0</td>
+<td>169</td>
+<td>4.7</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>56.1分</td>
+<td>3,921</td>
+<td>56.7</td>
+<td>439</td>
+<td>12.0</td>
+</tr>
+</tbody>
+</table>
+<p>時間とコード量は、9試行の終了後に追加した補助的な測定です。原因と結果の断定や、統計的な差の証明には使いません。</p>
+<h2 id="agent-sample-04-公開資料"><a class="heading-permalink" href="#agent-sample-04-公開資料" aria-label="この見出しへのリンク">#</a>公開資料</h2>
+<ul>
+<li><a href="https://github.com/kooiei-in4a/amane-ai-lab/blob/main/content/articles/2026/kb-2026-0012-sample04-contract-convergence/sources/run-results.csv">9試行の集計値</a></li>
+<li><a href="https://github.com/kooiei-in4a/amane-ai-lab/blob/main/content/articles/2026/kb-2026-0012-sample04-contract-convergence/sources/result-summary.md">判定結果のまとめ</a></li>
+<li><a href="https://github.com/kooiei-in4a/amane-ai-lab/blob/main/content/articles/2026/kb-2026-0012-sample04-contract-convergence/sources/measurement-method.md">追加測定の方法と注意点</a></li>
+</ul></div>
+  </details>
+</section>
+<section class="agent-response" data-agent="Codex">
+  <details id="agent-codex">
+    <summary>
+      <span class="agent-name">Codex</span>
+      <span class="agent-meta">GPT-5 / 2026-09-11 / integrity=edited</span>
+    </summary>
+    <dl class="agent-facts">
+      <div><dt>Web検索</dt><dd>なし</dd></div>
+      <div><dt>添付</dt><dd>あり</dd></div>
+      <div><dt>完全性</dt><dd>edited</dd></div>
+    </dl>
+    <p class="agent-notes">会話中に作成したSample 04 S04-E2最終実験レポートを、公開記事向けに再構成した。数値と判定は固定し、重複説明と難しい表現を減らした。非公開の製品コード、実行記録、ローカル環境情報は掲載していない。</p>
+    <div class="agent-body prose"><h1 id="agent-codex-sample-04-s04-e2-実験報告"><a class="heading-permalink" href="#agent-codex-sample-04-s04-e2-実験報告" aria-label="この見出しへのリンク">#</a>Sample 04 S04-E2 実験報告</h1>
+<h2 id="agent-codex-要旨"><a class="heading-permalink" href="#agent-codex-要旨" aria-label="この見出しへのリンク">#</a>要旨</h2>
+<p>同じ在庫管理製品を、AIエージェントへ渡す事前資料だけ変えて9回実装した。比較したのは、目的だけを渡すA0、製品仕様を追加するA2、設計・実行計画・確認仕様まで渡すA1である。各条件を3回ずつ実施した。</p>
+<p>9件すべてが、決められた主要機能の確認に合格した。このため、今回の課題では資料の多さによる完成率の差は測れなかった。</p>
+<p>一方、事前に登録した目標との一致には差が出た。業務上の意味に関する9項目は、A0が27判定中24一致、A2とA1が27判定中27一致だった。設計上の責任分担に関する2項目は、A1だけが各3回とも一致した。</p>
+<p>追加資料は、製品を「動く状態にする」より、複数あり得る実装を同じ意味と設計へ寄せる働きをした可能性がある。ただしA1は平均実装時間、コード量、ファイル数、外部部品への依存も増えた。各条件3回、単一製品、単一の実行環境による結果なので、ほかの開発でも同じになるとは言えない。</p>
+<h2 id="agent-codex-実験の問い"><a class="heading-permalink" href="#agent-codex-実験の問い" aria-label="この見出しへのリンク">#</a>実験の問い</h2>
+<p>この実験では、次の二つを分けて評価した。</p>
+<ol>
+<li>製品として必要な働きを満たしたか</li>
+<li>人が事前に決めた意味と設計に一致したか</li>
+</ol>
+<p>前者に合格しても、後者に一致するとは限らない。A0やA2で選ばれた別の設計が、製品として誤りとは限らないからである。</p>
+<p>大規模開発で問題になりやすいのは、この「合理的だが別の選択」である。複数のチームやAIが別々の選択をすると、個別には正しくても結合時に食い違うことがある。</p>
+<h2 id="agent-codex-対象製品"><a class="heading-permalink" href="#agent-codex-対象製品" aria-label="この見出しへのリンク">#</a>対象製品</h2>
+<p>対象は、複数倉庫の在庫、予約、倉庫間移動、出荷、受領、取消、訂正、監査を扱う小規模な業務製品である。</p>
+<p>少なくとも次を守る必要があった。</p>
+<ul>
+<li>在庫を理由なく増減させない</li>
+<li>同じ在庫を二重に使えないようにする</li>
+<li>負の在庫を成立させない</li>
+<li>確定済みの履歴を追跡できるようにする</li>
+<li>同じ操作を再送しても二重の副作用を起こさない</li>
+<li>権限のない操作を拒否する</li>
+<li>古い状態を使った更新で新しい状態を壊さない</li>
+<li>画面から主要な業務操作へ到達できる</li>
+</ul>
+<h2 id="agent-codex-3つの条件"><a class="heading-permalink" href="#agent-codex-3つの条件" aria-label="この見出しへのリンク">#</a>3つの条件</h2>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>AIへ渡した資料</th>
+<th>見たかったこと</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>製品の目的</td>
+<td>AIが自分で選ぶ合理的な実装</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>製品の目的、製品仕様</td>
+<td>業務上の意味がそろうか</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>A2に加え、設計、実行計画、確認仕様</td>
+<td>設計責任や確認方法までそろうか</td>
+</tr>
+</tbody>
+</table>
+<p>各条件は3回ずつ実施した。開始時点、AIの設定、実行環境、課題、評価方法は同じにし、試行ごとに作業場所と実行過程を分離した。</p>
+<h2 id="agent-codex-評価方法"><a class="heading-permalink" href="#agent-codex-評価方法" aria-label="この見出しへのリンク">#</a>評価方法</h2>
+<p>第1の評価では、正常な在庫移動、在庫不足の拒否、予約中在庫の保護、古い更新の拒否、再送の安全性、権限、監査、再起動後の保存を、実際の通信経路から確認した。</p>
+<p>第2の評価では、実験前に封印した目標表と照合した。判定は次の3種類である。</p>
+<ul>
+<li>一致: 事前目標と同じ</li>
+<li>合理的な別案: 目標とは違うが、製品として筋が通っている</li>
+<li>不合理な不一致: 目標と違い、製品としても妥当でない</li>
+</ul>
+<p>「合理的な別案」は製品の失敗として数えていない。</p>
+<h2 id="agent-codex-結果1-9件すべて動いた"><a class="heading-permalink" href="#agent-codex-結果1-9件すべて動いた" aria-label="この見出しへのリンク">#</a>結果1: 9件すべて動いた</h2>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>有効な試行</th>
+<th>製品として合格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>3/3</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>3/3</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>3/3</td>
+<td>3/3</td>
+</tr>
+</tbody>
+</table>
+<p>今回の課題では、目的だけを渡したA0でも全件合格した。したがって、「資料を増やせば完成率が上がる」とは言えない。課題がAIにとって十分に作りやすく、完成率が上限に達した可能性がある。</p>
+<h2 id="agent-codex-結果2-製品仕様は業務上の意味をそろえた"><a class="heading-permalink" href="#agent-codex-結果2-製品仕様は業務上の意味をそろえた" aria-label="この見出しへのリンク">#</a>結果2: 製品仕様は業務上の意味をそろえた</h2>
+<p>業務上の目標は9項目あり、各条件3回なので合計27判定となる。</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>事前目標との一致</th>
+<th>合理的な別案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>24/27</td>
+<td>3/27</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>27/27</td>
+<td>0/27</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>27/27</td>
+<td>0/27</td>
+</tr>
+</tbody>
+</table>
+<p>A0の3件はいずれも製品として合格したが、在庫移動や予約期限の表し方に、事前目標とは異なる選択があった。製品仕様を渡したA2とA1では、9項目すべてが3回とも事前目標へ一致した。</p>
+<p>この結果は、製品仕様が完成を可能にしたというより、AIが持つ実装の自由を、人が合意した業務の意味へ絞った可能性を示す。</p>
+<h2 id="agent-codex-結果3-a1は設計上の責任分担もそろえた"><a class="heading-permalink" href="#agent-codex-結果3-a1は設計上の責任分担もそろえた" aria-label="この見出しへのリンク">#</a>結果3: A1は設計上の責任分担もそろえた</h2>
+<p>設計上の主な2項目は、在庫計算を業務領域側へ置くことと、操作権限を処理の入口側へ置くことである。</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>設計項目1の一致</th>
+<th>設計項目2の一致</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>2/3</td>
+<td>2/3</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>1/3</td>
+<td>1/3</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>3/3</td>
+<td>3/3</td>
+</tr>
+</tbody>
+</table>
+<p>A1の3件は、業務上の意味だけでなく、設計上の責任分担も同じ分類になった。今回の3回では、A1が最も広い範囲で事前目標にそろった。</p>
+<p>ただし、ここで言えるのは「今回の3件が一致した」ことまでである。今後も必ず一致する保証ではない。また、A2がA0より設計面で悪いとも言えない。A2はそもそも設計方法を指定しておらず、各条件3回の小さな差には偶然も含まれる。</p>
+<h2 id="agent-codex-結果4-そろえるために増えた初回の負担"><a class="heading-permalink" href="#agent-codex-結果4-そろえるために増えた初回の負担" aria-label="この見出しへのリンク">#</a>結果4: そろえるために増えた初回の負担</h2>
+<p>時間とコード量は、実験後に追加した補助的な測定である。</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>平均実装時間</th>
+<th>製品コードの平均行数</th>
+<th>製品ファイルの平均数</th>
+<th>テストの平均行数</th>
+<th>テストの平均件数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>21.4分</td>
+<td>1,936</td>
+<td>5.3</td>
+<td>169</td>
+<td>6.3</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>24.0分</td>
+<td>2,236</td>
+<td>5.0</td>
+<td>169</td>
+<td>4.7</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>56.1分</td>
+<td>3,921</td>
+<td>56.7</td>
+<td>439</td>
+<td>12.0</td>
+</tr>
+</tbody>
+</table>
+<p>A0とA2は、少数の大きなファイルにまとめた構成が中心だった。追加の外部部品を使わず、実行方法も単純だった。</p>
+<p>A1は、多数の小さなファイルと複数の構成単位に分け、業務処理、利用手順、保存、画面などの境界を明示した。確認コードも厚かった。その代わり、実装時間はA0の約2.6倍、製品ファイル数は約10.6倍になった。</p>
+<p>行数やファイル数だけで品質は決められない。A0/A2の単純さは、理解と実行のしやすさに向く。一方、A1の分割は、変更箇所や責任の所在を見つけやすくする可能性がある。どちらが保守しやすいかは、実際の変更実験をしなければ分からない。</p>
+<h2 id="agent-codex-何が分かったか"><a class="heading-permalink" href="#agent-codex-何が分かったか" aria-label="この見出しへのリンク">#</a>何が分かったか</h2>
+<h3 id="agent-codex-a0は資料なしではない"><a class="heading-permalink" href="#agent-codex-a0は資料なしではない" aria-label="この見出しへのリンク">#</a>A0は「資料なし」ではない</h3>
+<p>A0にも、目的、必要な機能、守るべき在庫の条件、画面の必要性が渡されていた。良質な目的文だけでも、小規模な製品を完成させられる可能性を示した。</p>
+<p>また、細かい設計を渡していないからこそ、AIがより短く単純な方法を選べた可能性もある。これは契約違反ではなく、自由を残した結果である。</p>
+<h3 id="agent-codex-a2は今回の釣り合いがよかった"><a class="heading-permalink" href="#agent-codex-a2は今回の釣り合いがよかった" aria-label="この見出しへのリンク">#</a>A2は今回の釣り合いがよかった</h3>
+<p>A2はA0と近い時間とファイル数のまま、業務上の9項目をすべて事前目標へそろえた。今回の小規模な製品では、製品仕様までを渡す方法が、意味の一致と実装負担の釣り合いがよく見える。</p>
+<p>ただし、複数の部品やチームをまたぐ責任分担までは保証しない。</p>
+<h3 id="agent-codex-a1はより広い範囲をそろえた"><a class="heading-permalink" href="#agent-codex-a1はより広い範囲をそろえた" aria-label="この見出しへのリンク">#</a>A1はより広い範囲をそろえた</h3>
+<p>A1だけが、業務上の意味と設計上の責任分担の両方を3回ともそろえた。大きな製品で、複数チームや複数AIが同じ設計へ接続する場合、この性質には価値がある可能性がある。</p>
+<p>一方、資料を作る費用、資料と実装のずれを防ぐ費用、外部部品の管理、実装時間が増える。小さな機能にも常にA1を使うのは過剰かもしれない。</p>
+<p>なお、A1では設計、実行計画、確認仕様をまとめて追加したため、どの資料が設計の一致に効いたかは、この実験だけでは分けられない。</p>
+<h2 id="agent-codex-実務への示唆"><a class="heading-permalink" href="#agent-codex-実務への示唆" aria-label="この見出しへのリンク">#</a>実務への示唆</h2>
+<p>事前資料は、多いほどよいわけではない。必要な保証範囲に合わせて厚さを変える方がよい。</p>
+<table>
+<thead>
+<tr>
+<th>開発の状況</th>
+<th>事前にそろえる内容の目安</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>試作品、局所的な道具</td>
+<td>目的と守るべき条件</td>
+</tr>
+<tr>
+<td>複数実装で業務の意味をそろえたい</td>
+<td>製品仕様</td>
+</tr>
+<tr>
+<td>複数チームや部品で責任分担をそろえたい</td>
+<td>設計上の境界と判断記録</td>
+</tr>
+<tr>
+<td>高い危険を伴う変更や監査</td>
+<td>実行計画と確認仕様まで</td>
+</tr>
+</tbody>
+</table>
+<p>AESの価値は、資料を増やすこと自体ではない。<strong>どこまでそろえる必要があるかを先に決め、その範囲をAIが実行し、別の評価で確かめられるようにすること</strong>にある。</p>
+<h2 id="agent-codex-限界"><a class="heading-permalink" href="#agent-codex-限界" aria-label="この見出しへのリンク">#</a>限界</h2>
+<ul>
+<li>各条件は3回だけである</li>
+<li>対象は一つの小規模な在庫管理製品である</li>
+<li>同じAI設定と実行環境に限られる</li>
+<li>A0へ渡した目的文自体が比較的詳しい</li>
+<li>全件合格したため、完成率の差を測りにくい</li>
+<li>A1は複数資料をまとめて追加しており、どの資料が効いたか分けられない</li>
+<li>時間、行数、ファイル数は実験後に追加した測定である</li>
+<li>初回実装だけを見ており、変更、統合、長期保守は試していない</li>
+</ul>
+<h2 id="agent-codex-次に試すこと"><a class="heading-permalink" href="#agent-codex-次に試すこと" aria-label="この見出しへのリンク">#</a>次に試すこと</h2>
+<p>次の段階では、同じ9件へ共通の変更要求を与え、修正時間、変更ファイル数、既存機能の壊れ方、目標への一致が保たれるかを測る必要がある。</p>
+<p>また、複数の部品を別々のAIへ作らせて結合すれば、大規模開発で事前に決めたルールが手戻りを減らすかを、より直接に確かめられる。</p>
+<h2 id="agent-codex-公開した根拠資料"><a class="heading-permalink" href="#agent-codex-公開した根拠資料" aria-label="この見出しへのリンク">#</a>公開した根拠資料</h2>
+<ul>
+<li><a href="https://github.com/kooiei-in4a/amane-ai-lab/blob/main/content/articles/2026/kb-2026-0012-sample04-contract-convergence/sources/run-results.csv">9試行の集計値</a></li>
+<li><a href="https://github.com/kooiei-in4a/amane-ai-lab/blob/main/content/articles/2026/kb-2026-0012-sample04-contract-convergence/sources/result-summary.md">判定結果のまとめ</a></li>
+<li><a href="https://github.com/kooiei-in4a/amane-ai-lab/blob/main/content/articles/2026/kb-2026-0012-sample04-contract-convergence/sources/measurement-method.md">追加測定の方法と注意点</a></li>
+</ul>
+<p>公開資料には、判定とこの記事で使った集計値だけを収録した。製品コード、非公開の実行記録、ローカル環境情報は含めていない。</p>
+<h2 id="agent-codex-結論"><a class="heading-permalink" href="#agent-codex-結論" aria-label="この見出しへのリンク">#</a>結論</h2>
+<p>今回の9回では、事前資料を増やしても完成率は変わらなかった。変わったのは、完成した製品の意味と設計のそろい方だった。</p>
+<p>製品仕様は業務上の意味をそろえ、設計・計画・確認仕様まで含む資料は設計上の責任分担もそろえた可能性がある。その代わり、初回の実装時間と構造上の負担は増えた。</p>
+<p>したがって、Sample 04が示した方向性は「詳しく書けば必ず良い製品になる」ではない。<strong>必要な範囲を事前に合意し、実装をその範囲へそろえられる可能性がある</strong>ということである。</p></div>
+  </details>
+</section></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">AI回答の合成</h2>
+      <div class="prose"><h1 id="analysis-先に結果"><a class="heading-permalink" href="#analysis-先に結果" aria-label="この見出しへのリンク">#</a>先に結果</h1>
+<p>9回の実装はすべて製品として合格しました。資料を増やしても、完成率は上がっていません。</p>
+<p>それでも、結果は同じではありませんでした。</p>
+<ul>
+<li>目的だけを渡したA0は、製品としては動いたものの、業務上の目標27判定のうち3件で別の合理的な選択をした</li>
+<li>製品仕様を渡したA2は、業務上の目標27判定すべてに一致した</li>
+<li>設計・実行計画・確認仕様まで渡したA1は、業務上の意味に加え、主な設計責任も3回すべて一致した</li>
+</ul>
+<p>今回、事前資料が変えたのは「完成できるか」より、<strong>完成品を事前の合意へどこまでそろえられるか</strong>でした。</p>
+<p>ここでいう「事前契約」は法律上の契約ではなく、実装前に合意して文書にしたルールのことです。</p>
+<h2 id="analysis-比較した3つの条件"><a class="heading-permalink" href="#analysis-比較した3つの条件" aria-label="この見出しへのリンク">#</a>比較した3つの条件</h2>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>渡した資料</th>
+<th>3回の製品合格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>製品の目的</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>製品の目的、製品仕様</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>A2に加え、設計、実行計画、確認仕様</td>
+<td>3/3</td>
+</tr>
+</tbody>
+</table>
+<p>A1が最も資料の多い条件です。元の実験名を保っているため、A1とA2の番号順が直感と逆になっています。</p>
+<p>対象は、倉庫間の在庫移動と予約を扱う小規模な業務製品です。在庫不足、予約中在庫、再送、古い更新、権限、監査、再起動後の保存まで、同じ評価方法で確認しました。</p>
+<h2 id="analysis-動いたと合意どおりを分けた"><a class="heading-permalink" href="#analysis-動いたと合意どおりを分けた" aria-label="この見出しへのリンク">#</a>「動いた」と「合意どおり」を分けた</h2>
+<p>この実験で一番大切なのは、二つの評価を分けたことです。</p>
+<p>一つ目は、製品として必要な働きを満たしたかです。二つ目は、人が実験前に決めた意味と設計に一致したかです。</p>
+<p>A0の別案は、製品として誤りではありません。資料を渡していない以上、AIがより短く効率的な方法を選んだ可能性もあります。その選択を、後から契約違反として扱うことはできません。</p>
+<p>ただし、大きな製品では「どちらも正しい」が問題になる場面があります。別々のチームが在庫や権限の責任を違う場所へ置けば、部品を結合するときに食い違うからです。</p>
+<h2 id="analysis-製品仕様で業務の意味がそろった"><a class="heading-permalink" href="#analysis-製品仕様で業務の意味がそろった" aria-label="この見出しへのリンク">#</a>製品仕様で業務の意味がそろった</h2>
+<p>業務上の目標9項目を3回ずつ判定した結果です。</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>事前目標との一致</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>24/27</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>27/27</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>27/27</td>
+</tr>
+</tbody>
+</table>
+<p>A0で一致しなかった3件も、合理的な別案でした。一方、製品仕様を渡したA2とA1では、全27判定が一致しました。</p>
+<p>この差から、製品仕様はAIを完成へ導いたというより、複数あり得る業務上の解釈を、人が選んだ一つへ寄せたと考える方が自然です。</p>
+<h2 id="analysis-a1は設計責任までそろえた"><a class="heading-permalink" href="#analysis-a1は設計責任までそろえた" aria-label="この見出しへのリンク">#</a>A1は設計責任までそろえた</h2>
+<p>設計上の主な2項目では、A1だけが各3回とも一致しました。</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>在庫計算の置き場所</th>
+<th>権限確認の置き場所</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>2/3</td>
+<td>2/3</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>1/3</td>
+<td>1/3</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>3/3</td>
+<td>3/3</td>
+</tr>
+</tbody>
+</table>
+<p>したがって、A1には完成品の方向性をそろえる可能性があります。ただし「今後も必ずそろう」と保証されたわけではありません。確認できたのは、今回の3回がそろったことだけです。</p>
+<p>A2がA0より設計面で悪いとも言えません。A2は設計方法を指定していないため、別の設計を選ぶ自由がありました。各条件3回なので、1件の差も大きく見えます。</p>
+<h2 id="analysis-速さとコードの簡潔さ"><a class="heading-permalink" href="#analysis-速さとコードの簡潔さ" aria-label="この見出しへのリンク">#</a>速さとコードの簡潔さ</h2>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>平均時間</th>
+<th>製品コード行数</th>
+<th>製品ファイル数</th>
+<th>テスト件数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A0</td>
+<td>21.4分</td>
+<td>1,936</td>
+<td>5.3</td>
+<td>6.3</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>24.0分</td>
+<td>2,236</td>
+<td>5.0</td>
+<td>4.7</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>56.1分</td>
+<td>3,921</td>
+<td>56.7</td>
+<td>12.0</td>
+</tr>
+</tbody>
+</table>
+<p>A0とA2は、少数の大きなファイルで作られ、追加の外部部品もありませんでした。短時間で動かしやすいという意味では単純です。</p>
+<p>A1は、多数の小さなファイルへ責任を分け、確認コードも厚くなりました。構成を理解する入口は増えますが、どこに何を書くかは明確です。</p>
+<p>つまり、「簡単なコード」には二つの見方があります。</p>
+<ul>
+<li>部品が少なく、すぐ全体を読める</li>
+<li>責任が小さく分かれ、変更場所を見つけやすい</li>
+</ul>
+<p>今回の測定だけで、将来どちらが保守しやすいかは決められません。A1の初期費用が将来の変更で回収されるかは、次の実験課題です。</p>
+<h2 id="analysis-今回はa2の釣り合いがよく見えた"><a class="heading-permalink" href="#analysis-今回はa2の釣り合いがよく見えた" aria-label="この見出しへのリンク">#</a>今回はA2の釣り合いがよく見えた</h2>
+<p>A2はA0と近い時間とファイル数のまま、業務上の意味を27/27へそろえました。この小規模な製品に限れば、製品仕様までを渡す方法が、そろいやすさと実装負担の釣り合いがよく見えます。</p>
+<p>A1は、複数チームや複数部品が同じ設計上の責任へ接続するときに価値を持つ可能性があります。一方、小さな機能へ常に設計・計画・確認仕様まで用意すると、資料作成と維持の費用が大きすぎるかもしれません。</p>
+<p>どこまで同じにする必要があるかに応じて、事前に決める内容の詳しさを変えるべきです。</p>
+<h2 id="analysis-実務での使い分け"><a class="heading-permalink" href="#analysis-実務での使い分け" aria-label="この見出しへのリンク">#</a>実務での使い分け</h2>
+<table>
+<thead>
+<tr>
+<th>状況</th>
+<th>事前にそろえる内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>試作品や局所的な道具</td>
+<td>目的と守るべき条件</td>
+</tr>
+<tr>
+<td>業務の意味を複数実装でそろえる</td>
+<td>製品仕様</td>
+</tr>
+<tr>
+<td>複数チームや部品で責任をそろえる</td>
+<td>設計上の境界と判断理由</td>
+</tr>
+<tr>
+<td>監査や高い危険を伴う変更</td>
+<td>実行計画と確認仕様まで</td>
+</tr>
+</tbody>
+</table>
+<p>資料の多さを競うのではなく、「どこまで違ってよいか」を先に決めることが重要です。</p>
+<h2 id="analysis-この結果の限界"><a class="heading-permalink" href="#analysis-この結果の限界" aria-label="この見出しへのリンク">#</a>この結果の限界</h2>
+<p>各条件は3回だけです。対象も一つの小規模製品で、同じAI設定と実行環境に限られます。また、全件が製品として合格したため、完成率の差は測れませんでした。</p>
+<p>時間やコード量は実験後に追加した測定です。初回実装しか見ておらず、変更、統合、長期保守の費用はまだ分かりません。</p>
+<p>そのため、A1が常に最善とも、A2が一般に最も効率的とも言えません。今回見えたのは、次の実験を考えるための方向性です。</p>
+<h2 id="analysis-根拠を確認する"><a class="heading-permalink" href="#analysis-根拠を確認する" aria-label="この見出しへのリンク">#</a>根拠を確認する</h2>
+<p>この記事で使った数値と判定方法は、公開可能な範囲へ絞って次のファイルに収録しました。</p>
+<ul>
+<li><a href="https://github.com/kooiei-in4a/amane-ai-lab/blob/main/content/articles/2026/kb-2026-0012-sample04-contract-convergence/sources/run-results.csv">9試行の集計値</a></li>
+<li><a href="https://github.com/kooiei-in4a/amane-ai-lab/blob/main/content/articles/2026/kb-2026-0012-sample04-contract-convergence/sources/result-summary.md">判定結果のまとめ</a></li>
+<li><a href="https://github.com/kooiei-in4a/amane-ai-lab/blob/main/content/articles/2026/kb-2026-0012-sample04-contract-convergence/sources/measurement-method.md">追加測定の方法と注意点</a></li>
+</ul>
+<p>製品コード、非公開の実行記録、ローカル環境情報は掲載していません。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="analysis-plain-heading">
+      <h2 id="analysis-plain-heading">AI回答の合成（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="analysis-plain-かんたんに言うと"><a class="heading-permalink" href="#analysis-plain-かんたんに言うと" aria-label="この見出しへのリンク">#</a>かんたんに言うと</h1>
+<p>同じ在庫管理の課題を、AIへ渡す資料だけ変えて9回作らせました。</p>
+<p>資料の違いは次の3段階です。</p>
+<ol>
+<li>やりたいことだけを渡す</li>
+<li>製品の詳しい決まりも渡す</li>
+<li>設計や作業順、確認方法まで渡す</li>
+</ol>
+<p>各段階で3回ずつ試しました。9件とも必要な機能は動きました。</p>
+<p>しかし、完成した中身のそろい方には差がありました。</p>
+<p>製品の詳しい決まりを渡すと、在庫や予約をどう扱うかが、人の決めた内容とそろいました。設計資料まで渡すと、どの部分が在庫計算や権限確認を担当するかもそろいました。</p>
+<p>一方、最も詳しい資料を渡した場合は、平均実装時間が約56分でした。他の2条件は約21分と約24分です。コードとファイルも増えました。</p>
+<p>この結果から「資料は多いほどよい」とは言えません。</p>
+<p>小さな機能なら、目的と守るべき決まりだけで十分なことがあります。業務の意味をそろえたいなら製品仕様を足す。複数のチームや部品を同じ設計でつなぎたいなら、設計や確認方法まで決める。</p>
+<p>今回の実験では、この使い分けが大切だと分かりました。ただし各条件3回だけなので、今後も必ず同じ結果になるとは言えません。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">合成結果の要約</h2>
+      <div class="prose"><h1 id="conclusion-まとめ"><a class="heading-permalink" href="#conclusion-まとめ" aria-label="この見出しへのリンク">#</a>まとめ</h1>
+<p>Sample 04では、同じ在庫管理製品を、AIへ渡す事前資料だけ変えて9回実装しました。</p>
+<p>9件すべてが製品として合格したため、資料を増やすことで完成率が上がるとは確認できませんでした。差が出たのは、完成品が事前の合意へどこまでそろったかです。</p>
+<ul>
+<li>A0は目的だけでも3件すべて動いたが、業務上の目標27判定のうち3件で合理的な別案を選んだ</li>
+<li>A2は製品仕様を渡し、業務上の目標27判定すべてに一致した</li>
+<li>A1は設計、実行計画、確認仕様まで渡し、主な設計責任も3回すべて一致した</li>
+</ul>
+<p>一方、A1の平均実装時間は約56分で、A0の約21分、A2の約24分より長く、コード量、ファイル数、外部部品への依存も増えました。</p>
+<p>この小規模な製品では、A2が業務の意味をそろえつつ初期負担を抑える釣り合いのよい条件に見えます。A1は、複数チームや複数部品が同じ設計上の責任へ接続する場合に、より価値を持つ可能性があります。</p>
+<p>AESの目的は、最も厚い資料を常に作ることではありません。<strong>必要な範囲を事前に合意し、実装がその範囲へそろったかを独立して確認できるようにすること</strong>です。</p>
+<p>ただし各条件3回、単一製品、単一のAI設定による結果です。今後は同じ9件へ変更要求を与え、A1の初期費用が変更や統合の手戻り削減で回収されるかを確かめる必要があります。</p></div>
+    </section>
+
+    <section class="conclusion panel" aria-labelledby="conclusion-plain-heading">
+      <h2 id="conclusion-plain-heading">合成結果の要約（わかりやすい説明）</h2>
+      <div class="prose"><h1 id="conclusion-plain-まとめかんたん版"><a class="heading-permalink" href="#conclusion-plain-まとめかんたん版" aria-label="この見出しへのリンク">#</a>まとめ（かんたん版）</h1>
+<p>9回とも、必要な機能は動きました。</p>
+<p>違ったのは、完成した中身のそろい方です。</p>
+<p>製品の詳しい決まりを渡すと、在庫や予約の扱いが人の決めた内容とそろいました。設計資料まで渡すと、どの部分が何を担当するかもそろいました。</p>
+<p>ただし、資料を増やした条件は、時間、コード、ファイルも増えました。</p>
+<p>小さな機能に、いつも最も詳しい資料が必要とは限りません。何をそろえる必要があるかを先に考え、必要な分だけ決めることが大切です。</p>
+<p>今回は各条件3回だけです。大きな製品でも同じ結果になるかは、これから確かめる必要があります。</p></div>
+      <p class="summary-doc-link"><a href="summary/">読みやすい資料版（HTML）</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="edit-heading">
+      <h2 id="edit-heading">Edit on GitHub</h2>
+      <p>正本ディレクトリ: <a href="https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0012-sample04-contract-convergence/">https://github.com/kooiei-in4a/amane-ai-lab/tree/main/content/articles/2026/kb-2026-0012-sample04-contract-convergence/</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="comments-heading">
+      <h2 id="comments-heading">コメント</h2>
+      <p class="note">コメントは GitHub Discussions（giscus）上の第三者投稿です。読み込みと投稿にはGitHubへの接続が必要です。</p>
+      <button type="button" class="btn" id="load-giscus">コメントを読み込む</button>
+      <div id="giscus-container"
+        hidden
+        data-giscus-src="https://giscus.app/client.js"
+  data-repo="kooiei-in4a/amane-ai-lab"
+  data-repo-id="R_kgDOToJuSQ"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOToJuSc4DCT1S"
+  data-mapping="specific"
+  data-term="KB-2026-0012"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="ja"
+  data-loading="lazy"
+      ></div>
+    </section>
+
+    <footer class="article-footer panel">
+      <p>コード: MIT / コンテンツ: CC BY 4.0。AI回答は参考情報であり、事実確認は読者の責任です。</p>
+      <p><a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧へ戻る</a> · <a href="../../../benchmarks/">Benchmarksを見る</a></p>
+    </footer>
+  </main>
+
+  <script src="../../../assets/js/site.js" defer></script>
+  <nav class="page-jump" aria-label="ページ内ジャンプ">
+    <a href="#tldr" class="page-jump-link" data-jump="tldr">要点</a>
+    <a href="#article-toc" class="page-jump-link">目次</a>
+    <a href="#main" class="page-jump-link page-jump-top" hidden>先頭へ</a>
+  </nav>
+</body>
+</html>

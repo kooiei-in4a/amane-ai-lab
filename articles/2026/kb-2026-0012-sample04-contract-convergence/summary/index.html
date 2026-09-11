@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIへ渡す事前ルールを変えたら、完成率ではなく「実装のそろい方」に差が出た — 9回の比較実験 — 資料版 — amane AI Lab Knowledge Base</title>
+  <meta name="description" content="同じ在庫管理の課題を、渡す資料だけ変えて9回実装した。9件とも動いた一方、製品仕様を渡すと業務の意味がそろい、設計資料まで渡すと責任分担もそろった。資料が最も多い条件では、時間とコード量も増えた。">
+  <link rel="canonical" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/summary/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AIへ渡す事前ルールを変えたら、完成率ではなく「実装のそろい方」に差が出た — 9回の比較実験 — 資料版">
+  <meta property="og:description" content="同じ在庫管理の課題を、渡す資料だけ変えて9回実装した。9件とも動いた一方、製品仕様を渡すと業務の意味がそろい、設計資料まで渡すと責任分担もそろった。資料が最も多い条件では、時間とコード量も増えた。">
+  <meta property="og:url" content="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/summary/">
+  <meta property="og:site_name" content="amane-ai-lab">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="../../../../assets/css/site.css">
+  <link rel="stylesheet" href="../../../../assets/css/nav-benchmark.css">
+</head>
+<body class="summary-doc-page">
+  <a class="skip-link" href="#main">本文へスキップ</a>
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand"><a href="https://kooiei-in4a.github.io/amane-ai-lab/">amane AI Lab</a></p>
+      <nav aria-label="サイト">
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/">記事本文</a>
+        <a href="../../../../benchmarks/">Benchmarks</a>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/#articles">記事</a>
+        <a href="https://github.com/kooiei-in4a/amane-ai-lab">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap summary-doc">
+    <header class="summary-doc-header panel">
+      <p class="meta-row">
+        <span class="pill">KB-2026-0012</span>
+        <span class="pill">資料版</span>
+        <span>更新: 2026-09-11</span>
+      </p>
+      <h1>まとめ（かんたん版）</h1>
+      <p class="summary-doc-subtitle">合成結果を、わかりやすい言葉で短くまとめた資料版。</p>
+      <nav class="summary-source-links" aria-label="記事本文の関連セクション">
+        <p class="summary-source-links-label">記事本文の関連セクション</p>
+        <ul>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#background-heading">検討に至った背景</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#prompt-heading">調査プロンプト</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#agents-heading">AIエージェントの回答</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#analysis-heading">AI回答の合成</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#analysis-plain-heading">合成（わかりやすい説明）</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#conclusion-heading">要約</a></li>
+          <li><a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#conclusion-plain-heading">要約（わかりやすい説明）</a></li>
+        </ul>
+      </nav>
+      <p class="summary-doc-nav">
+        <a class="btn btn-secondary" href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/">← 記事本文へ戻る</a>
+      </p>
+    </header>
+
+    <div class="summary-doc-layout">
+      <nav class="summary-toc" aria-label="目次"><h2 class="summary-toc-title">目次</h2><ol></ol></nav>
+      <article class="summary-doc-body panel prose" aria-label="統合サマリー本文">
+        <h1>まとめ（かんたん版）</h1>
+<p>9回とも、必要な機能は動きました。</p>
+<p>違ったのは、完成した中身のそろい方です。</p>
+<p>製品の詳しい決まりを渡すと、在庫や予約の扱いが人の決めた内容とそろいました。設計資料まで渡すと、どの部分が何を担当するかもそろいました。</p>
+<p>ただし、資料を増やした条件は、時間、コード、ファイルも増えました。</p>
+<p>小さな機能に、いつも最も詳しい資料が必要とは限りません。何をそろえる必要があるかを先に考え、必要な分だけ決めることが大切です。</p>
+<p>今回は各条件3回だけです。大きな製品でも同じ結果になるかは、これから確かめる必要があります。</p>
+      </article>
+    </div>
+
+    <footer class="summary-doc-footer panel">
+      <p class="note">この資料は記事の「合成結果の要約（わかりやすい説明）」（<code>conclusion-plain.md</code>）から自動生成しています。</p>
+      <p>
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#background-heading">背景</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#prompt-heading">プロンプト</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#agents-heading">AI回答</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#analysis-heading">合成</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#analysis-plain-heading">合成（平易）</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#conclusion-heading">要約</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/#conclusion-plain-heading">要約（平易）</a> ·
+        <a href="../../../../benchmarks/">Benchmarks</a> ·
+        <a href="https://kooiei-in4a.github.io/amane-ai-lab/">記事一覧</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

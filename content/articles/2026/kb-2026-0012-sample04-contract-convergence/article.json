@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "KB-2026-0012",
+  "slug": "sample04-contract-convergence",
+  "title": "AIへ渡す事前ルールを変えたら、完成率ではなく「実装のそろい方」に差が出た — 9回の比較実験",
+  "description": "同じ在庫管理の課題を、渡す資料だけ変えて9回実装した。9件とも動いた一方、製品仕様を渡すと業務の意味がそろい、設計資料まで渡すと責任分担もそろった。資料が最も多い条件では、時間とコード量も増えた。",
+  "status": "published",
+  "publishedAt": "2026-09-11",
+  "updatedAt": "2026-09-11",
+  "lastVerifiedAt": "2026-09-11",
+  "tags": [
+    "AIエージェント",
+    "AIコーディング",
+    "仕様駆動開発",
+    "実装比較",
+    "ソフトウェア設計",
+    "品質保証"
+  ],
+  "agents": [
+    {
+      "name": "Sample 04 実験記録",
+      "model": "S04-E2 3条件9試行",
+      "responseFile": "responses/experiment-results.md",
+      "executedAt": "2026-09-11",
+      "webSearch": false,
+      "attachmentsUsed": true,
+      "integrity": "edited",
+      "notes": "9試行の評価記録から、公開可能な条件、判定、測定値だけを抜き出した。製品コード、非公開の実行記録、ローカル環境情報は含めていない。"
+    },
+    {
+      "name": "Codex",
+      "model": "GPT-5",
+      "responseFile": "responses/codex.md",
+      "executedAt": "2026-09-11",
+      "webSearch": false,
+      "attachmentsUsed": true,
+      "integrity": "edited",
+      "notes": "会話中に作成したSample 04 S04-E2最終実験レポートを、公開記事向けに再構成した。数値と判定は固定し、重複説明と難しい表現を減らした。非公開の製品コード、実行記録、ローカル環境情報は掲載していない。"
+    }
+  ],
+  "giscusTerm": "KB-2026-0012",
+  "supersededBy": null
+}

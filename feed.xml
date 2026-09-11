@@ -4,8 +4,16 @@
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/" rel="alternate"/>
   <link href="https://kooiei-in4a.github.io/amane-ai-lab/feed.xml" rel="self"/>
   <id>https://kooiei-in4a.github.io/amane-ai-lab/</id>
-  <updated>2026-09-07T00:00:00Z</updated>
+  <updated>2026-09-11T00:00:00Z</updated>
   <subtitle>AIエージェントによる検証結果を公開するナレッジベース</subtitle>
+  <entry>
+    <title>AIへ渡す事前ルールを変えたら、完成率ではなく「実装のそろい方」に差が出た — 9回の比較実験</title>
+    <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/" rel="alternate"/>
+    <id>https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0012-sample04-contract-convergence/</id>
+    <updated>2026-09-11T00:00:00Z</updated>
+    <published>2026-09-11T00:00:00Z</published>
+    <summary type="text">同じ在庫管理の課題を、渡す資料だけ変えて9回実装した。9件とも動いた一方、製品仕様を渡すと業務の意味がそろい、設計資料まで渡すと責任分担もそろった。資料が最も多い条件では、時間とコード量も増えた。</summary>
+  </entry>
   <entry>
     <title>トランザクションメール送信基盤を比較した — Azure ACSを基準にSES・SendGrid・Mailgun・ZeptoMailを選ぶ</title>
     <link href="https://kooiei-in4a.github.io/amane-ai-lab/articles/2026/kb-2026-0011-transactional-email-provider-comparison/" rel="alternate"/>

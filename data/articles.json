@@ -7,8 +7,8 @@
       "slug": "sample04-contract-convergence",
       "title": "AIへ渡す事前ルールを変えたら、完成率ではなく「実装のそろい方」に差が出た — 9回の比較実験",
       "description": "同じ在庫管理の課題を、渡す資料だけ変えて9回実装した。9件とも動いた一方、製品仕様を渡すと業務の意味がそろい、設計資料まで渡すと責任分担もそろった。資料が最も多い条件では、時間とコード量も増えた。",
-      "status": "review",
-      "publishedAt": null,
+      "status": "published",
+      "publishedAt": "2026-09-11",
       "updatedAt": "2026-09-11",
       "lastVerifiedAt": "2026-09-11",
       "tags": [

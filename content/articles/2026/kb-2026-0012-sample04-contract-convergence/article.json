@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "KB-2026-0012",
+  "slug": "sample04-contract-convergence",
+  "title": "AIに事前ルールを渡すと、完成率より「実装のそろい方」が変わった — 9回の比較実験",
+  "description": "同じ在庫管理の課題を、渡す資料だけ変えて9回実装した。9件とも動いたが、製品仕様を渡すと業務の意味がそろい、設計資料まで渡すと責任分担もそろった。一方で、資料を増やすほど時間とコード量は増えた。",
+  "status": "review",
+  "publishedAt": null,
+  "updatedAt": "2026-09-11",
+  "lastVerifiedAt": "2026-09-11",
+  "tags": [
+    "AIエージェント",
+    "AIコーディング",
+    "仕様駆動開発",
+    "実装比較",
+    "ソフトウェア設計",
+    "品質保証"
+  ],
+  "agents": [
+    {
+      "name": "Codex",
+      "model": "GPT-5",
+      "responseFile": "responses/codex.md",
+      "executedAt": "2026-09-11",
+      "webSearch": false,
+      "attachmentsUsed": true,
+      "integrity": "edited",
+      "notes": "会話中に作成したSample 04 S04-E2最終実験レポートを、公開記事向けに再構成した。数値と判定は固定し、重複説明を減らした。非公開の製品コード、実行記録、ローカル環境情報は掲載せず、公開可能な集計値と測定方法だけを記事のsources配下へ収録した。"
+    }
+  ],
+  "giscusTerm": "KB-2026-0012",
+  "supersededBy": null
+}

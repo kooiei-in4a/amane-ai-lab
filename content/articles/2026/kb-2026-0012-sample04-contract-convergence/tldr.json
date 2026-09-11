@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "source": "synthesis",
+      "label": "結果",
+      "text": "9回すべて動いたため、事前資料による完成率の差は確認できなかった。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "experiment",
+      "label": "業務の意味",
+      "text": "目標一致はA0が24/27、製品仕様を渡したA2とA1は27/27だった。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "experiment",
+      "label": "設計",
+      "text": "設計資料まで渡したA1だけが、主な設計責任2項目で各3/3一致した。",
+      "href": "#analysis-heading"
+    },
+    {
+      "source": "synthesis",
+      "label": "実務",
+      "text": "資料を常に最大化せず、そろえる必要がある範囲に応じて事前契約の厚さを変える。",
+      "href": "#conclusion-heading"
+    }
+  ]
+}
